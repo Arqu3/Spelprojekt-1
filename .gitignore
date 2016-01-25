@@ -29,3 +29,13 @@
 
 # Folders
 Resources
+
+# Binary files
+*.ilk
+*.pdb
+*.sdf
+*.suo
+*.tlog
+*.log
+*.idb
+*.vcxproj
