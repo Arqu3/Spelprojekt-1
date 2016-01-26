@@ -47,6 +47,15 @@ void Player::setPosition(float x, float y)
 {
 	moveTo = sf::Vector2f(x, y);
 	mDirection = moveTo - mPosition;
+
+	float unitX = mDirection.x;
+	unitX = unitX * unitX;
+
+	float unitY = mDirection.y;
+	unitY = unitY * unitY;
+
+	sf::Vector2f unitVector(unitX, unitY);
+	mDirection = unitVector;
 }
 
 
