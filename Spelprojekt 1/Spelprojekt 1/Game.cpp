@@ -17,9 +17,9 @@ void Game::update()
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Hittaren Hilma");
 
 	//Resourcehandler test code
-	sf::Sprite temp;
+	/*sf::Sprite temp;
 	temp.setPosition(400, 400);
-	temp.setTexture(*mHandler.getTexture(0));
+	temp.setTexture(*mHandler.getTexture(0));*/
 
 	while (window.isOpen())
 	{
@@ -31,12 +31,6 @@ void Game::update()
 		mEventHandler.eventDraw(window);
 		mEventHandler.eventUpdate(deltaTime);
 		mEventHandler.eventListen(window);
-		//window.draw(temp);
-
-		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{
-			player->setPosition(10, 10);
-		}*/
 
 		deltaClock.restart();
 		window.display();

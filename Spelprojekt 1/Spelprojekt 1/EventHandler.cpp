@@ -28,10 +28,11 @@ void EventHandler::mouseClick(sf::Event &event)
 	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
 	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 	sf::Vector2f point (event.mouseButton.x, event.mouseButton.y);
+	player->setPosition(point.x, point.y);
 	//Kallar på kollisionsfunktion
 	if (checkCollision(player->getRect(), point)) 
 	{
-		std::cout << "HIT!";
+		std::cout << "HIT!" << std::endl;
 	}
 }
 
@@ -54,7 +55,8 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 				break;
 
 		case sf::Event::KeyPressed:
-			window.close();
+			if (event.key.code == sf::Keyboard::Escape)
+				window.close();
 			break;
 
 			// we don't process other types of events
