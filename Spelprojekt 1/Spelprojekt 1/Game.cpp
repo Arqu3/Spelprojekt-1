@@ -3,9 +3,9 @@
 
 using namespace std;
 
-Game::Game()
+Game::Game():
+mEventHandler(mHandler)
 {
-	player = new Player(mHandler, sf::Vector2f(400, 300));
 }
 
 Game::~Game()
@@ -23,20 +23,20 @@ void Game::update()
 
 	while (window.isOpen())
 	{
-		mEventHandler.eventListen(window);
-
 		window.clear(sf::Color::Black);
 
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
+
+		mEventHandler.eventDraw(window);
+		mEventHandler.eventUpdate(deltaTime);
+		mEventHandler.eventListen(window);
 		//window.draw(temp);
 
-		player->draw(window);
-		player->update(deltaTime);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			player->setPosition(10, 10);
-		}
+		}*/
 
 		deltaClock.restart();
 		window.display();

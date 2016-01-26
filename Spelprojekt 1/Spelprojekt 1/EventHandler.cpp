@@ -1,14 +1,14 @@
 #include "EventHandler.h"
 #include <iostream>
 
-EventHandler::EventHandler()
+EventHandler::EventHandler(ResourceHandler &handler)
 {
-
+	player = new Player(handler, sf::Vector2f(400, 300));
 }
 
 EventHandler::~EventHandler()
 {
-
+	delete player;
 }
 
 //Kollisionsfunktion som checkar kollision
@@ -29,11 +29,10 @@ void EventHandler::mouseClick(sf::Event &event)
 	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 	sf::Vector2f point (event.mouseButton.x, event.mouseButton.y);
 	//Kallar på kollisionsfunktion
-	//if (checkCollision(mRectangle.rectangleBoundingBox(), point)) 
-	//{
-	//	mRectangle.randPos();
-	//	std::cout << "HIT!";
-	//}
+	if (checkCollision(player->getRect(), point)) 
+	{
+		std::cout << "HIT!";
+	}
 }
 
 //Ligger i bakgrunden i spelloopen och lyssnar efter events
@@ -63,4 +62,12 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 			break;
 		}
 	}
+}
+
+void EventHandler::eventDraw(sf::RenderWindow &window){
+	player->draw(window);
+}
+
+void EventHandler::eventUpdate(float deltaTime) {
+	player->update(deltaTime);
 }
