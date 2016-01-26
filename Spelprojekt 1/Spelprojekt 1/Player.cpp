@@ -35,7 +35,7 @@ void Player::move(float deltaTime)
 	if (isOnPosition == false)
 	{
 
-		float speed = 1.0f;
+		float speed = 200.0f;
 		
 		mPosition += mDirection * speed * deltaTime;
 	}
@@ -45,17 +45,22 @@ void Player::move(float deltaTime)
 
 void Player::setPosition(float x, float y)
 {
+	//Creates a unit-direction vector that the player follows
 	moveTo = sf::Vector2f(x, y);
-	mDirection = moveTo - mPosition;
 
-	float unitX = mDirection.x;
-	unitX = unitX * unitX;
+	float deltaX = (moveTo.x - mPosition.x);
+	float deltaY = (moveTo.y - mPosition.y);
 
-	float unitY = mDirection.y;
-	unitY = unitY * unitY;
+	mDirection = sf::Vector2f(deltaX, deltaY);
 
-	sf::Vector2f unitVector(unitX, unitY);
-	mDirection = unitVector;
+	float squareX = (deltaX * deltaX);
+	float squareY = (deltaY * deltaY);
+
+	float added = (squareX + squareY);
+	float root = sqrt(added);
+
+	sf::Vector2f unit(mDirection.x / root, mDirection.y / root);
+	mDirection = unit;
 }
 
 

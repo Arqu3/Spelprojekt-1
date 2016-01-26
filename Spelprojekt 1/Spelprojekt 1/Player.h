@@ -3,6 +3,7 @@
 
 #include "ResourceHandler.h"
 #include "SFML\System.hpp"
+#include <cmath>
 
 class Player{
 public:
