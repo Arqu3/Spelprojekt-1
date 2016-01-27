@@ -40,7 +40,7 @@ void EventHandler::mouseClick(sf::Event &event)
 	std::cout << "Mouse Pressed" << std::endl;
 	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
 	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-	sf::Vector2f point (event.mouseButton.x, event.mouseButton.y);
+	sf::Vector2f point ((float) event.mouseButton.x, (float) event.mouseButton.y);
 	//Kallar på kollisionsfunktion
 	if (checkCollision(mLHandler->getPlayer()->getRect(), point)) 
 	{
