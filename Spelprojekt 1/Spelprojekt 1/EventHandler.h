@@ -18,6 +18,7 @@ private:
 	int checkCollision(sf::FloatRect &boundingBox, sf::Vector2f &point);
 	void mouseClick(sf::Event &event);
 	Player *player;
+	ResourceHandler* mHandler;
 };
 
 #endif

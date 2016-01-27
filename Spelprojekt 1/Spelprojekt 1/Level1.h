@@ -2,7 +2,6 @@
 #define INCLUDED_LEVEL1
 
 #include "Level.h"
-#include "ResourceHandler.h"
 #include "SFML\System.hpp"
 
 class Level1: public Level{
@@ -15,10 +14,12 @@ public:
 	void drawBackground(sf::RenderWindow &window);
 	rectVector getRects();
 	void removeRect(int index);
+	void clearScene();
+	void internalSwap(int num, ResourceHandler &handler);
+	void changeScene(int num, ResourceHandler &handler);
 private:
 	
-	void addRect(sf::FloatRect);
-	typedef std::vector<sf::FloatRect> rectVector;
+	void addRect(sf::FloatRect* rect);
 	rectVector mRects;
 	sf::RectangleShape background;
 	sf::Music backgroundMusic;

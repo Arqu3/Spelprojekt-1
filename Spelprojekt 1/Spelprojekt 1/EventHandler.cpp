@@ -1,7 +1,8 @@
 #include "EventHandler.h"
 #include <iostream>
 
-EventHandler::EventHandler(ResourceHandler &handler)
+EventHandler::EventHandler(ResourceHandler &handler):
+mHandler(&handler)
 {
 	player = new Player(handler, sf::Vector2f(400, 300));
 }
