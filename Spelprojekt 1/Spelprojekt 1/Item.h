@@ -11,17 +11,25 @@ public:
 	~Item();
 
 	void toggleActive();
-	void setLookable();
-	void setInteractable();
-	void setPickupable();
+	void toggleLookable();
+	void toggleInteractable();
+	void togglePickupable();
 
 	bool getActive();
 	bool getLookable();
 	bool getInteractable();
 	bool getPickupable();
+
+	std::string getName();
+
 private:
 	bool mIsActive;
+	bool mIsLookable;
+	bool mIsInteractable;
+	bool mIsPickupable;
+
 	std::string mName;
+
 	sf::Vector2f mPosition;
 	sf::Sprite mSprite;
 };
