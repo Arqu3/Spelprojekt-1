@@ -24,14 +24,14 @@ public:
 	bool getInteractable();
 	bool getPickupable();
 
-	//Function that is called through the EventHandler, to put an item in the inventory
-	void addToInventory(std::string &id);
-
 	//Get Name
 	std::string getName();
 
 	//Get bounding boxes
 	sf::FloatRect getRectangle();
+
+	//Get position of item
+	sf::Vector2f getPosition();
 
 private:
 	bool mIsActive;

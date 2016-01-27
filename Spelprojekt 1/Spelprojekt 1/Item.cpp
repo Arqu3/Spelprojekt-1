@@ -73,11 +73,6 @@ bool Item::getPickupable()
 	return mIsPickupable;
 }
 
-void Item::addToInventory(std::string &id)
-{
-	getId();
-}
-
 //Get name
 std::string Item::getName()
 {
@@ -88,4 +83,9 @@ std::string Item::getName()
 sf::FloatRect Item::getRectangle()
 {
 	return mRectangle;
+}
+
+sf::Vector2f Item::getPosition()
+{
+	return mPosition;
 }
