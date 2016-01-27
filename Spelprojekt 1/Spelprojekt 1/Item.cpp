@@ -1,11 +1,15 @@
 #include "Item.h"
 
-Item::Item(ResourceHandler &handler, sf::Vector2f &posision, std::string id) :
+Item::Item(ResourceHandler &handler, sf::Vector2f &position, sf::FloatRect &rectangle, std::string id) :
+mPosition(position),
+mRectangle(rectangle),
+mId(id),
 mIsActive(false),
 mIsLookable(false),
 mIsInteractable(false),
 mIsPickupable(false)
 {
+	//Create items here
 	if (id == "")
 	{
 		mName = "";
@@ -20,6 +24,7 @@ Item::~Item()
 
 }
 
+//Toggle functions for flags
 void Item::toggleActive()
 {
 	//Short if-statement. Toggles between true and false
@@ -44,6 +49,7 @@ void Item::togglePickupable()
 	mIsPickupable ? !mIsPickupable : mIsPickupable;
 }
 
+//Get functions of flags (bools)
 bool Item::getActive()
 {
 	return mIsActive;
@@ -64,7 +70,19 @@ bool Item::getPickupable()
 	return mIsPickupable;
 }
 
+void Item::addToInventory()
+{
+
+}
+
+//Get name
 std::string Item::getName()
 {
 	return mName;
+}
+
+//Get bounding boxes
+sf::FloatRect Item::getRectangle()
+{
+	return mRectangle;
 }
