@@ -16,6 +16,8 @@ public:
 	void toggleInteractable();
 	void togglePickupable();
 
+	std::string getId();
+
 	//Get functions to check flags
 	bool getActive();
 	bool getLookable();
@@ -23,7 +25,7 @@ public:
 	bool getPickupable();
 
 	//Function that is called through the EventHandler, to put an item in the inventory
-	void addToInventory();
+	void addToInventory(std::string &id);
 
 	//Get Name
 	std::string getName();

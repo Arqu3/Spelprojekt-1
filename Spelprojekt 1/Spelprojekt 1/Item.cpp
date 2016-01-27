@@ -14,8 +14,6 @@ mIsPickupable(false)
 	{
 		mName = "";
 		mSprite.setTexture(*handler.getTexture(0));
-		mPosition.x = 0;
-		mPosition.y = 0;
 	}
 }
 
@@ -49,6 +47,11 @@ void Item::togglePickupable()
 	mIsPickupable ? !mIsPickupable : mIsPickupable;
 }
 
+std::string Item::getId()
+{
+	return mId;
+}
+
 //Get functions of flags (bools)
 bool Item::getActive()
 {
@@ -70,9 +73,9 @@ bool Item::getPickupable()
 	return mIsPickupable;
 }
 
-void Item::addToInventory()
+void Item::addToInventory(std::string &id)
 {
-
+	getId();
 }
 
 //Get name
