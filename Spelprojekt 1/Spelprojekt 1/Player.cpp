@@ -7,7 +7,7 @@ mPosition(position),
 isOnPosition(true),
 moveTo(position)
 {
-	mSprite.setTexture(*handler.getTexture(0));
+	mSprite.setTexture(*handler.getTexture("test_2.png"));
 	
 }
 
