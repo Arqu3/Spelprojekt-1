@@ -8,7 +8,6 @@ isOnPosition(true),
 moveTo(position)
 {
 	mSprite.setTexture(*handler.getTexture("test_2.png"));
-	
 }
 
 
@@ -20,7 +19,7 @@ Player::~Player()
 
 void Player::move(float deltaTime)
 {
-	sf::FloatRect moveToRect(moveTo.x, moveTo.y, 10, 10);
+	sf::FloatRect moveToRect(moveTo.x, moveTo.y, 2, 2);
 
 	if (mRect.intersects(moveToRect))
 	{

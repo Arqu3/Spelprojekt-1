@@ -1,7 +1,6 @@
 #ifndef INCLUDED_GAME
 #define INCLUDED_GAME
 
-#include "ResourceHandler.h"
 #include "EventHandler.h"
 #include "SFML\System.hpp"
 #include "SFML\Window.hpp"
@@ -15,7 +14,8 @@ public:
 	void update();
 
 private:
-	ResourceHandler mHandler;
+	ResourceHandler mRHandler;
+	LevelHandler mLHandler;
 	EventHandler mEventHandler;
 
 	sf::Clock deltaClock;

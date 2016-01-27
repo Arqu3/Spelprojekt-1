@@ -16,6 +16,7 @@ musicCounter(0)
 	//Add resources in constructor
 	addTexture("test_1.jpg");
 	addTexture("test_2.png");
+	addTexture("Test3.png");
 
 	cout << "Number of textures loaded: " << mTextures.size() << endl;
 }

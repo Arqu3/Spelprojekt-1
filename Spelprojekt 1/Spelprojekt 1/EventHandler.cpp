@@ -1,23 +1,35 @@
 #include "EventHandler.h"
 #include <iostream>
 
-EventHandler::EventHandler(ResourceHandler &handler):
-mHandler(&handler)
+EventHandler::EventHandler(LevelHandler &lHandler):
+mLHandler(&lHandler)
 {
-	player = new Player(handler, sf::Vector2f(400, 300));
+	mLHandler->setActiveLevel(0);
 }
 
 EventHandler::~EventHandler()
 {
-	delete player;
 }
 
-//Kollisionsfunktion som checkar kollision
-int EventHandler::checkCollision(sf::FloatRect &boundingBox, sf::Vector2f &point)
+//Check collision with single rectangle
+int EventHandler::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point)
 {
 	if (boundingBox.contains(point))
 	{	
 		return 1;
+	}
+	return 0;
+}
+
+//Check collision with multiple rectangles
+int EventHandler::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point)
+{
+	for (std::vector<sf::FloatRect*>::size_type i = 0; i < RectVector.size(); i++)
+	{
+		if (RectVector[i]->contains(point))
+		{
+			return 1;
+		}
 	}
 	return 0;
 }
@@ -29,11 +41,16 @@ void EventHandler::mouseClick(sf::Event &event)
 	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
 	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 	sf::Vector2f point (event.mouseButton.x, event.mouseButton.y);
-	player->setPosition(point.x, point.y);
 	//Kallar på kollisionsfunktion
-	if (checkCollision(player->getRect(), point)) 
+	if (checkCollision(mLHandler->getPlayer()->getRect(), point)) 
 	{
 		std::cout << "HIT!" << std::endl;
+	}
+
+	//Check if playrect collision
+	if (checkCollision(mLHandler->getActiveLevel()->getPlayRects(), point))
+	{
+		mLHandler->getPlayer()->setPosition(point.x, point.y);
 	}
 }
 
@@ -67,10 +84,11 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 	}
 }
 
+//NOT NEEDED, REMOVE LATER
 void EventHandler::eventDraw(sf::RenderWindow &window){
-	player->draw(window);
+	mLHandler->draw(window);
 }
 
 void EventHandler::eventUpdate(float deltaTime) {
-	player->update(deltaTime);
+	mLHandler->update(deltaTime);
 }

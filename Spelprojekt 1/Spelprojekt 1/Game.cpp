@@ -1,10 +1,10 @@
 #include "Game.h"
 
-
 using namespace std;
 
 Game::Game():
-mEventHandler(mHandler)
+mLHandler(mRHandler),
+mEventHandler(mLHandler)
 {
 }
 
@@ -14,12 +14,7 @@ Game::~Game()
 
 void Game::update()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Hittaren Hilma");
-
-	//Resourcehandler test code
-	/*sf::Sprite temp;
-	temp.setPosition(400, 400);
-	temp.setTexture(*mHandler.getTexture(0));*/
+	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
 	while (window.isOpen())
 	{
@@ -28,8 +23,8 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		mEventHandler.eventDraw(window);
-		mEventHandler.eventUpdate(deltaTime);
+		mLHandler.update(deltaTime);
+		mLHandler.draw(window);
 		mEventHandler.eventListen(window);
 
 		deltaClock.restart();
