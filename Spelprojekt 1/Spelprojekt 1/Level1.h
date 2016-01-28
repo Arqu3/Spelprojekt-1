@@ -34,6 +34,7 @@ private:
 	rectVector mRects;
 	rectVector mPlayRects;
 	sf::RectangleShape background;
+	sf::RectangleShape rectangle;
 
 	sf::Sprite mBackground;
 

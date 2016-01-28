@@ -13,7 +13,9 @@ mIsActive(false)
 	mBackground.setTexture(*handler.getTexture("Test3.png"));
 	mBackground.setPosition(sf::Vector2f(0, 0));
 
-	sf::FloatRect* test = new sf::FloatRect(100, 100, 400, 400);
+	rectangle.setSize(sf::Vector2f(660, 200));
+	rectangle.setPosition(sf::Vector2f(110, 360));
+	sf::FloatRect* test = new sf::FloatRect(110, 360, 660, 200);
 
 	mPlayRects.push_back(test);
 }
@@ -38,6 +40,7 @@ void Level1::playAmbience()
 void Level1::draw(sf::RenderWindow &window)
 {
 	window.draw(background);
+	window.draw(rectangle);
 }
 
 void Level1::addRect(sf::FloatRect* rect)

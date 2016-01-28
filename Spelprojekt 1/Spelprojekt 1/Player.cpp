@@ -7,7 +7,8 @@ mPosition(position),
 isOnPosition(true),
 moveTo(position)
 {
-	mSprite.setTexture(*handler.getTexture("test_2.png"));
+	mSprite.setTexture(*handler.getTexture("Thomas.png"));
+	mSprite.setOrigin(100, 230);
 }
 
 
@@ -65,7 +66,7 @@ void Player::setPosition(float x, float y)
 
 void Player::update(float deltaTime)
 {
-	mRect = sf::FloatRect(mPosition.x, mPosition.y, mSprite.getGlobalBounds().width, mSprite.getGlobalBounds().height);
+	mRect = sf::FloatRect(mPosition.x, mPosition.y, 10, 10);
 	mSprite.setPosition(mPosition);
 	move(deltaTime);
 }

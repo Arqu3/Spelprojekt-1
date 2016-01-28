@@ -17,6 +17,7 @@ musicCounter(0)
 	addTexture("test_1.jpg");
 	addTexture("test_2.png");
 	addTexture("Test3.png");
+	addTexture("Thomas.png");
 
 	cout << "Number of textures loaded: " << mTextures.size() << endl;
 }
