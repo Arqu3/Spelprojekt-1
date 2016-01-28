@@ -18,6 +18,9 @@ public:
 
 	std::string getId();
 
+	int getIndex();
+	void setIndex(int value);
+	
 	//Get functions to check flags
 	bool getActive();
 	bool getLookable();
@@ -38,6 +41,8 @@ private:
 	bool mIsLookable;
 	bool mIsInteractable;
 	bool mIsPickupable;
+
+	int mIndex;
 
 	std::string mId;
 	std::string mName;

@@ -20,6 +20,8 @@ public:
 	//Function to draw the inventory
 	void drawInventory(sf::RenderWindow &window);
 
+	void sort();
+
 private:
 	typedef std::vector<Item*> ItemVector;
 	ItemVector mItemVector;

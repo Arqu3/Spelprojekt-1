@@ -41,3 +41,23 @@ void Inventory::drawInventory(sf::RenderWindow &window)
 {
 
 }
+
+void Inventory::sort()
+{
+	if (mItemVector.size() > 1)
+	{
+		int indexId = 0;
+		for (ItemVector::size_type i = 0; i < mItemVector.size(); i++)
+		{
+			for (ItemVector::size_type j = 0; j < mItemVector.size(); j++)
+			{
+				if (mItemVector[j] < mItemVector[j + 1])
+				{
+					indexId = mItemVector[j]->getIndex();
+					mItemVector[j] = mItemVector[j + 1];
+					mItemVector[j + 1]->setIndex(indexId);
+				}
+			}
+		}
+	}
+}

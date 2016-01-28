@@ -12,6 +12,7 @@ mIsPickupable(false)
 	//Create items here
 	if (id == "")
 	{
+		mIndex = 0;
 		mName = "";
 		mSprite.setTexture(*handler.getTexture(0));
 	}
@@ -50,6 +51,16 @@ void Item::togglePickupable()
 std::string Item::getId()
 {
 	return mId;
+}
+
+int Item::getIndex()
+{
+	return mIndex;
+}
+
+void Item::setIndex(int value)
+{
+	mIndex = value;
 }
 
 //Get functions of flags (bools)
