@@ -34,14 +34,15 @@ int EventHandler::checkCollision(const std::vector<sf::FloatRect*> RectVector, s
 	return 0;
 }
 
-//Funktion för musklick
+//Mouseclick function
 void EventHandler::mouseClick(sf::Event &event)
 {
 	std::cout << "Mouse Pressed" << std::endl;
 	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
 	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 	sf::Vector2f point ((float) event.mouseButton.x, (float) event.mouseButton.y);
-	//Kallar på kollisionsfunktion
+
+	//Check collision
 	if (checkCollision(mLHandler->getPlayer()->getRect(), point)) 
 	{
 		std::cout << "HIT!" << std::endl;
@@ -54,7 +55,7 @@ void EventHandler::mouseClick(sf::Event &event)
 	}
 }
 
-//Ligger i bakgrunden i spelloopen och lyssnar efter events
+//Waits in background and listens for mouseclicks
 void EventHandler::eventListen(sf::RenderWindow &window)
 {
 	sf::Event event;
@@ -62,12 +63,12 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 	{
 		switch (event.type)
 		{
-			// window closed
+			//window closed
 		case sf::Event::Closed:
 			window.close();
 			break;
 
-			// mouse button pressed
+			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
 			mouseClick(event);
 				break;
@@ -77,18 +78,8 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 				window.close();
 			break;
 
-			// we don't process other types of events
 		default:
 			break;
 		}
 	}
-}
-
-//NOT NEEDED, REMOVE LATER
-void EventHandler::eventDraw(sf::RenderWindow &window){
-	mLHandler->draw(window);
-}
-
-void EventHandler::eventUpdate(float deltaTime) {
-	mLHandler->update(deltaTime);
 }

@@ -8,8 +8,10 @@ mItems()
 {
 	mPlayer = new Player(handler, sf::Vector2f(400, 400));
 
+	//Initialize new levels
 	mLevel1 = new Level1(handler);
 
+	//Add levels to member list
 	mLevels.push_back(mLevel1);
 }
 
@@ -54,6 +56,7 @@ void LevelHandler::setActiveLevel(int index)
 
 Level* LevelHandler::getActiveLevel()
 {
+	//Returns current active level
 	for (LevelVector::size_type i = 0; i < mLevels.size(); i++)
 	{
 		if (mLevels[i]->isActive())

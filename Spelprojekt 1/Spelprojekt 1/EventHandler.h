@@ -12,13 +12,19 @@ public:
 	EventHandler(LevelHandler &lHandler);
 	~EventHandler();
 
+	//Listen for mouse clicks
 	void eventListen(sf::RenderWindow &window);
-	void eventDraw(sf::RenderWindow &window);
-	void eventUpdate(float deltaTime);
+
 private:
+	//Check collision between a single rectangle and a point
 	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
+
+	//Check collision between a list of rectangles and a point
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
+
 	void mouseClick(sf::Event &event);
+
+	//Member variables
 	LevelHandler *mLHandler;
 };
 
