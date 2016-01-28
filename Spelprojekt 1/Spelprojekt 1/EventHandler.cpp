@@ -40,7 +40,12 @@ void EventHandler::mouseClick(sf::Event &event)
 	std::cout << "Mouse Pressed" << std::endl;
 	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
 	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-	sf::Vector2f point ((float) event.mouseButton.x, (float) event.mouseButton.y);
+
+	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+
+	//sf::Vector2f point ((float) event.mouseButton.x, (float) event.mouseButton.y);
+	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
 	//Check collision
 	if (checkCollision(mLHandler->getPlayer()->getRect(), point)) 
@@ -70,8 +75,12 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
+			// get the current mouse position in the window
+			mPixelPos = sf::Mouse::getPosition(window);
+			// convert it to world coordinates
+			mWorldPos = window.mapPixelToCoords(mPixelPos);
 			mouseClick(event);
-				break;
+			break;
 
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape)

@@ -26,6 +26,8 @@ private:
 
 	//Member variables
 	LevelHandler *mLHandler;
+	sf::Vector2f mWorldPos;
+	sf::Vector2i mPixelPos;
 };
 
 #endif
