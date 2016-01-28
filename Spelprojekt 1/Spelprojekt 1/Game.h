@@ -14,11 +14,19 @@ public:
 	void update();
 
 private:
+	//Handlers
 	ResourceHandler mRHandler;
 	LevelHandler mLHandler;
 	EventHandler mEventHandler;
 
+	//Deltatime
 	sf::Clock deltaClock;
+
+	//Sound
+	sf::SoundBuffer test1;
+	sf::Music music;
+	sf::Sound test;
+
 };
 
 #endif

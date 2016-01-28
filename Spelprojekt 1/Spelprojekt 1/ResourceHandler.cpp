@@ -19,6 +19,8 @@ musicCounter(0)
 	addTexture("Test3.png");
 	addTexture("Thomas.png");
 
+	addSound("concept_2.wav");
+
 	cout << "Number of textures loaded: " << mTextures.size() << endl;
 }
 
@@ -68,12 +70,10 @@ void ResourceHandler::addTexture(string fileName)
 	mTextures.push_back(new sf::Texture());
 	mTextureNames.push_back(fileName);
 	textureCounter++;
-	for (TextureVector::size_type i = 0; i < mTextures.size(); i++)
+
+	if (!mTextures[textureCounter - 1]->loadFromFile("Resources/Textures/" + fileName))
 	{
-		if (!mTextures[textureCounter - 1]->loadFromFile("Resources/Textures/" + fileName))
-		{
-			cout << "Could not load texture at index: " << i << endl;
-		}
+		cout << "Could not load texture at index: " << textureCounter - 1 << endl;
 	}
 }
 
@@ -83,12 +83,10 @@ void ResourceHandler::addSound(string fileName)
 	mSounds.push_back(new sf::SoundBuffer());
 	mSoundNames.push_back(fileName);
 	soundCounter++;
-	for (SoundVector::size_type i = 0; i < mSounds.size(); i++)
+
+	if (!mSounds[soundCounter - 1]->loadFromFile("Resources/Sounds/" + fileName))
 	{
-		if (!mSounds[soundCounter - 1]->loadFromFile("Resources/Sounds/" + fileName))
-		{
-			cout << "Could not load sound at index: " << i << endl;
-		}
+		cout << "Could not load sound at index: " << soundCounter - 1 << endl;
 	}
 }
 
@@ -98,12 +96,10 @@ void ResourceHandler::addMusic(string fileName)
 	mMusic.push_back(new sf::Music());
 	mMusicNames.push_back(fileName);
 	musicCounter++;
-	for (MusicVector::size_type i = 0; i < mMusic.size(); i++)
+
+	if (!mMusic[musicCounter - 1]->openFromFile("Resources/Music/" + fileName))
 	{
-		if (!mMusic[musicCounter - 1]->openFromFile("Resources/Music/" + fileName))
-		{
-			cout << "Could not open music at index: " << i << endl;
-		}
+		cout << "Could not open music at index: " << musicCounter - 1 << endl;
 	}
 }
 
@@ -113,11 +109,7 @@ sf::Texture* ResourceHandler::getTexture(int index)
 	assert(index >= 0);
 	assert((unsigned int)index <= mTextures.size() - 1);
 
-	for (TextureVector::size_type i = 0; i < mTextures.size(); i++)
-	{
-		return mTextures[index];
-	}
-	return NULL;
+	return mTextures[index];
 }
 
 //Get texture via name
@@ -140,11 +132,7 @@ sf::SoundBuffer* ResourceHandler::getSound(int index)
 	assert(index >= 0);
 	assert((unsigned int)index <= mSounds.size() - 1);
 
-	for (SoundVector::size_type i = 0; i < mSounds.size(); i++)
-	{
-		return mSounds[index];
-	}
-	return NULL;
+	return mSounds[index];
 }
 
 //Get sound via name
@@ -167,11 +155,7 @@ sf::Music* ResourceHandler::getMusic(int index)
 	assert(index >= 0);
 	assert((unsigned int)index <= mMusic.size() - 1);
 
-	for (MusicVector::size_type i = 0; i < mMusic.size(); i++)
-	{
-		return mMusic[index];
-	}
-	return NULL;
+	return mMusic[index];
 }
 
 //Get music via name
