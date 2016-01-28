@@ -42,17 +42,19 @@ void LevelHandler::draw(sf::RenderWindow &window)
 void LevelHandler::setActiveLevel(int index)
 {
 	assert(index >= 0);
-	for (LevelVector::size_type i = 0; i < mLevels.size(); i++)
+	//Toggles active level
+	if (index > 0)
 	{
-		//Toggles active level
-		if (index > 0)
-		{
-			//If level to be toggled is greater than 0, toggle last level to be inactive
-			mLevels[index - 1]->toggleActive();
-		}
-		mLevels[index]->toggleActive();
+		//If level to be toggled is greater than 0, toggle last level to be inactive
+		mLevels[index - 1]->toggleActive();
 	}
+	mLevels[index]->toggleActive();
 }
+
+//LevelHandler::ItemVector LevelHandler::getActiveItems()
+//{
+//
+//}
 
 Level* LevelHandler::getActiveLevel()
 {

@@ -58,6 +58,14 @@ void EventHandler::mouseClick(sf::Event &event)
 	{
 		mLHandler->getPlayer()->setPosition(point.x, point.y);
 	}
+
+	if (checkCollision(mLHandler->getActiveLevel()->getRects(), point))
+	{
+		if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+			mLHandler->getActiveLevel()->changeScene(1);
+		else 
+			mLHandler->getActiveLevel()->changeScene(0);
+	}
 }
 
 //Waits in background and listens for mouseclicks

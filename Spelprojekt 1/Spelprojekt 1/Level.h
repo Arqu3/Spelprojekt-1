@@ -24,8 +24,9 @@ public:
 
 	//Scene functions
 	virtual void clearScene() = 0;
-	virtual void internalSwap(int num, ResourceHandler &handler) = 0;
-	virtual void changeScene(int num, ResourceHandler &handler) = 0;
+	virtual void internalSwap(int num) = 0;
+	virtual void changeScene(int num) = 0;
+	virtual int getActiveScene() = 0;
 	virtual void toggleActive() = 0;
 	virtual bool isActive() = 0;
 };

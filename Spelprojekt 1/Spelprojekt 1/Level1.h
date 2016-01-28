@@ -24,8 +24,9 @@ public:
 
 	//Scene
 	void clearScene();
-	void internalSwap(int num, ResourceHandler &handler);
-	void changeScene(int num, ResourceHandler &handler);
+	void internalSwap(int num);
+	void changeScene(int num);
+	int getActiveScene();
 	void toggleActive();
 	bool isActive();
 private:
@@ -34,9 +35,9 @@ private:
 	rectVector mRects;
 	rectVector mPlayRects;
 	sf::RectangleShape background;
+	sf::RectangleShape backgroundfishtank;
 	sf::RectangleShape rectangle;
-
-	sf::Sprite mBackground;
+	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
 
 	//Sound
 	sf::Music backgroundMusic;
@@ -44,5 +45,6 @@ private:
 
 	//Scene
 	bool mIsActive;
+	int mActiveScene;
 };
 #endif
