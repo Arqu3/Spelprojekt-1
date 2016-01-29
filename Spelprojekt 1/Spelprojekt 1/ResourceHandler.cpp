@@ -13,10 +13,11 @@ soundCounter(0),
 musicCounter(0)
 {
 	//Add resources in constructor
-	addTexture("test_1.jpg");
-	addTexture("test_2.png");
-	addTexture("Test3.png");
+	addTexture("Item1.png");
+	addTexture("Item2.png");
+	addTexture("Background.png");
 	addTexture("Thomas.png");
+	addTexture("Background_Zoom.png");
 
 	addSound("Test_Music.wav");
 	addSound("Test_Music.ogg");
@@ -24,6 +25,7 @@ musicCounter(0)
 	addMusic("Test_Music.wav");
 	addMusic("Test_Music.ogg");
 	addMusic("Test_3.ogg");
+	addMusic("Level1Music.ogg");
 
 	cout << "Number of textures loaded: " << mTextures.size() << endl;
 }

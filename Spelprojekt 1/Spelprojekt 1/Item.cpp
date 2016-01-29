@@ -15,48 +15,48 @@ mIsPickupable(false)
 		mIndex = 0;
 		mName = "Skruvmakapär";
 		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("test_1.jpg")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Item1.png")); //Add correct texture
 	}
 
-	if (id == "Star")
-	{
-		mIndex = 1;
-		mName = "Stjärna";
-		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
-	}
+	//if (id == "Star")
+	//{
+	//	mIndex = 1;
+	//	mName = "Stjärna";
+	//	mSprite.setPosition(mPosition);
+	//	mSprite.setTexture(*handler.getTexture("Item2.png")); //Add correct texture
+	//}
 
-	if (id == "Block")
-	{
-		mIndex = 2;
-		mName = "Kloss";
-		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
-	}
+	//if (id == "Block")
+	//{
+	//	mIndex = 2;
+	//	mName = "Kloss";
+	//	mSprite.setPosition(mPosition);
+	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	//}
 
-	if (id == "String")
-	{
-		mIndex = 3;
-		mName = "Tråd";
-		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
-	}
+	//if (id == "String")
+	//{
+	//	mIndex = 3;
+	//	mName = "Tråd";
+	//	mSprite.setPosition(mPosition);
+	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	//}
 
 	if (id == "Magnet")
 	{
 		mIndex = 4;
 		mName = "Magnet";
 		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("test_1.jpg")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Item2.png")); //Add correct texture
 	}
 
-	if (id == "Astronaut")
-	{
-		mIndex = 5;
-		mName = "Astronaut";
-		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
-	}
+	//if (id == "Astronaut")
+	//{
+	//	mIndex = 5;
+	//	mName = "Astronaut";
+	//	mSprite.setPosition(mPosition);
+	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	//}
 }
 
 Item::~Item()

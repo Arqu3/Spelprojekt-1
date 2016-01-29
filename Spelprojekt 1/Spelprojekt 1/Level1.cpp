@@ -5,19 +5,26 @@ mRects(),
 mPlayRects(),
 mIsActive(false)
 {
+	//Background texture
 	background.setSize(sf::Vector2f(1024, 576));
-	background.setTexture(handler.getTexture("Test3.png"));
-	backgroundfishtank.setSize(sf::Vector2f(1024, 576));
-	backgroundfishtank.setTexture(handler.getTexture("test_2.png"));
-	//backgroundMusic = *handler.getMusic(0);
-	//ambientSound.setBuffer(*handler.getSound(0));
+	background.setTexture(handler.getTexture("Background.png"));
 
+	//Zoom texture
+	backgroundfishtank.setSize(sf::Vector2f(1024, 576));
+	backgroundfishtank.setTexture(handler.getTexture("Background_Zoom.png"));
+
+	//Sound/music
+	music.openFromFile("Level1Music.ogg");
+
+	//Help rectangles
 	rectangle.setPosition(sf::Vector2f(140, 480));
 	rectangle.setSize(sf::Vector2f(400, 30));
 
+	//Playground rectangles
 	mPlayRects.push_back(createRect(110, 360, 660, 200));
 	mRects.push_back(createRect(440, 150, 210, 70));
 
+	//Items
 	mMagnet = new Item(handler, sf::Vector2f(100, 100), sf::FloatRect(100, 100, 100, 100), "Magnet");
 	mMagnet->toggleActive();
 	mScrewdevice = new Item(handler, sf::Vector2f(300, 300), sf::FloatRect(300, 300, 100, 100), "Screwdevice");
@@ -61,8 +68,7 @@ void Level1::removeItem(Item* item)
 
 void Level1::playBackgroundMusic()
 {
-	backgroundMusic.setPitch(0.5);
-	backgroundMusic.play();
+	music.play();
 }
 
 void Level1::playAmbience()
@@ -70,18 +76,32 @@ void Level1::playAmbience()
 	ambientSound.play();
 }
 
-void Level1::draw(sf::RenderWindow &window)
+void Level1::drawBackground(sf::RenderWindow &window)
 {
 	if (mActiveScene == 0)
 	{
 		window.draw(background);
+		//window.draw(playground);
 	}
 	else
 	{
 		window.draw(backgroundfishtank);
+		//window.draw(playgroundfishtank);
 	}
 	drawItems(mItems, window);
 	//window.draw(rectangle);
+}
+
+void Level1::drawForeground(sf::RenderWindow &window)
+{
+	if (mActiveScene == 0)
+	{
+		//window.draw(foreground);
+	}
+	else
+	{
+		//window.draw(foregroundfishtank);
+	}
 }
 
 void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
@@ -89,7 +109,9 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		if (mItems[i]->getActive())
+		{
 			mItems[i]->draw(window);
+		}
 	}
 }
 
@@ -135,6 +157,10 @@ void Level1::internalSwap(int num)
 		if (mMagnet->getActive())
 		{
 			mItems.push_back(mMagnet);
+		}
+		if (mScrewdevice->getActive())
+		{
+			mItems.push_back(mScrewdevice);
 		}
 	}
 	else

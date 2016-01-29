@@ -24,7 +24,6 @@ private:
 
 	//Sound
 	sf::Music music;
-	sf::Sound sound;
 
 };
 

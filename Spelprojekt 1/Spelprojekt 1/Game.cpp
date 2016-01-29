@@ -7,8 +7,7 @@ mRHandler(),
 mLHandler(mRHandler),
 mEventHandler(mLHandler)
 {
-	sound.setBuffer(*mRHandler.getSound("Test_Music.ogg"));
-	music.openFromFile(mRHandler.getMusic("Test_3.ogg"));
+	music.openFromFile(mRHandler.getMusic("Level1Music.ogg"));
 }
 
 Game::~Game()
@@ -19,13 +18,8 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
-	//float dur = music.getDuration().asSeconds();
-	//cout << "Music duration as seconds: " << dur << endl;
-
+	music.setLoop(true);
 	music.play();
-	//sound.play();
-
-	//cout << sound.getStatus() << endl;
 
 	while (window.isOpen())
 	{

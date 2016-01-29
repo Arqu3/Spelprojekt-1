@@ -19,7 +19,8 @@ public:
 	void playAmbience();
 
 	//Draw
-	void draw(sf::RenderWindow &window);
+	void drawBackground(sf::RenderWindow &window);
+	void drawForeground(sf::RenderWindow &window);
 	void drawItems(ItemVector items, sf::RenderWindow &window);
 
 	//Rectangles
@@ -46,7 +47,7 @@ private:
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
 
 	//Sound
-	sf::Music backgroundMusic;
+	sf::Music music;
 	sf::Sound ambientSound;
 
 	//Scene

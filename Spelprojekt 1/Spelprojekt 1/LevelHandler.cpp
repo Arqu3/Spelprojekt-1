@@ -32,11 +32,11 @@ void LevelHandler::draw(sf::RenderWindow &window)
 		//Only draw active level
 		if (mLevels[i]->isActive())
 		{
-			mLevels[i]->draw(window);
+			mLevels[i]->drawBackground(window);
+			mPlayer->draw(window);
+			mLevels[i]->drawForeground(window);
 		}
 	}
-
-	mPlayer->draw(window);
 }
 
 void LevelHandler::setActiveLevel(int index)
