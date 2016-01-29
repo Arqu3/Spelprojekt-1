@@ -10,11 +10,46 @@ mIsInteractable(false),
 mIsPickupable(false)
 {
 	//Create items here
-	if (id == "")
+	if (id == "Skruvmakapär")
 	{
 		mIndex = 0;
-		mName = "";
-		mSprite.setTexture(*handler.getTexture(0));
+		mName = "Skruvmakapär";
+		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	}
+
+	if (id == "Stjärna")
+	{
+		mIndex = 1;
+		mName = "Stjärna";
+		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	}
+
+	if (id == "Kloss")
+	{
+		mIndex = 2;
+		mName = "Kloss";
+		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	}
+
+	if (id == "Tråd")
+	{
+		mIndex = 3;
+		mName = "Tråd";
+		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	}
+
+	if (id == "Magnet")
+	{
+		mIndex = 4;
+		mName = "Magnet";
+		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+	}
+
+	if (id == "Astronaut")
+	{
+		mIndex = 5;
+		mName = "Astronaut";
+		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	}
 }
 
