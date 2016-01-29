@@ -9,7 +9,8 @@ public:
 	Crafting();
 	~Crafting();
 
-	void combineItems(Item *item, Item *item2);
+	//Function to combine items
+	void combineItems(Item *item, Item *item2, Item *result);
 private:
 	Inventory *mInventory;
 };

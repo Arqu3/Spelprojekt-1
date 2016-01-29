@@ -8,14 +8,16 @@ mItemVector()
 
 Inventory::~Inventory()
 {
-
+	mItemVector.clear();
 }
 
+//Adds an item to the inventory
 void Inventory::addItem(Item *item)
 {
 	mItemVector.push_back(item);
 }
 
+//Removes an item from the inventory
 void Inventory::removeItem(Item *item)
 {
 	if (mItemVector.size() > 1)
@@ -24,6 +26,8 @@ void Inventory::removeItem(Item *item)
 		{
 			if (item->getId() == mItemVector[i]->getId())
 			{
+				/*Swaps the chosen element and the last element in the vector
+				and removes the new last element*/ 
 				std::swap(mItemVector[i], mItemVector.back());
 				mItemVector.pop_back();
 				break;
@@ -32,16 +36,22 @@ void Inventory::removeItem(Item *item)
 	}
 }
 
+//Function to get the id of an item in the index list
 std::string Inventory::getItemId(int index)
 {
 	return mItemVector[index]->getId();
 }
 
+//Function to draw the inventory
 void Inventory::drawInventory(sf::RenderWindow &window)
 {
-
+	for (ItemVector::size_type i = 0; i < mItemVector.size(); i++)
+	{
+		mItemVector[i]->draw(window);
+	}
 }
 
+//Sorting function, to sort items in the vector
 void Inventory::sort()
 {
 	if (mItemVector.size() > 1)
