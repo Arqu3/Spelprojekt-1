@@ -19,10 +19,12 @@ mIsActive(false)
 	mRects.push_back(createRect(440, 150, 210, 70));
 
 	mMagnet = new Item(handler, sf::Vector2f(100, 100), sf::FloatRect(100, 100, 100, 100), "Magnet");
-	mSkruvmakapär = new Item(handler, sf::Vector2f(300, 300), sf::FloatRect(300, 300, 100, 100), "Skruvmakapär");
+	mMagnet->toggleActive();
+	mScrewdevice = new Item(handler, sf::Vector2f(300, 300), sf::FloatRect(300, 300, 100, 100), "Screwdevice");
+	mScrewdevice->toggleActive();
 
 	addItem(mMagnet);
-	addItem(mSkruvmakapär);
+	addItem(mScrewdevice);
 }
 
 Level1::~Level1()
@@ -79,14 +81,15 @@ void Level1::draw(sf::RenderWindow &window)
 		window.draw(backgroundfishtank);
 	}
 	drawItems(mItems, window);
-	window.draw(rectangle);
+	//window.draw(rectangle);
 }
 
 void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		mItems[i]->draw(window);
+		if (mItems[i]->getActive())
+			mItems[i]->draw(window);
 	}
 }
 
@@ -129,7 +132,10 @@ void Level1::internalSwap(int num)
 		mActiveScene = 0;
 		mPlayRects.push_back(createRect(110, 360, 660, 200));
 		mRects.push_back(createRect(440, 150, 210, 70));
-		mItems.push_back(mMagnet);
+		if (mMagnet->getActive())
+		{
+			mItems.push_back(mMagnet);
+		}
 	}
 	else
 	{
@@ -155,7 +161,7 @@ Level1::rectVector Level1::getRects()
 	return mRects;
 }
 
-sf::FloatRect* Level1::createRect(int positionX, int positionY, int sizeX, int sizeY)
+sf::FloatRect* Level1::createRect(float positionX, float positionY, float sizeX, float sizeY)
 {
 	sf::FloatRect* floatRect = new sf::FloatRect(positionX, positionY, sizeX, sizeY);
 	return floatRect;

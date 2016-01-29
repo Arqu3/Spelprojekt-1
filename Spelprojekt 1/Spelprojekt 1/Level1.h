@@ -43,7 +43,7 @@ private:
 	sf::RectangleShape background;
 	sf::RectangleShape backgroundfishtank;
 	sf::RectangleShape rectangle;
-	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
+	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
 
 	//Sound
 	sf::Music backgroundMusic;
@@ -55,10 +55,10 @@ private:
 
 	//Items
 	ItemVector mItems;
-	Item* mSkruvmakapär;
-	Item* mStjärna;
-	Item* mKloss;
-	Item* mTråd;
+	Item* mScrewdevice;
+	Item* mStar;
+	Item* mBlock;
+	Item* mString;
 	Item* mMagnet;
 	Item* mAstronaut;
 };

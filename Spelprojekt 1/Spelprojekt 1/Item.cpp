@@ -10,7 +10,7 @@ mIsInteractable(false),
 mIsPickupable(false)
 {
 	//Create items here
-	if (id == "Skruvmakapär")
+	if (id == "Screwdevice")
 	{
 		mIndex = 0;
 		mName = "Skruvmakapär";
@@ -18,7 +18,7 @@ mIsPickupable(false)
 		mSprite.setTexture(*handler.getTexture("test_1.jpg")); //Add correct texture
 	}
 
-	if (id == "Stjärna")
+	if (id == "Star")
 	{
 		mIndex = 1;
 		mName = "Stjärna";
@@ -26,7 +26,7 @@ mIsPickupable(false)
 		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	}
 
-	if (id == "Kloss")
+	if (id == "Block")
 	{
 		mIndex = 2;
 		mName = "Kloss";
@@ -34,7 +34,7 @@ mIsPickupable(false)
 		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	}
 
-	if (id == "Tråd")
+	if (id == "String")
 	{
 		mIndex = 3;
 		mName = "Tråd";
@@ -68,13 +68,15 @@ Item::~Item()
 void Item::toggleActive()
 {
 	//Short if-statement. Toggles between true and false
-	mIsActive ? !mIsActive : mIsActive;
+	//mIsActive ? !mIsActive : mIsActive;
+	mIsActive = !mIsActive;
 }
 
 void Item::toggleLookable()
 {
 	//Short if-statement. Toggles between true and false
-	mIsLookable ? !mIsLookable : mIsLookable;
+	//mIsLookable ? !mIsLookable : mIsLookable;
+	mIsLookable = !mIsLookable;
 }
 
 void Item::toggleInteractable()
