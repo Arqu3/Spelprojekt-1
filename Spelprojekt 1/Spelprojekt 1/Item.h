@@ -20,6 +20,9 @@ public:
 
 	int getIndex();
 	void setIndex(int value);
+
+	//Draw
+	void draw(sf::RenderWindow &window);
 	
 	//Get functions to check flags
 	bool getActive();

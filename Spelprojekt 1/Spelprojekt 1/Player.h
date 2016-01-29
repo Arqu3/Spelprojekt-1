@@ -15,6 +15,7 @@ public:
 	sf::FloatRect getRect();
 	sf::Vector2f getPosition();
 	void setPosition(float x, float y);
+	void moveToPosition(float x, float y);
 
 private:
 	void move(float deltaTime);
@@ -26,6 +27,7 @@ private:
 
 	bool isOnPosition;
 	sf::FloatRect mRect;
+	sf::FloatRect mMoveToRect;
 	void waitForClick(sf::RenderWindow &window);
 	
 };

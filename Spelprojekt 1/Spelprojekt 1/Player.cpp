@@ -20,9 +20,9 @@ Player::~Player()
 
 void Player::move(float deltaTime)
 {
-	sf::FloatRect moveToRect(moveTo.x, moveTo.y, 2, 2);
+	mMoveToRect = sf::FloatRect(moveTo.x, moveTo.y, 2, 2);
 
-	if (mRect.intersects(moveToRect))
+	if (mRect.intersects(mMoveToRect))
 	{
 		isOnPosition = true;
 	}
@@ -42,8 +42,13 @@ void Player::move(float deltaTime)
 
 }
 
-
 void Player::setPosition(float x, float y)
+{
+	mPosition = sf::Vector2f(x, y);
+	mDirection = sf::Vector2f(0, 0);
+}
+
+void Player::moveToPosition(float x, float y)
 {
 	//Creates a unit-direction vector that the player follows
 	moveTo = sf::Vector2f(x, y);

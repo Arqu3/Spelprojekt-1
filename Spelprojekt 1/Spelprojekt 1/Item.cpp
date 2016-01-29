@@ -14,13 +14,15 @@ mIsPickupable(false)
 	{
 		mIndex = 0;
 		mName = "Skruvmakapär";
-		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+		mSprite.setPosition(mPosition);
+		mSprite.setTexture(*handler.getTexture("test_1.jpg")); //Add correct texture
 	}
 
 	if (id == "Stjärna")
 	{
 		mIndex = 1;
 		mName = "Stjärna";
+		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	}
 
@@ -28,6 +30,7 @@ mIsPickupable(false)
 	{
 		mIndex = 2;
 		mName = "Kloss";
+		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	}
 
@@ -35,6 +38,7 @@ mIsPickupable(false)
 	{
 		mIndex = 3;
 		mName = "Tråd";
+		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	}
 
@@ -42,13 +46,15 @@ mIsPickupable(false)
 	{
 		mIndex = 4;
 		mName = "Magnet";
-		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
+		mSprite.setPosition(mPosition);
+		mSprite.setTexture(*handler.getTexture("test_1.jpg")); //Add correct texture
 	}
 
 	if (id == "Astronaut")
 	{
 		mIndex = 5;
 		mName = "Astronaut";
+		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	}
 }
@@ -96,6 +102,11 @@ int Item::getIndex()
 void Item::setIndex(int value)
 {
 	mIndex = value;
+}
+
+void Item::draw(sf::RenderWindow &window)
+{
+	window.draw(mSprite);
 }
 
 //Get functions of flags (bools)

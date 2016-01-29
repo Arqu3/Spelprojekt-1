@@ -20,6 +20,7 @@ public:
 
 	//Draw
 	void draw(sf::RenderWindow &window);
+	void drawItems(ItemVector items, sf::RenderWindow &window);
 
 	//Rectangles
 	rectVector getRects();
@@ -35,9 +36,6 @@ public:
 	void toggleActive();
 	bool isActive();
 private:
-
-	//Items
-	ItemVector mItems;
 	
 	//Rectangles
 	rectVector mRects;
@@ -54,5 +52,14 @@ private:
 	//Scene
 	bool mIsActive;
 	int mActiveScene;
+
+	//Items
+	ItemVector mItems;
+	Item* mSkruvmakapär;
+	Item* mStjärna;
+	Item* mKloss;
+	Item* mTråd;
+	Item* mMagnet;
+	Item* mAstronaut;
 };
 #endif

@@ -14,21 +14,26 @@ mIsActive(false)
 
 	rectangle.setPosition(sf::Vector2f(140, 480));
 	rectangle.setSize(sf::Vector2f(400, 30));
-	//sf::FloatRect* test = new sf::FloatRect(110, 360, 660, 200);
-	//sf::FloatRect* testSceneChange = new sf::FloatRect(440, 150, 210, 70);
 
 	mPlayRects.push_back(createRect(110, 360, 660, 200));
 	mRects.push_back(createRect(440, 150, 210, 70));
 
-	Item* test = new Item(handler, sf::Vector2f(100, 100), sf::FloatRect(100, 100, 100, 100), "skruvmakapar");
+	mMagnet = new Item(handler, sf::Vector2f(100, 100), sf::FloatRect(100, 100, 100, 100), "Magnet");
+	mSkruvmakapär = new Item(handler, sf::Vector2f(300, 300), sf::FloatRect(300, 300, 100, 100), "Skruvmakapär");
 
-	addItem(test);
+	addItem(mMagnet);
+	addItem(mSkruvmakapär);
 }
 
 Level1::~Level1()
 {
 	mRects.clear();
 	mPlayRects.clear();
+}
+
+Level1::ItemVector Level1::getItems()
+{
+	return mItems;
 }
 
 void Level1::addItem(Item* item)
@@ -73,7 +78,16 @@ void Level1::draw(sf::RenderWindow &window)
 	{
 		window.draw(backgroundfishtank);
 	}
+	drawItems(mItems, window);
 	window.draw(rectangle);
+}
+
+void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
+{
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		mItems[i]->draw(window);
+	}
 }
 
 void Level1::addRect(sf::FloatRect* rect)
@@ -105,16 +119,20 @@ void Level1::clearScene()
 {
 	mRects.clear();
 	mPlayRects.clear();
+	mItems.clear();
 }
 
 void Level1::internalSwap(int num)
 {
-	if (num == 0){
+	if (num == 0)
+	{
 		mActiveScene = 0;
 		mPlayRects.push_back(createRect(110, 360, 660, 200));
 		mRects.push_back(createRect(440, 150, 210, 70));
+		mItems.push_back(mMagnet);
 	}
-	else{
+	else
+	{
 		mActiveScene = 1;
 		mPlayRects.push_back(createRect(140, 480, 400, 30));
 		mRects.push_back(createRect(440, 150, 210, 70));

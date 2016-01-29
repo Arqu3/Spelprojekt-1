@@ -9,9 +9,9 @@ class Level
 public:
 	//Items
 	typedef std::vector<Item*> ItemVector;
-	ItemVector getItems();
-	void addItem(Item* item);
-	void removeItem(Item* item);
+	virtual ItemVector getItems() = 0;
+	virtual void addItem(Item* item) = 0;
+	virtual void removeItem(Item* item) = 0;
 
 	//Rectangle for levels
 	typedef std::vector<sf::FloatRect*> rectVector;

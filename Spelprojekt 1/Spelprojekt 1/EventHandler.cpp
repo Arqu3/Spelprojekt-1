@@ -56,15 +56,21 @@ void EventHandler::mouseClick(sf::Event &event)
 	//Check if playrect collision
 	if (checkCollision(mLHandler->getActiveLevel()->getPlayRects(), point))
 	{
-		mLHandler->getPlayer()->setPosition(point.x, point.y);
+		mLHandler->getPlayer()->moveToPosition(point.x, point.y);
 	}
 
+	//TODO - Only if active level is 1
 	if (checkCollision(mLHandler->getActiveLevel()->getRects(), point))
 	{
 		if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+		{
+			mLHandler->getPlayer()->setPosition(150, 480);
 			mLHandler->getActiveLevel()->changeScene(1);
-		else 
+		}
+		else
+		{
 			mLHandler->getActiveLevel()->changeScene(0);
+		}
 	}
 }
 
