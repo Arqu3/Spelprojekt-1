@@ -19,12 +19,37 @@ mIsActive(false)
 
 	mPlayRects.push_back(createRect(110, 360, 660, 200));
 	mRects.push_back(createRect(440, 150, 210, 70));
+
+	Item* test = new Item(handler, sf::Vector2f(100, 100), sf::FloatRect(100, 100, 100, 100), "skruvmakapar");
+
+	addItem(test);
 }
 
 Level1::~Level1()
 {
 	mRects.clear();
 	mPlayRects.clear();
+}
+
+void Level1::addItem(Item* item)
+{
+	mItems.push_back(item);
+}
+
+void Level1::removeItem(Item* item)
+{
+	if (mItems.size() > 1)
+	{
+		for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+		{
+			if (item->getId() == mItems[i]->getId())
+			{
+				std::swap(mItems[i], mItems.back());
+				mItems.pop_back();
+				break;
+			}
+		}
+	}
 }
 
 void Level1::playBackgroundMusic()

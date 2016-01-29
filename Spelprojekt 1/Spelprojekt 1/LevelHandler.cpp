@@ -39,6 +39,14 @@ void LevelHandler::draw(sf::RenderWindow &window)
 	mPlayer->draw(window);
 }
 
+void LevelHandler::drawItems(ItemVector items, )
+{
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		mItems[i]
+	}
+}
+
 void LevelHandler::setActiveLevel(int index)
 {
 	assert(index >= 0);
@@ -51,10 +59,10 @@ void LevelHandler::setActiveLevel(int index)
 	mLevels[index]->toggleActive();
 }
 
-//LevelHandler::ItemVector LevelHandler::getActiveItems()
-//{
-//
-//}
+LevelHandler::ItemVector LevelHandler::getActiveItems()
+{
+	return getActiveLevel()->getItems();
+}
 
 Level* LevelHandler::getActiveLevel()
 {

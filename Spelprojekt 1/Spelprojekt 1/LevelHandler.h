@@ -21,6 +21,7 @@ public:
 
 	//Draw
 	void draw(sf::RenderWindow &window);
+	void drawItems(ItemVector);
 
 	void setActiveLevel(int num);
 

@@ -9,6 +9,11 @@ public:
 	Level1(ResourceHandler &handler);
 	~Level1();
 
+	//Items
+	ItemVector getItems();
+	void addItem(Item* item);
+	void removeItem(Item* item);
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();
@@ -30,6 +35,9 @@ public:
 	void toggleActive();
 	bool isActive();
 private:
+
+	//Items
+	ItemVector mItems;
 	
 	//Rectangles
 	rectVector mRects;

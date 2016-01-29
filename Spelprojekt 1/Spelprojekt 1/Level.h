@@ -2,10 +2,17 @@
 #define INCLUDED_LEVEL
 
 #include "ResourceHandler.h"
+#include "Item.h"
 
 class Level
 {
 public:
+	//Items
+	typedef std::vector<Item*> ItemVector;
+	ItemVector getItems();
+	void addItem(Item* item);
+	void removeItem(Item* item);
+
 	//Rectangle for levels
 	typedef std::vector<sf::FloatRect*> rectVector;
 
