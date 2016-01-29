@@ -25,7 +25,7 @@ public:
 
 	//Rectangle functions
 	rectVector getRects();
-	void addRect(sf::FloatRect *rect);
+	//void addRect(sf::FloatRect *rect);
 	void removeRect(int index);
 	const rectVector getPlayRects();
 
