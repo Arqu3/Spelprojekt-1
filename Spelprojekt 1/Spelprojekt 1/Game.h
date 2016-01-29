@@ -23,9 +23,8 @@ private:
 	sf::Clock deltaClock;
 
 	//Sound
-	sf::SoundBuffer test1;
 	sf::Music music;
-	sf::Sound test;
+	sf::Sound sound;
 
 };
 

@@ -7,7 +7,6 @@ mTextures(),
 mTextureNames(),
 mSounds(),
 mSoundNames(),
-mMusic(),
 mMusicNames(),
 textureCounter(0),
 soundCounter(0),
@@ -19,49 +18,30 @@ musicCounter(0)
 	addTexture("Test3.png");
 	addTexture("Thomas.png");
 
-	addSound("concept_2.wav");
+	addSound("Test_Music.wav");
+	addSound("Test_Music.ogg");
+
+	addMusic("Test_Music.wav");
+	addMusic("Test_Music.ogg");
+	addMusic("Test_3.ogg");
 
 	cout << "Number of textures loaded: " << mTextures.size() << endl;
 }
 
 ResourceHandler::~ResourceHandler()
 {
-	//Delete textures
-	while (!mTextures.empty())
-	{
-		delete mTextures.back();
-		mTextures.pop_back();
-	}
+	internalClear();
+}
 
-	//Delete sounds
-	while (!mSounds.empty())
-	{
-		delete mSounds.back();
-		mSounds.pop_back();
-	}
+void ResourceHandler::internalClear()
+{
+	mTextures.clear();
+	mTextureNames.clear();
 
-	//Delete music
-	while (!mMusic.empty())
-	{
-		delete mMusic.back();
-		mMusic.pop_back();
-	}
+	mSounds.clear();
+	mSoundNames.clear();
 
-	//Delete string vectors
-	while (!mTextureNames.empty())
-	{
-		mTextureNames.pop_back();
-	}
-
-	while (!mSoundNames.empty())
-	{
-		mSoundNames.pop_back();
-	}
-
-	while (!mMusicNames.empty())
-	{
-		mMusicNames.pop_back();
-	}
+	mMusicNames.clear();
 }
 
 //Adds a texture to the texture vector
@@ -90,17 +70,10 @@ void ResourceHandler::addSound(string fileName)
 	}
 }
 
-//Adds music to the musicvector
+//Adds music name to the name vector
 void ResourceHandler::addMusic(string fileName)
 {
-	mMusic.push_back(new sf::Music());
 	mMusicNames.push_back(fileName);
-	musicCounter++;
-
-	if (!mMusic[musicCounter - 1]->openFromFile("Resources/Music/" + fileName))
-	{
-		cout << "Could not open music at index: " << musicCounter - 1 << endl;
-	}
 }
 
 //Get texture at specific index
@@ -150,22 +123,22 @@ sf::SoundBuffer* ResourceHandler::getSound(string name)
 }
 
 //Get music at specific index
-sf::Music* ResourceHandler::getMusic(int index)
+string ResourceHandler::getMusic(int index)
 {
 	assert(index >= 0);
-	assert((unsigned int)index <= mMusic.size() - 1);
+	assert((unsigned int)index <= mMusicNames.size() - 1);
 
-	return mMusic[index];
+	return mMusicNames[index];
 }
 
 //Get music via name
-sf::Music* ResourceHandler::getMusic(string name)
+string ResourceHandler::getMusic(string name)
 {
 	for (StringVector::size_type i = 0; i < mMusicNames.size(); i++)
 	{
 		if (name == mMusicNames[i])
 		{
-			return mMusic[i];
+			return mMusicNames[i];
 			break;
 		}
 	}

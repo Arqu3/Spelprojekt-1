@@ -17,14 +17,17 @@ public:
 	//Get resources via index
 	sf::Texture* getTexture(int index);
 	sf::SoundBuffer* getSound(int index);
-	sf::Music* getMusic(int index);
+	std::string getMusic(int index);
 
 	//Get resources via name
 	sf::Texture* getTexture(std::string name);
 	sf::SoundBuffer* getSound(std::string name);
-	sf::Music* getMusic(std::string name);
+	std::string getMusic(std::string name);
 
 private:
+	//Clear
+	void internalClear();
+
 	//Add texture
 	void addTexture(std::string fileName);
 	int textureCounter;
@@ -50,8 +53,6 @@ private:
 	StringVector mSoundNames;
 
 	//Music variables
-	typedef std::vector<sf::Music*> MusicVector;
-	MusicVector mMusic;
 	StringVector mMusicNames;
 };
 
