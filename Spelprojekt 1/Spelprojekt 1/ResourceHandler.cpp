@@ -13,21 +13,19 @@ soundCounter(0),
 musicCounter(0)
 {
 	//Add resources in constructor
+	//Texture
 	addTexture("Item1.png");
 	addTexture("Item2.png");
 	addTexture("Background.png");
 	addTexture("Thomas.png");
 	addTexture("Background_Zoom.png");
 
-	addSound("Test_Music.wav");
-	addSound("Test_Music.ogg");
-
-	addMusic("Test_Music.wav");
-	addMusic("Test_Music.ogg");
-	addMusic("Test_3.ogg");
+	//Music
 	addMusic("Level1Music.ogg");
 
 	cout << "Number of textures loaded: " << mTextures.size() << endl;
+	cout << "Number of sounds loaded: " << mSounds.size() << endl;
+	cout << "Number of music files loaded: " << mMusicNames.size() << endl;
 }
 
 ResourceHandler::~ResourceHandler()
