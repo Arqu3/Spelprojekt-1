@@ -15,6 +15,7 @@ public:
 	void toggleLookable();
 	void toggleInteractable();
 	void togglePickupable();
+	void toggleIsLookedAt();
 
 	std::string getId();
 
@@ -33,6 +34,9 @@ public:
 	//Get Name
 	std::string getName();
 
+	//Get Description
+	std::string getDescription();
+
 	//Get bounding boxes
 	sf::FloatRect getRectangle();
 
@@ -44,11 +48,13 @@ private:
 	bool mIsLookable;
 	bool mIsInteractable;
 	bool mIsPickupable;
+	bool mIsLookedAt;
 
 	int mIndex;
 
 	std::string mId;
 	std::string mName;
+	std::string mDescription;
 
 	sf::FloatRect mRectangle;
 	sf::Vector2f mPosition;

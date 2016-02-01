@@ -7,13 +7,15 @@ mId(id),
 mIsActive(false),
 mIsLookable(false),
 mIsInteractable(false),
-mIsPickupable(false)
+mIsPickupable(false),
+mIsLookedAt(false)
 {
 	//Create items here
 	if (id == "Screwdevice")
 	{
 		mIndex = 0;
 		mName = "Skruvmakapär";
+		mDescription = "Testar Description!";
 		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("Item1.png")); //Add correct texture
 	}
@@ -22,6 +24,7 @@ mIsPickupable(false)
 	//{
 	//	mIndex = 1;
 	//	mName = "Stjärna";
+	//	mDescription = "";
 	//	mSprite.setPosition(mPosition);
 	//	mSprite.setTexture(*handler.getTexture("Item2.png")); //Add correct texture
 	//}
@@ -30,6 +33,7 @@ mIsPickupable(false)
 	//{
 	//	mIndex = 2;
 	//	mName = "Kloss";
+	//	mDescription = "";
 	//	mSprite.setPosition(mPosition);
 	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	//}
@@ -38,6 +42,7 @@ mIsPickupable(false)
 	//{
 	//	mIndex = 3;
 	//	mName = "Tråd";
+	//	mDescription = "";
 	//	mSprite.setPosition(mPosition);
 	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	//}
@@ -46,6 +51,7 @@ mIsPickupable(false)
 	{
 		mIndex = 4;
 		mName = "Magnet";
+		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("Item2.png")); //Add correct texture
 	}
@@ -54,6 +60,7 @@ mIsPickupable(false)
 	//{
 	//	mIndex = 5;
 	//	mName = "Astronaut";
+	//	mDescription = "Skruvar på saker";
 	//	mSprite.setPosition(mPosition);
 	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
 	//}
@@ -89,6 +96,12 @@ void Item::togglePickupable()
 {
 	//Short if-statement. Toggles between true and false
 	mIsPickupable ? !mIsPickupable : mIsPickupable;
+}
+
+void Item::toggleIsLookedAt()
+{
+	//Short if-statement. Toggle between true and false
+	mIsLookedAt ? !mIsLookedAt : mIsLookedAt;
 }
 
 std::string Item::getId()
@@ -136,6 +149,12 @@ bool Item::getPickupable()
 std::string Item::getName()
 {
 	return mName;
+}
+
+//Get Description
+std::string Item::getDescription()
+{
+	return mDescription;
 }
 
 //Get bounding boxes
