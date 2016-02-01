@@ -14,11 +14,15 @@ musicCounter(0)
 {
 	//Add resources in constructor
 	//Texture
+	addTexture("Thomas.png");
 	addTexture("Item1.png");
 	addTexture("Item2.png");
-	addTexture("Background.png");
-	addTexture("Thomas.png");
-	addTexture("Background_Zoom.png");
+	addTexture("thomasbg.png");
+	addTexture("thomaspg.png");
+	addTexture("thomasfg.png");
+	addTexture("thomaszoombg.png");
+	addTexture("thomaszoompg.png");
+	addTexture("thomaszoomfg.png");
 
 	//Music
 	addMusic("Level1Music.ogg");

@@ -42,7 +42,11 @@ private:
 	rectVector mRects;
 	rectVector mPlayRects;
 	sf::RectangleShape background;
-	sf::RectangleShape backgroundfishtank;
+	sf::RectangleShape playground;
+	sf::RectangleShape foreground;
+	sf::RectangleShape backgroundZoom;
+	sf::RectangleShape playgroundZoom;
+	sf::RectangleShape foregroundZoom;
 	sf::RectangleShape rectangle;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
 

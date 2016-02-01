@@ -5,13 +5,31 @@ mRects(),
 mPlayRects(),
 mIsActive(false)
 {
+	// Room Textures
 	//Background texture
 	background.setSize(sf::Vector2f(1024, 576));
-	background.setTexture(handler.getTexture("Background.png"));
+	background.setTexture(handler.getTexture("thomasbg.png"));
 
-	//Zoom texture
-	backgroundfishtank.setSize(sf::Vector2f(1024, 576));
-	backgroundfishtank.setTexture(handler.getTexture("Background_Zoom.png"));
+	//Playground texture
+	playground.setSize(sf::Vector2f(1024, 576));
+	playground.setTexture(handler.getTexture("thomaspg.png"));
+
+	//Foreground texture
+	foreground.setSize(sf::Vector2f(1024, 576));
+	foreground.setTexture(handler.getTexture("thomasfg.png"));
+
+	// Zoom Textures
+	//Background Zoom texture
+	backgroundZoom.setSize(sf::Vector2f(1024, 576));
+	backgroundZoom.setTexture(handler.getTexture("thomaszoombg.png"));
+
+	//Playground Zoom texture
+	playgroundZoom.setSize(sf::Vector2f(1024, 576));
+	playgroundZoom.setTexture(handler.getTexture("thomaszoompg.png"));
+
+	//Foreground Zoom texture
+	foregroundZoom.setSize(sf::Vector2f(1024, 576));
+	foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
 
 	//Sound/music
 	music.openFromFile("Level1Music.ogg");
@@ -81,12 +99,12 @@ void Level1::drawBackground(sf::RenderWindow &window)
 	if (mActiveScene == 0)
 	{
 		window.draw(background);
-		//window.draw(playground);
+		window.draw(playground);
 	}
 	else
 	{
-		window.draw(backgroundfishtank);
-		//window.draw(playgroundfishtank);
+		window.draw(backgroundZoom);
+		window.draw(playgroundZoom);
 	}
 	drawItems(mItems, window);
 	//window.draw(rectangle);
@@ -96,11 +114,11 @@ void Level1::drawForeground(sf::RenderWindow &window)
 {
 	if (mActiveScene == 0)
 	{
-		//window.draw(foreground);
+		window.draw(foreground);
 	}
 	else
 	{
-		//window.draw(foregroundfishtank);
+		window.draw(foregroundZoom);
 	}
 }
 
