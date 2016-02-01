@@ -1,6 +1,6 @@
 #include "DialogueSystem.h"
-#include <ctime>
 #include <iostream>
+#include <chrono>
 
 DialogueSystem::DialogueSystem()
 {
@@ -55,7 +55,10 @@ void DialogueSystem::displayRubicCubeDialogue()
 	std::string rubicThomas = "En Rubiks kub, man ska få alla färgerna på varsin sida.";
 	std::string rubicHilma2 = "Men vad är det för utmaning? Låter ju jättelätt!";
 
+	std::chrono::seconds(2);
 	std::cout << rubicHilma << std::endl;
+	std::chrono::seconds(2);
 	std::cout << rubicThomas << std::endl;
+	std::chrono::seconds(2);
 	std::cout << rubicHilma2 << std::endl;
 }
