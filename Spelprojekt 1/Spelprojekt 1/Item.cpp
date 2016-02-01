@@ -17,35 +17,38 @@ mIsLookedAt(false)
 		mName = "Skruvmakapär";
 		mDescription = "Testar Description!";
 		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("Item1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
 	}
 
-	//if (id == "Star")
-	//{
-	//	mIndex = 1;
-	//	mName = "Stjärna";
-	//	mDescription = "";
-	//	mSprite.setPosition(mPosition);
-	//	mSprite.setTexture(*handler.getTexture("Item2.png")); //Add correct texture
-	//}
+	if (id == "Star")
+	{
+		mIndex = 1;
+		mName = "Stjärna";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4, 0.4));
+		mSprite.setTexture(*handler.getTexture("thomasstar.png")); //Add correct texture
+	}
 
-	//if (id == "Block")
-	//{
-	//	mIndex = 2;
-	//	mName = "Kloss";
-	//	mDescription = "";
-	//	mSprite.setPosition(mPosition);
-	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
-	//}
+	if (id == "Block")
+	{
+		mIndex = 2;
+		mName = "Kloss";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setTexture(*handler.getTexture("thomasblock.png")); //Add correct texture
+	}
 
-	//if (id == "String")
-	//{
-	//	mIndex = 3;
-	//	mName = "Tråd";
-	//	mDescription = "";
-	//	mSprite.setPosition(mPosition);
-	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
-	//}
+	if (id == "String")
+	{
+		mIndex = 3;
+		mName = "Tråd";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4, 0.4));
+		mSprite.setTexture(*handler.getTexture("thomasstring.png")); //Add correct texture
+	}
 
 	if (id == "Magnet")
 	{
@@ -53,17 +56,39 @@ mIsLookedAt(false)
 		mName = "Magnet";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("Item2.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setTexture(*handler.getTexture("thomasmagnet.png")); //Add correct texture
 	}
 
-	//if (id == "Astronaut")
-	//{
-	//	mIndex = 5;
-	//	mName = "Astronaut";
-	//	mDescription = "Skruvar på saker";
-	//	mSprite.setPosition(mPosition);
-	//	mSprite.setTexture(*handler.getTexture("Test_2.png")); //Add correct texture
-	//}
+	if (id == "Astronaut")
+	{
+		mIndex = 5;
+		mName = "Astronaut";
+		mDescription = "Skruvar på saker";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4, 0.4));
+		mSprite.setTexture(*handler.getTexture("thomasastronaut.png")); //Add correct texture
+	}
+
+	if (id == "Bowl")
+	{
+		mIndex = 6;
+		mName = "Skål";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
+	}
+
+	if (id == "Cube")
+	{
+		mIndex = 7;
+		mName = "Kub";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setTexture(*handler.getTexture("thomascube.png")); //Add correct texture
+	}
 }
 
 Item::~Item()
@@ -74,34 +99,32 @@ Item::~Item()
 //Toggle functions for flags
 void Item::toggleActive()
 {
-	//Short if-statement. Toggles between true and false
-	//mIsActive ? !mIsActive : mIsActive;
+	//Toggles between true and false
 	mIsActive = !mIsActive;
 }
 
 void Item::toggleLookable()
 {
-	//Short if-statement. Toggles between true and false
-	//mIsLookable ? !mIsLookable : mIsLookable;
+	//Toggles between true and false
 	mIsLookable = !mIsLookable;
 }
 
 void Item::toggleInteractable()
 {
-	//Short if-statement. Toggles between true and false
-	mIsInteractable ? !mIsInteractable : mIsInteractable;
+	//Toggles between true and false
+	mIsInteractable = !mIsInteractable;
 }
 
 void Item::togglePickupable()
 {
-	//Short if-statement. Toggles between true and false
-	mIsPickupable ? !mIsPickupable : mIsPickupable;
+	//Toggles between true and false
+	mIsPickupable = !mIsPickupable;
 }
 
 void Item::toggleIsLookedAt()
 {
-	//Short if-statement. Toggle between true and false
-	mIsLookedAt ? !mIsLookedAt : mIsLookedAt;
+	//Toggle between true and false
+	mIsLookedAt = !mIsLookedAt;
 }
 
 std::string Item::getId()
@@ -143,6 +166,11 @@ bool Item::getInteractable()
 bool Item::getPickupable()
 {
 	return mIsPickupable;
+}
+
+bool Item::isLookedAt()
+{
+	return mIsLookedAt;
 }
 
 //Get name

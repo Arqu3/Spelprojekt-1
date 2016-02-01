@@ -13,13 +13,22 @@ soundCounter(0),
 musicCounter(0)
 {
 	//Add resources in constructor
-	//Texture
+	// Textures
+	//Thomas
 	addTexture("Thomas.png");
-	addTexture("Item1.png");
-	addTexture("Item2.png");
+	//Thomas rum items
+	addTexture("thomasstar.png");
+	addTexture("thomasblock.png");
+	addTexture("thomasstring.png");
+	addTexture("thomasmagnet.png");
+	addTexture("thomasastronaut.png");
+	addTexture("thomasbowl.png");
+	addTexture("thomascube.png");
+	//Thomas rum bakgrund
 	addTexture("thomasbg.png");
 	addTexture("thomaspg.png");
 	addTexture("thomasfg.png");
+	//Thomas zoom bakgrund
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");

@@ -30,6 +30,7 @@ public:
 	bool getLookable();
 	bool getInteractable();
 	bool getPickupable();
+	bool isLookedAt();
 
 	//Get Name
 	std::string getName();

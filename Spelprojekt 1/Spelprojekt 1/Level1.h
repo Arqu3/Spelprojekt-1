@@ -66,5 +66,7 @@ private:
 	Item* mString;
 	Item* mMagnet;
 	Item* mAstronaut;
+	Item* mBowl;
+	Item* mCube;
 };
 #endif

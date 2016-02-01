@@ -44,13 +44,40 @@ void EventHandler::mouseClick(sf::Event &event)
 	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
 	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
 
-	//sf::Vector2f point ((float) event.mouseButton.x, (float) event.mouseButton.y);
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
-	//Check collision
+	//Check collision with Player
 	if (checkCollision(mLHandler->getPlayer()->getRect(), point)) 
 	{
 		std::cout << "HIT!" << std::endl;
+	}
+
+	//Check Item collision
+	//Loop through all Items in active level
+	//Check if mouse collided with Item
+	//Check Id of that Item
+	//Check if Item is looked at, if not look at it and display dialogue
+	//If Item is looked at, check if it is pickupable and if so toggle Active and add to inventory
+	for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveLevel()->getItems().size(); i++)
+	{
+		if (checkCollision(mLHandler->getActiveLevel()->getItems()[i]->getRectangle(), point))
+		{
+			if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
+			{
+				if (!mLHandler->getActiveLevel()->getItems()[i]->isLookedAt())
+				{
+					mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
+					//TODO - Call DialogueSystem MagnetDialogue
+					std::cout << "Fin magnet";
+				}
+				else if (!mLHandler->getActiveLevel()->getItems()[i]->getPickupable())
+				{
+					mLHandler->getActiveLevel()->getItems()[i]->toggleActive(); //Change to not be a toggle?
+					//TODO - Add to inventory
+					std::cout << "Plockade upp magnet";
+				}
+			}
+		}
 	}
 
 	//Check if playrect collision

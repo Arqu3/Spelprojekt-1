@@ -35,21 +35,37 @@ mIsActive(false)
 	music.openFromFile("Level1Music.ogg");
 
 	//Help rectangles
-	rectangle.setPosition(sf::Vector2f(140, 480));
-	rectangle.setSize(sf::Vector2f(400, 30));
+	rectangle.setPosition(sf::Vector2f(475, 435));
+	rectangle.setSize(sf::Vector2f(50, 40));
 
 	//Playground rectangles
 	mPlayRects.push_back(createRect(110, 360, 660, 200));
 	mRects.push_back(createRect(440, 150, 210, 70));
 
-	//Items
-	mMagnet = new Item(handler, sf::Vector2f(100, 100), sf::FloatRect(100, 100, 100, 100), "Magnet");
+	//Items - Create and set as Active
+	mMagnet = new Item(handler, sf::Vector2f(325, 270), sf::FloatRect(325, 270, 60, 45), "Magnet");
 	mMagnet->toggleActive();
-	mScrewdevice = new Item(handler, sf::Vector2f(300, 300), sf::FloatRect(300, 300, 100, 100), "Screwdevice");
-	mScrewdevice->toggleActive();
+	mStar = new Item(handler, sf::Vector2f(475, 435), sf::FloatRect(475, 435, 50, 40), "Star");
+	mStar->toggleActive();
+	mAstronaut = new Item(handler, sf::Vector2f(570, 160), sf::FloatRect(570, 160, 50, 40), "Astronaut");
+	mAstronaut->toggleActive();
+	mBlock = new Item(handler, sf::Vector2f(570, 160), sf::FloatRect(570, 160, 50, 40), "Block");
+	mBlock->toggleActive();
+	mString = new Item(handler, sf::Vector2f(250, 370), sf::FloatRect(250, 370, 50, 40), "String");
+	mString->toggleActive();
+	mBowl = new Item(handler, sf::Vector2f(320, 158), sf::FloatRect(320, 158, 50, 40), "Bowl");
+	mBowl->toggleActive();
+	mCube = new Item(handler, sf::Vector2f(352, 222), sf::FloatRect(352, 222, 50, 40), "Cube");
+	mCube->toggleActive();
 
+	//Add to ItemVector
 	addItem(mMagnet);
-	addItem(mScrewdevice);
+	addItem(mStar);
+	addItem(mAstronaut);
+	addItem(mBlock);
+	addItem(mString);
+	addItem(mBowl);
+	addItem(mCube);
 }
 
 Level1::~Level1()
@@ -106,8 +122,8 @@ void Level1::drawBackground(sf::RenderWindow &window)
 		window.draw(backgroundZoom);
 		window.draw(playgroundZoom);
 	}
-	drawItems(mItems, window);
 	//window.draw(rectangle);
+	drawItems(mItems, window);
 }
 
 void Level1::drawForeground(sf::RenderWindow &window)
@@ -174,11 +190,31 @@ void Level1::internalSwap(int num)
 		mRects.push_back(createRect(440, 150, 210, 70));
 		if (mMagnet->getActive())
 		{
-			mItems.push_back(mMagnet);
+			addItem(mMagnet);
 		}
-		if (mScrewdevice->getActive())
+		if (mStar->getActive())
 		{
-			mItems.push_back(mScrewdevice);
+			addItem(mStar);
+		}
+		if (mAstronaut->getActive())
+		{
+			addItem(mAstronaut);
+		}
+		if (mBlock->getActive())
+		{
+			addItem(mBlock);
+		}
+		if (mString->getActive())
+		{
+			addItem(mString);
+		}
+		if (mBowl->getActive())
+		{
+			addItem(mBowl);
+		}
+		if (mCube->getActive())
+		{
+			addItem(mCube);
 		}
 	}
 	else

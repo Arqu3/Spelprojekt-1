@@ -7,8 +7,9 @@ mPosition(position),
 isOnPosition(true),
 moveTo(position)
 {
+	mSprite.setScale(sf::Vector2f(0.08, 0.08));
 	mSprite.setTexture(*handler.getTexture("Thomas.png"));
-	mSprite.setOrigin(100, 230);
+	mSprite.setOrigin(950, 3300);
 }
 
 
