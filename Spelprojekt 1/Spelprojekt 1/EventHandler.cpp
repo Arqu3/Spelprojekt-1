@@ -21,6 +21,16 @@ int EventHandler::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f 
 	return 0;
 }
 
+//Check collision with single rectangle
+int EventHandler::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point)
+{
+	if (boundingBox->contains(point))
+	{
+		return 1;
+	}
+	return 0;
+}
+
 //Check collision with multiple rectangles
 int EventHandler::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point)
 {
@@ -56,23 +66,30 @@ void EventHandler::mouseClick(sf::Event &event)
 	//Loop through all Items in active level
 	//Check if mouse collided with Item
 	//Check Id of that Item
-	//Check if Item is looked at, if not look at it and display dialogue
+	//Check if Item is looked at, if not, look at it and display dialogue
 	//If Item is looked at, check if it is pickupable and if so toggle Active and add to inventory
 	for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveLevel()->getItems().size(); i++)
 	{
 		if (checkCollision(mLHandler->getActiveLevel()->getItems()[i]->getRectangle(), point))
 		{
-			if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
+			if (!mLHandler->getActiveLevel()->getItems()[i]->isLookedAt())
 			{
-				if (!mLHandler->getActiveLevel()->getItems()[i]->isLookedAt())
+				mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
+				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Cube")
 				{
-					mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
-					//TODO - Call DialogueSystem MagnetDialogue
-					std::cout << "Fin magnet";
+					mDialogueSystem->displayRubicCubeDialogue();
 				}
-				else if (!mLHandler->getActiveLevel()->getItems()[i]->getPickupable())
+				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
 				{
-					mLHandler->getActiveLevel()->getItems()[i]->toggleActive(); //Change to not be a toggle?
+					//mDialogueSystem->displayMagnetDialogue();
+					std::cout << "Effin' magnets, how do they work!?";
+				}
+			}
+			else if (mLHandler->getActiveLevel()->getItems()[i]->getPickupable())
+			{
+				mLHandler->getActiveLevel()->getItems()[i]->toggleActive(); //Change to not be a toggle?
+				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
+				{
 					//TODO - Add to inventory
 					std::cout << "Plockade upp magnet";
 				}
@@ -86,17 +103,35 @@ void EventHandler::mouseClick(sf::Event &event)
 		mLHandler->getPlayer()->moveToPosition(point.x, point.y);
 	}
 
-	//TODO - Only if active level is 1
-	if (checkCollision(mLHandler->getActiveLevel()->getRects(), point))
+	//Separate for each level?
+	//Check Rect Collisions
+	for (Level::rectVector::size_type i = 0; i < mLHandler->getActiveLevel()->getRects().size(); i++)
 	{
-		if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+		if (checkCollision(mLHandler->getActiveLevel()->getRects()[i], point))
 		{
-			mLHandler->getPlayer()->setPosition(150, 480);
-			mLHandler->getActiveLevel()->changeScene(1);
-		}
-		else
-		{
-			mLHandler->getActiveLevel()->changeScene(0);
+			// i == 0 is the fishtankplace
+			if (i == 0)
+			{
+				if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+				{
+					mLHandler->getPlayer()->setPosition(150, 480);
+					mLHandler->getActiveLevel()->changeScene(1);
+				}
+				else
+				{
+					mLHandler->getActiveLevel()->changeScene(0);
+				}
+			}
+			// i == 1 is books in the bookcase
+			else if (i == 1)
+			{
+				//mDialogueSystem->displayBookDialogue();
+				std::cout << "Böcker!";
+			}
+			else if (i == 2)
+			{
+				std::cout << "Lampa!";
+			}
 		}
 	}
 }

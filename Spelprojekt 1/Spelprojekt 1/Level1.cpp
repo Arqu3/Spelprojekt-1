@@ -35,16 +35,22 @@ mIsActive(false)
 	music.openFromFile("Level1Music.ogg");
 
 	//Help rectangles
-	rectangle.setPosition(sf::Vector2f(475, 435));
-	rectangle.setSize(sf::Vector2f(50, 40));
+	rectangle.setPosition(sf::Vector2f(75, 165));
+	rectangle.setSize(sf::Vector2f(50, 100));
 
 	//Playground rectangles
 	mPlayRects.push_back(createRect(110, 360, 660, 200));
+	//Fishtank
 	mRects.push_back(createRect(440, 150, 210, 70));
+	//Books in bookcase
+	mRects.push_back(createRect(200, 50, 100, 200));
+	//Lamp
+	mRects.push_back(createRect(75, 165, 50, 100));
 
 	//Items - Create and set as Active
 	mMagnet = new Item(handler, sf::Vector2f(325, 270), sf::FloatRect(325, 270, 60, 45), "Magnet");
 	mMagnet->toggleActive();
+	mMagnet->togglePickupable();
 	mStar = new Item(handler, sf::Vector2f(475, 435), sf::FloatRect(475, 435, 50, 40), "Star");
 	mStar->toggleActive();
 	mAstronaut = new Item(handler, sf::Vector2f(570, 160), sf::FloatRect(570, 160, 50, 40), "Astronaut");
@@ -53,6 +59,7 @@ mIsActive(false)
 	mBlock->toggleActive();
 	mString = new Item(handler, sf::Vector2f(250, 370), sf::FloatRect(250, 370, 50, 40), "String");
 	mString->toggleActive();
+	mString->togglePickupable();
 	mBowl = new Item(handler, sf::Vector2f(320, 158), sf::FloatRect(320, 158, 50, 40), "Bowl");
 	mBowl->toggleActive();
 	mCube = new Item(handler, sf::Vector2f(352, 222), sf::FloatRect(352, 222, 50, 40), "Cube");
@@ -111,7 +118,7 @@ void Level1::playAmbience()
 }
 
 void Level1::drawBackground(sf::RenderWindow &window)
-{
+{	
 	if (mActiveScene == 0)
 	{
 		window.draw(background);
@@ -122,7 +129,7 @@ void Level1::drawBackground(sf::RenderWindow &window)
 		window.draw(backgroundZoom);
 		window.draw(playgroundZoom);
 	}
-	//window.draw(rectangle);
+	window.draw(rectangle);
 	drawItems(mItems, window);
 }
 
@@ -186,8 +193,13 @@ void Level1::internalSwap(int num)
 	if (num == 0)
 	{
 		mActiveScene = 0;
+		//Walkable area
 		mPlayRects.push_back(createRect(110, 360, 660, 200));
+		//Fishtank
 		mRects.push_back(createRect(440, 150, 210, 70));
+		//Books in bookcase
+		mRects.push_back(createRect(200, 50, 100, 200));
+		//Repopulate ItemVector with active items
 		if (mMagnet->getActive())
 		{
 			addItem(mMagnet);
@@ -220,7 +232,9 @@ void Level1::internalSwap(int num)
 	else
 	{
 		mActiveScene = 1;
+		//Walkable area
 		mPlayRects.push_back(createRect(140, 480, 400, 30));
+		//Back to room
 		mRects.push_back(createRect(440, 150, 210, 70));
 	}
 }

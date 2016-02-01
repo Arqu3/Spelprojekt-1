@@ -2,6 +2,7 @@
 #define EVENTHANDLER
 
 #include "LevelHandler.h"
+#include "DialogueSystem.h"
 #include "SFML\Window.hpp"
 #include "SFML\Graphics.hpp"
 
@@ -19,6 +20,9 @@ private:
 	//Check collision between a single rectangle and a point
 	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
 
+	//Check collision between a single rectangle and a point
+	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
+
 	//Check collision between a list of rectangles and a point
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
 
@@ -26,6 +30,7 @@ private:
 
 	//Member variables
 	LevelHandler *mLHandler;
+	DialogueSystem *mDialogueSystem;
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
 };
