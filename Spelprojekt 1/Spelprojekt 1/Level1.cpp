@@ -38,14 +38,15 @@ mIsActive(false)
 	rectangle.setPosition(sf::Vector2f(0, 0));
 	rectangle.setSize(sf::Vector2f(0, 0));
 
-	mScrewdevice = new Item(handler, sf::Vector2f(380, 400), sf::FloatRect(380, 400, 40, 40), "Screwdevice");
-	mMagnet = new Item(handler, sf::Vector2f(325, 270), sf::FloatRect(325, 270, 60, 45), "Magnet");
-	mStar = new Item(handler, sf::Vector2f(475, 435), sf::FloatRect(475, 435, 50, 40), "Star");
-	mAstronaut = new Item(handler, sf::Vector2f(570, 160), sf::FloatRect(570, 160, 50, 40), "Astronaut");
-	mBlock = new Item(handler, sf::Vector2f(570, 160), sf::FloatRect(570, 160, 50, 40), "Block");
-	mString = new Item(handler, sf::Vector2f(250, 370), sf::FloatRect(250, 370, 50, 40), "String");
-	mBowl = new Item(handler, sf::Vector2f(320, 158), sf::FloatRect(320, 158, 50, 40), "Bowl");
-	mCube = new Item(handler, sf::Vector2f(352, 222), sf::FloatRect(352, 222, 50, 40), "Cube");
+	//Create Items
+	mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
+	mMagnet = new Item(handler, sf::Vector2f(325, 270), "Magnet");
+	mStar = new Item(handler, sf::Vector2f(475, 435), "Star");
+	mAstronaut = new Item(handler, sf::Vector2f(560, 160), "Astronaut");
+	mBlock = new Item(handler, sf::Vector2f(570, 160), "Block");
+	mString = new Item(handler, sf::Vector2f(250, 370), "String");
+	mBowl = new Item(handler, sf::Vector2f(320, 158), "Bowl");
+	mCube = new Item(handler, sf::Vector2f(352, 222), "Cube");
 
 }
 
@@ -103,7 +104,7 @@ void Level1::drawBackground(sf::RenderWindow &window)
 		window.draw(backgroundZoom);
 		window.draw(playgroundZoom);
 	}
-	window.draw(rectangle);
+	window.draw(rectangle); // Help rectangle
 	drawItems(mItems, window);
 }
 
@@ -137,7 +138,7 @@ void Level1::addRect(sf::FloatRect* rect)
 
 void Level1::removeRect(int index)
 {
-	//std::swap(mRects[index], mRects.back());
+	//TODO - Should set Rect size to 0 and/or move it outside screen bounds
 }
 
 const Level::rectVector Level1::getPlayRects()
@@ -173,8 +174,6 @@ void Level1::toggleActive()
 
 		mStar->toggleActive();
 		mStar->toggleInteractable();
-
-		mAstronaut->toggleActive();
 
 		mBlock->toggleActive();
 
@@ -220,8 +219,9 @@ void Level1::internalSwap(int num)
 		mPlayRects.push_back(createRect(110, 360, 660, 200));
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
-		//Fishtank
+		//Fishtank, Zoom
 		mRects.push_back(createRect(440, 150, 210, 70));
+
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
 		//Lamp
@@ -275,6 +275,7 @@ void Level1::internalSwap(int num)
 		mRects.push_back(createRect(0, 30, 120, 470));
 
 		//mBlock toggle interactable only if not already moved
+		//isInteracted() in Item?
 
 		//Repopulate ItemVector with active items
 		if (mBlock->getActive())

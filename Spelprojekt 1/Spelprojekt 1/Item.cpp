@@ -1,8 +1,7 @@
 #include "Item.h"
 
-Item::Item(ResourceHandler &handler, sf::Vector2f &position, sf::FloatRect &rectangle, std::string id) :
+Item::Item(ResourceHandler &handler, sf::Vector2f &position, std::string id) :
 mPosition(position),
-mRectangle(rectangle),
 mId(id),
 mIsActive(false),
 mIsLookable(false),
@@ -96,7 +95,7 @@ mIsLookedAt(false)
 		mName = "Magisk Mussla";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
 	}
 
@@ -106,7 +105,7 @@ mIsLookedAt(false)
 		mName = "Nål";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
 	}
 
@@ -116,7 +115,7 @@ mIsLookedAt(false)
 		mName = "Jordglob";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
 	}
 
@@ -126,7 +125,7 @@ mIsLookedAt(false)
 		mName = "Fisk";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
 	}
 
@@ -136,7 +135,7 @@ mIsLookedAt(false)
 		mName = "Rockring";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
 	}
 
@@ -146,7 +145,7 @@ mIsLookedAt(false)
 		mName = "Beige Boll";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
 	}
 
@@ -156,7 +155,7 @@ mIsLookedAt(false)
 		mName = "Rött Äpple";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
 	}
 }
@@ -258,7 +257,6 @@ std::string Item::getDescription()
 //Get bounding boxes
 sf::FloatRect Item::getRectangle()
 {
-	//return mRectangle;
 	return mSprite.getGlobalBounds();
 }
 

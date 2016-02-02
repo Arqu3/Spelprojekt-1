@@ -16,6 +16,8 @@ musicCounter(0)
 	// Textures
 	//Thomas
 	addTexture("Thomas.png");
+	//Hilma
+	addTexture("Hilma.png");
 	//Thomas rum items
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");

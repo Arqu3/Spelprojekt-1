@@ -6,7 +6,10 @@ LevelHandler::LevelHandler(ResourceHandler &handler):
 mLevels(),
 mItems()
 {
-	mPlayer = new Player(handler, sf::Vector2f(400, 400));
+	mThomas = new Player(handler, sf::Vector2f(400, 400), "Thomas.png");
+	mHilma = new Player(handler, sf::Vector2f(400, 400), "Hilma.png");
+	activePlayer = "Hilma"; // THIS IS
+	togglePlayer();			// STUPID, FIX (note to self)
 
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
@@ -45,7 +48,8 @@ void LevelHandler::setActiveLevel(int index)
 {
 	assert(index >= 0);
 	//Toggles active level
-	//if (index > 0) // ADD THIS BACK LATER
+	//TODO - ADD THIS BACK LATER
+	//if (index > 0)
 	//{
 	//	//If level to be toggled is greater than 0, toggle last level to be inactive
 	//	mLevels[index - 1]->toggleActive();
@@ -80,4 +84,18 @@ Level* LevelHandler::getLevel(int index)
 Player* LevelHandler::getPlayer()
 {
 	return mPlayer;
+}
+
+void LevelHandler::togglePlayer()
+{
+	if (activePlayer == "Thomas")
+	{
+		activePlayer = "Hilma";
+		mPlayer = mHilma;
+	}
+	else
+	{
+		activePlayer = "Thomas";
+		mPlayer = mThomas;
+	}
 }

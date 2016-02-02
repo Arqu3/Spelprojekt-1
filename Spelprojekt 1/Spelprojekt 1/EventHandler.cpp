@@ -68,76 +68,77 @@ void EventHandler::mouseClick(sf::Event &event)
 	//Check Id of that Item
 	//Check if Item is looked at, if not, look at it and display dialogue
 	//If Item is looked at, check if it is pickupable and if so toggle Active and add to inventory
-	for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveLevel()->getItems().size(); i++)
+	for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveItems().size(); i++)
 	{
-		if (checkCollision(mLHandler->getActiveLevel()->getItems()[i]->getRectangle(), point))
+		if (checkCollision(mLHandler->getActiveItems()[i]->getRectangle(), point))
 		{
-			if (mLHandler->getActiveLevel()->getItems()[i]->getActive())
+			if (mLHandler->getActiveItems()[i]->getActive())
 			{
-				if (!mLHandler->getActiveLevel()->getItems()[i]->isLookedAt())
+				if (!mLHandler->getActiveItems()[i]->isLookedAt())
 				{
-					mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Cube")
+					mLHandler->getActiveItems()[i]->toggleIsLookedAt();
+					if (mLHandler->getActiveItems()[i]->getId() == "Cube")
 					{
 						mDialogueSystem->displayRubicCubeDialogue();
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
+					if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
 					{
 						//mDialogueSystem->displayMagnetDialogue();
 						std::cout << "Effin' magnets, how do they work!?";
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Bowl")
+					if (mLHandler->getActiveItems()[i]->getId() == "Bowl")
 					{
 						//mDialogueSystem->displayBowlDialogue();
 						std::cout << "Skål!";
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Block")
+					if (mLHandler->getActiveItems()[i]->getId() == "Block")
 					{
 						//mDialogueSystem->displayBlockDialogue();
 						std::cout << "En kloss framför akvariet, undrar om det finns en astronaut bakom?";
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Astronaut")
+					if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
 					{
 						//mDialogueSystem->displayAstronautDialogue();
 						std::cout << "Nämen titta, en astronaut.";
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "String")
+					if (mLHandler->getActiveItems()[i]->getId() == "String")
 					{
 						//mDialogueSystem->displayStringDialogue();
 						std::cout << "En tråd på golvet.";
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Star")
+					if (mLHandler->getActiveItems()[i]->getId() == "Star")
 					{
 						//mDialogueSystem->displayStarDialogue();
 						std::cout << "Stjärnklart!";
 					}
 				}
-				else if (mLHandler->getActiveLevel()->getItems()[i]->getPickupable())
+				else if (mLHandler->getActiveItems()[i]->getPickupable())
 				{
-					mLHandler->getActiveLevel()->getItems()[i]->toggleActive();
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
+					mLHandler->getActiveItems()[i]->toggleActive();
+					if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
 					{
 						//TODO - Add to inventory
+						mInventory->addItem(mLHandler->getActiveItems()[i]);
 						std::cout << "Plockade upp magnet";
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Tråd")
+					if (mLHandler->getActiveItems()[i]->getId() == "Tråd")
 					{
 						//TODO - Add to inventory
 						std::cout << "Plockade upp tråd";
 					}
 				}
-				else if (mLHandler->getActiveLevel()->getItems()[i]->getInteractable())
+				else if (mLHandler->getActiveItems()[i]->getInteractable())
 				{
-					mLHandler->getActiveLevel()->getItems()[i]->toggleInteractable();
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Block")
+					mLHandler->getActiveItems()[i]->toggleInteractable();
+					if (mLHandler->getActiveItems()[i]->getId() == "Block")
 					{
-						//TODO - toggleActive on Astronaut to make it active
+						//TODO - toggleActive() on Astronaut to make it active
 						//TODO - Move Block
 						std::cout << "Knuffade Klossen";
 					}
-					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Star")
+					if (mLHandler->getActiveItems()[i]->getId() == "Star")
 					{
-						//TODO - Move Star
+						mLHandler->getActiveItems()[i]->setPosition(900,190);
 						std::cout << "Satte stjärnan på väggen";
 					}
 				}
@@ -164,15 +165,15 @@ void EventHandler::mouseClick(sf::Event &event)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
 					{
-						//mLHandler->getPlayer()->moveToPosition(400, 370);
-						//if (mLHandler->getPlayer()->getIsOnPosition())
-						//{
-							mLHandler->getPlayer()->setPosition(150, 480);
-							mLHandler->getActiveLevel()->changeScene(1);
-						//}
+						//TODO - Make player walk to (400, 370) before
+						mLHandler->togglePlayer();
+						mLHandler->getPlayer()->setPosition(150, 480);
+						mLHandler->getActiveLevel()->changeScene(1);
 					}
 					else
 					{
+						//TODO - Make player walk to (150, 480) before
+						mLHandler->togglePlayer();
 						mLHandler->getPlayer()->setPosition(400, 370);
 						mLHandler->getActiveLevel()->changeScene(0);
 					}
@@ -210,6 +211,58 @@ void EventHandler::mouseClick(sf::Event &event)
 			}
 		}
 	}
+
+	/* Template for Rect check in other levels */
+	//else if (mLHandler->getActiveLevel() == mLHandler->getLevel(1))
+	//{
+	//	for (Level::rectVector::size_type i = 0; i < mLHandler->getActiveLevel()->getRects().size(); i++)
+	//	{
+	//		if (checkCollision(mLHandler->getActiveLevel()->getRects()[i], point))
+	//		{
+	//			// i == 0 is ____ if ActiveScene is 0, or ___ if ActiveScene is 1, etc.
+	//			if (i == 0)
+	//			{
+	//				if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+	//				{
+	//					//Do stuff here
+	//				}
+	//				else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+	//				{
+	//					//Do stuff here
+	//				}
+	//				else
+	//				{
+	//					//Do stuff here
+	//				}
+	//			}
+	//			// i == 1 is ____
+	//			else if (i == 1)
+	//			{
+	//				std::cout << "Insert stuff here";
+	//			}
+	//			// i == 2 is ____
+	//			else if (i == 2)
+	//			{
+	//				std::cout << "Insert stuff here";
+	//			}
+	//			// i == 3 is ____
+	//			else if (i == 3)
+	//			{
+	//				std::cout << "Insert stuff here";
+	//			}
+	//			// i == 4 is ____
+	//			else if (i == 4)
+	//			{
+	//				std::cout << "Insert stuff here";
+	//			}
+	//			// i == 5 is ____
+	//			else if (i == 5)
+	//			{
+	//				std::cout << "Insert stuff here";
+	//			}
+	//		}
+	//	}
+	//}
 }
 
 //Waits in background and listens for mouseclicks
@@ -236,7 +289,17 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape)
+			{
 				window.close();
+			}
+			/*if (event.key.code == sf::Keyboard::I)
+			{
+				std::cout << mInventory->getItemId(0);
+			}*/
+			if (event.key.code == sf::Keyboard::P)
+			{
+				mLHandler->togglePlayer();
+			}
 			break;
 
 		default:

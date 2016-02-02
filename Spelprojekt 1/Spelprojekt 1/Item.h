@@ -7,7 +7,7 @@
 class Item
 {
 public:
-	Item(ResourceHandler &handler, sf::Vector2f &position, sf::FloatRect &rectangle, std::string id);
+	Item(ResourceHandler &handler, sf::Vector2f &position, std::string id);
 	~Item();
  
 	//Toggle functions for flags
@@ -63,7 +63,6 @@ private:
 	std::string mName;
 	std::string mDescription;
 
-	sf::FloatRect mRectangle;
 	sf::Vector2f mPosition;
 	sf::Sprite mSprite;
 };

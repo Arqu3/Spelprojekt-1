@@ -7,7 +7,7 @@
 
 class Player{
 public:
-	Player(ResourceHandler &handler, sf::Vector2f &position); 
+	Player(ResourceHandler &handler, sf::Vector2f &position, std::string textureName); 
 	~Player();
 	
 	void update(float deltaTime);
