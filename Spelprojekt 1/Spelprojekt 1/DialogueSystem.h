@@ -24,10 +24,19 @@ public:
 	void autoSizeTalkBubble();
 	void setTalkBubblePosition(Player *player);
 
+	void update(float time);
+
+	void hasClicked();
+
 	//Dialogues (functions with strings)
 	void displayRubicCubeDialogue();
 private:
 	std::string mDialogue;
+	float mTime;
+	sf::Clock mClock;
+	bool mHasClicked;
+
+	float test;
 };
 
 #endif

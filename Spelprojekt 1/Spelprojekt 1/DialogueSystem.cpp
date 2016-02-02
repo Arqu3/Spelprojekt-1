@@ -2,7 +2,12 @@
 #include <iostream>
 #include "SFML\System.hpp"
 
-DialogueSystem::DialogueSystem()
+using namespace std;
+
+DialogueSystem::DialogueSystem():
+mHasClicked(false),
+mTime(0),
+test(0)
 {
 
 }
@@ -48,6 +53,26 @@ void DialogueSystem::setTalkBubblePosition(Player *player)
 	
 }
 
+//Update function
+void DialogueSystem::update(float time)
+{
+	if (mHasClicked == true)
+	{
+		mTime = mClock.getElapsedTime().asSeconds();
+	}
+	else
+	{
+		mTime = 0;
+	}
+
+	displayRubicCubeDialogue();
+}
+
+void DialogueSystem::hasClicked()
+{
+	mHasClicked = true;
+}
+
 //Dialogue functions
 void DialogueSystem::displayRubicCubeDialogue()
 {
@@ -55,12 +80,18 @@ void DialogueSystem::displayRubicCubeDialogue()
 	std::string rubicThomas = "En Rubiks kub, man ska få alla färgerna på varsin sida.";
 	std::string rubicHilma2 = "Men vad är det för utmaning? Låter ju jättelätt!";
 
-	sf::Clock clock;
+	if (mTime > 20)
+	{
+		mHasClicked = false;
+		mClock.restart();
+	}
 
-	sf::Time elapsed = clock.getElapsedTime();
-
-	std::cout << rubicHilma << elapsed.asSeconds() << std::endl;
-	clock.restart();
-	std::cout << rubicThomas << std::endl;
-	std::cout << rubicHilma2 << std::endl;
+	else if (mTime >= 1 && mTime <= 5)
+	{
+		std::cout << rubicHilma << std::endl;
+	}
+	else if (mTime > 5 && mTime <= 10)
+	{
+		std::cout << rubicThomas << std::endl;
+	}
 }

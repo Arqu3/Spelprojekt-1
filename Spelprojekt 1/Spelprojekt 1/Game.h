@@ -19,6 +19,8 @@ private:
 	LevelHandler mLHandler;
 	EventHandler mEventHandler;
 
+	DialogueSystem dSystem;
+
 	//Deltatime
 	sf::Clock deltaClock;
 

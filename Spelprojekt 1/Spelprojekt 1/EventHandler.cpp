@@ -4,6 +4,7 @@
 EventHandler::EventHandler(LevelHandler &lHandler):
 mLHandler(&lHandler)
 {
+	mDialogueSystem = new DialogueSystem();
 	mLHandler->setActiveLevel(0);
 }
 
@@ -74,10 +75,10 @@ void EventHandler::mouseClick(sf::Event &event)
 		{
 			if (!mLHandler->getActiveLevel()->getItems()[i]->isLookedAt())
 			{
-				mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
+				//mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
 				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Cube")
 				{
-					mDialogueSystem->displayRubicCubeDialogue();
+					mDialogueSystem->hasClicked();
 				}
 				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
 				{
