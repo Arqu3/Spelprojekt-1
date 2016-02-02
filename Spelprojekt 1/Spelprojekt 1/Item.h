@@ -44,6 +44,12 @@ public:
 	//Get position of item
 	sf::Vector2f getPosition();
 
+	//Set position of item
+	void setPosition(float x, float y);
+
+	//Set scale of item
+	void setScale(float x, float y);
+
 private:
 	bool mIsActive;
 	bool mIsLookable;

@@ -70,6 +70,11 @@ Level* LevelHandler::getActiveLevel()
 	return NULL;
 }
 
+Level* LevelHandler::getLevel(int index)
+{
+	return mLevels[index];
+}
+
 Player* LevelHandler::getPlayer()
 {
 	return mPlayer;

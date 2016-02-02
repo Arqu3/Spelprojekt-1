@@ -26,6 +26,7 @@ public:
 
 	ItemVector getActiveItems();
 	Level* getActiveLevel();
+	Level* getLevel(int index);
 
 	Player* getPlayer();
 
