@@ -10,9 +10,11 @@ mItems()
 
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
+	mLastLevel = new LastLevel(handler);
 
 	//Add levels to member list
 	mLevels.push_back(mLevel1);
+	mLevels.push_back(mLastLevel);
 }
 
 LevelHandler::~LevelHandler()

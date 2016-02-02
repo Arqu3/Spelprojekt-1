@@ -20,14 +20,16 @@ public:
 	void playAmbience();
 
 	//Draw
-	void draw(sf::RenderWindow &window);
 	void drawItems(ItemVector items, sf::RenderWindow &window);
+	void drawBackground(sf::RenderWindow &window);
+	void drawForeground(sf::RenderWindow &window);
 
 	//Rectangle functions
 	rectVector getRects();
-	//void addRect(sf::FloatRect *rect);
+	void addRect(sf::FloatRect *rect);
 	void removeRect(int index);
 	const rectVector getPlayRects();
+
 
 	//Scene funtions
 	void clearScene();
@@ -55,6 +57,14 @@ private:
 
 	//Items
 	ItemVector mItems;
+	Item* mMagicClam;
+	Item* mNeedle;
+	Item* mEarth;
+	Item* mFish;
+	Item* mHoolaHoop;
+	Item* mBeigeBall;
+	Item* mRedApple;
+
 
 	
 };
