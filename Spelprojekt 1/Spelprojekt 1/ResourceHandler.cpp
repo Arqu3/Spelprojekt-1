@@ -35,6 +35,7 @@ musicCounter(0)
 
 	//LastLevel
 	addTexture("LastLevel_BackgroundTest1.png");
+	addTexture("LastLevel_ItemTest1.png");
 	//Music
 	addMusic("Level1Music.ogg");
 

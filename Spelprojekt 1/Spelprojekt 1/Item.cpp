@@ -90,6 +90,8 @@ mIsLookedAt(false)
 		mSprite.setTexture(*handler.getTexture("thomascube.png")); //Add correct texture
 	}
 
+	//Last Level
+
 	if (id == "Magic Clam")
 	{
 		mIndex = 8;
@@ -97,7 +99,7 @@ mIsLookedAt(false)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3, 0.3));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Needle")
