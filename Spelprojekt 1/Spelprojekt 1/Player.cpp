@@ -9,7 +9,7 @@ moveTo(position)
 {
 	mSprite.setScale(sf::Vector2f(0.08, 0.08));
 	mSprite.setTexture(*handler.getTexture("Thomas.png"));
-	mSprite.setOrigin(950, 3300);
+	mSprite.setOrigin(1050, 3250);
 }
 
 
@@ -98,3 +98,7 @@ sf::Vector2f Player::getPosition()
 	return mPosition;
 }
 
+bool Player::getIsOnPosition()
+{
+	return isOnPosition;
+}

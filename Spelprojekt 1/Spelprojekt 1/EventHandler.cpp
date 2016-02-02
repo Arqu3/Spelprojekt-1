@@ -4,7 +4,7 @@
 EventHandler::EventHandler(LevelHandler &lHandler):
 mLHandler(&lHandler)
 {
-	mLHandler->setActiveLevel(1); //Change back!
+	mLHandler->setActiveLevel(0); //Change back!
 }
 
 EventHandler::~EventHandler()
@@ -135,6 +135,11 @@ void EventHandler::mouseClick(sf::Event &event)
 						//TODO - Move Block
 						std::cout << "Knuffade Klossen";
 					}
+					if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Star")
+					{
+						//TODO - Move Star
+						std::cout << "Satte stjärnan på väggen";
+					}
 				}
 			}
 		}
@@ -159,11 +164,16 @@ void EventHandler::mouseClick(sf::Event &event)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
 					{
-						mLHandler->getPlayer()->setPosition(150, 480);
-						mLHandler->getActiveLevel()->changeScene(1);
+						//mLHandler->getPlayer()->moveToPosition(400, 370);
+						//if (mLHandler->getPlayer()->getIsOnPosition())
+						//{
+							mLHandler->getPlayer()->setPosition(150, 480);
+							mLHandler->getActiveLevel()->changeScene(1);
+						//}
 					}
 					else
 					{
+						mLHandler->getPlayer()->setPosition(400, 370);
 						mLHandler->getActiveLevel()->changeScene(0);
 					}
 				}

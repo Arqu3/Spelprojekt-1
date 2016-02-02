@@ -35,53 +35,18 @@ mIsActive(false)
 	music.openFromFile("Level1Music.ogg");
 
 	//Help rectangles
-	rectangle.setPosition(sf::Vector2f(380, 400));
-	rectangle.setSize(sf::Vector2f(40, 40));
+	rectangle.setPosition(sf::Vector2f(0, 0));
+	rectangle.setSize(sf::Vector2f(0, 0));
 
-	//Playground rectangles
-	mPlayRects.push_back(createRect(110, 360, 660, 200));
-
-	//Fishtank, Zoom
-	mRects.push_back(createRect(440, 150, 125, 70));
-
-	//Books in bookcase
-	mRects.push_back(createRect(200, 50, 100, 200));
-	//Lamp
-	mRects.push_back(createRect(75, 165, 50, 100));
-	//Radio
-	mRects.push_back(createRect(10, 245, 50, 60));
-	//Posters
-	mRects.push_back(createRect(410, 20, 260, 120));
-	//Backpack
-	mRects.push_back(createRect(750, 420, 50, 70));
-
-	//Items - Create and set as Active
 	mScrewdevice = new Item(handler, sf::Vector2f(380, 400), sf::FloatRect(380, 400, 40, 40), "Screwdevice");
 	mMagnet = new Item(handler, sf::Vector2f(325, 270), sf::FloatRect(325, 270, 60, 45), "Magnet");
-	mMagnet->toggleActive();
-	mMagnet->togglePickupable();
 	mStar = new Item(handler, sf::Vector2f(475, 435), sf::FloatRect(475, 435, 50, 40), "Star");
-	mStar->toggleActive();
 	mAstronaut = new Item(handler, sf::Vector2f(570, 160), sf::FloatRect(570, 160, 50, 40), "Astronaut");
-	mAstronaut->toggleActive();
 	mBlock = new Item(handler, sf::Vector2f(570, 160), sf::FloatRect(570, 160, 50, 40), "Block");
-	mBlock->toggleActive();
 	mString = new Item(handler, sf::Vector2f(250, 370), sf::FloatRect(250, 370, 50, 40), "String");
-	mString->toggleActive();
-	mString->togglePickupable();
 	mBowl = new Item(handler, sf::Vector2f(320, 158), sf::FloatRect(320, 158, 50, 40), "Bowl");
-	mBowl->toggleActive();
 	mCube = new Item(handler, sf::Vector2f(352, 222), sf::FloatRect(352, 222, 50, 40), "Cube");
-	mCube->toggleActive();
 
-	//Add to ItemVector
-	addItem(mMagnet);
-	addItem(mStar);
-	addItem(mAstronaut);
-	addItem(mBlock);
-	addItem(mString);
-	addItem(mBowl);
-	addItem(mCube);
 }
 
 Level1::~Level1()
@@ -182,6 +147,54 @@ const Level::rectVector Level1::getPlayRects()
 
 void Level1::toggleActive()
 {
+	if (!mIsActive)
+	{
+		//Playground rectangles
+		mPlayRects.push_back(createRect(110, 360, 610, 200));
+		mPlayRects.push_back(createRect(670, 330, 160, 80));
+
+		//Fishtank, Zoom
+		mRects.push_back(createRect(440, 150, 125, 70));
+
+		//Books in bookcase
+		mRects.push_back(createRect(200, 50, 100, 200));
+		//Lamp
+		mRects.push_back(createRect(75, 165, 50, 100));
+		//Radio
+		mRects.push_back(createRect(10, 245, 50, 60));
+		//Posters
+		mRects.push_back(createRect(410, 20, 260, 120));
+		//Backpack
+		mRects.push_back(createRect(750, 420, 50, 70));
+
+		//Items - Set as Active
+		mMagnet->toggleActive();
+		mMagnet->togglePickupable();
+
+		mStar->toggleActive();
+		mStar->toggleInteractable();
+
+		mAstronaut->toggleActive();
+
+		mBlock->toggleActive();
+
+		mString->toggleActive();
+		mString->togglePickupable();
+
+		mBowl->toggleActive();
+
+		mCube->toggleActive();
+
+		//Add to ItemVector
+		addItem(mMagnet);
+		addItem(mStar);
+		addItem(mAstronaut);
+		addItem(mBlock);
+		addItem(mString);
+		addItem(mBowl);
+		addItem(mCube);
+	}
+
 	mIsActive = !mIsActive;
 }
 
@@ -205,6 +218,7 @@ void Level1::internalSwap(int num)
 		mActiveScene = 0;
 		//Walkable area
 		mPlayRects.push_back(createRect(110, 360, 660, 200));
+		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank
 		mRects.push_back(createRect(440, 150, 210, 70));
@@ -256,10 +270,13 @@ void Level1::internalSwap(int num)
 	{
 		mActiveScene = 1;
 		//Walkable area
-		mPlayRects.push_back(createRect(140, 490, 400, 25));
-		//Back to room
-		mRects.push_back(createRect(440, 150, 210, 70));
+		mPlayRects.push_back(createRect(140, 490, 350, 25));
+		//Back to room, left side of screen
+		mRects.push_back(createRect(0, 30, 120, 470));
 
+		//mBlock toggle interactable only if not already moved
+
+		//Repopulate ItemVector with active items
 		if (mBlock->getActive())
 		{
 			mBlock->setPosition(500, 315);

@@ -45,11 +45,11 @@ void LevelHandler::setActiveLevel(int index)
 {
 	assert(index >= 0);
 	//Toggles active level
-	if (index > 0)
-	{
-		//If level to be toggled is greater than 0, toggle last level to be inactive
-		mLevels[index - 1]->toggleActive();
-	}
+	//if (index > 0) // ADD THIS BACK LATER
+	//{
+	//	//If level to be toggled is greater than 0, toggle last level to be inactive
+	//	mLevels[index - 1]->toggleActive();
+	//}
 	mLevels[index]->toggleActive();
 }
 
