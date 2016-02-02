@@ -35,19 +35,28 @@ mIsActive(false)
 	music.openFromFile("Level1Music.ogg");
 
 	//Help rectangles
-	rectangle.setPosition(sf::Vector2f(75, 165));
-	rectangle.setSize(sf::Vector2f(50, 100));
+	rectangle.setPosition(sf::Vector2f(380, 400));
+	rectangle.setSize(sf::Vector2f(40, 40));
 
 	//Playground rectangles
 	mPlayRects.push_back(createRect(110, 360, 660, 200));
-	//Fishtank
-	mRects.push_back(createRect(440, 150, 210, 70));
+
+	//Fishtank, Zoom
+	mRects.push_back(createRect(440, 150, 125, 70));
+
 	//Books in bookcase
 	mRects.push_back(createRect(200, 50, 100, 200));
 	//Lamp
 	mRects.push_back(createRect(75, 165, 50, 100));
+	//Radio
+	mRects.push_back(createRect(10, 245, 50, 60));
+	//Posters
+	mRects.push_back(createRect(410, 20, 260, 120));
+	//Backpack
+	mRects.push_back(createRect(750, 420, 50, 70));
 
 	//Items - Create and set as Active
+	mScrewdevice = new Item(handler, sf::Vector2f(380, 400), sf::FloatRect(380, 400, 40, 40), "Screwdevice");
 	mMagnet = new Item(handler, sf::Vector2f(325, 270), sf::FloatRect(325, 270, 60, 45), "Magnet");
 	mMagnet->toggleActive();
 	mMagnet->togglePickupable();
@@ -190,15 +199,26 @@ void Level1::clearScene()
 
 void Level1::internalSwap(int num)
 {
+	// Thomas Rum
 	if (num == 0)
 	{
 		mActiveScene = 0;
 		//Walkable area
 		mPlayRects.push_back(createRect(110, 360, 660, 200));
+
 		//Fishtank
 		mRects.push_back(createRect(440, 150, 210, 70));
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
+		//Lamp
+		mRects.push_back(createRect(75, 165, 50, 100));
+		//Radio
+		mRects.push_back(createRect(10, 245, 50, 60));
+		//Posters
+		mRects.push_back(createRect(410, 20, 260, 120));
+		//Backpack
+		mRects.push_back(createRect(750, 420, 50, 70));
+
 		//Repopulate ItemVector with active items
 		if (mMagnet->getActive())
 		{
@@ -214,6 +234,8 @@ void Level1::internalSwap(int num)
 		}
 		if (mBlock->getActive())
 		{
+			mBlock->setPosition(570, 160);
+			mBlock->setScale(0.3, 0.3);
 			addItem(mBlock);
 		}
 		if (mString->getActive())
@@ -229,13 +251,21 @@ void Level1::internalSwap(int num)
 			addItem(mCube);
 		}
 	}
+	// Fishtank Zoom
 	else
 	{
 		mActiveScene = 1;
 		//Walkable area
-		mPlayRects.push_back(createRect(140, 480, 400, 30));
+		mPlayRects.push_back(createRect(140, 490, 400, 25));
 		//Back to room
 		mRects.push_back(createRect(440, 150, 210, 70));
+
+		if (mBlock->getActive())
+		{
+			mBlock->setPosition(500, 315);
+			mBlock->setScale(1, 1);
+			addItem(mBlock);
+		}
 	}
 }
 

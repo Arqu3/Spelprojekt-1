@@ -26,7 +26,7 @@ mIsLookedAt(false)
 		mName = "Stjärna";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4, 0.4));
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("thomasstar.png")); //Add correct texture
 	}
 
@@ -36,7 +36,7 @@ mIsLookedAt(false)
 		mName = "Kloss";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomasblock.png")); //Add correct texture
 	}
 
@@ -46,7 +46,7 @@ mIsLookedAt(false)
 		mName = "Tråd";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4, 0.4));
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("thomasstring.png")); //Add correct texture
 	}
 
@@ -56,7 +56,7 @@ mIsLookedAt(false)
 		mName = "Magnet";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomasmagnet.png")); //Add correct texture
 	}
 
@@ -66,7 +66,7 @@ mIsLookedAt(false)
 		mName = "Astronaut";
 		mDescription = "Skruvar på saker";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4, 0.4));
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("thomasastronaut.png")); //Add correct texture
 	}
 
@@ -76,7 +76,7 @@ mIsLookedAt(false)
 		mName = "Skål";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
 	}
 
@@ -86,7 +86,7 @@ mIsLookedAt(false)
 		mName = "Kub";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomascube.png")); //Add correct texture
 	}
 }
@@ -188,10 +188,21 @@ std::string Item::getDescription()
 //Get bounding boxes
 sf::FloatRect Item::getRectangle()
 {
-	return mRectangle;
+	//return mRectangle;
+	return mSprite.getGlobalBounds();
 }
 
 sf::Vector2f Item::getPosition()
 {
 	return mPosition;
+}
+
+void Item::setPosition(float x, float y)
+{
+	mSprite.setPosition(sf::Vector2f(x, y));
+}
+
+void Item::setScale(float x, float y)
+{
+	mSprite.setScale(sf::Vector2f(x, y));
 }
