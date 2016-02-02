@@ -4,7 +4,7 @@
 EventHandler::EventHandler(LevelHandler &lHandler):
 mLHandler(&lHandler)
 {
-	mLHandler->setActiveLevel(0);
+	mLHandler->setActiveLevel(1); //Change back!
 }
 
 EventHandler::~EventHandler()

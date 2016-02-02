@@ -89,6 +89,76 @@ mIsLookedAt(false)
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomascube.png")); //Add correct texture
 	}
+
+	if (id == "Magic Clam")
+	{
+		mIndex = 8;
+		mName = "Magisk Mussla";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
+
+	if (id == "Needle")
+	{
+		mIndex = 9;
+		mName = "Nål";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
+
+	if (id == "Earth")
+	{
+		mIndex = 10;
+		mName = "Jordglob";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
+
+	if (id == "Fish")
+	{
+		mIndex = 11;
+		mName = "Fisk";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
+
+	if (id == "Hoola Hoop")
+	{
+		mIndex = 12;
+		mName = "Rockring";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
+
+	if (id == "Beige Ball")
+	{
+		mIndex = 13;
+		mName = "Beige Boll";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
+
+	if (id == "Red Apple")
+	{
+		mIndex = 14;
+		mName = "Rött Äpple";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3, 0.3));
+		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
 }
 
 Item::~Item()
