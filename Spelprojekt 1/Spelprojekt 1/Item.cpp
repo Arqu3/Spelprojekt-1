@@ -97,13 +97,11 @@ mIsLookedAt(false)
 		mName = "Magisk Mussla";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-<<<<<<< HEAD
 		mSprite.setScale(sf::Vector2f(0.3, 0.3));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
-=======
+		//mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
->>>>>>> refs/remotes/origin/master
+
 	}
 
 	if (id == "Needle")

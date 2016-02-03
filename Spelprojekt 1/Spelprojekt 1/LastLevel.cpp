@@ -5,45 +5,44 @@ mRects(),
 mPlayRects(),
 mIsActive(false)
 {
-	background.setSize(sf::Vector2f(1024, 576));
-	background.setTexture(handler.getTexture("LastLevel_BackgroundTest1.png")); //Add correct texture
+
+	//Background Texture scene 1
+	background.setSize(sf::Vector2f(1024,576));  //(1536, 576) för scen 2
+	background.setTexture(handler.getTexture("flickrum.png")); //Add correct texture
+
+	//Playground Texture scene 1
+
+	//Foreground Texture scene 1
+
+	//Background Texture scene 2
+
+	//Playground Texture scene 2
+
+	//Foreground Texture scene 2
+
+	//Background Texture scene 3
+
+	//Background Texture scene 3
+
+	//Foreground Texture scene 3
 
 	//Add sound
 
-	//Add Rect
-
+	//Add HelpRect
+	rectangle.setPosition(sf::Vector2f(0, 70));
+	rectangle.setSize(sf::Vector2f(108, 350));
+	rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
+	
 	//Add items
 	mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
-	mMagicClam->toggleActive();
-
 	mNeedle = new Item(handler, sf::Vector2f(0, 0), "Needle");
-	mNeedle->toggleActive();
-	mNeedle->togglePickupable();
-
 	mEarth = new Item(handler, sf::Vector2f(0, 0), "Earth");
-	mEarth->toggleActive();
-	mEarth->togglePickupable();
-
 	mFish = new Item(handler, sf::Vector2f(0, 0), "Fish");
-	mFish->toggleActive();
-
 	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
-	mHoolaHoop->toggleActive();
-
 	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
-	mBeigeBall->toggleActive();
-
 	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
-	mRedApple->toggleActive();
 
-	//Add to itemVector
-	addItem(mMagicClam);
-	addItem(mNeedle);
-	addItem(mEarth);
-	addItem(mFish);
-	addItem(mHoolaHoop);
-	addItem(mBeigeBall);
-	addItem(mRedApple);
+	
 }
 
 LastLevel::~LastLevel()
@@ -98,7 +97,7 @@ void LastLevel::playAmbience()
 void LastLevel::drawBackground(sf::RenderWindow &window)
 {
 	window.draw(background);
-
+	//window.draw(rectangle);
 	drawItems(mItems, window);
 	
 }
@@ -137,6 +136,59 @@ void LastLevel::addRect(sf::FloatRect *rect)
 
 void LastLevel::toggleActive()
 {
+	if (!mIsActive)
+	{
+		//Rectangles
+
+		//Dollhouse
+		mRects.push_back(createRect(193, 257, 150, 100));
+
+		//Planets 1-9
+		mRects.push_back(createRect(243, 44, 25, 25));
+		mRects.push_back(createRect(317, 52, 40, 40));
+		mRects.push_back(createRect(395, 47, 25, 25));
+		mRects.push_back(createRect(458, 42, 23, 23));
+		mRects.push_back(createRect(518, 38, 70, 70));
+		mRects.push_back(createRect(620, 50, 30, 30));
+		mRects.push_back(createRect(680, 55, 28, 28));
+		mRects.push_back(createRect(742, 55, 28, 28));
+		mRects.push_back(createRect(797, 56, 13, 13));
+
+		//Door
+		mRects.push_back(createRect(445, 186, 80, 50));
+
+		//Stairs to scene 2
+		mRects.push_back(createRect(0, 70, 108, 350));
+
+		//Playground
+		mPlayRects.push_back(createRect(108, 378, 610, 192));
+		mPlayRects.push_back(createRect(347, 324, 370, 52));
+
+		
+
+
+		//Items - set as active
+		mMagicClam->toggleActive();
+		mNeedle->toggleActive();
+		mNeedle->togglePickupable();
+		mEarth->toggleActive();
+		mEarth->togglePickupable();
+		mFish->toggleActive();
+		mHoolaHoop->toggleActive();
+		mBeigeBall->toggleActive();
+		mRedApple->toggleActive();
+
+		//Add items to itemVector
+		addItem(mMagicClam);
+		addItem(mNeedle);
+		addItem(mEarth);
+		addItem(mFish);
+		addItem(mHoolaHoop);
+		addItem(mBeigeBall);
+		addItem(mRedApple);
+
+	}
+
 	mIsActive = !mIsActive;
 }
 
@@ -157,7 +209,45 @@ void LastLevel::clearScene()
 
 void LastLevel::internalSwap(int num)
 {
-	//Zoom in on an object
+	if (num == 0)
+	{
+		mActiveScene = 0;
+
+		//Walkable Area
+		mPlayRects.push_back(createRect(108, 378, 610, 192));
+		mPlayRects.push_back(createRect(347, 324, 370, 52));
+
+		//Planets 1-9
+		mRects.push_back(createRect(243, 44, 25, 25));
+		mRects.push_back(createRect(317, 52, 40, 40));
+		mRects.push_back(createRect(395, 47, 25, 25));
+		mRects.push_back(createRect(458, 42, 23, 23));
+		mRects.push_back(createRect(518, 38, 70, 70));
+		mRects.push_back(createRect(620, 50, 30, 30));
+		mRects.push_back(createRect(680, 55, 28, 28));
+		mRects.push_back(createRect(742, 55, 28, 28));
+		mRects.push_back(createRect(797, 56, 13, 13));
+
+		//Dollhouse
+		mRects.push_back(createRect(193, 257, 150, 100));
+
+		//Door
+		mRects.push_back(createRect(445, 186, 80, 50));
+
+		//Stairs to scene 2
+		mRects.push_back(createRect(0, 70, 108, 350));
+
+	}
+	else if (num == 1)
+	{
+		//Scene 2
+		mActiveScene = 1;
+	}
+	else
+	{
+		//Scene 3
+		mActiveScene = 2;
+	}
 }
 
 

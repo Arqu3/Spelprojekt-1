@@ -4,7 +4,7 @@
 EventHandler::EventHandler(LevelHandler &lHandler):
 mLHandler(&lHandler)
 {
-	mLHandler->setActiveLevel(0); //Change back!
+	mLHandler->setActiveLevel(1); //Change back!
 }
 
 EventHandler::~EventHandler()
@@ -213,56 +213,86 @@ void EventHandler::mouseClick(sf::Event &event)
 	}
 
 	/* Template for Rect check in other levels */
-	//else if (mLHandler->getActiveLevel() == mLHandler->getLevel(1))
-	//{
-	//	for (Level::rectVector::size_type i = 0; i < mLHandler->getActiveLevel()->getRects().size(); i++)
-	//	{
-	//		if (checkCollision(mLHandler->getActiveLevel()->getRects()[i], point))
-	//		{
-	//			// i == 0 is ____ if ActiveScene is 0, or ___ if ActiveScene is 1, etc.
-	//			if (i == 0)
-	//			{
-	//				if (mLHandler->getActiveLevel()->getActiveScene() == 0)
-	//				{
-	//					//Do stuff here
-	//				}
-	//				else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
-	//				{
-	//					//Do stuff here
-	//				}
-	//				else
-	//				{
-	//					//Do stuff here
-	//				}
-	//			}
-	//			// i == 1 is ____
-	//			else if (i == 1)
-	//			{
-	//				std::cout << "Insert stuff here";
-	//			}
-	//			// i == 2 is ____
-	//			else if (i == 2)
-	//			{
-	//				std::cout << "Insert stuff here";
-	//			}
-	//			// i == 3 is ____
-	//			else if (i == 3)
-	//			{
-	//				std::cout << "Insert stuff here";
-	//			}
-	//			// i == 4 is ____
-	//			else if (i == 4)
-	//			{
-	//				std::cout << "Insert stuff here";
-	//			}
-	//			// i == 5 is ____
-	//			else if (i == 5)
-	//			{
-	//				std::cout << "Insert stuff here";
-	//			}
-	//		}
-	//	}
-	//}
+	else if (mLHandler->getActiveLevel() == mLHandler->getLevel(1))
+	{
+		for (Level::rectVector::size_type i = 0; i < mLHandler->getActiveLevel()->getRects().size(); i++)
+		{
+			if (checkCollision(mLHandler->getActiveLevel()->getRects()[i], point))
+			{
+				// i == 0 is Dollhouse if ActiveScene is 0, or ___ if ActiveScene is 1, etc.
+				if (i == 0)
+				{
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Dollhouse!";
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						//Do stuff here
+					}
+					else
+					{
+						//Do stuff here
+					}
+				}
+				// i == 1 is Planet 1 if ActiveScene is 0, 
+				else if (i == 1)
+				{
+					std::cout << "Planet 1!";
+				}
+				// i == 2 is Planet 2 if ActiveScene is 0, 
+				else if (i == 2)
+				{
+					std::cout << "Planet 2!";
+				}
+				// i == 3 is Planet 3 if ActiveScene is 0,
+				else if (i == 3)
+				{
+					std::cout << "Planet 3!";
+				}
+				// i == 4 is Planet 4 if ActiveScene is 0,
+				else if (i == 4)
+				{
+					std::cout << "Planet 4!";
+				}
+				// i == 5 is Planet 5 if ActiveScene is 0,
+				else if (i == 5)
+				{
+					std::cout << "Planet 5!";
+				}
+				// i == 6 is Planet 6 if ActiveScene is 0,
+				else if (i == 6)
+				{
+					std::cout << "Planet 6!";
+				}
+				// i == 7 is Planet 7 if ActiveScene is 0, 
+				else if (i == 7)
+				{
+					std::cout << "Planet 7!";
+				}
+				// i == 8 is Planet 8 if ActiveScene is 0,
+				else if (i == 8)
+				{
+					std::cout << "Planet 8!";
+				}
+				// i == 9 is Planet 9 if ActiveScene is 0,
+				else if (i == 9)
+				{
+					std::cout << "Planet 9!";
+				}
+				// i == 10 is Door if ActiveScene is 0,
+				else if (i == 10)
+				{
+					std::cout << "Door!";
+				}
+				// i == 11 is Stairs if ActiveScene is 0,
+				else if (i == 11)
+				{
+					std::cout << "Stairs to scene 2!";
+				}
+			}
+		}
+	}
 }
 
 //Waits in background and listens for mouseclicks

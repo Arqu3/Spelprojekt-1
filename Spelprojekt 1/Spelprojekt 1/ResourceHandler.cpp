@@ -36,7 +36,8 @@ musicCounter(0)
 	addTexture("thomaszoomfg.png");
 
 	//LastLevel
-	addTexture("LastLevel_BackgroundTest1.png");
+	addTexture("Barn hem.png");
+	addTexture("flickrum.png");
 	addTexture("LastLevel_ItemTest1.png");
 	//Music
 	addMusic("Level1Music.ogg");
