@@ -2,14 +2,22 @@
 
 using namespace std;
 
-Player::Player(ResourceHandler &handler, sf::Vector2f &position) :
+Player::Player(ResourceHandler &handler, sf::Vector2f &position, std::string textureName) :
 mPosition(position),
 isOnPosition(true),
 moveTo(position)
 {
-	mSprite.setScale(sf::Vector2f(0.08, 0.08));
-	mSprite.setTexture(*handler.getTexture("Thomas.png"));
-	mSprite.setOrigin(950, 3300);
+	mSprite.setTexture(*handler.getTexture(textureName));
+	if (textureName == "Thomas.png")
+	{
+		mSprite.setScale(sf::Vector2f(0.08f, 0.08f));
+		mSprite.setOrigin(1050, 3250);
+	}
+	else
+	{
+		mSprite.setScale(sf::Vector2f(0.04f, 0.04f));
+		mSprite.setOrigin(600, 2100);
+	}
 }
 
 
@@ -98,3 +106,7 @@ sf::Vector2f Player::getPosition()
 	return mPosition;
 }
 
+bool Player::getIsOnPosition()
+{
+	return isOnPosition;
+}
