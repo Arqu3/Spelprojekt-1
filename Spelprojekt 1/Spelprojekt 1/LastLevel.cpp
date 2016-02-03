@@ -13,27 +13,27 @@ mIsActive(false)
 	//Add Rect
 
 	//Add items
-	mMagicClam = new Item(handler, sf::Vector2f(0, 0), sf::FloatRect(0, 0, 0, 0), "Magic Clam");
+	mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
 	mMagicClam->toggleActive();
 
-	mNeedle = new Item(handler, sf::Vector2f(0, 0), sf::FloatRect(0, 0, 0, 0), "Needle");
+	mNeedle = new Item(handler, sf::Vector2f(0, 0), "Needle");
 	mNeedle->toggleActive();
 	mNeedle->togglePickupable();
 
-	mEarth = new Item(handler, sf::Vector2f(0, 0), sf::FloatRect(0, 0, 0, 0), "Earth");
+	mEarth = new Item(handler, sf::Vector2f(0, 0), "Earth");
 	mEarth->toggleActive();
 	mEarth->togglePickupable();
 
-	mFish = new Item(handler, sf::Vector2f(0, 0), sf::FloatRect(0, 0, 0, 0), "Fish");
+	mFish = new Item(handler, sf::Vector2f(0, 0), "Fish");
 	mFish->toggleActive();
 
-	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), sf::FloatRect(0, 0, 0, 0), "Hoola Hoop");
+	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 	mHoolaHoop->toggleActive();
 
-	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), sf::FloatRect(0, 0, 0, 0), "Beige Ball");
+	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 	mBeigeBall->toggleActive();
 
-	mRedApple = new Item(handler, sf::Vector2f(0, 0), sf::FloatRect(0, 0, 0, 0), "Red Apple");
+	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
 	mRedApple->toggleActive();
 
 	//Add to itemVector

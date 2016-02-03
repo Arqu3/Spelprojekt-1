@@ -3,6 +3,7 @@
 
 #include "LevelHandler.h"
 #include "DialogueSystem.h"
+#include "Inventory.h"
 #include "SFML\Window.hpp"
 #include "SFML\Graphics.hpp"
 
@@ -31,6 +32,7 @@ private:
 	//Member variables
 	LevelHandler *mLHandler;
 	DialogueSystem *mDialogueSystem;
+	Inventory *mInventory;
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
 };
