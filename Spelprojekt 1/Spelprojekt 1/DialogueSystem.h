@@ -13,10 +13,11 @@ public:
 	~DialogueSystem();
 
 	//Talk functions
-	void text(std::string text, sf::Vector2f &position);
+	void text(std::string text, sf::Vector2f &position, float x, float y);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
+	void createTalkBubble(int x, int y);
 
 	//Function that checks if an object has been clicked on
 	void hasClicked(std::string indexName);
