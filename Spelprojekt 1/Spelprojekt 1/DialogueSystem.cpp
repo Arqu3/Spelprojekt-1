@@ -2,11 +2,12 @@
 #include <iostream>
 #include "SFML\System.hpp"
 
-DialogueSystem::DialogueSystem():
+DialogueSystem::DialogueSystem(LevelHandler &levelHandler):
 mHasClicked(false),
 mTime(0),
 mText(),
-mFont()
+mFont(),
+mLevelHandler(&levelHandler)
 {
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 }
@@ -16,24 +17,14 @@ DialogueSystem::~DialogueSystem()
 
 }
 
-void DialogueSystem::setDialogue()
-{
-
-}
-
-std::string DialogueSystem::getDialogue()
-{
-	return mDialogue;
-}
-
-void DialogueSystem::text(std::string text)
+void DialogueSystem::text(std::string text, sf::Vector2f &position)
 {
 	mText.setFont(mFont);
 	mText.setCharacterSize(14);
 	mText.setStyle(sf::Text::Bold);
 	mText.setColor(sf::Color::White);
 	//Get Player position correctly
-	mText.setPosition(400, 400);
+	mText.setPosition(position);
 	mText.setString(text);
 }
 
@@ -42,17 +33,7 @@ void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 	window.draw(mText);
 }
 
-//Talk Bubble
-void DialogueSystem::createTalkBubble(Player *player)
-{
-	player->getPosition();
-}
-
-void DialogueSystem::autoSizeTalkBubble()
-{
-
-}
-
+//Function to check if the player has clicked on an object
 void DialogueSystem::hasClicked(std::string indexName)
 {
 	if (indexName == "rubicCube")
@@ -63,7 +44,21 @@ void DialogueSystem::hasClicked(std::string indexName)
 	{
 		mMagnet = true;
 	}
+
 	mHasClicked = true;
+}
+
+//Resets all variables
+void DialogueSystem::reset()
+{
+	mHasClicked = false;
+	mRubicCube = false;
+	mMagnet = false;
+
+	mText.setString("");
+
+	mClock.restart();
+	mTime = 0;
 }
 
 //Update function
@@ -101,20 +96,21 @@ void DialogueSystem::displayRubicCubeDialogue()
 		mText.setString("");
 		mHasClicked = false;
 		mRubicCube = false;
+		mTime = 0;
 		mClock.restart();
 	}
 
-	else if (mTime >= 0.1 && mTime <= 5)
+	else if (mTime > 0 && mTime <= 5)
 	{
-		text(rubicHilma);
+		text(rubicHilma, mLevelHandler->getPlayer()->getPosition());
 	}
 	else if (mTime > 5 && mTime <= 10)
 	{
-		text(rubicThomas);
+		text(rubicThomas, mLevelHandler->getPlayer()->getPosition());
 	}
 	else if (mTime > 10 && mTime <= 15)
 	{
-		text(rubicHilma2);
+		text(rubicHilma2, mLevelHandler->getPlayer()->getPosition());
 	}
 }
 
@@ -127,11 +123,12 @@ void DialogueSystem::displayMagnetDialogue()
 		mText.setString("");
 		mHasClicked = false;
 		mMagnet = false;
+		mTime = 0;
 		mClock.restart();
 	}
 
-	else if (mTime >= 0.1 && mTime <= 5)
+	else if (mTime > 0 && mTime <= 5)
 	{
-		text(magnetHilma);
+		text(magnetHilma, mLevelHandler->getPlayer()->getPosition());
 	}
 }

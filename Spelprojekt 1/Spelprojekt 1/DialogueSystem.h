@@ -4,27 +4,27 @@
 #include <string>
 #include "Item.h"
 #include "Player.h"
+#include "LevelHandler.h"
 
 class DialogueSystem
 {
 public:
-	DialogueSystem();
+	DialogueSystem(LevelHandler &levelHandler);
 	~DialogueSystem();
 
-	//Dialogue functions
-	void setDialogue();
-	std::string getDialogue();
-
 	//Talk functions
-	void text(std::string text);
+	void text(std::string text, sf::Vector2f &position);
 
 	//Talk Bubble
-	void createTalkBubble(Player *player);
 	void drawDialogue(sf::RenderWindow &window);
-	void autoSizeTalkBubble();
 
+	//Function that checks if an object has been clicked on
 	void hasClicked(std::string indexName);
 
+	//Reset variables
+	void reset();
+
+	//Update function
 	void update(float time);
 
 	//Dialogues (functions with strings)
@@ -42,6 +42,7 @@ private:
 	sf::Font mFont;
 
 	Player *mPlayer;
+	LevelHandler *mLevelHandler;
 };
 
 #endif

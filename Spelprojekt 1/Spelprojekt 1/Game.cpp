@@ -5,7 +5,7 @@ using namespace std;
 Game::Game():
 mRHandler(),
 mLHandler(mRHandler),
-dSystem(),
+dSystem(mLHandler),
 mEventHandler(mLHandler, dSystem)
 {
 	music.openFromFile(mRHandler.getMusic("Level1Music.ogg"));

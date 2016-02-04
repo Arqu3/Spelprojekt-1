@@ -78,12 +78,13 @@ void EventHandler::mouseClick(sf::Event &event)
 				//mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
 				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Cube")
 				{
+					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("rubicCube");
 				}
 				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
 				{
+					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("magnet");
-					std::cout << "Effin' magnets, how do they work!?";
 				}
 			}
 			else if (mLHandler->getActiveLevel()->getItems()[i]->getPickupable())
