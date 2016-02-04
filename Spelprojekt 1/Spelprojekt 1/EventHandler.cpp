@@ -1,10 +1,10 @@
 #include "EventHandler.h"
 #include <iostream>
 
-EventHandler::EventHandler(LevelHandler &lHandler):
-mLHandler(&lHandler)
+EventHandler::EventHandler(LevelHandler &lHandler, DialogueSystem &dSystem):
+mLHandler(&lHandler),
+mDialogueSystem(&dSystem)
 {
-	mDialogueSystem = new DialogueSystem();
 	mLHandler->setActiveLevel(0);
 }
 
@@ -78,11 +78,11 @@ void EventHandler::mouseClick(sf::Event &event)
 				//mLHandler->getActiveLevel()->getItems()[i]->toggleIsLookedAt();
 				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Cube")
 				{
-					mDialogueSystem->hasClicked();
+					mDialogueSystem->hasClicked("rubicCube");
 				}
 				if (mLHandler->getActiveLevel()->getItems()[i]->getId() == "Magnet")
 				{
-					//mDialogueSystem->displayMagnetDialogue();
+					mDialogueSystem->hasClicked("magnet");
 					std::cout << "Effin' magnets, how do they work!?";
 				}
 			}

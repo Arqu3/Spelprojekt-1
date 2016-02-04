@@ -5,8 +5,8 @@ using namespace std;
 Game::Game():
 mRHandler(),
 mLHandler(mRHandler),
-mEventHandler(mLHandler),
-dSystem()
+dSystem(),
+mEventHandler(mLHandler, dSystem)
 {
 	music.openFromFile(mRHandler.getMusic("Level1Music.ogg"));
 }
@@ -34,6 +34,7 @@ void Game::update()
 		mEventHandler.eventListen(window);
 
 		dSystem.update(deltaTime);
+		dSystem.drawDialogue(window);
 
 		deltaClock.restart();
 		window.display();

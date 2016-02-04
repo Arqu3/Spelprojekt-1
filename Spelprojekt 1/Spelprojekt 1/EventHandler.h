@@ -10,7 +10,7 @@
 class EventHandler
 {
 public:
-	EventHandler(LevelHandler &lHandler);
+	EventHandler(LevelHandler &lHandler, DialogueSystem &dSystem);
 	~EventHandler();
 
 	//Listen for mouse clicks

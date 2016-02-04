@@ -16,27 +16,32 @@ public:
 	std::string getDialogue();
 
 	//Talk functions
-	std::string talk();
+	void text(std::string text);
 
 	//Talk Bubble
-	void createTalkBubble();
-	void autoENDL();
+	void createTalkBubble(Player *player);
+	void drawDialogue(sf::RenderWindow &window);
 	void autoSizeTalkBubble();
-	void setTalkBubblePosition(Player *player);
+
+	void hasClicked(std::string indexName);
 
 	void update(float time);
 
-	void hasClicked();
-
 	//Dialogues (functions with strings)
 	void displayRubicCubeDialogue();
+	void displayMagnetDialogue();
+
 private:
 	std::string mDialogue;
 	float mTime;
-	sf::Clock mClock;
 	bool mHasClicked;
+	bool mRubicCube;
+	bool mMagnet;
+	sf::Text mText;
+	sf::Clock mClock;
+	sf::Font mFont;
 
-	float test;
+	Player *mPlayer;
 };
 
 #endif

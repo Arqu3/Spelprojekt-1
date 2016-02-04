@@ -2,14 +2,13 @@
 #include <iostream>
 #include "SFML\System.hpp"
 
-using namespace std;
-
 DialogueSystem::DialogueSystem():
 mHasClicked(false),
 mTime(0),
-test(0)
+mText(),
+mFont()
 {
-
+	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 }
 
 DialogueSystem::~DialogueSystem()
@@ -27,20 +26,26 @@ std::string DialogueSystem::getDialogue()
 	return mDialogue;
 }
 
-std::string DialogueSystem::talk()
+void DialogueSystem::text(std::string text)
 {
-	return 0;
+	mText.setFont(mFont);
+	mText.setCharacterSize(14);
+	mText.setStyle(sf::Text::Bold);
+	mText.setColor(sf::Color::White);
+	//Get Player position correctly
+	mText.setPosition(400, 400);
+	mText.setString(text);
+}
+
+void DialogueSystem::drawDialogue(sf::RenderWindow &window)
+{
+	window.draw(mText);
 }
 
 //Talk Bubble
-void DialogueSystem::createTalkBubble()
+void DialogueSystem::createTalkBubble(Player *player)
 {
-
-}
-
-void DialogueSystem::autoENDL()
-{
-
+	player->getPosition();
 }
 
 void DialogueSystem::autoSizeTalkBubble()
@@ -48,9 +53,17 @@ void DialogueSystem::autoSizeTalkBubble()
 
 }
 
-void DialogueSystem::setTalkBubblePosition(Player *player)
+void DialogueSystem::hasClicked(std::string indexName)
 {
-	
+	if (indexName == "rubicCube")
+	{
+		mRubicCube = true;
+	}
+	if (indexName == "magnet")
+	{
+		mMagnet = true;
+	}
+	mHasClicked = true;
 }
 
 //Update function
@@ -60,17 +73,20 @@ void DialogueSystem::update(float time)
 	{
 		mTime = mClock.getElapsedTime().asSeconds();
 	}
-	else
+	if (mHasClicked == false)
 	{
 		mTime = 0;
 	}
 
-	displayRubicCubeDialogue();
-}
+	if (mRubicCube == true)
+	{
+		displayRubicCubeDialogue();
+	}
 
-void DialogueSystem::hasClicked()
-{
-	mHasClicked = true;
+	if (mMagnet == true)
+	{
+		displayMagnetDialogue();
+	}
 }
 
 //Dialogue functions
@@ -80,18 +96,42 @@ void DialogueSystem::displayRubicCubeDialogue()
 	std::string rubicThomas = "En Rubiks kub, man ska få alla färgerna på varsin sida.";
 	std::string rubicHilma2 = "Men vad är det för utmaning? Låter ju jättelätt!";
 
-	if (mTime > 20)
+	if (mTime > 15)
 	{
+		mText.setString("");
 		mHasClicked = false;
+		mRubicCube = false;
 		mClock.restart();
 	}
 
-	else if (mTime >= 1 && mTime <= 5)
+	else if (mTime >= 0.1 && mTime <= 5)
 	{
-		std::cout << rubicHilma << std::endl;
+		text(rubicHilma);
 	}
 	else if (mTime > 5 && mTime <= 10)
 	{
-		std::cout << rubicThomas << std::endl;
+		text(rubicThomas);
+	}
+	else if (mTime > 10 && mTime <= 15)
+	{
+		text(rubicHilma2);
+	}
+}
+
+void DialogueSystem::displayMagnetDialogue()
+{
+	std::string magnetHilma = "En magnet… hmm den kan vara användbar.";
+
+	if (mTime > 5)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mMagnet = false;
+		mClock.restart();
+	}
+
+	else if (mTime >= 0.1 && mTime <= 5)
+	{
+		text(magnetHilma);
 	}
 }
