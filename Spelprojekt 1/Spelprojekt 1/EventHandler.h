@@ -26,7 +26,7 @@ private:
 	//Check collision between a single rectangle and a point
 	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
 
-	//Check collision between a list of rectangles and a point
+	//Check collision between a vector of rectangles and a point
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
 
 	void mouseClick(sf::Event &event);
@@ -38,8 +38,13 @@ private:
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
 	sf::Vector2f mViewMoveTo;
-	float mXMove;
-	float mYMove;
+	Item* mTargetItem;
+	bool mItemInteraction;
+	//Scene change
+	sf::FloatRect mSceneChangeRect;
+	sf::Vector2f mSceneChangePlayerPos;
+	int mNewScene;
+	bool mPlayerToggle;
 };
 
 #endif

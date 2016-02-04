@@ -106,11 +106,6 @@ sf::Vector2f Player::getPosition()
 	return mPosition;
 }
 
-bool Player::getIsOnPosition()
-{
-	return isOnPosition;
-}
-
 sf::Vector2f Player::getDirection()
 {
 	return mDirection;
@@ -125,4 +120,9 @@ void Player::flipPlayer()
 bool Player::isFacingLeft()
 {
 	return mFacingLeft;
+}
+
+sf::FloatRect Player::getGlobalRect()
+{
+	return mSprite.getGlobalBounds();
 }

@@ -16,10 +16,10 @@ public:
 	sf::Vector2f getPosition();
 	void setPosition(float x, float y);
 	void moveToPosition(float x, float y);
-	bool getIsOnPosition();
 	sf::Vector2f getDirection();
 	void flipPlayer();
 	bool isFacingLeft();
+	sf::FloatRect getGlobalRect();
 
 private:
 	void move(float deltaTime);

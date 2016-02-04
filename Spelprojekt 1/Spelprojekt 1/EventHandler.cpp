@@ -2,18 +2,18 @@
 #include <iostream>
 
 EventHandler::EventHandler(LevelHandler &lHandler):
-mLHandler(&lHandler),
-mInventory()
+mLHandler(&lHandler)
 {
 	mLHandler->setActiveLevel(0); //Change back!
 	mInventory = new Inventory();
+	mItemInteraction = false;
 }
 
 EventHandler::~EventHandler()
 {
 }
 
-//Check collision with single rectangle
+//Check collision between single rectangle and point
 int EventHandler::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point)
 {
 	if (boundingBox.contains(point))
@@ -23,7 +23,7 @@ int EventHandler::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f 
 	return 0;
 }
 
-//Check collision with single rectangle
+//Check collision between single rectangle pointer and point
 int EventHandler::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point)
 {
 	if (boundingBox->contains(point))
@@ -33,7 +33,7 @@ int EventHandler::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &poin
 	return 0;
 }
 
-//Check collision with multiple rectangles
+//Check collision between a vector of rectangles and a point
 int EventHandler::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point)
 {
 	for (std::vector<sf::FloatRect*>::size_type i = 0; i < RectVector.size(); i++)
@@ -58,124 +58,84 @@ void EventHandler::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
-	//Check collision with Player
-	if (checkCollision(mLHandler->getPlayer()->getRect(), point)) 
-	{
-		std::cout << "HIT!" << std::endl;
-	}
-
-	//Check Item collision
-	//Loop through all Items in active level
-	//Check if mouse collided with Item
-	//Check Id of that Item
-	//Check if Item is looked at, if not, look at it and display dialogue
-	//If Item is looked at, check if it is pickupable and if so toggle Active and add to inventory
-	for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveItems().size(); i++)
-	{
-		if (checkCollision(mLHandler->getActiveItems()[i]->getRectangle(), point))
-		{
-			if (mLHandler->getActiveItems()[i]->getActive())
-			{
-				if (!mLHandler->getActiveItems()[i]->isLookedAt())
-				{
-					mLHandler->getActiveItems()[i]->toggleIsLookedAt();
-					if (mLHandler->getActiveItems()[i]->getId() == "Cube")
-					{
-						mDialogueSystem->displayRubicCubeDialogue();
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
-					{
-						//mDialogueSystem->displayMagnetDialogue();
-						//mViewMoveTo = sf::Vector2f(20, 0);
-						std::cout << "Effin' magnets, how do they work!?";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Bowl")
-					{
-						//mDialogueSystem->displayBowlDialogue();
-						std::cout << "Skål!";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Block")
-					{
-						//mDialogueSystem->displayBlockDialogue();
-						std::cout << "En kloss framför akvariet, undrar om det finns en astronaut bakom?";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
-					{
-						//mDialogueSystem->displayAstronautDialogue();
-						std::cout << "Nämen titta, en astronaut.";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "String")
-					{
-						//mDialogueSystem->displayStringDialogue();
-						std::cout << "En tråd på golvet.";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Star")
-					{
-						//mDialogueSystem->displayStarDialogue();
-						std::cout << "Stjärnklart!";
-					}
-				}
-				else if (mLHandler->getActiveItems()[i]->getPickupable())
-				{
-					mLHandler->getActiveItems()[i]->toggleActive();
-					if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
-					{
-						mInventory->addItem(mLHandler->getActiveItems()[i]);
-						std::cout << "Plockade upp magnet";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "String")
-					{
-						mInventory->addItem(mLHandler->getActiveItems()[i]);
-						std::cout << "Plockade upp tråd";
-					}
-				}
-				else if (mLHandler->getActiveItems()[i]->getInteractable())
-				{
-					if (!mLHandler->getActiveItems()[i]->isInteracted())
-					{
-						mLHandler->getActiveItems()[i]->toggleInteractable();
-						if (mLHandler->getActiveItems()[i]->getId() == "Block")
-						{
-							//Move Block, TODO - change to smooth movement
-							mLHandler->getActiveItems()[i]->setPosition(630, 315);
-							mLHandler->getActiveItems()[i]->toggleInteracted();
-							//Toggle Astronaut Active, i + 1 is Astronaut currently, might be problematic?
-							mLHandler->getActiveItems()[i + 1]->toggleActive();
-
-							//This for-loop might be better?
-							/*for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveItems().size(); i++)
-							{
-								std::cout << mLHandler->getActiveItems()[i]->getId();
-								if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
-								{
-									mLHandler->getActiveItems()[i]->toggleActive();
-								}
-							}*/
-
-							std::cout << "Knuffade Klossen";
-						}
-						if (mLHandler->getActiveItems()[i]->getId() == "Star")
-						{
-							mLHandler->getActiveItems()[i]->setPosition(900, 190);
-							std::cout << "Satte stjärnan på väggen";
-						}
-					}
-				}
-			}
-		}
-	}
-
 	//Check if playrect collision
 	if (checkCollision(mLHandler->getActiveLevel()->getPlayRects(), point))
 	{
 		mLHandler->getPlayer()->moveToPosition(point.x, point.y);
-		if (mLHandler->getPlayer()->getDirection().x < 0 && !mLHandler->getPlayer()->isFacingLeft())
+		mItemInteraction = false;
+	}
+
+	//Check Item collision
+	//Loop through all Items in active level
+	for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveItems().size(); i++)
+	{
+		//Check if mouse collided with Item
+		if (checkCollision(mLHandler->getActiveItems()[i]->getRectangle(), point))
 		{
-			mLHandler->getPlayer()->flipPlayer();
-		}
-		if (mLHandler->getPlayer()->getDirection().x > 0 && mLHandler->getPlayer()->isFacingLeft())
-		{
-			mLHandler->getPlayer()->flipPlayer();
+			//Check if Item is Active
+			if (mLHandler->getActiveItems()[i]->getActive())
+			{
+				//Check Id of that Item
+				if (mLHandler->getActiveItems()[i]->getId() == "Cube")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mLHandler->getPlayer()->moveToPosition(340, 370);
+					//Set the Item as "Target Item"
+					mTargetItem = mLHandler->getActiveItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+				}
+				if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
+				{
+					mLHandler->getPlayer()->moveToPosition(340, 370);
+					mTargetItem = mLHandler->getActiveItems()[i];
+					mItemInteraction = true;
+				}
+				if (mLHandler->getActiveItems()[i]->getId() == "Bowl")
+				{
+					mLHandler->getPlayer()->moveToPosition(340, 370);
+					mTargetItem = mLHandler->getActiveItems()[i];
+					mItemInteraction = true;
+				}
+				if (mLHandler->getActiveItems()[i]->getId() == "Block")
+				{
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						mLHandler->getPlayer()->moveToPosition(560, 365);
+					}
+					else
+					{
+						mLHandler->getPlayer()->moveToPosition(490, 500);
+					}
+					mTargetItem = mLHandler->getActiveItems()[i];
+					mItemInteraction = true;
+				}
+				if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
+				{
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						mLHandler->getPlayer()->moveToPosition(560, 365);
+					}
+					else
+					{
+						mLHandler->getPlayer()->moveToPosition(490, 500);
+					}
+					mTargetItem = mLHandler->getActiveItems()[i];
+					mItemInteraction = true;
+				}
+				if (mLHandler->getActiveItems()[i]->getId() == "String")
+				{
+					mLHandler->getPlayer()->moveToPosition(340, 370);
+					mTargetItem = mLHandler->getActiveItems()[i];
+					mItemInteraction = true;
+				}
+				if (mLHandler->getActiveItems()[i]->getId() == "Star")
+				{
+					mLHandler->getPlayer()->moveToPosition(480, 450);
+					mTargetItem = mLHandler->getActiveItems()[i];
+					mItemInteraction = true;
+				}
+			}
 		}
 	}
 
@@ -192,17 +152,29 @@ void EventHandler::mouseClick(sf::Event &event)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
 					{
-						//TODO - Make player walk to (400, 370) before
-						mLHandler->togglePlayer();
-						mLHandler->getPlayer()->setPosition(150, 480);
-						mLHandler->getActiveLevel()->changeScene(1);
+						//Make Player get into position for Scene change
+						mLHandler->getPlayer()->moveToPosition(400, 370);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = true;
+						//Set starting position of Player in new Scene
+						mSceneChangePlayerPos = sf::Vector2f(150, 480);
+						//Set which Scene will be the new Scene
+						mNewScene = 1;
 					}
 					else
 					{
-						//TODO - Make player walk to (150, 480) before
-						mLHandler->togglePlayer();
-						mLHandler->getPlayer()->setPosition(400, 370);
-						mLHandler->getActiveLevel()->changeScene(0);
+						//Make Player get into position for Scene change
+						mLHandler->getPlayer()->moveToPosition(150, 480);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(150, 480), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = true;
+						//Set starting position of Player in new Scene
+						mSceneChangePlayerPos = sf::Vector2f(400, 370);
+						//Set which Scene will be the new Scene
+						mNewScene = 0;
 					}
 				}
 				// i == 1 is books in the bookcase
@@ -326,13 +298,6 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 					std::cout << mInventory->getItemId(i) << " ";
 				}
 			}
-			if (event.key.code == sf::Keyboard::C)
-			{
-				for (Level::ItemVector::size_type i = 0; i < mInventory->getItems().size(); i++)
-				{
-					std::cout << mInventory->getItemId(i) << " ";
-				}
-			}
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mLHandler->togglePlayer();
@@ -347,17 +312,146 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 
 void EventHandler::update()
 {
-	std::cout << mLHandler->getActiveLevel() << std::endl;
-	std::cout << mLHandler->getActiveLevel()->getActiveScene() << std::endl;
 	//Only do this if the level needs moving camera
-	if (mLHandler->getActiveLevel() == 0)
+	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
+	if (mLHandler->getActiveLevel() == mLHandler->getLevel(1))
 	{
-		if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+		//Scene 1 is the big, second room in LastLevel, change as necessary
+		if (mLHandler->getActiveLevel()->getActiveScene() == 1)
 		{
-			if (mLHandler->getPlayer()->getPosition().x > 250)
+			//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
+			//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary
+			//In this case the camera scrolls while the Player is between 520 and 1000.
+			if (mLHandler->getPlayer()->getPosition().x > 520 && mLHandler->getPlayer()->getPosition().x < 1000)
 			{
+				//Make camera follow Player position
 				mLHandler->getActiveLevel()->moveViewWithPlayer(mLHandler->getPlayer()->getPosition().x);
 			}
 		}
+	}
+
+
+	//Check if Player is in position to change Scene
+	if (mLHandler->getPlayer()->getRect().intersects(mSceneChangeRect))
+	{
+		//Toggle Player if the new Scene needs it
+		if (mPlayerToggle)
+		{
+			mLHandler->togglePlayer();
+		}
+		//Set Player position to the starting position of the new Scene
+		mLHandler->getPlayer()->setPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
+		//Change to the new Scene
+		mLHandler->getActiveLevel()->changeScene(mNewScene);
+	}
+
+
+	//Check if Item interaction is enabled, which it only is when an Item is clicked
+	if (mItemInteraction)
+	{
+		//Check if any part of the Player intersects with the Item
+		if (mLHandler->getPlayer()->getGlobalRect().intersects(mTargetItem->getRectangle()))
+		{
+			//Check if Item has already been looked at
+			if (!mTargetItem->isLookedAt())
+			{
+				mTargetItem->toggleIsLookedAt();
+				if (mTargetItem->getId() == "Cube")
+				{
+					mDialogueSystem->displayRubicCubeDialogue();
+				}
+				if (mTargetItem->getId() == "Magnet")
+				{
+					//mDialogueSystem->displayMagnetDialogue();
+					std::cout << "Effin' magnets, how do they work!?";
+				}
+				if (mTargetItem->getId() == "Bowl")
+				{
+					//mDialogueSystem->displayBowlDialogue();
+					std::cout << "Skål!";
+				}
+				if (mTargetItem->getId() == "Block")
+				{
+					//mDialogueSystem->displayBlockDialogue();
+					std::cout << "En kloss framför akvariet, undrar om det finns en astronaut bakom?";
+				}
+				if (mTargetItem->getId() == "Astronaut")
+				{
+					//mDialogueSystem->displayAstronautDialogue();
+					std::cout << "Nämen titta, en astronaut.";
+				}
+				if (mTargetItem->getId() == "String")
+				{
+					//mDialogueSystem->displayStringDialogue();
+					std::cout << "En tråd på golvet.";
+				}
+				if (mTargetItem->getId() == "Star")
+				{
+					//mDialogueSystem->displayStarDialogue();
+					std::cout << "Stjärnklart!";
+				}
+			}
+			//Check if Item can be picked up
+			else if (mTargetItem->getPickupable())
+			{
+				//Make Item inactive when it is picked up
+				mTargetItem->toggleActive();
+				if (mTargetItem->getId() == "Magnet")
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Plockade upp magnet";
+				}
+				if (mTargetItem->getId() == "String")
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Plockade upp tråd";
+				}
+			}
+			//Check if Item can be interacted with
+			else if (mTargetItem->getInteractable())
+			{
+				//Check if Item has already been interacted with
+				if (!mTargetItem->isInteracted())
+				{
+					mTargetItem->toggleInteractable();
+					if (mTargetItem->getId() == "Block")
+					{
+						//Move Block, TODO - change to smooth movement
+						mTargetItem->setPosition(630, 315);
+						mTargetItem->toggleInteracted();
+
+						//Find Astronaut in ItemVector and make it active
+						for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveItems().size(); i++)
+							{
+							if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
+							{
+								mLHandler->getActiveItems()[i]->toggleActive();
+							}
+						}
+
+						std::cout << "Knuffade Klossen";
+					}
+					if (mTargetItem->getId() == "Star")
+					{
+						mTargetItem->setPosition(900, 190);
+						std::cout << "Satte stjärnan på väggen";
+					}
+				}
+			}
+			//Disable Item interaction when done
+			mItemInteraction = false;
+		}
+	}
+
+
+	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
+	if (mLHandler->getPlayer()->getDirection().x < 0 && !mLHandler->getPlayer()->isFacingLeft())
+	{
+		mLHandler->getPlayer()->flipPlayer();
+	}
+	//If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
+	if (mLHandler->getPlayer()->getDirection().x > 0 && mLHandler->getPlayer()->isFacingLeft())
+	{
+		mLHandler->getPlayer()->flipPlayer();
 	}
 }
