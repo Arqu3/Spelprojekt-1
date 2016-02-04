@@ -110,3 +110,19 @@ bool Player::getIsOnPosition()
 {
 	return isOnPosition;
 }
+
+sf::Vector2f Player::getDirection()
+{
+	return mDirection;
+}
+
+void Player::flipPlayer()
+{
+	mFacingLeft = !mFacingLeft;
+	mSprite.scale(sf::Vector2f(-1, 1));
+}
+
+bool Player::isFacingLeft()
+{
+	return mFacingLeft;
+}

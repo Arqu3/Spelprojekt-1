@@ -7,7 +7,8 @@ mIsActive(false),
 mIsLookable(false),
 mIsInteractable(false),
 mIsPickupable(false),
-mIsLookedAt(false)
+mIsLookedAt(false),
+mInteracted(false)
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -196,6 +197,12 @@ void Item::toggleIsLookedAt()
 	mIsLookedAt = !mIsLookedAt;
 }
 
+void Item::toggleInteracted()
+{
+	//Toggle between true and false
+	mInteracted = !mInteracted;
+}
+
 std::string Item::getId()
 {
 	return mId;
@@ -240,6 +247,11 @@ bool Item::getPickupable()
 bool Item::isLookedAt()
 {
 	return mIsLookedAt;
+}
+
+bool Item::isInteracted()
+{
+	return mInteracted;
 }
 
 //Get name

@@ -38,6 +38,10 @@ mIsActive(false)
 	rectangle.setPosition(sf::Vector2f(0, 0));
 	rectangle.setSize(sf::Vector2f(0, 0));
 
+	//View
+	mView.setCenter(512, 288);
+	mView.setSize(1024, 576);
+
 	//Create Items
 	mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
 	mMagnet = new Item(handler, sf::Vector2f(325, 270), "Magnet");
@@ -94,6 +98,7 @@ void Level1::playAmbience()
 
 void Level1::drawBackground(sf::RenderWindow &window)
 {	
+	window.setView(mView);
 	if (mActiveScene == 0)
 	{
 		window.draw(background);
@@ -187,8 +192,8 @@ void Level1::toggleActive()
 		//Add to ItemVector
 		addItem(mMagnet);
 		addItem(mStar);
-		addItem(mAstronaut);
 		addItem(mBlock);
+		addItem(mAstronaut);
 		addItem(mString);
 		addItem(mBowl);
 		addItem(mCube);
@@ -200,6 +205,16 @@ void Level1::toggleActive()
 bool Level1::isActive()
 {
 	return mIsActive;
+}
+
+sf::View Level1::getView()
+{
+	return mView;
+}
+
+void Level1::moveViewWithPlayer(float playerPos)
+{
+	mView.setCenter(playerPos, 288);
 }
 
 void Level1::clearScene()
@@ -220,7 +235,7 @@ void Level1::internalSwap(int num)
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
-		mRects.push_back(createRect(440, 150, 210, 70));
+		mRects.push_back(createRect(440, 150, 125, 70));
 
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
@@ -244,12 +259,22 @@ void Level1::internalSwap(int num)
 		}
 		if (mAstronaut->getActive())
 		{
+			mAstronaut->setPosition(565, 150);
+			mAstronaut->setScale(0.4f, 0.4f);
 			addItem(mAstronaut);
 		}
 		if (mBlock->getActive())
 		{
-			mBlock->setPosition(570, 160);
-			mBlock->setScale(0.3, 0.3);
+			if (!mBlock->isInteracted())
+			{
+				mBlock->toggleInteractable();
+				mBlock->setPosition(570, 160);
+			}
+			else
+			{
+				mBlock->setPosition(615, 160);
+			}
+			mBlock->setScale(0.3f, 0.3f);
 			addItem(mBlock);
 		}
 		if (mString->getActive())
@@ -274,16 +299,27 @@ void Level1::internalSwap(int num)
 		//Back to room, left side of screen
 		mRects.push_back(createRect(0, 30, 120, 470));
 
-		//mBlock toggle interactable only if not already moved
-		//isInteracted() in Item?
-
 		//Repopulate ItemVector with active items
 		if (mBlock->getActive())
 		{
-			mBlock->setPosition(500, 315);
-			mBlock->setScale(1, 1);
+			if (!mBlock->isInteracted())
+			{
+				mBlock->toggleInteractable();
+				mBlock->setPosition(500, 315);
+			}
+			else
+			{
+				mBlock->setPosition(630, 315);
+			}
+			mBlock->setScale(1.0f, 1.0f);
 			addItem(mBlock);
 		}
+		if (mAstronaut->getActive())
+		{
+		}
+		mAstronaut->setPosition(500, 315);
+		mAstronaut->setScale(1.0f, 1.0f);
+		addItem(mAstronaut);
 	}
 }
 

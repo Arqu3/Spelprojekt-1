@@ -16,6 +16,7 @@ public:
 	void toggleInteractable();
 	void togglePickupable();
 	void toggleIsLookedAt();
+	void toggleInteracted();
 
 	std::string getId();
 
@@ -31,6 +32,7 @@ public:
 	bool getInteractable();
 	bool getPickupable();
 	bool isLookedAt();
+	bool isInteracted();
 
 	//Get Name
 	std::string getName();
@@ -56,6 +58,7 @@ private:
 	bool mIsInteractable;
 	bool mIsPickupable;
 	bool mIsLookedAt;
+	bool mInteracted;
 
 	int mIndex;
 

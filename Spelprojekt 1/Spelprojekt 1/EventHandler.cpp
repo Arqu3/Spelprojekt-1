@@ -2,9 +2,11 @@
 #include <iostream>
 
 EventHandler::EventHandler(LevelHandler &lHandler):
-mLHandler(&lHandler)
+mLHandler(&lHandler),
+mInventory()
 {
 	mLHandler->setActiveLevel(0); //Change back!
+	mInventory = new Inventory();
 }
 
 EventHandler::~EventHandler()
@@ -84,6 +86,7 @@ void EventHandler::mouseClick(sf::Event &event)
 					if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
 					{
 						//mDialogueSystem->displayMagnetDialogue();
+						//mViewMoveTo = sf::Vector2f(20, 0);
 						std::cout << "Effin' magnets, how do they work!?";
 					}
 					if (mLHandler->getActiveItems()[i]->getId() == "Bowl")
@@ -117,29 +120,45 @@ void EventHandler::mouseClick(sf::Event &event)
 					mLHandler->getActiveItems()[i]->toggleActive();
 					if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
 					{
-						//TODO - Add to inventory
 						mInventory->addItem(mLHandler->getActiveItems()[i]);
 						std::cout << "Plockade upp magnet";
 					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Tråd")
+					if (mLHandler->getActiveItems()[i]->getId() == "String")
 					{
-						//TODO - Add to inventory
+						mInventory->addItem(mLHandler->getActiveItems()[i]);
 						std::cout << "Plockade upp tråd";
 					}
 				}
 				else if (mLHandler->getActiveItems()[i]->getInteractable())
 				{
-					mLHandler->getActiveItems()[i]->toggleInteractable();
-					if (mLHandler->getActiveItems()[i]->getId() == "Block")
+					if (!mLHandler->getActiveItems()[i]->isInteracted())
 					{
-						//TODO - toggleActive() on Astronaut to make it active
-						//TODO - Move Block
-						std::cout << "Knuffade Klossen";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Star")
-					{
-						mLHandler->getActiveItems()[i]->setPosition(900,190);
-						std::cout << "Satte stjärnan på väggen";
+						mLHandler->getActiveItems()[i]->toggleInteractable();
+						if (mLHandler->getActiveItems()[i]->getId() == "Block")
+						{
+							//Move Block, TODO - change to smooth movement
+							mLHandler->getActiveItems()[i]->setPosition(630, 315);
+							mLHandler->getActiveItems()[i]->toggleInteracted();
+							//Toggle Astronaut Active, i + 1 is Astronaut currently, might be problematic?
+							mLHandler->getActiveItems()[i + 1]->toggleActive();
+
+							//This for-loop might be better?
+							/*for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveItems().size(); i++)
+							{
+								std::cout << mLHandler->getActiveItems()[i]->getId();
+								if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
+								{
+									mLHandler->getActiveItems()[i]->toggleActive();
+								}
+							}*/
+
+							std::cout << "Knuffade Klossen";
+						}
+						if (mLHandler->getActiveItems()[i]->getId() == "Star")
+						{
+							mLHandler->getActiveItems()[i]->setPosition(900, 190);
+							std::cout << "Satte stjärnan på väggen";
+						}
 					}
 				}
 			}
@@ -150,6 +169,14 @@ void EventHandler::mouseClick(sf::Event &event)
 	if (checkCollision(mLHandler->getActiveLevel()->getPlayRects(), point))
 	{
 		mLHandler->getPlayer()->moveToPosition(point.x, point.y);
+		if (mLHandler->getPlayer()->getDirection().x < 0 && !mLHandler->getPlayer()->isFacingLeft())
+		{
+			mLHandler->getPlayer()->flipPlayer();
+		}
+		if (mLHandler->getPlayer()->getDirection().x > 0 && mLHandler->getPlayer()->isFacingLeft())
+		{
+			mLHandler->getPlayer()->flipPlayer();
+		}
 	}
 
 	//Check Rect Collisions
@@ -292,10 +319,20 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 			{
 				window.close();
 			}
-			/*if (event.key.code == sf::Keyboard::I)
+			if (event.key.code == sf::Keyboard::I)
 			{
-				std::cout << mInventory->getItemId(0);
-			}*/
+				for (Level::ItemVector::size_type i = 0; i < mInventory->getItems().size(); i++)
+				{
+					std::cout << mInventory->getItemId(i) << " ";
+				}
+			}
+			if (event.key.code == sf::Keyboard::C)
+			{
+				for (Level::ItemVector::size_type i = 0; i < mInventory->getItems().size(); i++)
+				{
+					std::cout << mInventory->getItemId(i) << " ";
+				}
+			}
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mLHandler->togglePlayer();
@@ -304,6 +341,23 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 
 		default:
 			break;
+		}
+	}
+}
+
+void EventHandler::update()
+{
+	std::cout << mLHandler->getActiveLevel() << std::endl;
+	std::cout << mLHandler->getActiveLevel()->getActiveScene() << std::endl;
+	//Only do this if the level needs moving camera
+	if (mLHandler->getActiveLevel() == 0)
+	{
+		if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+		{
+			if (mLHandler->getPlayer()->getPosition().x > 250)
+			{
+				mLHandler->getActiveLevel()->moveViewWithPlayer(mLHandler->getPlayer()->getPosition().x);
+			}
 		}
 	}
 }

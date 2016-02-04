@@ -12,9 +12,14 @@ public:
 	Inventory();
 	~Inventory();
 
+	typedef std::vector<Item*> ItemVector;
+
 	//Add and remove functions
 	void addItem(Item *item);
 	void removeItem(Item *item);
+
+	//Get ItemVector
+	ItemVector getItems();
 
 	//Get index function
 	std::string getItemId(int index);
@@ -27,7 +32,6 @@ public:
 
 private:
 	//Vector for items
-	typedef std::vector<Item*> ItemVector;
 	ItemVector mItemVector;
 };
 

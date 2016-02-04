@@ -17,6 +17,8 @@ public:
 	//Listen for mouse clicks
 	void eventListen(sf::RenderWindow &window);
 
+	void update();
+
 private:
 	//Check collision between a single rectangle and a point
 	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
@@ -35,6 +37,9 @@ private:
 	Inventory *mInventory;
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
+	sf::Vector2f mViewMoveTo;
+	float mXMove;
+	float mYMove;
 };
 
 #endif

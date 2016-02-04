@@ -17,6 +17,9 @@ public:
 	void setPosition(float x, float y);
 	void moveToPosition(float x, float y);
 	bool getIsOnPosition();
+	sf::Vector2f getDirection();
+	void flipPlayer();
+	bool isFacingLeft();
 
 private:
 	void move(float deltaTime);
@@ -26,6 +29,7 @@ private:
 	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
 
+	bool mFacingLeft;
 	bool isOnPosition;
 	sf::FloatRect mRect;
 	sf::FloatRect mMoveToRect;

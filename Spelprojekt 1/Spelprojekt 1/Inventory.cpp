@@ -71,3 +71,8 @@ void Inventory::sort()
 		}
 	}
 }
+
+Inventory::ItemVector Inventory::getItems()
+{
+	return mItemVector;
+}
