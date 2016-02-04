@@ -15,6 +15,8 @@ mIsActive(false)
 	//Foreground Texture scene 1
 
 	//Background Texture scene 2
+	background2.setSize(sf::Vector2f(1536, 576));
+	background2.setTexture(handler.getTexture("Barn hem.png"));
 
 	//Playground Texture scene 2
 
@@ -29,8 +31,8 @@ mIsActive(false)
 	//Add sound
 
 	//Add HelpRect
-	rectangle.setPosition(sf::Vector2f(0, 70));
-	rectangle.setSize(sf::Vector2f(108, 350));
+	rectangle.setPosition(sf::Vector2f(437, 108));
+	rectangle.setSize(sf::Vector2f(96, 123));
 	rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 	
 	//Add items
@@ -96,8 +98,21 @@ void LastLevel::playAmbience()
 
 void LastLevel::drawBackground(sf::RenderWindow &window)
 {
-	window.draw(background);
-	//window.draw(rectangle);
+	if (mActiveScene == 0)
+	{
+		window.draw(background);
+
+	}
+
+	else if (mActiveScene == 1)
+	{
+		window.draw(background2);
+	}
+	else
+	{
+		window.draw(background3);
+	}
+	window.draw(rectangle);
 	drawItems(mItems, window);
 	
 }
@@ -242,6 +257,45 @@ void LastLevel::internalSwap(int num)
 	{
 		//Scene 2
 		mActiveScene = 1;
+
+		//Walkable Area
+		mPlayRects.push_back(createRect(100, 354, 917, 216));
+
+		//Door
+		mRects.push_back(createRect(0, 39, 70, 357));
+
+		//Books
+		mRects.push_back(createRect(261, 314, 82, 33));
+
+		//Jewelry Box
+		mRects.push_back(createRect(486, 314, 84, 36));
+
+		//Yarn Basket
+		mRects.push_back(createRect(271, 255, 74, 43));
+
+		//Crotch Rocket
+		mRects.push_back(createRect(377, 249, 23, 49));
+
+		//Gramophone
+		mRects.push_back(createRect(437, 108, 96, 123));
+
+		//Mask
+		mRects.push_back(createRect(0, 0, 0, 0));
+
+		
+
+
+		//Items Active
+		mNeedle->toggleActive();
+		mEarth->toggleActive();
+		mFish->toggleActive();
+
+		//Add items to ItemVector
+		addItem(mNeedle);
+		addItem(mEarth);
+		addItem(mFish);
+
+
 	}
 	else
 	{

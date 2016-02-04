@@ -235,10 +235,20 @@ void EventHandler::mouseClick(sf::Event &event)
 						//Do stuff here
 					}
 				}
-				// i == 1 is Planet 1 if ActiveScene is 0, 
+				// i == 1 is Planet 1 if ActiveScene is 0, Door if ActiveLevel is 1,
 				else if (i == 1)
 				{
-					std::cout << "Planet 1!";
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Planet 1!";
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						std::cout << "Door!";
+						mLHandler->getPlayer()->setPosition(108, 350);
+						mLHandler->getActiveLevel()->changeScene(0);
+					}
+					
 				}
 				// i == 2 is Planet 2 if ActiveScene is 0, 
 				else if (i == 2)
@@ -288,7 +298,19 @@ void EventHandler::mouseClick(sf::Event &event)
 				// i == 11 is Stairs if ActiveScene is 0,
 				else if (i == 11)
 				{
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						//TODO - Make player walk to (108, 350) before
+						//mLHandler->getPlayer()->moveToPosition(108, 350);
+
+					/*	if (mLHandler->getPlayer()->getPosition() == sf::Vector2f(108, 350))
+						{*/
+							mLHandler->getPlayer()->setPosition(90, 450);
+							mLHandler->getActiveLevel()->changeScene(1);
+						//}
+						
 					std::cout << "Stairs to scene 2!";
+					}
 				}
 			}
 		}

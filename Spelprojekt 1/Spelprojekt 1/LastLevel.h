@@ -44,8 +44,12 @@ private:
 	//Rectangles
 	rectVector mRects;
 	rectVector mPlayRects;
+
 	sf::RectangleShape background;
-	sf::RectangleShape rectangle;
+	sf::RectangleShape background2;
+	sf::RectangleShape background3;
+
+	sf::RectangleShape rectangle; //HelpRect
 	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
 
 	//Sound
