@@ -7,6 +7,7 @@ mLHandler(&lHandler)
 	mLHandler->setActiveLevel(0); //Change back!
 	mInventory = new Inventory();
 	mItemInteraction = false;
+	mInventoryMode = false;
 }
 
 EventHandler::~EventHandler()
@@ -283,7 +284,14 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 			mPixelPos = sf::Mouse::getPosition(window);
 			// convert it to world coordinates
 			mWorldPos = window.mapPixelToCoords(mPixelPos);
-			mouseClick(event);
+			if (mInventoryMode)
+			{
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+			}
+			else
+			{
+				mouseClick(event);
+			}
 			break;
 
 		case sf::Event::KeyPressed:
@@ -298,6 +306,10 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 					std::cout << mInventory->getItemId(i) << " ";
 				}
 			}
+			if (event.key.code == sf::Keyboard::M)
+			{
+				mInventoryMode = !mInventoryMode;
+			}
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mLHandler->togglePlayer();
@@ -310,7 +322,7 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 	}
 }
 
-void EventHandler::update()
+void EventHandler::update(sf::RenderWindow &window)
 {
 	//Only do this if the level needs moving camera
 	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
@@ -454,4 +466,9 @@ void EventHandler::update()
 	{
 		mLHandler->getPlayer()->flipPlayer();
 	}
+
+
+	//Inventory
+	mInventory->update(window);
+	mInventory->draw(window);
 }

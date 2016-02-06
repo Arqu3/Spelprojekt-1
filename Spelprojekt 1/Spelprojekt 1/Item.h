@@ -52,6 +52,8 @@ public:
 	//Set scale of item
 	void setScale(float x, float y);
 
+	sf::Sprite getSprite();
+
 private:
 	bool mIsActive;
 	bool mIsLookable;

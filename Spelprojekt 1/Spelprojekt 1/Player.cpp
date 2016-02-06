@@ -10,14 +10,23 @@ moveTo(position)
 	mSprite.setTexture(*handler.getTexture(textureName));
 	if (textureName == "Thomas.png")
 	{
-		mSprite.setScale(sf::Vector2f(0.08f, 0.08f));
-		mSprite.setOrigin(1050, 3250);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setOrigin(300, 900);
+		//mSprite.setScale(sf::Vector2f(0.08f, 0.08f));
+		//mSprite.setOrigin(1050, 3250);
 	}
 	else
 	{
 		mSprite.setScale(sf::Vector2f(0.04f, 0.04f));
 		mSprite.setOrigin(600, 2100);
 	}
+
+	mFrameTime = 0.001f;
+	mCurrentTime = 0;
+	mCurrentFrame = 1;
+	mThomasWalk.loadFromFile("Resources/Textures/ThomasWalk.png");
+	mTexture.loadFromImage(mThomasWalk, sf::IntRect(100, 0, 400, 1080));
+	mSprite.setTexture(mTexture);
 }
 
 
@@ -80,6 +89,53 @@ void Player::moveToPosition(float x, float y)
 
 void Player::update(float deltaTime)
 {
+	//Animation
+	//mCurrentTime += deltaTime;
+	////if (mCurrentTime >= mFrameTime)
+	////{
+	//	if (mCurrentFrame == 1)
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 500, 0, 400, 1080));
+	//	}
+	//	else if (mCurrentFrame < 3)
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 450, 0, 400, 1080));
+	//	}
+	//	else if (mCurrentFrame < 4)
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 430, 0, 400, 1080));
+	//	}
+	//	else if (mCurrentFrame < 5)
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 425, 0, 400, 1080));
+	//	}
+	//	else if (mCurrentFrame < 7)
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 418, 0, 400, 1080));
+	//	}
+	//	else if (mCurrentFrame < 8)
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 415, 0, 400, 1080));
+	//	}
+	//	else if (mCurrentFrame < 9)
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 412, 0, 400, 1080));
+	//	}
+	//	else
+	//	{
+	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 411, 0, 400, 1080));
+	//	}
+	//	mSprite.setTexture(mTexture);
+	//	if (mCurrentFrame < 9)
+	//	{
+	//		mCurrentFrame += 1;
+	//	}
+	//	else
+	//	{
+	//		mCurrentFrame = 0;
+	//	}
+	//	mCurrentTime = 0;
+	////}
 	mRect = sf::FloatRect(mPosition.x, mPosition.y, 10, 10);
 	mSprite.setPosition(mPosition);
 	move(deltaTime);

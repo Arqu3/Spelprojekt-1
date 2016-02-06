@@ -17,7 +17,7 @@ public:
 	//Listen for mouse clicks
 	void eventListen(sf::RenderWindow &window);
 
-	void update();
+	void update(sf::RenderWindow &window);
 
 private:
 	//Check collision between a single rectangle and a point
@@ -45,6 +45,7 @@ private:
 	sf::Vector2f mSceneChangePlayerPos;
 	int mNewScene;
 	bool mPlayerToggle;
+	bool mInventoryMode;
 };
 
 #endif

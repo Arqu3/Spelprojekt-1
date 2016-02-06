@@ -28,6 +28,12 @@ private:
 	sf::Vector2f mDirection;
 	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
+	sf::Image mThomasWalk;
+	
+	sf::Texture mTexture;
+	int mCurrentFrame;
+	float mCurrentTime;
+	float mFrameTime;
 
 	bool mFacingLeft;
 	bool isOnPosition;

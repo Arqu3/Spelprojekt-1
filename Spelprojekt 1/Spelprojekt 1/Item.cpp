@@ -286,3 +286,8 @@ void Item::setScale(float x, float y)
 {
 	mSprite.setScale(sf::Vector2f(x, y));
 }
+
+sf::Sprite Item::getSprite()
+{
+	return mSprite;
+}

@@ -31,7 +31,7 @@ void Game::update()
 		mLHandler.update(deltaTime);
 		mLHandler.draw(window);
 		mEventHandler.eventListen(window);
-		mEventHandler.update();
+		mEventHandler.update(window);
 
 		deltaClock.restart();
 		window.display();

@@ -1,78 +1,299 @@
 #include "Inventory.h"
 
-Inventory::Inventory():
-mItemVector()
-{
+using namespace std;
 
+Inventory::Inventory():
+mRow(0),
+mCol(-1),
+mColNum(3),
+mInitialXOffset(100),
+mInitialYOffset(100),
+mXIncrease(80),
+mYIncrease(80),
+//mTextureCounter(0),
+mHasSelected(false),
+//mTextures(),
+//mSprites(),
+mItems(),
+mEvent(),
+mSelectedItem1(-1),
+mSelectedItem2(-1)
+{
+	//Adds initial textures
+	/*addTexture("test_1.jpg");
+	addTexture("test_1.jpg");
+	addTexture("test_1.jpg");
+	addTexture("test_1.jpg");
+	addTexture("test_1.jpg");
+	addTexture("test_1.jpg");
+	addTexture("test_1.jpg");
+	addTexture("test_1.jpg");
+	addTexture("test_1.jpg");*/
+
+	//Size check
+	//cout << mTextures.size() << endl;
+	//cout << mSprites.size() << endl;
+	cout << mItems.size() << endl;
+
+	//Test color change
+	/*mSprites[0].setColor(sf::Color::Red);
+	mSprites[3].setColor(sf::Color::Blue);
+	mSprites[6].setColor(sf::Color::Green);*/
+
+	//Sets initial grid position
+	setInitialGrid();
+
+	//Rows and columns
+	cout << "Number of columns: " << mCol + 1 << endl;
+	cout << "Number of rows: " << mRow + 1 << endl;
+
+	//Mouse rectangle
+	mRectShape.setSize(sf::Vector2f(10, 10));
+	mRectShape.setFillColor(sf::Color::Red);
+
+	//Select rectangle
+	mSelectRect.setSize(sf::Vector2f(70, 70));
+	mSelectRect.setFillColor(sf::Color::Yellow);
 }
 
 Inventory::~Inventory()
 {
-	mItemVector.clear();
+	/*mTextures.clear();
+	mSprites.clear();*/
+	mItems.clear();
 }
 
-//Adds an item to the inventory
-void Inventory::addItem(Item *item)
+void Inventory::update(sf::RenderWindow &window)
 {
-	mItemVector.push_back(item);
-}
+	//Map mouse position to local window
+	mPixelPos = sf::Mouse::getPosition(window);
+	mWorldPos = window.mapPixelToCoords(mPixelPos);
 
-//Removes an item from the inventory
-void Inventory::removeItem(Item *item)
-{
-	if (mItemVector.size() > 1)
+	//Set mouse rectangle position
+	mRectShape.setPosition(sf::Vector2f(mWorldPos));
+
+	//Set select rectangle position
+	if (mSelectedItem1 != -1)
 	{
-		for (ItemVector::size_type i = 0; i < mItemVector.size(); i++)
+		//mSelectRect.setPosition(sf::Vector2f(mSprites[mSelectedItem1].getPosition().x - 3, mSprites[mSelectedItem1].getPosition().y - 3));
+		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getPosition().x - 3, mItems[mSelectedItem1]->getPosition().y - 3));
+	}
+
+	//Swap selected items
+	if (mSelectedItem1 != -1 && mSelectedItem2 != -1)
+	{
+		swapItems(mItems, mSelectedItem1, mSelectedItem2);
+		mSelectedItem1 = -1;
+		mSelectedItem2 = -1;
+	}
+
+	while (window.pollEvent(mEvent))
+	{
+		switch (mEvent.type)
 		{
-			if (item->getId() == mItemVector[i]->getId())
+		case sf::Event::Closed:
+			window.close();
+			break;
+
+		case sf::Event::KeyPressed:
+			//Close window when pressing escape
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				/*Swaps the chosen element and the last element in the vector
-				and removes the new last element*/ 
-				std::swap(mItemVector[i], mItemVector.back());
-				mItemVector.pop_back();
-				break;
+				window.close();
 			}
+
+			//Remove last element in inventory when pressing S
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				/*if (mTextures.size() >= 1 && mSprites.size() >= 1)
+				{
+					removeItem();
+
+					cout << mTextures.size() << endl;
+					cout << mSprites.size() << endl;
+				}*/
+			}
+
+			//Add element to inventory when pressing A
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			{
+				/*addTexture("test_1.jpg");
+				setDynamicGrid();
+
+				cout << mTextures.size() << endl;
+				cout << mSprites.size() << endl;*/
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			{
+				/*swapItems(mSprites, 0, 3);*/
+			}
+
+			//Help function to clear console window when pressing space
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				system("cls");
+			}
+			break;
+
+		case sf::Event::MouseButtonPressed:
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				checkCollision(mItems, mWorldPos);
+			}
+
+			break;
 		}
 	}
+}
+
+void Inventory::draw(sf::RenderWindow &window)
+{
+	if (mSelectedItem1 != -1)
+	{
+		window.draw(mSelectRect);
+	}
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		window.draw(mItems[i]->getSprite());
+	}
+	window.draw(mRectShape);
+}
+
+//Adds texture via name
+void Inventory::addTexture(string name)
+{
+	/*mTextures.push_back(sf::Texture());
+	mSprites.push_back(sf::Sprite());
+	mTextureCounter++;
+
+	if (!mTextures[mTextureCounter - 1].loadFromFile("Resources/Textures/" + name))
+	{
+		cout << "Cannot load texture at: " << mTextureCounter - 1 << endl;
+	}
+	for (SpriteVector::size_type i = 0; i < mSprites.size(); i++)
+	{
+		mSprites[i].setTexture(mTextures[mTextureCounter - 1]);
+	}*/
+}
+
+void Inventory::addItem(Item* item)
+{
+	mItems.push_back(item);
+	setDynamicGrid();
+}
+
+Inventory::ItemVector Inventory::getItems()
+{
+	return mItems;
 }
 
 //Function to get the id of an item in the index list
 std::string Inventory::getItemId(int index)
 {
-	return mItemVector[index]->getId();
+	return mItems[index]->getId();
 }
 
-//Function to draw the inventory
-void Inventory::drawInventory(sf::RenderWindow &window)
+void Inventory::setInitialGrid()
 {
-	for (ItemVector::size_type i = 0; i < mItemVector.size(); i++)
+	//Set initial grid with for-loop
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		mItemVector[i]->draw(window);
+		//Adds columns and rows depending on spritevector size
+		mCol++;
+		if (mCol >= mColNum)
+		{
+			mRow++;
+			mCol = 0;
+		}
+
+		mPosX = mInitialXOffset + (mCol * mXIncrease);
+		mPosY = mInitialYOffset + (mRow * mYIncrease);
+
+		mItems[i]->setPosition(mPosX, mPosY);
 	}
 }
 
-//Sorting function, to sort items in the vector
-void Inventory::sort()
+void Inventory::setDynamicGrid()
 {
-	if (mItemVector.size() > 1)
+	//Sets dynamic grid without affecting current grid position
+	mCol++;
+	if (mCol >= mColNum)
 	{
-		int indexId = 0;
-		for (ItemVector::size_type i = 0; i < mItemVector.size(); i++)
+		mRow++;
+		mCol = 0;
+	}
+
+	mPosX = mInitialXOffset + (mCol * mXIncrease);
+	mPosY = mInitialYOffset + (mRow * mYIncrease);
+
+	//mSprites[mTextureCounter - 1].setPosition(sf::Vector2f(mPosX, mPosY));
+	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
+}
+
+void Inventory::removeItem()
+{
+	//Reverse additem functionality 
+	/*mTextures.pop_back();
+	mSprites.pop_back();
+	mTextureCounter--;*/
+
+	mItems.pop_back();
+
+	mCol--;
+	if (mCol <= -1)
+	{
+		mRow--;
+		mCol = 2;
+	}
+}
+
+//Checks collision between any element in a vector and a sf::vector point
+//If the collision check is true, it returns the specified element it collided with
+void Inventory::checkCollision(ItemVector items, sf::Vector2f point)
+{
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		if (mItems[i]->getRectangle().contains(point))
 		{
-			for (ItemVector::size_type j = 0; j < mItemVector.size(); j++)
+			//Select first item if no first item is selected
+			if (mSelectedItem1 == -1)
 			{
-				if (mItemVector[j] < mItemVector[j + 1])
-				{
-					indexId = mItemVector[j]->getIndex();
-					mItemVector[j] = mItemVector[j + 1];
-					mItemVector[j + 1]->setIndex(indexId);
-				}
+				mSelectedItem1 = i;
+				cout << "First selected item is: " << mSelectedItem1 << endl;
 			}
+
+			//Select second item if has selected first item and no second is selected, also avoid selecting same item twice
+			if (mSelectedItem1 != -1 && mSelectedItem2 == -1 && mSelectedItem1 != i)
+			{
+				mSelectedItem2 = i;
+				cout << "Second selected item is: " << mSelectedItem2 << endl;
+			}
+			cout << i << endl;
 		}
 	}
 }
 
-Inventory::ItemVector Inventory::getItems()
+//Swaps elements in given vector, passed by referens to avoid copy
+//Inputindex and swapindex decides what elements are swapped
+void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex)
 {
-	return mItemVector;
+	//Safety checks
+	if (inputVector.size() > 1 && inputIndex != swapIndex && inputIndex >= 0)
+	{
+		//Swap index
+		std::swap(inputVector[inputIndex], inputVector[swapIndex]);
+
+		//Swap position
+		sf::Vector2f tempPos(inputVector[inputIndex]->getPosition());
+		inputVector[inputIndex]->setPosition(inputVector[swapIndex]->getPosition().x, inputVector[swapIndex]->getPosition().y);
+		inputVector[swapIndex]->setPosition(tempPos.x, tempPos.y);
+
+		cout << "Swapped" << endl;
+	}
+}
+
+void Inventory::invertSelect()
+{
+	mHasSelected = !mHasSelected;
 }
