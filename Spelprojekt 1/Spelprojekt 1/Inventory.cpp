@@ -19,26 +19,8 @@ mEvent(),
 mSelectedItem1(-1),
 mSelectedItem2(-1)
 {
-	//Adds initial textures
-	/*addTexture("test_1.jpg");
-	addTexture("test_1.jpg");
-	addTexture("test_1.jpg");
-	addTexture("test_1.jpg");
-	addTexture("test_1.jpg");
-	addTexture("test_1.jpg");
-	addTexture("test_1.jpg");
-	addTexture("test_1.jpg");
-	addTexture("test_1.jpg");*/
-
 	//Size check
-	//cout << mTextures.size() << endl;
-	//cout << mSprites.size() << endl;
 	cout << mItems.size() << endl;
-
-	//Test color change
-	/*mSprites[0].setColor(sf::Color::Red);
-	mSprites[3].setColor(sf::Color::Blue);
-	mSprites[6].setColor(sf::Color::Green);*/
 
 	//Sets initial grid position
 	setInitialGrid();
@@ -58,8 +40,6 @@ mSelectedItem2(-1)
 
 Inventory::~Inventory()
 {
-	/*mTextures.clear();
-	mSprites.clear();*/
 	mItems.clear();
 }
 
@@ -75,7 +55,6 @@ void Inventory::update(sf::RenderWindow &window)
 	//Set select rectangle position
 	if (mSelectedItem1 != -1)
 	{
-		//mSelectRect.setPosition(sf::Vector2f(mSprites[mSelectedItem1].getPosition().x - 3, mSprites[mSelectedItem1].getPosition().y - 3));
 		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getPosition().x - 3, mItems[mSelectedItem1]->getPosition().y - 3));
 	}
 
@@ -87,64 +66,37 @@ void Inventory::update(sf::RenderWindow &window)
 		mSelectedItem2 = -1;
 	}
 
-	while (window.pollEvent(mEvent))
-	{
-		switch (mEvent.type)
-		{
-		case sf::Event::Closed:
-			window.close();
-			break;
+	//while (window.pollEvent(mEvent))
+	//{
+	//	switch (mEvent.type)
+	//	{
+	//	case sf::Event::Closed:
+	//		window.close();
+	//		break;
 
-		case sf::Event::KeyPressed:
-			//Close window when pressing escape
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-			{
-				window.close();
-			}
+	//	case sf::Event::KeyPressed:
+	//		//Close window when pressing escape
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	//		{
+	//			window.close();
+	//		}
 
-			//Remove last element in inventory when pressing S
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			{
-				/*if (mTextures.size() >= 1 && mSprites.size() >= 1)
-				{
-					removeItem();
+	//		//Help function to clear console window when pressing space
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	//		{
+	//			system("cls");
+	//		}
+	//		break;
 
-					cout << mTextures.size() << endl;
-					cout << mSprites.size() << endl;
-				}*/
-			}
+	//	case sf::Event::MouseButtonPressed:
+	//		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	//		{
+	//			checkCollision(mItems, mWorldPos);
+	//		}
 
-			//Add element to inventory when pressing A
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			{
-				/*addTexture("test_1.jpg");
-				setDynamicGrid();
-
-				cout << mTextures.size() << endl;
-				cout << mSprites.size() << endl;*/
-			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			{
-				/*swapItems(mSprites, 0, 3);*/
-			}
-
-			//Help function to clear console window when pressing space
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			{
-				system("cls");
-			}
-			break;
-
-		case sf::Event::MouseButtonPressed:
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-			{
-				checkCollision(mItems, mWorldPos);
-			}
-
-			break;
-		}
-	}
+	//		break;
+	//	}
+	//}
 }
 
 void Inventory::draw(sf::RenderWindow &window)
@@ -160,23 +112,6 @@ void Inventory::draw(sf::RenderWindow &window)
 	window.draw(mRectShape);
 }
 
-//Adds texture via name
-void Inventory::addTexture(string name)
-{
-	/*mTextures.push_back(sf::Texture());
-	mSprites.push_back(sf::Sprite());
-	mTextureCounter++;
-
-	if (!mTextures[mTextureCounter - 1].loadFromFile("Resources/Textures/" + name))
-	{
-		cout << "Cannot load texture at: " << mTextureCounter - 1 << endl;
-	}
-	for (SpriteVector::size_type i = 0; i < mSprites.size(); i++)
-	{
-		mSprites[i].setTexture(mTextures[mTextureCounter - 1]);
-	}*/
-}
-
 void Inventory::addItem(Item* item)
 {
 	mItems.push_back(item);
@@ -188,7 +123,7 @@ Inventory::ItemVector Inventory::getItems()
 	return mItems;
 }
 
-//Function to get the id of an item in the index list
+//Function to get the id of an item in the ItemVector
 std::string Inventory::getItemId(int index)
 {
 	return mItems[index]->getId();
@@ -199,7 +134,7 @@ void Inventory::setInitialGrid()
 	//Set initial grid with for-loop
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		//Adds columns and rows depending on spritevector size
+		//Adds columns and rows depending on ItemVector size
 		mCol++;
 		if (mCol >= mColNum)
 		{
@@ -227,16 +162,12 @@ void Inventory::setDynamicGrid()
 	mPosX = mInitialXOffset + (mCol * mXIncrease);
 	mPosY = mInitialYOffset + (mRow * mYIncrease);
 
-	//mSprites[mTextureCounter - 1].setPosition(sf::Vector2f(mPosX, mPosY));
 	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
 }
 
 void Inventory::removeItem()
 {
 	//Reverse additem functionality 
-	/*mTextures.pop_back();
-	mSprites.pop_back();
-	mTextureCounter--;*/
 
 	mItems.pop_back();
 

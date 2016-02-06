@@ -284,6 +284,7 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 			mPixelPos = sf::Mouse::getPosition(window);
 			// convert it to world coordinates
 			mWorldPos = window.mapPixelToCoords(mPixelPos);
+			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mInventoryMode)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
@@ -470,5 +471,8 @@ void EventHandler::update(sf::RenderWindow &window)
 
 	//Inventory
 	mInventory->update(window);
-	mInventory->draw(window);
+	if (mInventoryMode)
+	{
+		mInventory->draw(window);
+	}
 }

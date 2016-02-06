@@ -10,8 +10,11 @@ moveTo(position)
 	mSprite.setTexture(*handler.getTexture(textureName));
 	if (textureName == "Thomas.png")
 	{
+		//Spritesheet
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setOrigin(300, 900);
+
+		//No spritesheet
 		//mSprite.setScale(sf::Vector2f(0.08f, 0.08f));
 		//mSprite.setOrigin(1050, 3250);
 	}
@@ -21,12 +24,15 @@ moveTo(position)
 		mSprite.setOrigin(600, 2100);
 	}
 
-	mFrameTime = 0.001f;
+	mFrameTime = 0.03f;
 	mCurrentTime = 0;
 	mCurrentFrame = 1;
-	mThomasWalk.loadFromFile("Resources/Textures/ThomasWalk.png");
-	mTexture.loadFromImage(mThomasWalk, sf::IntRect(100, 0, 400, 1080));
-	mSprite.setTexture(mTexture);
+	if (textureName == "Thomas.png")
+	{
+		mThomasWalk.loadFromFile("Resources/Textures/ThomasWalk.png");
+		mTexture.loadFromImage(mThomasWalk, sf::IntRect(100, 0, 400, 1080));
+		mSprite.setTexture(mTexture);
+	}
 }
 
 
@@ -43,10 +49,12 @@ void Player::move(float deltaTime)
 	if (mRect.intersects(mMoveToRect))
 	{
 		isOnPosition = true;
+		mWalk = false;
 	}
 	else
 	{
 		isOnPosition = false;
+		mWalk = true;
 	}
 
 
@@ -90,52 +98,55 @@ void Player::moveToPosition(float x, float y)
 void Player::update(float deltaTime)
 {
 	//Animation
-	//mCurrentTime += deltaTime;
-	////if (mCurrentTime >= mFrameTime)
-	////{
-	//	if (mCurrentFrame == 1)
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 500, 0, 400, 1080));
-	//	}
-	//	else if (mCurrentFrame < 3)
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 450, 0, 400, 1080));
-	//	}
-	//	else if (mCurrentFrame < 4)
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 430, 0, 400, 1080));
-	//	}
-	//	else if (mCurrentFrame < 5)
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 425, 0, 400, 1080));
-	//	}
-	//	else if (mCurrentFrame < 7)
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 418, 0, 400, 1080));
-	//	}
-	//	else if (mCurrentFrame < 8)
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 415, 0, 400, 1080));
-	//	}
-	//	else if (mCurrentFrame < 9)
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 412, 0, 400, 1080));
-	//	}
-	//	else
-	//	{
-	//		mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 411, 0, 400, 1080));
-	//	}
-	//	mSprite.setTexture(mTexture);
-	//	if (mCurrentFrame < 9)
-	//	{
-	//		mCurrentFrame += 1;
-	//	}
-	//	else
-	//	{
-	//		mCurrentFrame = 0;
-	//	}
-	//	mCurrentTime = 0;
-	////}
+	mCurrentTime += deltaTime;
+	if (mWalk)
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			if (mCurrentFrame == 1)
+			{
+				mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 500, 0, 400, 1080));
+			}
+			/*else if (mCurrentFrame < 3)
+			{
+			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 450, 0, 400, 1080));
+			}
+			else if (mCurrentFrame < 4)
+			{
+			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 430, 0, 400, 1080));
+			}
+			else if (mCurrentFrame < 5)
+			{
+			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 425, 0, 400, 1080));
+			}
+			else if (mCurrentFrame < 7)
+			{
+			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 418, 0, 400, 1080));
+			}
+			else if (mCurrentFrame < 8)
+			{
+			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 415, 0, 400, 1080));
+			}
+			else if (mCurrentFrame < 9)
+			{
+			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 412, 0, 400, 1080));
+			}*/
+			else
+			{
+				mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 411, 0, 400, 1080));
+			}
+			mSprite.setTexture(mTexture);
+			if (mCurrentFrame < 50)
+			{
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+			}
+			mCurrentTime = 0;
+		}
+	}
 	mRect = sf::FloatRect(mPosition.x, mPosition.y, 10, 10);
 	mSprite.setPosition(mPosition);
 	move(deltaTime);
@@ -145,6 +156,12 @@ void Player::update(float deltaTime)
 
 void Player::draw(sf::RenderWindow &window)
 {
+	//Help Rectangle to visualize getGlobalRect()
+	/*sf::RectangleShape rectangle(mPosition);
+	rectangle.setPosition(sf::Vector2f(mPosition.x - 90, mPosition.y - 230));
+	rectangle.setSize(sf::Vector2f(120, 250));
+	window.draw(rectangle);*/
+
 	window.draw(mSprite);
 }
 
@@ -178,7 +195,22 @@ bool Player::isFacingLeft()
 	return mFacingLeft;
 }
 
+//Return a Rect that covers the whole character
 sf::FloatRect Player::getGlobalRect()
 {
-	return mSprite.getGlobalBounds();
+	//Creates a FloatRect at Players current position and size, compensated for previously set Origin and Scale
+	return sf::FloatRect(sf::Vector2f(mPosition.x - 90, mPosition.y - 270), sf::Vector2f(120, 300));
+	//return mSprite.getGlobalBounds(); //Doesn't work with spritesheet
+}
+
+void Player::setCurrentAnimation(std::string animation)
+{
+	if (animation == "Walk")
+	{
+		mWalk = true;
+	}
+	else
+	{
+		mWalk = false;
+	}
 }

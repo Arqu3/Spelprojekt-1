@@ -28,7 +28,6 @@ public:
 	void update(sf::RenderWindow &window);
 	void draw(sf::RenderWindow &window);
 
-	void addTexture(std::string name);
 	void addItem(Item* item);
 	ItemVector getItems();
 	std::string getItemId(int index);
@@ -53,11 +52,6 @@ private:
 	float mInitialYOffset;
 	float mXIncrease;
 	float mYIncrease;
-
-	//Textures/sprites
-	//TextureVector mTextures;
-	//SpriteVector mSprites;
-	//int mTextureCounter;
 
 	//ItemVector
 	ItemVector mItems;

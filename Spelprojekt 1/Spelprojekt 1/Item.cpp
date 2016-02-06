@@ -274,7 +274,7 @@ sf::FloatRect Item::getRectangle()
 
 sf::Vector2f Item::getPosition()
 {
-	return mPosition;
+	return mSprite.getPosition();
 }
 
 void Item::setPosition(float x, float y)

@@ -20,6 +20,7 @@ public:
 	void flipPlayer();
 	bool isFacingLeft();
 	sf::FloatRect getGlobalRect();
+	void setCurrentAnimation(std::string animation);
 
 private:
 	void move(float deltaTime);
@@ -40,6 +41,7 @@ private:
 	sf::FloatRect mRect;
 	sf::FloatRect mMoveToRect;
 	void waitForClick(sf::RenderWindow &window);
+	bool mWalk;
 	
 };
 #endif
