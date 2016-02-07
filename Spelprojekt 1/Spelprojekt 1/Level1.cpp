@@ -5,6 +5,8 @@ mRects(),
 mPlayRects(),
 mIsActive(false)
 {
+	handler.loadLevel1();
+
 	// Room Textures
 	//Background texture
 	background.setSize(sf::Vector2f(1024, 576));

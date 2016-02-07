@@ -12,12 +12,38 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
-	//Add resources in constructor
-	// Textures
+
+	//cout << "Number of textures loaded: " << mTextures.size() << endl;
+	//cout << "Number of sounds loaded: " << mSounds.size() << endl;
+	//cout << "Number of music files loaded: " << mMusicNames.size() << endl;
+}
+
+ResourceHandler::~ResourceHandler()
+{
+	internalClear();
+}
+
+void ResourceHandler::internalClear()
+{
+	mTextures.clear();
+	mTextureNames.clear();
+
+	mSounds.clear();
+	mSoundNames.clear();
+
+	mMusicNames.clear();
+}
+
+void ResourceHandler::loadLevel1()
+{
+	internalClear();
+
 	//Thomas
 	addTexture("Thomas.png");
 	//Hilma
 	addTexture("Hilma.png");
+
+	//Textures
 	//Thomas rum items
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");
@@ -35,30 +61,16 @@ musicCounter(0)
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
 
-	//LastLevel
-	addTexture("LastLevel_BackgroundTest1.png");
 	//Music
 	addMusic("Level1Music.ogg");
-
-	cout << "Number of textures loaded: " << mTextures.size() << endl;
-	cout << "Number of sounds loaded: " << mSounds.size() << endl;
-	cout << "Number of music files loaded: " << mMusicNames.size() << endl;
 }
 
-ResourceHandler::~ResourceHandler()
+void ResourceHandler::loadLastLevel()
 {
 	internalClear();
-}
 
-void ResourceHandler::internalClear()
-{
-	mTextures.clear();
-	mTextureNames.clear();
-
-	mSounds.clear();
-	mSoundNames.clear();
-
-	mMusicNames.clear();
+	//LastLevel
+	addTexture("LastLevel_BackgroundTest1.png");
 }
 
 //Adds a texture to the texture vector
