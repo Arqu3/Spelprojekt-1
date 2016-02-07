@@ -20,17 +20,29 @@ moveTo(position)
 	}
 	else
 	{
-		mSprite.setScale(sf::Vector2f(0.04f, 0.04f));
-		mSprite.setOrigin(600, 2100);
+		//Spritesheet
+		mSprite.setScale(sf::Vector2f(0.25f, 0.25f));
+		mSprite.setOrigin(100, 780);
+
+		//No spritesheet
+		//mSprite.setScale(sf::Vector2f(0.04f, 0.04f));
+		//mSprite.setOrigin(600, 2100);
 	}
 
-	mFrameTime = 0.03f;
+	mWalk = false;
+	mFrameTime = 0.02f;
 	mCurrentTime = 0;
-	mCurrentFrame = 1;
+	mCurrentFrame = 0;
 	if (textureName == "Thomas.png")
 	{
 		mThomasWalk.loadFromFile("Resources/Textures/ThomasWalk.png");
 		mTexture.loadFromImage(mThomasWalk, sf::IntRect(100, 0, 400, 1080));
+		mSprite.setTexture(mTexture);
+	}
+	else if (textureName == "Hilma.png")
+	{
+		mHilmaWalk.loadFromFile("Resources/Textures/HilmaWalk.png");
+		mTexture.loadFromImage(mThomasWalk, sf::IntRect(55, 0, 250, 1080));
 		mSprite.setTexture(mTexture);
 	}
 }
@@ -101,52 +113,43 @@ void Player::update(float deltaTime)
 	mCurrentTime += deltaTime;
 	if (mWalk)
 	{
-		if (mCurrentTime >= mFrameTime)
+		if (mThomasActive)
 		{
-			if (mCurrentFrame == 1)
+			if (mCurrentTime >= mFrameTime)
 			{
-				mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 500, 0, 400, 1080));
+				//Issues with overlapping sprites in spritesheet, 2 maybe?, Frame 13? Fix by increasing distance between all sprites by 5 pixels?
+				mTexture.loadFromImage(mThomasWalk, sf::IntRect(100 + mCurrentFrame * 400, 0, 400, 1080));
+				mSprite.setTexture(mTexture);
+				if (mCurrentFrame < 50)
+				{
+					mCurrentFrame += 1;
+				}
+				else
+				{
+					mCurrentFrame = 0;
+				}
+				mCurrentTime = 0;
 			}
-			/*else if (mCurrentFrame < 3)
+		}
+		else
+		{
+			if (mCurrentTime >= mFrameTime)
 			{
-			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 450, 0, 400, 1080));
+				mTexture.loadFromImage(mHilmaWalk, sf::IntRect(55 + mCurrentFrame * 300, 0, 250, 1080));
+				mSprite.setTexture(mTexture);
+				if (mCurrentFrame < 47)
+				{
+					mCurrentFrame += 1;
+				}
+				else
+				{
+					mCurrentFrame = 0;
+				}
+				mCurrentTime = 0;
 			}
-			else if (mCurrentFrame < 4)
-			{
-			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 430, 0, 400, 1080));
-			}
-			else if (mCurrentFrame < 5)
-			{
-			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 425, 0, 400, 1080));
-			}
-			else if (mCurrentFrame < 7)
-			{
-			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 418, 0, 400, 1080));
-			}
-			else if (mCurrentFrame < 8)
-			{
-			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 415, 0, 400, 1080));
-			}
-			else if (mCurrentFrame < 9)
-			{
-			mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 412, 0, 400, 1080));
-			}*/
-			else
-			{
-				mTexture.loadFromImage(mThomasWalk, sf::IntRect(mCurrentFrame * 411, 0, 400, 1080));
-			}
-			mSprite.setTexture(mTexture);
-			if (mCurrentFrame < 50)
-			{
-				mCurrentFrame += 1;
-			}
-			else
-			{
-				mCurrentFrame = 0;
-			}
-			mCurrentTime = 0;
 		}
 	}
+
 	mRect = sf::FloatRect(mPosition.x, mPosition.y, 10, 10);
 	mSprite.setPosition(mPosition);
 	move(deltaTime);
@@ -199,7 +202,11 @@ bool Player::isFacingLeft()
 sf::FloatRect Player::getGlobalRect()
 {
 	//Creates a FloatRect at Players current position and size, compensated for previously set Origin and Scale
+	//TODO - Change depending on mFacingLeft?
 	return sf::FloatRect(sf::Vector2f(mPosition.x - 90, mPosition.y - 270), sf::Vector2f(120, 300));
+
+	//TODO - Add separate one for Hilma with correct offsets for Origin and Scale, if (!mThomasActive)
+
 	//return mSprite.getGlobalBounds(); //Doesn't work with spritesheet
 }
 
@@ -209,8 +216,26 @@ void Player::setCurrentAnimation(std::string animation)
 	{
 		mWalk = true;
 	}
+	else if (animation == "Push")
+	{
+		mWalk = false;
+		mPush = true;
+	}
 	else
 	{
 		mWalk = false;
+		mPush = false;
+	}
+}
+
+void Player::setThomasActive(bool thomasActive)
+{
+	if (thomasActive)
+	{
+		mThomasActive = true;
+	}
+	else
+	{
+		mThomasActive = false;
 	}
 }

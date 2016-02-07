@@ -10,10 +10,7 @@ mInitialXOffset(100),
 mInitialYOffset(100),
 mXIncrease(80),
 mYIncrease(80),
-//mTextureCounter(0),
 mHasSelected(false),
-//mTextures(),
-//mSprites(),
 mItems(),
 mEvent(),
 mSelectedItem1(-1),
@@ -65,38 +62,6 @@ void Inventory::update(sf::RenderWindow &window)
 		mSelectedItem1 = -1;
 		mSelectedItem2 = -1;
 	}
-
-	//while (window.pollEvent(mEvent))
-	//{
-	//	switch (mEvent.type)
-	//	{
-	//	case sf::Event::Closed:
-	//		window.close();
-	//		break;
-
-	//	case sf::Event::KeyPressed:
-	//		//Close window when pressing escape
-	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	//		{
-	//			window.close();
-	//		}
-
-	//		//Help function to clear console window when pressing space
-	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	//		{
-	//			system("cls");
-	//		}
-	//		break;
-
-	//	case sf::Event::MouseButtonPressed:
-	//		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	//		{
-	//			checkCollision(mItems, mWorldPos);
-	//		}
-
-	//		break;
-	//	}
-	//}
 }
 
 void Inventory::draw(sf::RenderWindow &window)
@@ -165,6 +130,7 @@ void Inventory::setDynamicGrid()
 	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
 }
 
+//TODO - Make this remove a specified Item
 void Inventory::removeItem()
 {
 	//Reverse additem functionality 

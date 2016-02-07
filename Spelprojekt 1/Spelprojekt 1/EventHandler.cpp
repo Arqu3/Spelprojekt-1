@@ -429,7 +429,7 @@ void EventHandler::update(sf::RenderWindow &window)
 					mTargetItem->toggleInteractable();
 					if (mTargetItem->getId() == "Block")
 					{
-						//Move Block, TODO - change to smooth movement
+						//Move Block, TODO - change to smooth movement, set Animation to "Push" and move Player
 						mTargetItem->setPosition(630, 315);
 						mTargetItem->toggleInteracted();
 
