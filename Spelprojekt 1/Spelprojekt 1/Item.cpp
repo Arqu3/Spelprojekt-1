@@ -97,10 +97,8 @@ mIsLookedAt(false)
 		mName = "Magisk Mussla";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3, 0.3));
-		//mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.8f, 0.8f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 
 	}
 
@@ -110,8 +108,8 @@ mIsLookedAt(false)
 		mName = "Nål";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Earth")
@@ -120,8 +118,8 @@ mIsLookedAt(false)
 		mName = "Jordglob";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.7f, 0.8f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Fish")
@@ -130,8 +128,8 @@ mIsLookedAt(false)
 		mName = "Fisk";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(1.5f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Hoola Hoop")

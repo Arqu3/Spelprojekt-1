@@ -31,15 +31,16 @@ mIsActive(false)
 	//Add sound
 
 	//Add HelpRect
-	rectangle.setPosition(sf::Vector2f(437, 108));
-	rectangle.setSize(sf::Vector2f(96, 123));
+	rectangle.setPosition(sf::Vector2f(286, 122));
+	rectangle.setSize(sf::Vector2f(82, 82));
 	rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 	
 	//Add items
-	mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
-	mNeedle = new Item(handler, sf::Vector2f(0, 0), "Needle");
-	mEarth = new Item(handler, sf::Vector2f(0, 0), "Earth");
-	mFish = new Item(handler, sf::Vector2f(0, 0), "Fish");
+	
+	mMagicClam = new Item(handler, sf::Vector2f(193, 257), "Magic Clam");
+	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
+	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
+	mFish = new Item(handler, sf::Vector2f(848, 37), "Fish");
 	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
@@ -107,12 +108,13 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 	else if (mActiveScene == 1)
 	{
 		window.draw(background2);
+		
 	}
 	else
 	{
 		window.draw(background3);
 	}
-	window.draw(rectangle);
+	//window.draw(rectangle);
 	drawItems(mItems, window);
 	
 }
@@ -184,23 +186,11 @@ void LastLevel::toggleActive()
 
 		//Items - set as active
 		mMagicClam->toggleActive();
-		mNeedle->toggleActive();
-		mNeedle->togglePickupable();
-		mEarth->toggleActive();
-		mEarth->togglePickupable();
-		mFish->toggleActive();
-		mHoolaHoop->toggleActive();
-		mBeigeBall->toggleActive();
-		mRedApple->toggleActive();
+		
 
 		//Add items to itemVector
 		addItem(mMagicClam);
-		addItem(mNeedle);
-		addItem(mEarth);
-		addItem(mFish);
-		addItem(mHoolaHoop);
-		addItem(mBeigeBall);
-		addItem(mRedApple);
+		
 
 	}
 
@@ -301,6 +291,16 @@ void LastLevel::internalSwap(int num)
 	{
 		//Scene 3
 		mActiveScene = 2;
+
+	
+		mHoolaHoop->toggleActive();
+		mBeigeBall->toggleActive();
+		mRedApple->toggleActive();
+
+	
+		addItem(mHoolaHoop);
+		addItem(mBeigeBall);
+		addItem(mRedApple);
 	}
 }
 

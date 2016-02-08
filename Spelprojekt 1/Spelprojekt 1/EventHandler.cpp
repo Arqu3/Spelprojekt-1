@@ -111,7 +111,14 @@ void EventHandler::mouseClick(sf::Event &event)
 						//mDialogueSystem->displayStarDialogue();
 						std::cout << "Stjärnklart!";
 					}
+					if (mLHandler->getActiveItems()[i]->getId() == "Earth")
+					{
+						//mDialogueSystem->displayEarthDialogue();
+						std::cout << "Jordglob!";
+					}
 				}
+
+
 				else if (mLHandler->getActiveItems()[i]->getPickupable())
 				{
 					mLHandler->getActiveItems()[i]->toggleActive();
@@ -126,7 +133,14 @@ void EventHandler::mouseClick(sf::Event &event)
 						//TODO - Add to inventory
 						std::cout << "Plockade upp tråd";
 					}
+					if (mLHandler->getActiveItems()[i]->getId() == "Earth")
+					{
+						//TODO - Add to inventory
+						std::cout << "Plockade upp Jordglob!";
+					}
 				}
+
+
 				else if (mLHandler->getActiveItems()[i]->getInteractable())
 				{
 					mLHandler->getActiveItems()[i]->toggleInteractable();
@@ -219,7 +233,7 @@ void EventHandler::mouseClick(sf::Event &event)
 		{
 			if (checkCollision(mLHandler->getActiveLevel()->getRects()[i], point))
 			{
-				// i == 0 is Dollhouse if ActiveScene is 0, or ___ if ActiveScene is 1, etc.
+				// i == 0 is Dollhouse if ActiveScene is 0, or Door if ActiveScene is 1, etc.
 				if (i == 0)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
@@ -228,14 +242,17 @@ void EventHandler::mouseClick(sf::Event &event)
 					}
 					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
 					{
-						//Do stuff here
+						std::cout << "Door!";
+						//mLHandler->getPlayer()->setPosition(108, 350);
+						mLHandler->getActiveLevel()->changeScene(0);
 					}
 					else
 					{
-						//Do stuff here
+						//Do stuff
 					}
 				}
-				// i == 1 is Planet 1 if ActiveScene is 0, Door if ActiveLevel is 1,
+
+				// i == 1 is Planet 1 if ActiveScene is 0, Books if ActiveLevel is 1,
 				else if (i == 1)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
@@ -244,37 +261,101 @@ void EventHandler::mouseClick(sf::Event &event)
 					}
 					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
 					{
-						std::cout << "Door!";
-						mLHandler->getPlayer()->setPosition(108, 350);
-						mLHandler->getActiveLevel()->changeScene(0);
+						std::cout << "Books!";
+						
+					}
+					else
+					{
+
 					}
 					
 				}
-				// i == 2 is Planet 2 if ActiveScene is 0, 
+
+				// i == 2 is Planet 2 if ActiveScene is 0, Jewelry Box if ActiveScene is 1 
 				else if (i == 2)
 				{
-					std::cout << "Planet 2!";
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Planet 2!";
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						std::cout << "Jewelry Box!";
+					}
+					else
+					{
+
+					}
 				}
-				// i == 3 is Planet 3 if ActiveScene is 0,
+
+				// i == 3 is Planet 3 if ActiveScene is 0, Yarn Basket if ActiveScene is 1
 				else if (i == 3)
 				{
-					std::cout << "Planet 3!";
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Planet 3!";
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						std::cout << "Yarn Basket!";
+					}
+					else
+					{
+
+					}
 				}
-				// i == 4 is Planet 4 if ActiveScene is 0,
+
+				// i == 4 is Planet 4 if ActiveScene is 0, Crotch Rocket if ActiveScene is 1
 				else if (i == 4)
 				{
-					std::cout << "Planet 4!";
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Planet 4!";
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						std::cout << "Crotch Rocket!";
+					}
+					else
+					{
+
+					}
 				}
-				// i == 5 is Planet 5 if ActiveScene is 0,
+
+				// i == 5 is Planet 5 if ActiveScene is 0, Gramophone if ActiveScene is 1
 				else if (i == 5)
 				{
-					std::cout << "Planet 5!";
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Planet 5!";
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						std::cout << "Gramophone!";
+					}
+					else
+					{
+
+					}
 				}
-				// i == 6 is Planet 6 if ActiveScene is 0,
+
+				// i == 6 is Planet 6 if ActiveScene is 0, Mask if ActiveScene is 1
 				else if (i == 6)
 				{
-					std::cout << "Planet 6!";
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Planet 6!";
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						std::cout << "Mask!";
+					}
+					else
+					{
+
+					}
 				}
+
 				// i == 7 is Planet 7 if ActiveScene is 0, 
 				else if (i == 7)
 				{
@@ -301,15 +382,10 @@ void EventHandler::mouseClick(sf::Event &event)
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
 					{
 						//TODO - Make player walk to (108, 350) before
-						//mLHandler->getPlayer()->moveToPosition(108, 350);
-
-					/*	if (mLHandler->getPlayer()->getPosition() == sf::Vector2f(108, 350))
-						{*/
+						
 							mLHandler->getPlayer()->setPosition(90, 450);
 							mLHandler->getActiveLevel()->changeScene(1);
-						//}
-						
-					std::cout << "Stairs to scene 2!";
+							std::cout << "Stairs to scene 2!";
 					}
 				}
 			}
