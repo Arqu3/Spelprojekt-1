@@ -30,6 +30,9 @@ public:
 	void removeRect(int index);
 	const rectVector getPlayRects();
 
+	//View
+	sf::View getView();
+	void moveViewWithPlayer(float playerPos);
 
 	//Scene funtions
 	void clearScene();
@@ -59,6 +62,9 @@ private:
 	//Scene
 	bool mIsActive;
 	int mActiveScene;
+
+	//View
+	sf::View mView;
 
 	//Items
 	ItemVector mItems;

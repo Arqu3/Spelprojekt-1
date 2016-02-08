@@ -29,6 +29,10 @@ public:
 	void addRect(sf::FloatRect* rect);
 	const rectVector getPlayRects();
 
+	//View
+	sf::View getView();
+	void moveViewWithPlayer(float playerPos);
+
 	//Scene
 	void clearScene();
 	void internalSwap(int num);
@@ -36,6 +40,8 @@ public:
 	int getActiveScene();
 	void toggleActive();
 	bool isActive();
+
+
 private:
 	
 	//Rectangles
@@ -57,6 +63,9 @@ private:
 	//Scene
 	bool mIsActive;
 	int mActiveScene;
+
+	//View
+	sf::View mView;
 
 	//Items
 	ItemVector mItems;

@@ -7,7 +7,8 @@ mIsActive(false),
 mIsLookable(false),
 mIsInteractable(false),
 mIsPickupable(false),
-mIsLookedAt(false)
+mIsLookedAt(false),
+mInteracted(false)
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -199,6 +200,12 @@ void Item::toggleIsLookedAt()
 	mIsLookedAt = !mIsLookedAt;
 }
 
+void Item::toggleInteracted()
+{
+	//Toggle between true and false
+	mInteracted = !mInteracted;
+}
+
 std::string Item::getId()
 {
 	return mId;
@@ -245,6 +252,11 @@ bool Item::isLookedAt()
 	return mIsLookedAt;
 }
 
+bool Item::isInteracted()
+{
+	return mInteracted;
+}
+
 //Get name
 std::string Item::getName()
 {
@@ -265,7 +277,7 @@ sf::FloatRect Item::getRectangle()
 
 sf::Vector2f Item::getPosition()
 {
-	return mPosition;
+	return mSprite.getPosition();
 }
 
 void Item::setPosition(float x, float y)
@@ -276,4 +288,9 @@ void Item::setPosition(float x, float y)
 void Item::setScale(float x, float y)
 {
 	mSprite.setScale(sf::Vector2f(x, y));
+}
+
+sf::Sprite Item::getSprite()
+{
+	return mSprite;
 }
