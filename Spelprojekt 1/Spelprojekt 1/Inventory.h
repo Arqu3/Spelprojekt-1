@@ -32,7 +32,7 @@ public:
 	ItemVector getItems();
 	std::string getItemId(int index);
 	void setDynamicGrid();
-	void removeItem();
+	void removeItem(Item* item);
 	void checkCollision(ItemVector items, sf::Vector2f point);
 	void swapItems(ItemVector &inputVector, int inputIndex, int swapIndex);
 	void invertSelect();
@@ -55,6 +55,7 @@ private:
 
 	//ItemVector
 	ItemVector mItems;
+	ItemVector mCraftableItems;
 
 	//Item specific - grid
 	bool mHasSelected;

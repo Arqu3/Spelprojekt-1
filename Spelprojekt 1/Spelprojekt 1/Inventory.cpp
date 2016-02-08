@@ -130,12 +130,26 @@ void Inventory::setDynamicGrid()
 	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
 }
 
-//TODO - Make this remove a specified Item
-void Inventory::removeItem()
+
+void Inventory::removeItem(Item* item)
 {
 	//Reverse additem functionality 
+	//mItems.pop_back();
 
-	mItems.pop_back();
+	if (mItems.size() > 1)
+	{
+		for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+		{
+			if (item->getId() == mItems[i]->getId())
+			{
+				/*Swaps the chosen element and the last element in the vector
+				and removes the new last element*/
+				std::swap(mItems[i], mItems.back());
+				mItems.pop_back();
+				break;
+			}
+		}
+	}
 
 	mCol--;
 	if (mCol <= -1)
@@ -178,6 +192,14 @@ void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex
 	//Safety checks
 	if (inputVector.size() > 1 && inputIndex != swapIndex && inputIndex >= 0)
 	{
+		//Temporary crafting
+		if ((inputVector[inputIndex]->getId() == "Magnet" && inputVector[swapIndex]->getId() == "String") ||
+			(inputVector[inputIndex]->getId() == "String" && inputVector[swapIndex]->getId() == "Magnet"))
+		{
+			//removeItem(inputVector[inputIndex]);
+			//removeItem(inputVector[swapIndex]);
+		}
+
 		//Swap index
 		std::swap(inputVector[inputIndex], inputVector[swapIndex]);
 
