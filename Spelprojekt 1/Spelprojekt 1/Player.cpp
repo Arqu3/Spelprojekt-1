@@ -42,7 +42,7 @@ moveTo(position)
 	else if (textureName == "Hilma.png")
 	{
 		mHilmaWalk.loadFromFile("Resources/Textures/HilmaWalk.png");
-		mTexture.loadFromImage(mThomasWalk, sf::IntRect(55, 0, 250, 1080));
+		mTexture.loadFromImage(mHilmaWalk, sf::IntRect(55, 0, 250, 1080));
 		mSprite.setTexture(mTexture);
 	}
 }
@@ -110,45 +110,45 @@ void Player::moveToPosition(float x, float y)
 void Player::update(float deltaTime)
 {
 	//Animation
-	mCurrentTime += deltaTime;
-	if (mWalk)
-	{
-		if (mThomasActive)
-		{
-			if (mCurrentTime >= mFrameTime)
-			{
-				//Issues with overlapping sprites in spritesheet, 2 maybe?, Frame 13? Fix by increasing distance between all sprites by 5 pixels?
-				mTexture.loadFromImage(mThomasWalk, sf::IntRect(100 + mCurrentFrame * 400, 0, 400, 1080));
-				mSprite.setTexture(mTexture);
-				if (mCurrentFrame < 50)
-				{
-					mCurrentFrame += 1;
-				}
-				else
-				{
-					mCurrentFrame = 0;
-				}
-				mCurrentTime = 0;
-			}
-		}
-		else
-		{
-			if (mCurrentTime >= mFrameTime)
-			{
-				mTexture.loadFromImage(mHilmaWalk, sf::IntRect(55 + mCurrentFrame * 300, 0, 250, 1080));
-				mSprite.setTexture(mTexture);
-				if (mCurrentFrame < 47)
-				{
-					mCurrentFrame += 1;
-				}
-				else
-				{
-					mCurrentFrame = 0;
-				}
-				mCurrentTime = 0;
-			}
-		}
-	}
+	//mCurrentTime += deltaTime;
+	//if (mWalk)
+	//{
+	//	if (mThomasActive)
+	//	{
+	//		if (mCurrentTime >= mFrameTime)
+	//		{
+	//			//Issues with overlapping sprites in spritesheet, 2 maybe?, Frame 13? Fix by increasing distance between all sprites by 5 pixels?
+	//			mTexture.loadFromImage(mThomasWalk, sf::IntRect(100 + mCurrentFrame * 400, 0, 400, 1080));
+	//			mSprite.setTexture(mTexture);
+	//			if (mCurrentFrame < 50)
+	//			{
+	//				mCurrentFrame += 1;
+	//			}
+	//			else
+	//			{
+	//				mCurrentFrame = 0;
+	//			}
+	//			mCurrentTime = 0;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		if (mCurrentTime >= mFrameTime)
+	//		{
+	//			mTexture.loadFromImage(mHilmaWalk, sf::IntRect(55 + mCurrentFrame * 300, 0, 250, 1080));
+	//			mSprite.setTexture(mTexture);
+	//			if (mCurrentFrame < 47)
+	//			{
+	//				mCurrentFrame += 1;
+	//			}
+	//			else
+	//			{
+	//				mCurrentFrame = 0;
+	//			}
+	//			mCurrentTime = 0;
+	//		}
+	//	}
+	//}
 
 	mRect = sf::FloatRect(mPosition.x, mPosition.y, 10, 10);
 	mSprite.setPosition(mPosition);
