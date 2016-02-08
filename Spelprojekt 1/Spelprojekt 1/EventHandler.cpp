@@ -57,6 +57,9 @@ void EventHandler::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
+	//Test function. Should be used within a arrow-box (an arrow you click to continue in a dialogue)
+	mDialogueSystem->setState();
+
 	//Check collision with Player
 	if (checkCollision(mLHandler->getPlayer()->getRect(), point)) 
 	{
