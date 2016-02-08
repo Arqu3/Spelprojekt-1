@@ -30,6 +30,10 @@ public:
 	virtual void removeRect(int index) = 0;
 	virtual const rectVector getPlayRects() = 0;
 
+	//View
+	virtual sf::View getView() = 0;
+	virtual void moveViewWithPlayer(float playerPos) = 0;
+
 	//Scene functions
 	virtual void clearScene() = 0;
 	virtual void internalSwap(int num) = 0;

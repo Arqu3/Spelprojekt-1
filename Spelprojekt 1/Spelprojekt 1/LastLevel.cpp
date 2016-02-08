@@ -146,6 +146,15 @@ bool LastLevel::isActive()
 	return mIsActive;
 }
 
+sf::View LastLevel::getView()
+{
+	return mView;
+}
+
+void LastLevel::moveViewWithPlayer(float playerPos)
+{
+	mView.setCenter(playerPos, 288);
+}
 
 void LastLevel::clearScene()
 {
