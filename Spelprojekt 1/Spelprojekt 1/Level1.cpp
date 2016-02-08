@@ -7,7 +7,7 @@ mIsActive(false)
 {
 	handler.loadLevel1();
 
-	// Room Textures
+	//Room Textures
 	//Background texture
 	background.setSize(sf::Vector2f(1024, 576));
 	background.setTexture(handler.getTexture("thomasbg.png"));
@@ -34,7 +34,7 @@ mIsActive(false)
 	foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
 
 	//Sound/music
-	music.openFromFile("Level1Music.ogg");
+	//music.openFromFile("Level1Music.ogg");
 
 	//Help rectangles
 	rectangle.setPosition(sf::Vector2f(0, 0));

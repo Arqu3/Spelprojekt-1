@@ -12,10 +12,6 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
-
-	//cout << "Number of textures loaded: " << mTextures.size() << endl;
-	//cout << "Number of sounds loaded: " << mSounds.size() << endl;
-	//cout << "Number of music files loaded: " << mMusicNames.size() << endl;
 }
 
 ResourceHandler::~ResourceHandler()
@@ -102,7 +98,7 @@ void ResourceHandler::addSound(string fileName)
 //Adds music name to the name vector
 void ResourceHandler::addMusic(string fileName)
 {
-	mMusicNames.push_back(fileName);
+	mMusicNames.push_back("Resources/Music/" + fileName);
 }
 
 //Get texture at specific index
@@ -165,7 +161,7 @@ string ResourceHandler::getMusic(string name)
 {
 	for (StringVector::size_type i = 0; i < mMusicNames.size(); i++)
 	{
-		if (name == mMusicNames[i])
+		if ("Resources/Music/" + name == mMusicNames[i])
 		{
 			return mMusicNames[i];
 			break;
