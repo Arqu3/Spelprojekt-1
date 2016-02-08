@@ -45,6 +45,10 @@ mIsActive(false)
 	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
 
+	//View
+	mView.setCenter(512, 288);
+	mView.setSize(1024, 576);
+
 	
 }
 
@@ -99,6 +103,7 @@ void LastLevel::playAmbience()
 
 void LastLevel::drawBackground(sf::RenderWindow &window)
 {
+	window.setView(mView);
 	if (mActiveScene == 0)
 	{
 		window.draw(background);
@@ -245,7 +250,7 @@ void LastLevel::internalSwap(int num)
 		//Dollhouse
 		mRects.push_back(createRect(193, 257, 150, 100));
 
-		//Door
+		//BalconyDoor
 		mRects.push_back(createRect(445, 186, 80, 50));
 
 		//Stairs to scene 2

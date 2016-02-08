@@ -4,14 +4,13 @@
 EventHandler::EventHandler(LevelHandler &lHandler):
 mLHandler(&lHandler)
 {
-<<<<<<< HEAD
+
 	mLHandler->setActiveLevel(1); //Change back!
-=======
-	mLHandler->setActiveLevel(0); //Change back!
+	//mLHandler->setActiveLevel(0); //Change back!
 	mInventory = new Inventory();
 	mItemInteraction = false;
 	mInventoryMode = false;
->>>>>>> refs/remotes/origin/master
+
 }
 
 EventHandler::~EventHandler()
@@ -83,73 +82,32 @@ void EventHandler::mouseClick(sf::Event &event)
 				//Check Id of that Item
 				if (mLHandler->getActiveItems()[i]->getId() == "Cube")
 				{
-<<<<<<< HEAD
-					mLHandler->getActiveItems()[i]->toggleIsLookedAt();
-					if (mLHandler->getActiveItems()[i]->getId() == "Cube")
-					{
-						mDialogueSystem->displayRubicCubeDialogue();
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
-					{
-						//mDialogueSystem->displayMagnetDialogue();
-						std::cout << "Effin' magnets, how do they work!?";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Bowl")
-					{
-						//mDialogueSystem->displayBowlDialogue();
-						std::cout << "Skål!";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Block")
-					{
-						//mDialogueSystem->displayBlockDialogue();
-						std::cout << "En kloss framför akvariet, undrar om det finns en astronaut bakom?";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
-					{
-						//mDialogueSystem->displayAstronautDialogue();
-						std::cout << "Nämen titta, en astronaut.";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "String")
-					{
-						//mDialogueSystem->displayStringDialogue();
-						std::cout << "En tråd på golvet.";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Star")
-					{
-						//mDialogueSystem->displayStarDialogue();
-						std::cout << "Stjärnklart!";
-					}
-					if (mLHandler->getActiveItems()[i]->getId() == "Earth")
-					{
-						//mDialogueSystem->displayEarthDialogue();
-						std::cout << "Jordglob!";
-					}
-				}
 
-
-				else if (mLHandler->getActiveItems()[i]->getPickupable())
-=======
 					//Move Player to the closest point that is still inside the playrect
 					mLHandler->getPlayer()->moveToPosition(340, 370);
 					//Set the Item as "Target Item"
 					mTargetItem = mLHandler->getActiveItems()[i];
 					//Enable Item interaction
 					mItemInteraction = true;
+
 				}
+
 				if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
 				{
 					mLHandler->getPlayer()->moveToPosition(340, 370);
 					mTargetItem = mLHandler->getActiveItems()[i];
 					mItemInteraction = true;
 				}
+
 				if (mLHandler->getActiveItems()[i]->getId() == "Bowl")
 				{
 					mLHandler->getPlayer()->moveToPosition(340, 370);
 					mTargetItem = mLHandler->getActiveItems()[i];
 					mItemInteraction = true;
 				}
+
 				if (mLHandler->getActiveItems()[i]->getId() == "Block")
->>>>>>> refs/remotes/origin/master
+
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
 					{
@@ -159,22 +117,15 @@ void EventHandler::mouseClick(sf::Event &event)
 					{
 						mLHandler->getPlayer()->moveToPosition(490, 500);
 					}
-<<<<<<< HEAD
-					if (mLHandler->getActiveItems()[i]->getId() == "Earth")
-					{
-						//TODO - Add to inventory
-						std::cout << "Plockade upp Jordglob!";
-					}
-				}
 
 
-				else if (mLHandler->getActiveItems()[i]->getInteractable())
-=======
 					mTargetItem = mLHandler->getActiveItems()[i];
 					mItemInteraction = true;
+
 				}
+
 				if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
->>>>>>> refs/remotes/origin/master
+
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
 					{
@@ -187,12 +138,14 @@ void EventHandler::mouseClick(sf::Event &event)
 					mTargetItem = mLHandler->getActiveItems()[i];
 					mItemInteraction = true;
 				}
+
 				if (mLHandler->getActiveItems()[i]->getId() == "String")
 				{
 					mLHandler->getPlayer()->moveToPosition(340, 370);
 					mTargetItem = mLHandler->getActiveItems()[i];
 					mItemInteraction = true;
 				}
+
 				if (mLHandler->getActiveItems()[i]->getId() == "Star")
 				{
 					mLHandler->getPlayer()->moveToPosition(480, 450);
@@ -202,6 +155,7 @@ void EventHandler::mouseClick(sf::Event &event)
 			}
 		}
 	}
+	
 
 	//Check Rect Collisions
 	//Separate for each level, getLevel(0) is Level1
@@ -292,8 +246,16 @@ void EventHandler::mouseClick(sf::Event &event)
 					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
 					{
 						std::cout << "Door!";
-						//mLHandler->getPlayer()->setPosition(108, 350);
-						mLHandler->getActiveLevel()->changeScene(0);
+						//Make Player get into position for Scene change
+						mLHandler->getPlayer()->moveToPosition(70, 370);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(70, 370), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = false;
+						//Set starting position of Player in new Scene
+						mSceneChangePlayerPos = sf::Vector2f(150, 480);
+						//Set which Scene will be the new Scene
+						mNewScene = 0;
 					}
 					else
 					{
@@ -430,10 +392,17 @@ void EventHandler::mouseClick(sf::Event &event)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
 					{
-						//TODO - Make player walk to (108, 350) before
 						
-							mLHandler->getPlayer()->setPosition(90, 450);
-							mLHandler->getActiveLevel()->changeScene(1);
+						//Make Player get into position for Scene change
+						mLHandler->getPlayer()->moveToPosition(90, 450);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(90, 450), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = false;
+						//Set starting position of Player in new Scene
+						mSceneChangePlayerPos = sf::Vector2f(150, 480);
+						//Set which Scene will be the new Scene
+						mNewScene = 1;
 							std::cout << "Stairs to scene 2!";
 					}
 				}
@@ -512,7 +481,7 @@ void EventHandler::update(sf::RenderWindow &window)
 			//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
 			//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary
 			//In this case the camera scrolls while the Player is between 520 and 1000.
-			if (mLHandler->getPlayer()->getPosition().x > 520 && mLHandler->getPlayer()->getPosition().x < 1000)
+			if (mLHandler->getPlayer()->getPosition().x > 520 && mLHandler->getPlayer()->getPosition().x < 1000) //OBSOSBOSBOSBOSOBSO
 			{
 				//Make camera follow Player position
 				mLHandler->getActiveLevel()->moveViewWithPlayer(mLHandler->getPlayer()->getPosition().x);
