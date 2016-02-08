@@ -31,8 +31,8 @@ mIsActive(false)
 	//Add sound
 
 	//Add HelpRect
-	rectangle.setPosition(sf::Vector2f(286, 122));
-	rectangle.setSize(sf::Vector2f(82, 82));
+	rectangle.setPosition(sf::Vector2f(1158, 2));
+	rectangle.setSize(sf::Vector2f(70, 168));
 	rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 	
 	//Add items
@@ -40,7 +40,7 @@ mIsActive(false)
 	mMagicClam = new Item(handler, sf::Vector2f(193, 257), "Magic Clam");
 	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
 	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
-	mFish = new Item(handler, sf::Vector2f(848, 37), "Fish");
+	mFish = new Item(handler, sf::Vector2f(840, 37), "Fish");
 	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
@@ -119,7 +119,7 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 	{
 		window.draw(background3);
 	}
-	//window.draw(rectangle);
+	window.draw(rectangle);
 	drawItems(mItems, window);
 	
 }
@@ -263,7 +263,8 @@ void LastLevel::internalSwap(int num)
 		mActiveScene = 1;
 
 		//Walkable Area
-		mPlayRects.push_back(createRect(100, 354, 917, 216));
+		mPlayRects.push_back(createRect(100, 354, 944, 216));
+		mPlayRects.push_back(createRect(1044, 440, 476, 132));
 
 		//Door
 		mRects.push_back(createRect(0, 39, 70, 357));
@@ -284,7 +285,10 @@ void LastLevel::internalSwap(int num)
 		mRects.push_back(createRect(437, 108, 96, 123));
 
 		//Mask
-		mRects.push_back(createRect(0, 0, 0, 0));
+		mRects.push_back(createRect(1158, 2, 70, 168));
+
+		//Stairs
+		mRects.push_back(createRect(1466, 246,44, 178));
 
 		
 

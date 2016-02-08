@@ -507,6 +507,7 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					}
 					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
 					{
+						//TODO - Make the gramophone play music so the fish can fall down
 						std::cout << "Gramophone!";
 					}
 					else
@@ -532,26 +533,49 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					}
 				}
 
-				// i == 7 is Planet 7 if ActiveScene is 0, 
+				// i == 7 is Planet 7 if ActiveScene is 0, Stairs if ActiveScene is 1
 				else if (i == 7)
 				{
-					std::cout << "Planet 7!";
+					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+					{
+						std::cout << "Planet 7!";
+
+					}
+					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+					{
+						std::cout << "Stairs to Scene 3!";
+						////Make Player get into position for Scene change
+						//mLHandler->getPlayer()->moveToPosition(1470, 450);
+						////Set Collision Rect to Scene change position
+						//mSceneChangeRect = sf::FloatRect(sf::Vector2f(1470, 450), sf::Vector2f(10, 10));
+						////Set if Player should toggle on Scene Change
+						//mPlayerToggle = false;
+						////Set starting position of Player in new Scene
+						//mSceneChangePlayerPos = sf::Vector2f(100, 400);
+						////Set which Scene will be the new Scene
+						//mNewScene = 2;
+						
+					}
 				}
-				// i == 8 is Planet 8 if ActiveScene is 0,
+
+				// i == 8 is Planet 8 if ActiveScene is 0, 
 				else if (i == 8)
 				{
 					std::cout << "Planet 8!";
 				}
+
 				// i == 9 is Planet 9 if ActiveScene is 0,
 				else if (i == 9)
 				{
 					std::cout << "Planet 9!";
 				}
+
 				// i == 10 is Door if ActiveScene is 0,
 				else if (i == 10)
 				{
 					std::cout << "Door!";
 				}
+
 				// i == 11 is Stairs if ActiveScene is 0,
 				else if (i == 11)
 				{
@@ -559,13 +583,13 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					{
 						
 						//Make Player get into position for Scene change
-						mLHandler->getPlayer()->moveToPosition(90, 450);
+						mLHandler->getPlayer()->moveToPosition(101, 349);
 						//Set Collision Rect to Scene change position
-						mSceneChangeRect = sf::FloatRect(sf::Vector2f(90, 450), sf::Vector2f(10, 10));
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(101, 349), sf::Vector2f(10, 10));
 						//Set if Player should toggle on Scene Change
 						mPlayerToggle = false;
 						//Set starting position of Player in new Scene
-						mSceneChangePlayerPos = sf::Vector2f(150, 480);
+						mSceneChangePlayerPos = sf::Vector2f(100, 400);
 						//Set which Scene will be the new Scene
 						mNewScene = 1;
 							std::cout << "Stairs to scene 2!";
@@ -714,6 +738,26 @@ void EventHandler::update(sf::RenderWindow &window)
 					//mDialogueSystem->displayStarDialogue();
 					std::cout << "Stjärnklart!";
 				}
+				if (mTargetItem->getId() == "Magic Clam")
+				{
+					//mDialogueSystem->displayMagicClamDialogue();
+					std::cout << "Musslaaaa!";
+				}
+				if (mTargetItem->getId() == "Earth")
+				{
+					//mDialogueSystem->displayEarthDialogue();
+					std::cout << "Jordglob";
+				}
+				if (mTargetItem->getId() == "Needle")
+				{
+					//mDialogueSystem->displayNeedleDialogue();
+					std::cout << "Nål i garnkorg!";
+				}
+				if (mTargetItem->getId() == "Fish")
+				{
+					//mDialogueSystem->displayFishDialogue();
+					std::cout << "Fisk på väggen!";
+				}
 			}
 			//Check if Item can be picked up
 			else if (mTargetItem->getPickupable())
@@ -729,6 +773,22 @@ void EventHandler::update(sf::RenderWindow &window)
 				{
 					mInventory->addItem(mTargetItem);
 					std::cout << "Plockade upp tråd";
+				}
+				if (mTargetItem->getId() == "Earth")
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Plockade upp jordglob";
+				}
+				if (mTargetItem->getId() == "Needle")
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Plockade upp nål";
+				}
+				if (mTargetItem->getId() == "Fish")
+				{
+					//TODO - Make the fish fall from the wall first
+					mInventory->addItem(mTargetItem);
+					std::cout << "Plockade upp fisk";
 				}
 			}
 			//Check if Item can be interacted with
