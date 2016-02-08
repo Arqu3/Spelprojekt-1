@@ -41,6 +41,12 @@ public:
 	void toggleActive();
 	bool isActive();
 
+	//Eventstuff
+	void update(sf::RenderWindow &window);
+	void mouseClick(sf::Event &event);
+	void eventListen(sf::RenderWindow &window);
+
+	Player* getPlayer();
 
 private:
 	
@@ -77,5 +83,22 @@ private:
 	Item* mAstronaut;
 	Item* mBowl;
 	Item* mCube;
+
+	//Eventstuff
+	DialogueSystem *mDialogueSystem;
+	Inventory *mInventory;
+	Player *mPlayer;
+	sf::Vector2f mWorldPos;
+	sf::Vector2i mPixelPos;
+	sf::Vector2f mViewMoveTo;
+	Item* mTargetItem;
+	bool mItemInteraction;
+	//Scene change
+	sf::FloatRect mSceneChangeRect;
+	sf::Vector2f mSceneChangePlayerPos;
+	int mNewScene;
+
+	bool mPlayerToggle;
+	bool mInventoryMode;
 };
 #endif

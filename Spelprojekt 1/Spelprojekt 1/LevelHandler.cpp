@@ -6,10 +6,10 @@ LevelHandler::LevelHandler(ResourceHandler &handler):
 mLevels(),
 mItems()
 {
-	mThomas = new Player(handler, sf::Vector2f(400, 400), "Thomas.png");
-	mHilma = new Player(handler, sf::Vector2f(400, 400), "Hilma.png");
-	activePlayer = "Hilma"; // THIS IS
-	togglePlayer();			// STUPID, FIX (note to self)
+	//mThomas = new Player(handler, sf::Vector2f(400, 400), "Thomas.png");
+	//mHilma = new Player(handler, sf::Vector2f(400, 400), "Hilma.png");
+	//activePlayer = "Hilma"; // THIS IS
+	//togglePlayer();			// STUPID, FIX (note to self)
 
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
@@ -25,9 +25,11 @@ LevelHandler::~LevelHandler()
 	mLevels.clear();
 }
 
-void LevelHandler::update(float deltaTime)
+void LevelHandler::update(float deltaTime, sf::RenderWindow &window)
 {
-	mPlayer->update(deltaTime);
+	//TODO - getActiveLevel
+	mLevel1->getPlayer()->update(deltaTime);
+	mLevel1->update(window);
 }
 
 void LevelHandler::draw(sf::RenderWindow &window)
@@ -38,7 +40,7 @@ void LevelHandler::draw(sf::RenderWindow &window)
 		if (mLevels[i]->isActive())
 		{
 			mLevels[i]->drawBackground(window);
-			mPlayer->draw(window);
+			mLevels[i]->getPlayer()->draw(window);
 			mLevels[i]->drawForeground(window);
 		}
 	}

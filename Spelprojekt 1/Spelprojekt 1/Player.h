@@ -7,7 +7,7 @@
 
 class Player{
 public:
-	Player(ResourceHandler &handler, sf::Vector2f &position, std::string textureName); 
+	Player(ResourceHandler &handler, sf::Vector2f &position); 
 	~Player();
 	
 	void update(float deltaTime);
@@ -48,10 +48,9 @@ private:
 	float mCurrentTime;
 	float mFrameTime;
 
-	//Animation Sprites
-	sf::Image mThomasWalk;
-	sf::Image mHilmaWalk;
-	sf::Texture mTexture;
+	//Animation Textures
+	sf::Texture mThomasTexture;
+	sf::Texture mHilmaTexture;
 	
 };
 #endif

@@ -42,6 +42,13 @@ public:
 	void toggleActive();
 	bool isActive();
 
+	//Eventstuff
+	void update(sf::RenderWindow &window);
+	void mouseClick(sf::Event &event);
+	void eventListen(sf::RenderWindow &window);
+
+	Player* getPlayer();
+
 private:
 
 	//Rectangles
@@ -71,7 +78,8 @@ private:
 	Item* mBeigeBall;
 	Item* mRedApple;
 
-
+	//Eventstuff
+	Player *mPlayer;
 	
 };
 

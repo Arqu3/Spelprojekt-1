@@ -2,7 +2,9 @@
 #define INCLUDED_LEVEL
 
 #include "ResourceHandler.h"
-#include "Item.h"
+#include "Inventory.h"
+#include "DialogueSystem.h"
+#include "Player.h"
 
 class Level
 {
@@ -41,6 +43,13 @@ public:
 	virtual int getActiveScene() = 0;
 	virtual void toggleActive() = 0;
 	virtual bool isActive() = 0;
+
+	//Eventstuff
+	virtual void update(sf::RenderWindow &window) = 0;
+	virtual void mouseClick(sf::Event &event) = 0;
+	virtual void eventListen(sf::RenderWindow &window) = 0;
+
+	virtual Player* getPlayer() = 0;
 };
 
 #endif

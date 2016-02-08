@@ -195,3 +195,22 @@ sf::FloatRect* LastLevel::createRect(int positionX, int positionY, int sizeX, in
 	return floatRect;
 }
 
+void LastLevel::update(sf::RenderWindow &window)
+{
+
+}
+
+void LastLevel::mouseClick(sf::Event &event)
+{
+
+}
+
+void LastLevel::eventListen(sf::RenderWindow &window)
+{
+
+}
+
+Player* LastLevel::getPlayer()
+{
+	return mPlayer;
+}

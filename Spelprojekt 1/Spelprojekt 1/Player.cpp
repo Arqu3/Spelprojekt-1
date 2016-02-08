@@ -2,43 +2,33 @@
 
 using namespace std;
 
-Player::Player(ResourceHandler &handler, sf::Vector2f &position, std::string textureName) :
+Player::Player(ResourceHandler &handler, sf::Vector2f &position) :
 mPosition(position),
 isOnPosition(true),
 moveTo(position)
 {
-	mSprite.setTexture(*handler.getTexture(textureName));
-	if (textureName == "Thomas.png")
-	{
-		//Spritesheet
+		//Spritesheet - Thomas
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setOrigin(400, 700);
-	}
-	else
-	{
-		//Spritesheet
-		mSprite.setScale(sf::Vector2f(0.25f, 0.25f));
-		mSprite.setOrigin(300, 500);
-	}
+
+		//Spritesheet - Hilma
+		/*mSprite.setScale(sf::Vector2f(0.25f, 0.25f));
+		mSprite.setOrigin(300, 500);*/
 
 	mWalk = false;
-	mFrameTime = 0.03f;
+	mFrameTime = 0.01f;
 	mCurrentTime = 0;
 	mCurrentFrame = 0;
 	mFrameXOffset = 0;
 	mFrameYOffset = 0;
-	if (textureName == "Thomas.png")
-	{
-		mTexture.loadFromFile("Resources/Textures/ThomasWalk.png");
-		mSprite.setTexture(mTexture);
-		mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
-	}
-	else if (textureName == "Hilma.png")
-	{
-		mTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
-		mSprite.setTexture(mTexture);
-		mSprite.setTextureRect(sf::IntRect(0, 0, 600, 600));
-	}
+
+	mThomasTexture.loadFromFile("Resources/Textures/ThomasWalk.png");
+	mSprite.setTexture(mThomasTexture);
+	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
+
+	mHilmaTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
+	/*mSprite.setTexture(mHilmaTexture);
+	mSprite.setTextureRect(sf::IntRect(0, 0, 600, 600));*/
 }
 
 

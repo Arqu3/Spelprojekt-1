@@ -18,7 +18,7 @@ public:
 	typedef std::vector<Level*> LevelVector;
 
 	//Update
-	void update(float deltaTime);
+	void update(float deltaTime, sf::RenderWindow &window);
 
 	//Draw
 	void draw(sf::RenderWindow &window);
