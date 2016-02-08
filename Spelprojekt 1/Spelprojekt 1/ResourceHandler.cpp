@@ -12,12 +12,34 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
-	//Add resources in constructor
-	// Textures
+}
+
+ResourceHandler::~ResourceHandler()
+{
+	internalClear();
+}
+
+void ResourceHandler::internalClear()
+{
+	mTextures.clear();
+	mTextureNames.clear();
+
+	mSounds.clear();
+	mSoundNames.clear();
+
+	mMusicNames.clear();
+}
+
+void ResourceHandler::loadLevel1()
+{
+	internalClear();
+
 	//Thomas
 	addTexture("Thomas.png");
 	//Hilma
 	addTexture("Hilma.png");
+
+	//Textures
 	//Thomas rum items
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");
@@ -41,26 +63,14 @@ musicCounter(0)
 	addTexture("LastLevel_ItemTest1.png");
 	//Music
 	addMusic("Level1Music.ogg");
-
-	cout << "Number of textures loaded: " << mTextures.size() << endl;
-	cout << "Number of sounds loaded: " << mSounds.size() << endl;
-	cout << "Number of music files loaded: " << mMusicNames.size() << endl;
 }
 
-ResourceHandler::~ResourceHandler()
+void ResourceHandler::loadLastLevel()
 {
 	internalClear();
-}
 
-void ResourceHandler::internalClear()
-{
-	mTextures.clear();
-	mTextureNames.clear();
-
-	mSounds.clear();
-	mSoundNames.clear();
-
-	mMusicNames.clear();
+	//LastLevel
+	addTexture("LastLevel_BackgroundTest1.png");
 }
 
 //Adds a texture to the texture vector
@@ -92,7 +102,7 @@ void ResourceHandler::addSound(string fileName)
 //Adds music name to the name vector
 void ResourceHandler::addMusic(string fileName)
 {
-	mMusicNames.push_back(fileName);
+	mMusicNames.push_back("Resources/Music/" + fileName);
 }
 
 //Get texture at specific index
@@ -155,7 +165,7 @@ string ResourceHandler::getMusic(string name)
 {
 	for (StringVector::size_type i = 0; i < mMusicNames.size(); i++)
 	{
-		if (name == mMusicNames[i])
+		if ("Resources/Music/" + name == mMusicNames[i])
 		{
 			return mMusicNames[i];
 			break;
