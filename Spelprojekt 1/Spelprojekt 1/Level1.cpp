@@ -34,7 +34,10 @@ mIsActive(false)
 	foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
 
 	//Sound/music
-	//music.openFromFile("Level1Music.ogg");
+	//music.openFromFile(handler.getMusic("Level1Music.ogg"));
+	mAmbientSound.setBuffer(*handler.getSound("Level1Ambience.ogg"));
+	mAmbientSound.setLoop(true);
+	mAmbientSound.play();
 
 	//Help rectangles
 	rectangle.setPosition(sf::Vector2f(0, 0));
@@ -95,7 +98,7 @@ void Level1::playBackgroundMusic()
 
 void Level1::playAmbience()
 {
-	ambientSound.play();
+	mAmbientSound.play();
 }
 
 void Level1::drawBackground(sf::RenderWindow &window)

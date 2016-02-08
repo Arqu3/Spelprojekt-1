@@ -47,6 +47,10 @@ private:
 	int mNewScene;
 	bool mPlayerToggle;
 	bool mInventoryMode;
+
+	//Sound/music
+	sf::SoundBuffer mBuffer;
+	sf::Sound mPickupItemSound;
 };
 
 #endif

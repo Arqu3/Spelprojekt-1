@@ -52,6 +52,9 @@ private:
 	sf::Image mThomasWalk;
 	sf::Image mHilmaWalk;
 	sf::Texture mTexture;
+
+	//Sounds
+	sf::Sound mWalkingSound;
 	
 };
 #endif

@@ -59,6 +59,12 @@ void ResourceHandler::loadLevel1()
 
 	//Music
 	addMusic("Level1Music.ogg");
+
+	//Sound
+	addSound("FootSteps.ogg");
+	addSound("Level1Ambience.ogg");
+
+	//addSound("");
 }
 
 void ResourceHandler::loadLastLevel()

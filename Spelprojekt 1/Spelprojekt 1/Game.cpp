@@ -16,10 +16,11 @@ Game::~Game()
 
 void Game::update()
 {
-	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
-
 	music.setLoop(true);
+
 	music.play();
+
+	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
 	while (window.isOpen())
 	{

@@ -17,12 +17,12 @@ moveTo(position)
 	else
 	{
 		//Spritesheet
-		mSprite.setScale(sf::Vector2f(0.25f, 0.25f));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setOrigin(300, 500);
 	}
 
 	mWalk = false;
-	mFrameTime = 0.03f;
+	mFrameTime = 0.06f;
 	mCurrentTime = 0;
 	mCurrentFrame = 0;
 	mFrameXOffset = 0;
@@ -39,6 +39,9 @@ moveTo(position)
 		mSprite.setTexture(mTexture);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 600, 600));
 	}
+
+	//Sounds
+	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
 }
 
 
@@ -67,7 +70,7 @@ void Player::move(float deltaTime)
 	if (isOnPosition == false)
 	{
 
-		float speed = 200.0f;
+		float speed = 150.0f;
 		
 		mPosition += mDirection * speed * deltaTime;
 	}
@@ -107,6 +110,10 @@ void Player::update(float deltaTime)
 	mCurrentTime += deltaTime;
 	if (mWalk)
 	{
+		if (mWalkingSound.getStatus() != 2)
+		{
+			mWalkingSound.play();
+		}
 		if (mThomasActive)
 		{
 			if (mCurrentTime >= mFrameTime)
@@ -162,6 +169,10 @@ void Player::update(float deltaTime)
 				mCurrentTime = 0;
 			}
 		}
+	}
+	else
+	{
+		mWalkingSound.pause();
 	}
 
 	mRect = sf::FloatRect(mPosition.x, mPosition.y, 10, 10);

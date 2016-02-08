@@ -1,6 +1,8 @@
 #include "EventHandler.h"
 #include <iostream>
 
+using namespace std;
+
 EventHandler::EventHandler(LevelHandler &lHandler):
 mLHandler(&lHandler)
 {
@@ -8,6 +10,12 @@ mLHandler(&lHandler)
 	mInventory = new Inventory();
 	mItemInteraction = false;
 	mInventoryMode = false;
+
+	if (!mBuffer.loadFromFile("Resources/Sounds/ItemPickup.ogg"))
+	{
+		cout << "Could not load Item pikcup sound" << endl;
+	}
+	mPickupItemSound.setBuffer(mBuffer);
 }
 
 EventHandler::~EventHandler()
@@ -576,11 +584,13 @@ void EventHandler::update(sf::RenderWindow &window)
 				mTargetItem->toggleActive();
 				if (mTargetItem->getId() == "Magnet")
 				{
+					mPickupItemSound.play();
 					mInventory->addItem(mTargetItem);
 					std::cout << "Plockade upp magnet";
 				}
 				if (mTargetItem->getId() == "String")
 				{
+					mPickupItemSound.play();
 					mInventory->addItem(mTargetItem);
 					std::cout << "Plockade upp tråd";
 				}
