@@ -50,6 +50,171 @@ int EventHandler::checkCollision(const std::vector<sf::FloatRect*> RectVector, s
 //Mouseclick function
 void EventHandler::mouseClick(sf::Event &event)
 {
+	//std::cout << "Mouse Pressed" << std::endl;
+	//std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+	//std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+
+	//std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	//std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+
+	//sf::Vector2f point(mWorldPos.x, mWorldPos.y);
+
+	////Check if playrect collision
+	//if (checkCollision(mLHandler->getActiveLevel()->getPlayRects(), point))
+	//{
+	//	mLHandler->getPlayer()->moveToPosition(point.x, point.y);
+	//	mItemInteraction = false;
+	//}
+
+	////Check Item collision
+	////Loop through all Items in active level
+	//for (Level::ItemVector::size_type i = 0; i < mLHandler->getActiveItems().size(); i++)
+	//{
+	//	//Check if mouse collided with Item
+	//	if (checkCollision(mLHandler->getActiveItems()[i]->getRectangle(), point))
+	//	{
+	//		//Check if Item is Active
+	//		if (mLHandler->getActiveItems()[i]->getActive())
+	//		{
+	//			//Check Id of that Item
+	//			if (mLHandler->getActiveItems()[i]->getId() == "Cube")
+	//			{
+	//				//Move Player to the closest point that is still inside the playrect
+	//				mLHandler->getPlayer()->moveToPosition(340, 370);
+	//				//Set the Item as "Target Item"
+	//				mTargetItem = mLHandler->getActiveItems()[i];
+	//				//Enable Item interaction
+	//				mItemInteraction = true;
+	//			}
+	//			if (mLHandler->getActiveItems()[i]->getId() == "Magnet")
+	//			{
+	//				mLHandler->getPlayer()->moveToPosition(340, 370);
+	//				mTargetItem = mLHandler->getActiveItems()[i];
+	//				mItemInteraction = true;
+	//			}
+	//			if (mLHandler->getActiveItems()[i]->getId() == "Bowl")
+	//			{
+	//				mLHandler->getPlayer()->moveToPosition(340, 370);
+	//				mTargetItem = mLHandler->getActiveItems()[i];
+	//				mItemInteraction = true;
+	//			}
+	//			if (mLHandler->getActiveItems()[i]->getId() == "Block")
+	//			{
+	//				if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+	//				{
+	//					mLHandler->getPlayer()->moveToPosition(560, 365);
+	//				}
+	//				else
+	//				{
+	//					mLHandler->getPlayer()->moveToPosition(490, 500);
+	//				}
+	//				mTargetItem = mLHandler->getActiveItems()[i];
+	//				mItemInteraction = true;
+	//			}
+	//			if (mLHandler->getActiveItems()[i]->getId() == "Astronaut")
+	//			{
+	//				if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+	//				{
+	//					mLHandler->getPlayer()->moveToPosition(560, 365);
+	//				}
+	//				else
+	//				{
+	//					mLHandler->getPlayer()->moveToPosition(490, 500);
+	//				}
+	//				mTargetItem = mLHandler->getActiveItems()[i];
+	//				mItemInteraction = true;
+	//			}
+	//			if (mLHandler->getActiveItems()[i]->getId() == "String")
+	//			{
+	//				mLHandler->getPlayer()->moveToPosition(340, 370);
+	//				mTargetItem = mLHandler->getActiveItems()[i];
+	//				mItemInteraction = true;
+	//			}
+	//			if (mLHandler->getActiveItems()[i]->getId() == "Star")
+	//			{
+	//				mLHandler->getPlayer()->moveToPosition(480, 450);
+	//				mTargetItem = mLHandler->getActiveItems()[i];
+	//				mItemInteraction = true;
+	//			}
+	//		}
+	//	}
+	//}
+
+	////Check Rect Collisions
+	////Separate for each level, getLevel(0) is Level1
+	//if (mLHandler->getActiveLevel() == mLHandler->getLevel(0))
+	//{
+	//	for (Level::rectVector::size_type i = 0; i < mLHandler->getActiveLevel()->getRects().size(); i++)
+	//	{
+	//		if (checkCollision(mLHandler->getActiveLevel()->getRects()[i], point))
+	//		{
+	//			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
+	//			if (i == 0)
+	//			{
+	//				if (mLHandler->getActiveLevel()->getActiveScene() == 0)
+	//				{
+	//					//Make Player get into position for Scene change
+	//					mLHandler->getPlayer()->moveToPosition(400, 370);
+	//					//Set Collision Rect to Scene change position
+	//					mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
+	//					//Set if Player should toggle on Scene Change
+	//					mPlayerToggle = true;
+	//					//Set starting position of Player in new Scene
+	//					mSceneChangePlayerPos = sf::Vector2f(150, 480);
+	//					//Set which Scene will be the new Scene
+	//					mNewScene = 1;
+	//				}
+	//				else
+	//				{
+	//					//Make Player get into position for Scene change
+	//					mLHandler->getPlayer()->moveToPosition(150, 480);
+	//					//Set Collision Rect to Scene change position
+	//					mSceneChangeRect = sf::FloatRect(sf::Vector2f(150, 480), sf::Vector2f(10, 10));
+	//					//Set if Player should toggle on Scene Change
+	//					mPlayerToggle = true;
+	//					//Set starting position of Player in new Scene
+	//					mSceneChangePlayerPos = sf::Vector2f(400, 370);
+	//					//Set which Scene will be the new Scene
+	//					mNewScene = 0;
+	//				}
+	//			}
+	//			// i == 1 is books in the bookcase
+	//			else if (i == 1)
+	//			{
+	//				//mDialogueSystem->displayBookDialogue();
+	//				std::cout << "Böcker!";
+	//			}
+	//			// i == 2 is lamp on table
+	//			else if (i == 2)
+	//			{
+	//				//mDialogueSystem->displayLampDialogue();
+	//				std::cout << "Lampa!";
+	//			}
+	//			// i == 3 is radio on table
+	//			else if (i == 3)
+	//			{
+	//				//mDialogueSystem->displayRadioDialogue();
+	//				std::cout << "Radio!";
+	//			}
+	//			// i == 4 is posters on wall
+	//			else if (i == 4)
+	//			{
+	//				//mDialogueSystem->displayPostersDialogue();
+	//				std::cout << "Affischer!";
+	//			}
+	//			// i == 5 is backpack near bed
+	//			else if (i == 5)
+	//			{
+	//				//mDialogueSystem->displayBackpackDialogue();
+	//				std::cout << "Ryggsäck! Ryggsäck!";
+	//			}
+	//		}
+	//	}
+	//}
+}
+
+void EventHandler::mouseClickLevel1(sf::Event &event)
+{
 	std::cout << "Mouse Pressed" << std::endl;
 	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
 	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
@@ -291,7 +456,7 @@ void EventHandler::eventListen(sf::RenderWindow &window)
 			}
 			else
 			{
-				mouseClick(event);
+				mouseClickLevel1(event);
 			}
 			break;
 

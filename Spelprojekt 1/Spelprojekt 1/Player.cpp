@@ -12,38 +12,32 @@ moveTo(position)
 	{
 		//Spritesheet
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setOrigin(300, 900);
-
-		//No spritesheet
-		//mSprite.setScale(sf::Vector2f(0.08f, 0.08f));
-		//mSprite.setOrigin(1050, 3250);
+		mSprite.setOrigin(400, 700);
 	}
 	else
 	{
 		//Spritesheet
 		mSprite.setScale(sf::Vector2f(0.25f, 0.25f));
-		mSprite.setOrigin(100, 780);
-
-		//No spritesheet
-		//mSprite.setScale(sf::Vector2f(0.04f, 0.04f));
-		//mSprite.setOrigin(600, 2100);
+		mSprite.setOrigin(300, 500);
 	}
 
 	mWalk = false;
-	mFrameTime = 0.02f;
+	mFrameTime = 0.03f;
 	mCurrentTime = 0;
 	mCurrentFrame = 0;
+	mFrameXOffset = 0;
+	mFrameYOffset = 0;
 	if (textureName == "Thomas.png")
 	{
-		mThomasWalk.loadFromFile("Resources/Textures/ThomasWalk.png");
-		mTexture.loadFromImage(mThomasWalk, sf::IntRect(100, 0, 400, 1080));
+		mTexture.loadFromFile("Resources/Textures/ThomasWalk.png");
 		mSprite.setTexture(mTexture);
+		mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
 	}
 	else if (textureName == "Hilma.png")
 	{
-		mHilmaWalk.loadFromFile("Resources/Textures/HilmaWalk.png");
-		mTexture.loadFromImage(mThomasWalk, sf::IntRect(55, 0, 250, 1080));
+		mTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
 		mSprite.setTexture(mTexture);
+		mSprite.setTextureRect(sf::IntRect(0, 0, 600, 600));
 	}
 }
 
@@ -117,16 +111,25 @@ void Player::update(float deltaTime)
 		{
 			if (mCurrentTime >= mFrameTime)
 			{
-				//Issues with overlapping sprites in spritesheet, 2 maybe?, Frame 13? Fix by increasing distance between all sprites by 5 pixels?
-				mTexture.loadFromImage(mThomasWalk, sf::IntRect(100 + mCurrentFrame * 400, 0, 400, 1080));
-				mSprite.setTexture(mTexture);
-				if (mCurrentFrame < 50)
+				mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+				if (mCurrentFrame < 27)
 				{
+					mFrameXOffset += 1;
+					if (mFrameXOffset % 11 == 10)
+					{
+						mFrameYOffset++;
+					}
+					if (mFrameXOffset >= 10)
+					{
+						mFrameXOffset = 0;
+					}
 					mCurrentFrame += 1;
 				}
 				else
 				{
 					mCurrentFrame = 0;
+					mFrameXOffset = 0;
+					mFrameYOffset = 0;
 				}
 				mCurrentTime = 0;
 			}
@@ -135,15 +138,26 @@ void Player::update(float deltaTime)
 		{
 			if (mCurrentTime >= mFrameTime)
 			{
-				mTexture.loadFromImage(mHilmaWalk, sf::IntRect(55 + mCurrentFrame * 300, 0, 250, 1080));
-				mSprite.setTexture(mTexture);
-				if (mCurrentFrame < 47)
+				mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 600, mFrameYOffset * 600, 600, 600));
+				if (mCurrentFrame < 27)
 				{
+					mFrameXOffset += 1;
+					if (mFrameXOffset % 8 == 7)
+					{
+						mFrameYOffset++;
+					}
+					if (mFrameXOffset >= 7)
+					{
+						mFrameXOffset = 0;
+					}
 					mCurrentFrame += 1;
+					std::cout << mCurrentFrame << std::endl;
 				}
 				else
 				{
 					mCurrentFrame = 0;
+					mFrameXOffset = 0;
+					mFrameYOffset = 0;
 				}
 				mCurrentTime = 0;
 			}

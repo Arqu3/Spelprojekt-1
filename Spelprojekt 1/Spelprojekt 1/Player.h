@@ -43,8 +43,11 @@ private:
 	bool mPush;
 	//Animation Values
 	int mCurrentFrame;
+	int mFrameYOffset;
+	int mFrameXOffset;
 	float mCurrentTime;
 	float mFrameTime;
+
 	//Animation Sprites
 	sf::Image mThomasWalk;
 	sf::Image mHilmaWalk;

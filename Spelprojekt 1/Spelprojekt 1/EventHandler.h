@@ -30,6 +30,7 @@ private:
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
 
 	void mouseClick(sf::Event &event);
+	void mouseClickLevel1(sf::Event &event);
 
 	//Member variables
 	LevelHandler *mLHandler;
