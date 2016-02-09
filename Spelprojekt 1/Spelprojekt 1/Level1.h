@@ -45,6 +45,12 @@ public:
 	void update(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
 	void eventListen(sf::RenderWindow &window);
+	//Check collision between a single rectangle and a point
+	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
+	//Check collision between a single rectangle and a point
+	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
+	//Check collision between a vector of rectangles and a point
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
 
 	Player* getPlayer();
 

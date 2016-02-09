@@ -94,12 +94,10 @@ void LevelHandler::togglePlayer()
 	{
 		activePlayer = "Hilma";
 		mPlayer = mHilma;
-		mPlayer->setThomasActive(false);
 	}
 	else
 	{
 		activePlayer = "Thomas";
 		mPlayer = mThomas;
-		mPlayer->setThomasActive(true);
 	}
 }

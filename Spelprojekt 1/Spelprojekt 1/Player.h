@@ -21,7 +21,7 @@ public:
 	bool isFacingLeft();
 	sf::FloatRect getGlobalRect();
 	void setCurrentAnimation(std::string animation);
-	void setThomasActive(bool thomasActive);
+	void togglePlayer();
 
 private:
 	void move(float deltaTime);

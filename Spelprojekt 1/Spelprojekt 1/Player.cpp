@@ -7,28 +7,21 @@ mPosition(position),
 isOnPosition(true),
 moveTo(position)
 {
-		//Spritesheet - Thomas
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setOrigin(400, 700);
-
-		//Spritesheet - Hilma
-		/*mSprite.setScale(sf::Vector2f(0.25f, 0.25f));
-		mSprite.setOrigin(300, 500);*/
+	//Spritesheet - Thomas
+	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+	mSprite.setOrigin(400, 700);
 
 	mWalk = false;
-	mFrameTime = 0.01f;
+	mFrameTime = 0.02f;
 	mCurrentTime = 0;
 	mCurrentFrame = 0;
 	mFrameXOffset = 0;
 	mFrameYOffset = 0;
 
+	mHilmaTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
 	mThomasTexture.loadFromFile("Resources/Textures/ThomasWalk.png");
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
-
-	mHilmaTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
-	/*mSprite.setTexture(mHilmaTexture);
-	mSprite.setTextureRect(sf::IntRect(0, 0, 600, 600));*/
 }
 
 
@@ -141,7 +134,6 @@ void Player::update(float deltaTime)
 						mFrameXOffset = 0;
 					}
 					mCurrentFrame += 1;
-					std::cout << mCurrentFrame << std::endl;
 				}
 				else
 				{
@@ -232,14 +224,28 @@ void Player::setCurrentAnimation(std::string animation)
 	}
 }
 
-void Player::setThomasActive(bool thomasActive)
+void Player::togglePlayer()
 {
-	if (thomasActive)
+	mThomasActive = !mThomasActive;
+
+	if (mThomasActive)
 	{
-		mThomasActive = true;
+		mSprite.setTexture(mThomasTexture);
+		mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setOrigin(400, 700);
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
 	}
 	else
 	{
-		mThomasActive = false;
+		mSprite.setTexture(mHilmaTexture);
+		mSprite.setTextureRect(sf::IntRect(0, 0, 600, 600));
+		mSprite.setScale(sf::Vector2f(0.25f, 0.25f));
+		mSprite.setOrigin(300, 500);
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
 	}
 }

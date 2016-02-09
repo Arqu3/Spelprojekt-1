@@ -135,6 +135,11 @@ void Level1::drawForeground(sf::RenderWindow &window)
 	{
 		window.draw(foregroundZoom);
 	}
+
+	if (mInventoryMode)
+	{
+		mInventory->draw(window);
+	}
 }
 
 void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
@@ -243,7 +248,7 @@ void Level1::internalSwap(int num)
 	{
 		mActiveScene = 0;
 		//Walkable area
-		mPlayRects.push_back(createRect(110, 360, 660, 200));
+		mPlayRects.push_back(createRect(110, 360, 610, 200));
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
@@ -359,35 +364,17 @@ sf::FloatRect* Level1::createRect(float positionX, float positionY, float sizeX,
 
 void Level1::update(sf::RenderWindow &window)
 {
-	////Only do this if the level needs moving camera
-	////mLHandler->getLevel(1) is currently LastLevel, change as necessary
-	//if (mLHandler->getActiveLevel() == mLHandler->getLevel(1))
-	//{
-	//	//Scene 1 is the big, second room in LastLevel, change as necessary
-	//	if (mLHandler->getActiveLevel()->getActiveScene() == 1)
-	//	{
-	//		//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
-	//		//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary
-	//		//In this case the camera scrolls while the Player is between 520 and 1000.
-	//		if (mLHandler->getPlayer()->getPosition().x > 520 && mLHandler->getPlayer()->getPosition().x < 1000)
-	//		{
-	//			//Make camera follow Player position
-	//			mLHandler->getActiveLevel()->moveViewWithPlayer(mLHandler->getPlayer()->getPosition().x);
-	//		}
-	//	}
-	//}
-
-
 	//Check if Player is in position to change Scene
 	if (mPlayer->getRect().intersects(mSceneChangeRect))
 	{
 		//Toggle Player if the new Scene needs it
 		if (mPlayerToggle)
 		{
-			//TODO - toggle Player
+			mPlayer->togglePlayer();
 		}
 		//Set Player position to the starting position of the new Scene
 		mPlayer->setPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
+		mPlayer->moveToPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
 		//Change to the new Scene
 		changeScene(mNewScene);
 	}
@@ -505,16 +492,169 @@ void Level1::update(sf::RenderWindow &window)
 
 	//Inventory
 	mInventory->update(window);
-	if (mInventoryMode)
-	{
-		mInventory->draw(window);
-	}
 
 }
 
 void Level1::mouseClick(sf::Event &event)
 {
-	std::cout << "MouseClick!" << std::endl;
+	std::cout << "Mouse Pressed" << std::endl;
+	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+
+	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+
+	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
+
+	//Check if playrect collision
+	if (checkCollision(getPlayRects(), point))
+	{
+		mPlayer->moveToPosition(point.x, point.y);
+		mItemInteraction = false;
+	}
+
+	//Check Item collision
+	//Loop through all Items in active level
+	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+	{
+		//Check if mouse collided with Item
+		if (checkCollision(getItems()[i]->getRectangle(), point))
+		{
+			//Check if Item is Active
+			if (getItems()[i]->getActive())
+			{
+				//Check Id of that Item
+				if (getItems()[i]->getId() == "Cube")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(340, 370);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "Magnet")
+				{
+					mPlayer->moveToPosition(340, 370);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "Bowl")
+				{
+					mPlayer->moveToPosition(340, 370);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "Block")
+				{
+					if (getActiveScene() == 0)
+					{
+						mPlayer->moveToPosition(560, 365);
+					}
+					else
+					{
+						mPlayer->moveToPosition(490, 500);
+					}
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "Astronaut")
+				{
+					if (getActiveScene() == 0)
+					{
+						mPlayer->moveToPosition(560, 365);
+					}
+					else
+					{
+						mPlayer->moveToPosition(490, 500);
+					}
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "String")
+				{
+					mPlayer->moveToPosition(340, 370);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "Star")
+				{
+					mPlayer->moveToPosition(480, 450);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+			}
+		}
+	}
+
+	//Check Rect Collisions
+	//Separate for each level, getLevel(0) is Level1
+	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
+	{
+		if (checkCollision(getRects()[i], point))
+		{
+			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
+			if (i == 0)
+			{
+				if (getActiveScene() == 0)
+				{
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(400, 370);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = true;
+					//Set starting position of Player in new Scene
+					mSceneChangePlayerPos = sf::Vector2f(150, 480);
+					//Set which Scene will be the new Scene
+					mNewScene = 1;
+				}
+				else
+				{
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(150, 480);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(150, 480), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = true;
+					//Set starting position of Player in new Scene
+					mSceneChangePlayerPos = sf::Vector2f(400, 370);
+					//Set which Scene will be the new Scene
+					mNewScene = 0;
+				}
+			}
+			// i == 1 is books in the bookcase
+			else if (i == 1)
+			{
+				//mDialogueSystem->displayBookDialogue();
+				std::cout << "Böcker!";
+			}
+			// i == 2 is lamp on table
+			else if (i == 2)
+			{
+				//mDialogueSystem->displayLampDialogue();
+				std::cout << "Lampa!";
+			}
+			// i == 3 is radio on table
+			else if (i == 3)
+			{
+				//mDialogueSystem->displayRadioDialogue();
+				std::cout << "Radio!";
+			}
+			// i == 4 is posters on wall
+			else if (i == 4)
+			{
+				//mDialogueSystem->displayPostersDialogue();
+				std::cout << "Affischer!";
+			}
+			// i == 5 is backpack near bed
+			else if (i == 5)
+			{
+				//mDialogueSystem->displayBackpackDialogue();
+				std::cout << "Ryggsäck! Ryggsäck!";
+			}
+		}
+	}
 }
 
 void Level1::eventListen(sf::RenderWindow &window)
@@ -522,6 +662,10 @@ void Level1::eventListen(sf::RenderWindow &window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
+		// get the current mouse position in the window
+		mPixelPos = sf::Mouse::getPosition(window);
+		// convert it to world coordinates
+		mWorldPos = window.mapPixelToCoords(mPixelPos);
 		switch (event.type)
 		{
 			//window closed
@@ -531,10 +675,6 @@ void Level1::eventListen(sf::RenderWindow &window)
 
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
-			// get the current mouse position in the window
-			mPixelPos = sf::Mouse::getPosition(window);
-			// convert it to world coordinates
-			mWorldPos = window.mapPixelToCoords(mPixelPos);
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mInventoryMode)
 			{
@@ -564,7 +704,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
-				//mLHandler->togglePlayer();
+				mPlayer->togglePlayer();
 			}
 			break;
 
@@ -572,6 +712,37 @@ void Level1::eventListen(sf::RenderWindow &window)
 			break;
 		}
 	}
+}
+
+//Check collision between a single rectangle and a point
+int Level1::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point)
+{
+	if (boundingBox.contains(point))
+	{
+		return 1;
+	}
+	return 0;
+}
+//Check collision between a single rectangle and a point
+int Level1::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point)
+{
+	if (boundingBox->contains(point))
+	{
+		return 1;
+	}
+	return 0;
+}
+//Check collision between a vector of rectangles and a point
+int Level1::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point)
+{
+	for (std::vector<sf::FloatRect*>::size_type i = 0; i < RectVector.size(); i++)
+	{
+		if (RectVector[i]->contains(point))
+		{
+			return 1;
+		}
+	}
+	return 0;
 }
 
 Player* Level1::getPlayer()
