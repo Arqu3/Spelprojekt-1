@@ -716,6 +716,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				}
 				if (mTargetItem->getId() == "String")
 				{
+					mTargetItem->setScale(0.2f, 0.4f);
 					mInventory->addItem(mTargetItem);
 					std::cout << "Plockade upp tråd";
 				}
