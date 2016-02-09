@@ -158,7 +158,6 @@ void Player::update(float deltaTime)
 						mFrameXOffset = 0;
 					}
 					mCurrentFrame += 1;
-					std::cout << mCurrentFrame << std::endl;
 				}
 				else
 				{
