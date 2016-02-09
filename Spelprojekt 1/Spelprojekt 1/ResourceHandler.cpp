@@ -15,10 +15,13 @@ musicCounter(0)
 	//Add resources in constructor
 	// Textures
 	//Thomas
-	addTexture("Thomas.png");
+	addTexture("ThomasWalk.png");
 	//Hilma
-	addTexture("Hilma.png");
-	//Thomas rum items
+	addTexture("HilmaWalk.png");
+	addTexture("HilmaPush.png");
+
+	// Level1
+	//Thomas room items
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");
 	addTexture("thomasstring.png");
@@ -26,11 +29,11 @@ musicCounter(0)
 	addTexture("thomasastronaut.png");
 	addTexture("thomasbowl.png");
 	addTexture("thomascube.png");
-	//Thomas rum bakgrund
+	//Thomas room background, playground, foreground
 	addTexture("thomasbg.png");
 	addTexture("thomaspg.png");
 	addTexture("thomasfg.png");
-	//Thomas zoom bakgrund
+	//Thomas zoom background, playground, foreground
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");

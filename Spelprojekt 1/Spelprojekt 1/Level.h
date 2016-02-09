@@ -15,6 +15,9 @@ public:
 	virtual void addItem(Item* item) = 0;
 	virtual void removeItem(Item* item) = 0;
 
+	//Player
+	virtual Player* getPlayer() = 0;
+
 	//Rectangle for levels
 	typedef std::vector<sf::FloatRect*> rectVector;
 
@@ -45,11 +48,9 @@ public:
 	virtual bool isActive() = 0;
 
 	//Eventstuff
-	virtual void update(sf::RenderWindow &window) = 0;
-	virtual void mouseClick(sf::Event &event) = 0;
 	virtual void eventListen(sf::RenderWindow &window) = 0;
-
-	virtual Player* getPlayer() = 0;
+	virtual void mouseClick(sf::Event &event) = 0;
+	virtual void update(sf::RenderWindow &window, float deltaTime) = 0;
 };
 
 #endif

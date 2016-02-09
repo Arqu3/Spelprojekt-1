@@ -20,8 +20,10 @@ public:
 	void flipPlayer();
 	bool isFacingLeft();
 	sf::FloatRect getGlobalRect();
-	void setCurrentAnimation(std::string animation);
+	void setActiveAnimation(std::string animation);
 	void togglePlayer();
+	float getSpeed();
+	void setSpeed(float speed);
 
 private:
 	void move(float deltaTime);
@@ -30,6 +32,8 @@ private:
 	sf::Vector2f mDirection;
 	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
+
+	float mSpeed;
 
 	bool mFacingLeft;
 	bool isOnPosition;
@@ -47,10 +51,11 @@ private:
 	int mFrameXOffset;
 	float mCurrentTime;
 	float mFrameTime;
+	std::string mActiveAnimation;
 
 	//Animation Textures
 	sf::Texture mThomasTexture;
 	sf::Texture mHilmaTexture;
-	
+	sf::Texture mHilmaPushTexture;
 };
 #endif

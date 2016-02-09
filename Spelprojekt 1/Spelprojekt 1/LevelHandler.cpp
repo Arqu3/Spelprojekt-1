@@ -27,9 +27,15 @@ LevelHandler::~LevelHandler()
 
 void LevelHandler::update(float deltaTime, sf::RenderWindow &window)
 {
-	//TODO - getActiveLevel
-	mLevel1->getPlayer()->update(deltaTime);
-	mLevel1->update(window);
+	for (LevelVector::size_type i = 0; i < mLevels.size(); i++)
+	{
+		//Only update active level
+		if (mLevels[i]->isActive())
+		{
+			mLevels[i]->getPlayer()->update(deltaTime);
+			mLevels[i]->update(window, deltaTime);
+		}
+	}
 }
 
 void LevelHandler::draw(sf::RenderWindow &window)
@@ -81,23 +87,4 @@ Level* LevelHandler::getActiveLevel()
 Level* LevelHandler::getLevel(int index)
 {
 	return mLevels[index];
-}
-
-Player* LevelHandler::getPlayer()
-{
-	return mPlayer;
-}
-
-void LevelHandler::togglePlayer()
-{
-	if (activePlayer == "Thomas")
-	{
-		activePlayer = "Hilma";
-		mPlayer = mHilma;
-	}
-	else
-	{
-		activePlayer = "Thomas";
-		mPlayer = mThomas;
-	}
 }

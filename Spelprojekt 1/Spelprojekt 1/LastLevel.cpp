@@ -81,6 +81,11 @@ void LastLevel::removeItem(Item *item)
 	}
 }
 
+Player* LastLevel::getPlayer()
+{
+	return mPlayer;
+}
+
 
 void LastLevel::playBackgroundMusic()
 {
@@ -195,7 +200,7 @@ sf::FloatRect* LastLevel::createRect(int positionX, int positionY, int sizeX, in
 	return floatRect;
 }
 
-void LastLevel::update(sf::RenderWindow &window)
+void LastLevel::eventListen(sf::RenderWindow &window)
 {
 
 }
@@ -205,12 +210,7 @@ void LastLevel::mouseClick(sf::Event &event)
 
 }
 
-void LastLevel::eventListen(sf::RenderWindow &window)
+void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 {
 
-}
-
-Player* LastLevel::getPlayer()
-{
-	return mPlayer;
 }

@@ -29,19 +29,10 @@ public:
 	Level* getActiveLevel();
 	Level* getLevel(int index);
 
-	Player* getPlayer();
-	void togglePlayer();
-
 private:
 	//Items
 	ItemVector mItems;
 	void setActiveItems();
-
-	//Player
-	Player* mPlayer;
-	Player* mThomas;
-	Player* mHilma;
-	std::string activePlayer;
 
 	//Levels
 	LevelVector mLevels;
