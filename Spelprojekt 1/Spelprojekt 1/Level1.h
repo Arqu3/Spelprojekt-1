@@ -114,5 +114,6 @@ private:
 	bool mInventoryMode;
 	bool mDialogueMode;
 	bool mDisableClick;
+	bool mLookedAtAquarium;
 };
 #endif

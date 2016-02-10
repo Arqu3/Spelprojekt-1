@@ -5,7 +5,8 @@ mRects(),
 mPlayRects(),
 mIsActive(false),
 mItemInteraction(false),
-mInventoryMode(false)
+mInventoryMode(false),
+mLookedAtAquarium(false)
 {
 	handler.loadLevel1();
 
@@ -137,7 +138,6 @@ void Level1::drawBackground(sf::RenderWindow &window)
 	}
 	window.draw(rectangle); // Help rectangle
 	drawItems(mItems, window);
-	mDialogueSystem->drawDialogue(window);
 }
 
 
@@ -155,6 +155,10 @@ void Level1::drawForeground(sf::RenderWindow &window)
 	if (mInventoryMode)
 	{
 		mInventory->draw(window);
+	}
+	if (mDialogueMode)
+	{
+		mDialogueSystem->drawDialogue(window);
 	}
 }
 
@@ -210,6 +214,8 @@ void Level1::toggleActive()
 		mRects.push_back(createRect(410, 20, 260, 120));
 		//Backpack
 		mRects.push_back(createRect(750, 420, 50, 70));
+		//Rug
+		mRects.push_back(createRect(380, 400, 40, 40));
 
 		//Items - Set as Active, Pickupable, Interactable
 		mMagnet->toggleActive();
@@ -290,6 +296,8 @@ void Level1::internalSwap(int num)
 		mRects.push_back(createRect(410, 20, 260, 120));
 		//Backpack
 		mRects.push_back(createRect(750, 420, 50, 70));
+		//Rug
+		mRects.push_back(createRect(380, 400, 40, 40));
 
 		//Repopulate ItemVector with active items
 		if (mMagnet->getActive())
@@ -590,16 +598,26 @@ void Level1::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
-					//Make Player get into position for Scene change
-					mPlayer->moveToPosition(400, 370);
-					//Set Collision Rect to Scene change position
-					mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
-					//Set if Player should toggle on Scene Change
-					mPlayerToggle = true;
-					//Set starting position of Player in new Scene
-					mSceneChangePlayerPos = sf::Vector2f(160, 480);
-					//Set which Scene will be the new Scene
-					mNewScene = 1;
+					if (!mLookedAtAquarium)
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("aquarium", mPlayer);
+						mDialogueMode = true;
+						mLookedAtAquarium = true;
+					}
+					else
+					{
+						//Make Player get into position for Scene change
+						mPlayer->moveToPosition(400, 370);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = true;
+						//Set starting position of Player in new Scene
+						mSceneChangePlayerPos = sf::Vector2f(160, 480);
+						//Set which Scene will be the new Scene
+						mNewScene = 1;
+					}
 				}
 				else
 				{
@@ -618,32 +636,45 @@ void Level1::mouseClick(sf::Event &event)
 			// i == 1 is books in the bookcase
 			else if (i == 1)
 			{
-				//mDialogueSystem->displayBookDialogue();
-				std::cout << "Böcker!";
+				mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("books", mPlayer);
+				mDialogueMode = true;
 			}
 			// i == 2 is lamp on table
 			else if (i == 2)
 			{
-				//mDialogueSystem->displayLampDialogue();
-				std::cout << "Lampa!";
+				mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("lamp", mPlayer);
+				mDialogueMode = true;
 			}
 			// i == 3 is radio on table
 			else if (i == 3)
 			{
-				//mDialogueSystem->displayRadioDialogue();
-				std::cout << "Radio!";
+				mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("radio", mPlayer);
+				mDialogueMode = true;
 			}
 			// i == 4 is posters on wall
 			else if (i == 4)
 			{
-				//mDialogueSystem->displayPostersDialogue();
-				std::cout << "Affischer!";
+				mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("poster", mPlayer);
+				mDialogueMode = true;
 			}
 			// i == 5 is backpack near bed
 			else if (i == 5)
 			{
-				//mDialogueSystem->displayBackpackDialogue();
-				std::cout << "Ryggsäck! Ryggsäck!";
+				mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("backpack", mPlayer);
+				mDialogueMode = true;
+			}
+			// i == 6 is bump in the rug
+			else if (i == 6)
+			{
+				//TODO - Add check for if Astronaut is in Inventory
+				mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("mat", mPlayer);
+				mDialogueMode = true;
 			}
 		}
 	}
@@ -688,32 +719,36 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("magnet", mPlayer);
 					mDialogueMode = true;
-					std::cout << "Effin' magnets, how do they work!?";
 				}
 				if (mTargetItem->getId() == "Bowl")
 				{
-					//mDialogueSystem->displayBowlDialogue();
-					std::cout << "Skål!";
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("bowl", mPlayer);
+					mDialogueMode = true;
 				}
 				if (mTargetItem->getId() == "Block")
 				{
-					//mDialogueSystem->displayBlockDialogue();
-					std::cout << "En kloss framför akvariet, undrar om det finns en astronaut bakom?";
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("block", mPlayer);
+					mDialogueMode = true;
 				}
 				if (mTargetItem->getId() == "Astronaut")
 				{
-					//mDialogueSystem->displayAstronautDialogue();
-					std::cout << "Nämen titta, en astronaut.";
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("astronaut", mPlayer);
+					mDialogueMode = true;
 				}
 				if (mTargetItem->getId() == "String")
 				{
-					//mDialogueSystem->displayStringDialogue();
-					std::cout << "En tråd på golvet.";
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("string", mPlayer);
+					mDialogueMode = true;
 				}
 				if (mTargetItem->getId() == "Star")
 				{
-					//mDialogueSystem->displayStarDialogue();
-					std::cout << "Stjärnklart!";
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("star", mPlayer);
+					mDialogueMode = true;
 				}
 			}
 			//Check if Item can be picked up
