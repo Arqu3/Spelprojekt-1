@@ -112,6 +112,7 @@ private:
 
 	bool mPlayerToggle;
 	bool mInventoryMode;
+	bool mDialogueMode;
 	bool mDisableClick;
 };
 #endif

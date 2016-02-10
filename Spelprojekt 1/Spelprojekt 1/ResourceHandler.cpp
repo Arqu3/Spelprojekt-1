@@ -58,6 +58,8 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
+	//Textbubbla
+	addTexture("textbubble.png");
 
 	//Music
 	addMusic("Level1Music.ogg");
