@@ -7,7 +7,7 @@ mIsActive(false)
 {
 
 	//Background Texture scene 1
-	background.setSize(sf::Vector2f(1024,576));  //(1536, 576) för scen 2
+	background.setSize(sf::Vector2f(1024,576));  
 	background.setTexture(handler.getTexture("flickrum.png")); //Add correct texture
 
 	//Playground Texture scene 1
@@ -16,15 +16,17 @@ mIsActive(false)
 
 	//Background Texture scene 2
 	background2.setSize(sf::Vector2f(1536, 576));
-	background2.setTexture(handler.getTexture("Barn hem.png"));
+	background2.setTexture(handler.getTexture("Barn hem.png")); //Add correct texture
 
 	//Playground Texture scene 2
 
 	//Foreground Texture scene 2
 
 	//Background Texture scene 3
+	background3.setSize(sf::Vector2f(1024, 576));
+	background3.setTexture(handler.getTexture("Barnhem_Scene3.jpg")); //Add correct texture
 
-	//Background Texture scene 3
+	//Playground Texture scene 3
 
 	//Foreground Texture scene 3
 
@@ -44,6 +46,8 @@ mIsActive(false)
 	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
+	mCat = new Item(handler, sf::Vector2f(0, 0), "Cat");
+	mFruitbowl = new Item(handler, sf::Vector2f(0, 0),"Fruitbowl");
 
 	//View
 	mView.setCenter(512, 288);
@@ -115,11 +119,12 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 		window.draw(background2);
 		
 	}
-	else
+	else if (mActiveScene == 2)
 	{
+		mView.setCenter(512, 288);
 		window.draw(background3);
 	}
-	window.draw(rectangle);
+	//window.draw(rectangle);
 	drawItems(mItems, window);
 	
 }
@@ -305,20 +310,42 @@ void LastLevel::internalSwap(int num)
 
 
 	}
-	else
+	else if (num == 2)
 	{
 		//Scene 3
 		mActiveScene = 2;
 
-	
+		//Walkable Area
+		mPlayRects.push_back(createRect(133, 379,799 , 189));
+
+		//Refrigerator
+		mRects.push_back(createRect(789, 105, 126, 269));
+
+		//Catbowl
+		mRects.push_back(createRect(714, 396, 54, 24));
+
+		//Hole
+		mRects.push_back(createRect(183, 346, 45, 31));
+
+		//Tap
+		mRects.push_back(createRect(352, 167, 32, 67));
+
+		
+
+
+		//Items active
 		mHoolaHoop->toggleActive();
 		mBeigeBall->toggleActive();
 		mRedApple->toggleActive();
+		mCat->toggleActive();
+		mFruitbowl->toggleActive();
 
-	
+		//Add Items to vector
 		addItem(mHoolaHoop);
 		addItem(mBeigeBall);
 		addItem(mRedApple);
+		addItem(mCat);
+		addItem(mFruitbowl);
 	}
 }
 

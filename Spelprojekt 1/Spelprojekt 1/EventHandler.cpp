@@ -401,7 +401,7 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 		{
 			if (checkCollision(mLHandler->getActiveLevel()->getRects()[i], point))
 			{
-				// i == 0 is Dollhouse if ActiveScene is 0, or Door if ActiveScene is 1, etc.
+				// i == 0 is Dollhouse if ActiveScene is 0, or Door if ActiveScene is 1, or Refrigerator if ActiveScene is 2.
 				if (i == 0)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
@@ -424,11 +424,11 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					}
 					else
 					{
-						//Do stuff
+						std::cout << "Refrigerator!";
 					}
 				}
 
-				// i == 1 is Planet 1 if ActiveScene is 0, Books if ActiveLevel is 1,
+				// i == 1 is Planet 1 if ActiveScene is 0, Books if ActiveLevel is 1, Catbowl if ActiveScene is 2
 				else if (i == 1)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
@@ -442,12 +442,12 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					}
 					else
 					{
-
+						std::cout << "Catbowl!";
 					}
 					
 				}
 
-				// i == 2 is Planet 2 if ActiveScene is 0, Jewelry Box if ActiveScene is 1 
+				// i == 2 is Planet 2 if ActiveScene is 0, Jewelry Box if ActiveScene is 1, Hole if ActiveSCene is 2
 				else if (i == 2)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
@@ -460,11 +460,11 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					}
 					else
 					{
-
+						std::cout << "Hole!";
 					}
 				}
 
-				// i == 3 is Planet 3 if ActiveScene is 0, Yarn Basket if ActiveScene is 1
+				// i == 3 is Planet 3 if ActiveScene is 0, Yarn Basket if ActiveScene is 1, Tap if ActiveScene is 2
 				else if (i == 3)
 				{
 					if (mLHandler->getActiveLevel()->getActiveScene() == 0)
@@ -477,7 +477,7 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					}
 					else
 					{
-
+						std::cout << "Tap!";
 					}
 				}
 
@@ -544,16 +544,16 @@ void EventHandler::mouseClickLevel1(sf::Event &event)
 					else if (mLHandler->getActiveLevel()->getActiveScene() == 1)
 					{
 						std::cout << "Stairs to Scene 3!";
-						////Make Player get into position for Scene change
-						//mLHandler->getPlayer()->moveToPosition(1470, 450);
-						////Set Collision Rect to Scene change position
-						//mSceneChangeRect = sf::FloatRect(sf::Vector2f(1470, 450), sf::Vector2f(10, 10));
-						////Set if Player should toggle on Scene Change
-						//mPlayerToggle = false;
-						////Set starting position of Player in new Scene
-						//mSceneChangePlayerPos = sf::Vector2f(100, 400);
-						////Set which Scene will be the new Scene
-						//mNewScene = 2;
+						//Make Player get into position for Scene change
+						mLHandler->getPlayer()->moveToPosition(1470, 450);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(1470, 450), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = false;
+						//Set starting position of Player in new Scene
+						mSceneChangePlayerPos = sf::Vector2f(920,420);
+						//Set which Scene will be the new Scene
+						mNewScene = 2;
 						
 					}
 				}
@@ -665,7 +665,7 @@ void EventHandler::update(sf::RenderWindow &window)
 	if (mLHandler->getActiveLevel() == mLHandler->getLevel(1))
 	{
 		//Scene 1 is the big, second room in LastLevel, change as necessary
-		if (mLHandler->getActiveLevel()->getActiveScene() == 1)
+		if (mLHandler->getActiveLevel()->getActiveScene() ==1)
 		{
 			//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
 			//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary

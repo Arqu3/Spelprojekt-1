@@ -75,6 +75,8 @@ private:
 	Item* mHoolaHoop;
 	Item* mBeigeBall;
 	Item* mRedApple;
+	Item* mCat;
+	Item* mFruitbowl;
 
 
 	
