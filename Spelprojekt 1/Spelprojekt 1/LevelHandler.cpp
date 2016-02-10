@@ -10,11 +10,6 @@ mItems()
 	mLevel1 = new Level1(handler);
 	mLastLevel = new LastLevel(handler);
 
-	mThomas = new Player(handler, sf::Vector2f(400, 400), "Thomas.png");
-	mHilma = new Player(handler, sf::Vector2f(400, 400), "Hilma.png");
-	activePlayer = "Hilma"; // THIS IS
-	togglePlayer();			// STUPID, FIX (note to self)
-
 	//Add levels to member list
 	mLevels.push_back(mLevel1);
 	mLevels.push_back(mLastLevel);
@@ -25,9 +20,17 @@ LevelHandler::~LevelHandler()
 	mLevels.clear();
 }
 
-void LevelHandler::update(float deltaTime)
+void LevelHandler::update(float deltaTime, sf::RenderWindow &window)
 {
-	mPlayer->update(deltaTime);
+	for (LevelVector::size_type i = 0; i < mLevels.size(); i++)
+	{
+		//Only update active level
+		if (mLevels[i]->isActive())
+		{
+			mLevels[i]->getPlayer()->update(deltaTime);
+			mLevels[i]->update(window, deltaTime);
+		}
+	}
 }
 
 void LevelHandler::draw(sf::RenderWindow &window)
@@ -38,7 +41,7 @@ void LevelHandler::draw(sf::RenderWindow &window)
 		if (mLevels[i]->isActive())
 		{
 			mLevels[i]->drawBackground(window);
-			mPlayer->draw(window);
+			mLevels[i]->getPlayer()->draw(window);
 			mLevels[i]->drawForeground(window);
 		}
 	}
@@ -79,25 +82,4 @@ Level* LevelHandler::getActiveLevel()
 Level* LevelHandler::getLevel(int index)
 {
 	return mLevels[index];
-}
-
-Player* LevelHandler::getPlayer()
-{
-	return mPlayer;
-}
-
-void LevelHandler::togglePlayer()
-{
-	if (activePlayer == "Thomas")
-	{
-		activePlayer = "Hilma";
-		mPlayer = mHilma;
-		mPlayer->setThomasActive(false);
-	}
-	else
-	{
-		activePlayer = "Thomas";
-		mPlayer = mThomas;
-		mPlayer->setThomasActive(true);
-	}
 }
