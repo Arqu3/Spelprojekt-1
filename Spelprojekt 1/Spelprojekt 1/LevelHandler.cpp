@@ -6,21 +6,9 @@ LevelHandler::LevelHandler(ResourceHandler &handler):
 mLevels(),
 mItems()
 {
-<<<<<<< HEAD
-	//mThomas = new Player(handler, sf::Vector2f(400, 400), "Thomas.png");
-	//mHilma = new Player(handler, sf::Vector2f(400, 400), "Hilma.png");
-	//activePlayer = "Hilma"; // THIS IS
-	//togglePlayer();			// STUPID, FIX (note to self)
-=======
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
 	mLastLevel = new LastLevel(handler);
-
-	mThomas = new Player(handler, sf::Vector2f(400, 400), "Thomas.png");
-	mHilma = new Player(handler, sf::Vector2f(400, 400), "Hilma.png");
-	activePlayer = "Hilma"; // THIS IS
-	togglePlayer();			// STUPID, FIX (note to self)
->>>>>>> refs/remotes/origin/master
 
 	//Add levels to member list
 	mLevels.push_back(mLevel1);

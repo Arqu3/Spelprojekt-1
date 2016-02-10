@@ -35,12 +35,6 @@ mInventoryMode(false)
 	foregroundZoom.setSize(sf::Vector2f(1024, 576));
 	foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
 
-<<<<<<< HEAD
-=======
-	//Sound/music
-	//music.openFromFile("Level1Music.ogg");
-
->>>>>>> refs/remotes/origin/master
 	//Help rectangles
 	rectangle.setPosition(sf::Vector2f(0, 0));
 	rectangle.setSize(sf::Vector2f(0, 0));
@@ -77,6 +71,7 @@ Level1::~Level1()
 {
 	mRects.clear();
 	mPlayRects.clear();
+	mItems.clear();
 }
 
 

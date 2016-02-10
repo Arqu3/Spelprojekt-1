@@ -37,18 +37,12 @@ void ResourceHandler::loadLevel1()
 	//Thomas
 	addTexture("ThomasWalk.png");
 	//Hilma
-<<<<<<< HEAD
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 
 	// Level1
-	//Thomas room items
-=======
-	addTexture("Hilma.png");
-
 	//Textures
 	//Thomas rum items
->>>>>>> refs/remotes/origin/master
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");
 	addTexture("thomasstring.png");

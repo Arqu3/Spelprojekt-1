@@ -258,15 +258,15 @@ void Player::setActiveAnimation(std::string animation)
 			mCurrentFrame = 0;
 			mFrameXOffset = 0;
 			mFrameYOffset = 0;
-		}
 
-		if (mThomasActive)
-		{
-			mSprite.setTexture(mThomasTexture);
-		}
-		else
-		{
-			mSprite.setTexture(mHilmaTexture);
+			if (mThomasActive)
+			{
+				mSprite.setTexture(mThomasTexture);
+			}
+			else
+			{
+				mSprite.setTexture(mHilmaTexture);
+			}
 		}
 		mWalk = true;
 	}
