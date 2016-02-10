@@ -2,13 +2,13 @@
 #include <iostream>
 #include "SFML\System.hpp"
 
-DialogueSystem::DialogueSystem(LevelHandler &levelHandler, ResourceHandler &handler):
+DialogueSystem::DialogueSystem(ResourceHandler &handler) :
 mHasClicked(false),
 mTime(0),
 mText(),
 mFont(),
 mIsActive(false),
-mLevelHandler(&levelHandler)
+mFinishedDialogue(false)
 {
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
@@ -49,8 +49,10 @@ void DialogueSystem::createTalkBubble(sf::Vector2f &position, float OffSetX, flo
 }
 
 //Function to check if the player has clicked on an object
-void DialogueSystem::hasClicked(std::string indexName)
+void DialogueSystem::hasClicked(std::string indexName, Player *player)
 {
+	mPlayer = player;
+
 	//Thomas' Room
 	if (indexName == "books" && mHasClicked == false)
 	{
@@ -310,6 +312,7 @@ void DialogueSystem::hasClicked(std::string indexName)
 //Resets all variables
 void DialogueSystem::reset()
 {
+	mFinishedDialogue = false;
 	mHasClicked = false;
 	mState = 0;
 
@@ -529,6 +532,11 @@ void DialogueSystem::setState()
 	mState++;
 }
 
+bool DialogueSystem::isDialogueFinished()
+{
+	return mFinishedDialogue;
+}
+
 //Dialogue functions down below
 //Thomas' Room
 void DialogueSystem::displayBooksDialogue()
@@ -542,17 +550,18 @@ void DialogueSystem::displayBooksDialogue()
 		mHasClicked = false;
 		mBooks = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(booksHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(booksHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 	if (mState == 1)
 	{
-		text(booksThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(booksThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -570,36 +579,37 @@ void DialogueSystem::displayLampDialogue()
 		mHasClicked = false;
 		mLamp = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(lampHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(lampHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(lampThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(lampThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(lampHilma2, mLevelHandler->getPlayer()->getPosition(), -250, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -250, -250, 2.5f, 1.f);
+		text(lampHilma2, mPlayer->getPosition(), -250, -250);
+		createTalkBubble(mPlayer->getPosition(), -250, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 3)
 	{
-		text(lampThomas2, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(lampThomas2, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 	if (mState == 4)
 	{
-		text(lampHilma3, mLevelHandler->getPlayer()->getPosition(), -250, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -250, -250, 2.5f, 1.f);
+		text(lampHilma3, mPlayer->getPosition(), -250, -250);
+		createTalkBubble(mPlayer->getPosition(), -250, -250, 2.5f, 1.f);
 	}
 }
 
@@ -615,23 +625,24 @@ void DialogueSystem::displayRubicCubeDialogue()
 		mHasClicked = false;
 		mRubicCube = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(rubicHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(rubicHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 	if (mState == 1)
 	{
-		text(rubicThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(rubicThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 	if (mState == 2)
 	{
-		text(rubicHilma2, mLevelHandler->getPlayer()->getPosition(), -250, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -250, -250, 2.5f, 1.f);
+		text(rubicHilma2, mPlayer->getPosition(), -250, -250);
+		createTalkBubble(mPlayer->getPosition(), -250, -250, 2.5f, 1.f);
 	}
 }
 
@@ -646,19 +657,20 @@ void DialogueSystem::displayPosterDialogue()
 		mHasClicked = false;
 		mPoster = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(posterHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(posterHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(posterThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(posterThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -673,19 +685,20 @@ void DialogueSystem::displayBackpackDialogue()
 		mHasClicked = false;
 		mBackpack = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(backpackHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(backpackHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(backpackThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(backpackThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -701,25 +714,26 @@ void DialogueSystem::displayBowlDialogue()
 		mHasClicked = false;
 		mBowl = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(bowlHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(bowlHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(bowlThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(bowlThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(bowlHilma2, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(bowlHilma2, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -735,25 +749,26 @@ void DialogueSystem::displayRadioDialogue()
 		mHasClicked = false;
 		mRadio = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(radioHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(radioHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(radioThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(radioThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(radioHilma2, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(radioHilma2, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -767,13 +782,14 @@ void DialogueSystem::displayMatDialogue()
 		mHasClicked = false;
 		mMat = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(matHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(matHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -787,13 +803,14 @@ void DialogueSystem::displayStarDialogue()
 		mHasClicked = false;
 		mStar = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(starHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(starHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -810,31 +827,32 @@ void DialogueSystem::displayAquariumDialogue()
 		mHasClicked = false;
 		mAquarium = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(aquariumHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(aquariumHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(aquariumThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(aquariumThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(aquariumHilma2, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(aquariumHilma2, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 3)
 	{
-		text(aquariumThomas2, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(aquariumThomas2, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -848,13 +866,14 @@ void DialogueSystem::displayBlockDialogue()
 		mHasClicked = false;
 		mBlock = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(blockHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(blockHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -870,25 +889,26 @@ void DialogueSystem::displayAstronautDialogue()
 		mHasClicked = false;
 		mAstronaut = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(astronautHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(astronautHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(astronautThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(astronautThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(astronautHilma2, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(astronautHilma2, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -902,13 +922,14 @@ void DialogueSystem::displayMagnetDialogue()
 		mHasClicked = false;
 		mMagnet = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(magnetHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(magnetHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -922,13 +943,14 @@ void DialogueSystem::displayStringDialogue()
 		mHasClicked = false;
 		mString = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(stringHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(stringHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -943,13 +965,14 @@ void DialogueSystem::displayBooks2Dialogue()
 		mHasClicked = false;
 		mBooks2 = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(books2Thomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(books2Thomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -965,25 +988,26 @@ void DialogueSystem::displayJewelryCaseDialogue()
 		mHasClicked = false;
 		mJewelryCase = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(jewelryCaseThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(jewelryCaseThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(jewelryCaseHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(jewelryCaseHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(jewelryCaseHilma2, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(jewelryCaseHilma2, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -998,19 +1022,20 @@ void DialogueSystem::displayMaskDialogue()
 		mHasClicked = false;
 		mMask = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(maskHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(maskHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(maskThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(maskThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1024,13 +1049,14 @@ void DialogueSystem::displayTextileCartDialogue()
 		mHasClicked = false;
 		mTextileCart = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(textileCartHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(textileCartHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1045,19 +1071,20 @@ void DialogueSystem::displayEarthGlobeDialogue()
 		mHasClicked = false;
 		mEarthGlobe = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(earthGlobeThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(earthGlobeThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(earthGlobeHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(earthGlobeHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1072,19 +1099,20 @@ void DialogueSystem::displayGramophoneDialogue()
 		mHasClicked = false;
 		mGramophone = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(gramophoneHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(gramophoneHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(gramophoneThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(gramophoneThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1098,13 +1126,14 @@ void DialogueSystem::displayFishTrophyDialogue()
 		mHasClicked = false;
 		mFishTrophy = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(fishTrophyHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(fishTrophyHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1118,13 +1147,14 @@ void DialogueSystem::displayPlantDialogue()
 		mHasClicked = false;
 		mPlant = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(plantHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(plantHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1138,13 +1168,14 @@ void DialogueSystem::displayArmchairDialogue()
 		mHasClicked = false;
 		mArmchair = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(armchairHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(armchairHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1159,13 +1190,14 @@ void DialogueSystem::displayRefridgeratorDialogue()
 		mHasClicked = false;
 		mRefridgerator = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(refridgeratorThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(refridgeratorThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1182,31 +1214,32 @@ void DialogueSystem::displayCatDialogue()
 		mHasClicked = false;
 		mCat = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(catHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(catHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(catThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(catThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(catHilma2, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(catHilma2, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 3)
 	{
-		text(catThomas2, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(catThomas2, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1220,13 +1253,14 @@ void DialogueSystem::displayCatFoodBowlDialogue()
 		mHasClicked = false;
 		mCatFoodBowl = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(catFoodBowlThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(catFoodBowlThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1240,13 +1274,14 @@ void DialogueSystem::displayMouseDwellingDialogue()
 		mHasClicked = false;
 		mMouseDwelling = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(mouseDwellingHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(mouseDwellingHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1261,19 +1296,20 @@ void DialogueSystem::displayWaterTapDialogue()
 		mHasClicked = false;
 		mWaterTap = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(waterTapThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(waterTapThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(waterTapHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(waterTapHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1287,13 +1323,14 @@ void DialogueSystem::displayFruitBowlDialogue()
 		mHasClicked = false;
 		mFruitBowl = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(fruitBowlThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(fruitBowlThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1308,13 +1345,14 @@ void DialogueSystem::displayPlanetsDialogue()
 		mHasClicked = false;
 		mPlanets = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(planetsThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(planetsThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1328,13 +1366,14 @@ void DialogueSystem::displayMercuryDialogue()
 		mHasClicked = false;
 		mMercury = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(mercuryThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(mercuryThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1348,13 +1387,14 @@ void DialogueSystem::displayVenusDialogue()
 		mHasClicked = false;
 		mVenus = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(venusThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(venusThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1368,13 +1408,14 @@ void DialogueSystem::displayEmptyEarthDialogue()
 		mHasClicked = false;
 		mEmptyEarth = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(emptyEarthThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(emptyEarthThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1388,13 +1429,14 @@ void DialogueSystem::displayEmptyMarsDialogue()
 		mHasClicked = false;
 		mEmptyMars = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(emptyMarsThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(emptyMarsThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1408,13 +1450,14 @@ void DialogueSystem::displayJupiterDialogue()
 		mHasClicked = false;
 		mJupiter = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(jupiterThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(jupiterThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1428,13 +1471,14 @@ void DialogueSystem::displayEmptySaturnDialogue()
 		mHasClicked = false;
 		mEmptySaturn = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(emptySaturnThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(emptySaturnThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1448,13 +1492,14 @@ void DialogueSystem::displayUranusDialogue()
 		mHasClicked = false;
 		mUranus = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(uranusThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(uranusThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1468,13 +1513,14 @@ void DialogueSystem::displayNeptuneDialogue()
 		mHasClicked = false;
 		mNeptune = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(neptuneThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(neptuneThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1488,13 +1534,14 @@ void DialogueSystem::displayEmptyPlutoDialogue()
 		mHasClicked = false;
 		mEmptyPluto = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(emptyPlutoThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(emptyPlutoThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1508,13 +1555,14 @@ void DialogueSystem::displayMarsDialogue()
 		mHasClicked = false;
 		mMars = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(marsThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(marsThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1528,13 +1576,14 @@ void DialogueSystem::displayEarthDialogue()
 		mHasClicked = false;
 		mEarth = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(earthHilma, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(earthHilma, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1548,13 +1597,14 @@ void DialogueSystem::displaySaturnDialogue()
 		mHasClicked = false;
 		mSaturn = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(saturnThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(saturnThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1568,13 +1618,14 @@ void DialogueSystem::displayPlutoDialogue()
 		mHasClicked = false;
 		mPluto = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(plutoThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(plutoThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1588,13 +1639,14 @@ void DialogueSystem::displaySwordsDialogue()
 		mHasClicked = false;
 		mSwords = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(swordsHilma, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(swordsHilma, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1609,19 +1661,20 @@ void DialogueSystem::displayDrawingsDialogue()
 		mHasClicked = false;
 		mDrawings = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(drawingsHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(drawingsHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(drawingsThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(drawingsThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }
 
@@ -1635,13 +1688,14 @@ void DialogueSystem::displayBalconyDoorDialogue()
 		mHasClicked = false;
 		mBalconyDoor = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(balconyDoorHilma, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(balconyDoorHilma, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1657,25 +1711,26 @@ void DialogueSystem::displayDollHouseDialogue()
 		mHasClicked = false;
 		mDollHouse = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(dollHouseHilma, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(dollHouseHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 
 	if (mState == 1)
 	{
-		text(dollHouseThomas, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), 60, -250, 2.5f, 1.f);
+		text(dollHouseThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 
 	if (mState == 2)
 	{
-		text(dollHouseHilma2, mLevelHandler->getPlayer()->getPosition(), -180, -180);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(dollHouseHilma2, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1689,13 +1744,14 @@ void DialogueSystem::displayPutteDialogue()
 		mHasClicked = false;
 		mPutte = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(putteHilma, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(putteHilma, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }
 
@@ -1709,12 +1765,13 @@ void DialogueSystem::displayPutteFamilyDialogue()
 		mHasClicked = false;
 		mPutteFamily = false;
 		mIsActive = false;
+		mFinishedDialogue = true;
 	}
 
 	if (mState == 0)
 	{
 		mIsActive = true;
-		text(putteFamilyHilma, mLevelHandler->getPlayer()->getPosition(), 60, -250);
-		createTalkBubble(mLevelHandler->getPlayer()->getPosition(), -180, -200, 2.1f, 1.f);
+		text(putteFamilyHilma, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
 	}
 }

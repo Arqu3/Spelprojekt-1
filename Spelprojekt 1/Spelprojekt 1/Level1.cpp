@@ -53,7 +53,7 @@ mInventoryMode(false)
 	mInventory = new Inventory();
 
 	//DialogueSystem
-	mDialogueSystem = new DialogueSystem();
+	mDialogueSystem = new DialogueSystem(handler);
 
 	//Create Items
 	mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -137,6 +137,7 @@ void Level1::drawBackground(sf::RenderWindow &window)
 	}
 	window.draw(rectangle); // Help rectangle
 	drawItems(mItems, window);
+	mDialogueSystem->drawDialogue(window);
 }
 
 
@@ -444,6 +445,10 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
 			}
+			else if (mDialogueMode)
+			{
+				mDialogueSystem->setState();
+			}
 			else if (!mDisableClick)
 			{
 				mouseClick(event);
@@ -674,11 +679,15 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				mTargetItem->toggleIsLookedAt();
 				if (mTargetItem->getId() == "Cube")
 				{
-					mDialogueSystem->displayRubicCubeDialogue();
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("rubicCube", mPlayer);
+					mDialogueMode = true;
 				}
 				if (mTargetItem->getId() == "Magnet")
 				{
-					//mDialogueSystem->displayMagnetDialogue();
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("magnet", mPlayer);
+					mDialogueMode = true;
 					std::cout << "Effin' magnets, how do they work!?";
 				}
 				if (mTargetItem->getId() == "Bowl")
@@ -780,6 +789,13 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	//Inventory
 	mInventory->update(window);
+
+	//DialogueSystem
+	mDialogueSystem->update(deltaTime);
+	if (mDialogueSystem->isDialogueFinished())
+	{
+		mDialogueMode = false;
+	}
 
 	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
 	if (mTargetItem != NULL)

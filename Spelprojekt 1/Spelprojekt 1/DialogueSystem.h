@@ -4,12 +4,11 @@
 #include <string>
 #include "Item.h"
 #include "Player.h"
-#include "LevelHandler.h"
 
 class DialogueSystem
 {
 public:
-	DialogueSystem(LevelHandler &levelHandler, ResourceHandler &handler);
+	DialogueSystem(ResourceHandler &handler);
 	~DialogueSystem();
 
 	//Talk functions
@@ -20,7 +19,7 @@ public:
 	void createTalkBubble(sf::Vector2f &position, float OffSetX, float OffSetY, float x, float y);
 
 	//Function that checks if an object has been clicked on
-	void hasClicked(std::string indexName);
+	void hasClicked(std::string indexName, Player *player);
 
 	//Reset variables
 	void reset();
@@ -30,6 +29,9 @@ public:
 
 	//Sets the state value
 	void setState();
+
+	//Function to check in dialogue is finished
+	bool isDialogueFinished();
 
 	//Dialogues (functions with strings)
 	//Thomas' room
@@ -94,14 +96,13 @@ private:
 	float mTime;
 	bool mHasClicked;
 	bool mIsActive;
+	bool mFinishedDialogue;
 	int mState;
 	sf::Text mText;
 	sf::Clock mClock;
 	sf::Font mFont;
 	sf::Sprite mBubble;
-
 	Player *mPlayer;
-	LevelHandler *mLevelHandler;
 
 	//Item bools (Thomas' Room)
 	bool mBooks;
