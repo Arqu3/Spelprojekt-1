@@ -15,19 +15,27 @@ public:
 	void addItem(Item *item);
 	void removeItem(Item *item);
 
+	//Player
+	Player* getPlayer();
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();
 
 	//Draw
-	void draw(sf::RenderWindow &window);
 	void drawItems(ItemVector items, sf::RenderWindow &window);
+	void drawBackground(sf::RenderWindow &window);
+	void drawForeground(sf::RenderWindow &window);
 
 	//Rectangle functions
 	rectVector getRects();
-	//void addRect(sf::FloatRect *rect);
+	void addRect(sf::FloatRect *rect);
 	void removeRect(int index);
 	const rectVector getPlayRects();
+
+	//View
+	sf::View getView();
+	void moveViewWithPlayer(float playerPos);
 
 	//Scene funtions
 	void clearScene();
@@ -37,7 +45,15 @@ public:
 	void toggleActive();
 	bool isActive();
 
+	//Eventstuff
+	void eventListen(sf::RenderWindow &window);
+	void mouseClick(sf::Event &event);
+	void update(sf::RenderWindow &window, float deltaTime);
+
 private:
+
+	//Player
+	Player *mPlayer;
 
 	//Rectangles
 	rectVector mRects;
@@ -53,10 +69,18 @@ private:
 	bool mIsActive;
 	int mActiveScene;
 
+	//View
+	sf::View mView;
+
 	//Items
 	ItemVector mItems;
-
-	
+	Item* mMagicClam;
+	Item* mNeedle;
+	Item* mEarth;
+	Item* mFish;
+	Item* mHoolaHoop;
+	Item* mBeigeBall;
+	Item* mRedApple;
 };
 
 #endif

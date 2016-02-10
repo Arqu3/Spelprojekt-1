@@ -17,7 +17,6 @@ private:
 	//Handlers
 	ResourceHandler mRHandler;
 	LevelHandler mLHandler;
-	EventHandler mEventHandler;
 
 	DialogueSystem dSystem;
 

@@ -6,14 +6,44 @@ mPlayRects(),
 mIsActive(false)
 {
 	background.setSize(sf::Vector2f(1024, 576));
-	background.setTexture(handler.getTexture(0)); //Add correct texture
+	background.setTexture(handler.getTexture("LastLevel_BackgroundTest1.png")); //Add correct texture
 
 	//Add sound
 
 	//Add Rect
 
 	//Add items
+	mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
+	mMagicClam->toggleActive();
 
+	mNeedle = new Item(handler, sf::Vector2f(0, 0), "Needle");
+	mNeedle->toggleActive();
+	mNeedle->togglePickupable();
+
+	mEarth = new Item(handler, sf::Vector2f(0, 0), "Earth");
+	mEarth->toggleActive();
+	mEarth->togglePickupable();
+
+	mFish = new Item(handler, sf::Vector2f(0, 0), "Fish");
+	mFish->toggleActive();
+
+	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
+	mHoolaHoop->toggleActive();
+
+	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
+	mBeigeBall->toggleActive();
+
+	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
+	mRedApple->toggleActive();
+
+	//Add to itemVector
+	addItem(mMagicClam);
+	addItem(mNeedle);
+	addItem(mEarth);
+	addItem(mFish);
+	addItem(mHoolaHoop);
+	addItem(mBeigeBall);
+	addItem(mRedApple);
 }
 
 LastLevel::~LastLevel()
@@ -51,6 +81,11 @@ void LastLevel::removeItem(Item *item)
 	}
 }
 
+Player* LastLevel::getPlayer()
+{
+	return mPlayer;
+}
+
 
 void LastLevel::playBackgroundMusic()
 {
@@ -65,11 +100,17 @@ void LastLevel::playAmbience()
 }
 
 
-void LastLevel::draw(sf::RenderWindow &window)
+void LastLevel::drawBackground(sf::RenderWindow &window)
 {
 	window.draw(background);
 
-	//Draw items etc.
+	drawItems(mItems, window);
+	
+}
+
+void LastLevel::drawForeground(sf::RenderWindow &window)
+{
+
 }
 
 
@@ -93,6 +134,11 @@ const Level::rectVector LastLevel::getPlayRects()
 	return mPlayRects;
 }
 
+void LastLevel::addRect(sf::FloatRect *rect)
+{
+
+}
+
 
 void LastLevel::toggleActive()
 {
@@ -105,6 +151,15 @@ bool LastLevel::isActive()
 	return mIsActive;
 }
 
+sf::View LastLevel::getView()
+{
+	return mView;
+}
+
+void LastLevel::moveViewWithPlayer(float playerPos)
+{
+	mView.setCenter(playerPos, 288);
+}
 
 void LastLevel::clearScene()
 {
@@ -141,7 +196,21 @@ LastLevel::rectVector LastLevel::getRects()
 
 sf::FloatRect* LastLevel::createRect(int positionX, int positionY, int sizeX, int sizeY)
 {
-	sf::FloatRect* floatRect = new sf::FloatRect(positionX, positionY, sizeX, sizeY);
+	sf::FloatRect* floatRect = new sf::FloatRect((float)positionX, (float)positionY, (float)sizeX, (float)sizeY);
 	return floatRect;
 }
 
+void LastLevel::eventListen(sf::RenderWindow &window)
+{
+
+}
+
+void LastLevel::mouseClick(sf::Event &event)
+{
+
+}
+
+void LastLevel::update(sf::RenderWindow &window, float deltaTime)
+{
+
+}

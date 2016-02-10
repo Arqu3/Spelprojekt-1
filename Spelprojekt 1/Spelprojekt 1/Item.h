@@ -7,7 +7,7 @@
 class Item
 {
 public:
-	Item(ResourceHandler &handler, sf::Vector2f &position, sf::FloatRect &rectangle, std::string id);
+	Item(ResourceHandler &handler, sf::Vector2f &position, std::string id);
 	~Item();
  
 	//Toggle functions for flags
@@ -16,6 +16,7 @@ public:
 	void toggleInteractable();
 	void togglePickupable();
 	void toggleIsLookedAt();
+	void toggleInteracted();
 
 	std::string getId();
 
@@ -31,6 +32,7 @@ public:
 	bool getInteractable();
 	bool getPickupable();
 	bool isLookedAt();
+	bool isInteracted();
 
 	//Get Name
 	std::string getName();
@@ -44,12 +46,32 @@ public:
 	//Get position of item
 	sf::Vector2f getPosition();
 
+	//Set position of item
+	void setPosition(float x, float y);
+
+	void moveToPosition(float x, float y);
+
+	void move(float deltaTime);
+
+	bool getIsOnPosition();
+
+	//Set scale of item
+	void setScale(float x, float y);
+
+	sf::Sprite getSprite();
+
+	void update(float deltaTime);
+
+	float getSpeed();
+	void setSpeed(float speed);
+
 private:
 	bool mIsActive;
 	bool mIsLookable;
 	bool mIsInteractable;
 	bool mIsPickupable;
 	bool mIsLookedAt;
+	bool mInteracted;
 
 	int mIndex;
 
@@ -57,9 +79,15 @@ private:
 	std::string mName;
 	std::string mDescription;
 
-	sf::FloatRect mRectangle;
 	sf::Vector2f mPosition;
+	sf::Vector2f mDirection;
+	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
+
+	sf::FloatRect mMoveToRect;
+	bool isOnPosition;
+
+	float mSpeed;
 };
 
 #endif

@@ -12,35 +12,6 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
-	//Add resources in constructor
-	// Textures
-	//Thomas
-	addTexture("Thomas.png");
-	//Thomas rum items
-	addTexture("thomasstar.png");
-	addTexture("thomasblock.png");
-	addTexture("thomasstring.png");
-	addTexture("thomasmagnet.png");
-	addTexture("thomasastronaut.png");
-	addTexture("thomasbowl.png");
-	addTexture("thomascube.png");
-	//Thomas rum bakgrund
-	addTexture("thomasbg.png");
-	addTexture("thomaspg.png");
-	addTexture("thomasfg.png");
-	//Thomas zoom bakgrund
-	addTexture("thomaszoombg.png");
-	addTexture("thomaszoompg.png");
-	addTexture("thomaszoomfg.png");
-	//Textbubbla
-	addTexture("textbubble.png");
-
-	//Music
-	addMusic("Level1Music.ogg");
-
-	cout << "Number of textures loaded: " << mTextures.size() << endl;
-	cout << "Number of sounds loaded: " << mSounds.size() << endl;
-	cout << "Number of music files loaded: " << mMusicNames.size() << endl;
 }
 
 ResourceHandler::~ResourceHandler()
@@ -57,6 +28,49 @@ void ResourceHandler::internalClear()
 	mSoundNames.clear();
 
 	mMusicNames.clear();
+}
+
+void ResourceHandler::loadLevel1()
+{
+	internalClear();
+
+	//Thomas
+	addTexture("ThomasWalk.png");
+	//Hilma
+	addTexture("HilmaWalk.png");
+	addTexture("HilmaPush.png");
+
+	// Level1
+	//Textures
+	//Thomas rum items
+	addTexture("thomasstar.png");
+	addTexture("thomasblock.png");
+	addTexture("thomasstring.png");
+	addTexture("thomasmagnet.png");
+	addTexture("thomasastronaut.png");
+	addTexture("thomasbowl.png");
+	addTexture("thomascube.png");
+	//Thomas room background, playground, foreground
+	addTexture("thomasbg.png");
+	addTexture("thomaspg.png");
+	addTexture("thomasfg.png");
+	//Thomas zoom background, playground, foreground
+	addTexture("thomaszoombg.png");
+	addTexture("thomaszoompg.png");
+	addTexture("thomaszoomfg.png");
+	//Textbubbla
+	addTexture("textbubble.png");
+
+	//Music
+	addMusic("Level1Music.ogg");
+}
+
+void ResourceHandler::loadLastLevel()
+{
+	internalClear();
+
+	//LastLevel
+	addTexture("LastLevel_BackgroundTest1.png");
 }
 
 //Adds a texture to the texture vector
@@ -88,7 +102,7 @@ void ResourceHandler::addSound(string fileName)
 //Adds music name to the name vector
 void ResourceHandler::addMusic(string fileName)
 {
-	mMusicNames.push_back(fileName);
+	mMusicNames.push_back("Resources/Music/" + fileName);
 }
 
 //Get texture at specific index
@@ -151,7 +165,7 @@ string ResourceHandler::getMusic(string name)
 {
 	for (StringVector::size_type i = 0; i < mMusicNames.size(); i++)
 	{
-		if (name == mMusicNames[i])
+		if ("Resources/Music/" + name == mMusicNames[i])
 		{
 			return mMusicNames[i];
 			break;

@@ -14,6 +14,9 @@ public:
 	void addItem(Item* item);
 	void removeItem(Item* item);
 
+	//Player
+	Player* getPlayer();
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();
@@ -29,13 +32,28 @@ public:
 	void addRect(sf::FloatRect* rect);
 	const rectVector getPlayRects();
 
+	//Active Level
+	void toggleActive();
+	bool isActive();
+
+	//View
+	sf::View getView();
+	void moveViewWithPlayer(float playerPos);
+
 	//Scene
 	void clearScene();
 	void internalSwap(int num);
 	void changeScene(int num);
 	int getActiveScene();
-	void toggleActive();
-	bool isActive();
+
+	//Eventstuff
+	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
+	void eventListen(sf::RenderWindow &window);
+	void mouseClick(sf::Event &event);
+	void update(sf::RenderWindow &window, float deltaTime);
+
 private:
 	
 	//Rectangles
@@ -58,6 +76,9 @@ private:
 	bool mIsActive;
 	int mActiveScene;
 
+	//View
+	sf::View mView;
+
 	//Items
 	ItemVector mItems;
 	Item* mScrewdevice;
@@ -68,5 +89,29 @@ private:
 	Item* mAstronaut;
 	Item* mBowl;
 	Item* mCube;
+
+	//Inventory
+	Inventory *mInventory;
+
+	//DialogueSystem
+	DialogueSystem *mDialogueSystem;
+
+	//Player
+	Player *mPlayer;
+
+	//Eventstuff
+	sf::Vector2f mWorldPos;
+	sf::Vector2i mPixelPos;
+	sf::Vector2f mViewMoveTo;
+	Item* mTargetItem;
+	bool mItemInteraction;
+	//Scene change
+	sf::FloatRect mSceneChangeRect;
+	sf::Vector2f mSceneChangePlayerPos;
+	int mNewScene;
+
+	bool mPlayerToggle;
+	bool mInventoryMode;
+	bool mDisableClick;
 };
 #endif

@@ -6,13 +6,13 @@ LevelHandler::LevelHandler(ResourceHandler &handler):
 mLevels(),
 mItems()
 {
-	mPlayer = new Player(handler, sf::Vector2f(400, 400));
-
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
+	mLastLevel = new LastLevel(handler);
 
 	//Add levels to member list
 	mLevels.push_back(mLevel1);
+	mLevels.push_back(mLastLevel);
 }
 
 LevelHandler::~LevelHandler()
@@ -20,9 +20,17 @@ LevelHandler::~LevelHandler()
 	mLevels.clear();
 }
 
-void LevelHandler::update(float deltaTime)
+void LevelHandler::update(float deltaTime, sf::RenderWindow &window)
 {
-	mPlayer->update(deltaTime);
+	for (LevelVector::size_type i = 0; i < mLevels.size(); i++)
+	{
+		//Only update active level
+		if (mLevels[i]->isActive())
+		{
+			mLevels[i]->getPlayer()->update(deltaTime);
+			mLevels[i]->update(window, deltaTime);
+		}
+	}
 }
 
 void LevelHandler::draw(sf::RenderWindow &window)
@@ -33,7 +41,7 @@ void LevelHandler::draw(sf::RenderWindow &window)
 		if (mLevels[i]->isActive())
 		{
 			mLevels[i]->drawBackground(window);
-			mPlayer->draw(window);
+			mLevels[i]->getPlayer()->draw(window);
 			mLevels[i]->drawForeground(window);
 		}
 	}
@@ -43,11 +51,12 @@ void LevelHandler::setActiveLevel(int index)
 {
 	assert(index >= 0);
 	//Toggles active level
-	if (index > 0)
-	{
-		//If level to be toggled is greater than 0, toggle last level to be inactive
-		mLevels[index - 1]->toggleActive();
-	}
+	//TODO - ADD THIS BACK LATER
+	//if (index > 0)
+	//{
+	//	//If level to be toggled is greater than 0, toggle last level to be inactive
+	//	mLevels[index - 1]->toggleActive();
+	//}
 	mLevels[index]->toggleActive();
 }
 
@@ -70,7 +79,7 @@ Level* LevelHandler::getActiveLevel()
 	return NULL;
 }
 
-Player* LevelHandler::getPlayer()
+Level* LevelHandler::getLevel(int index)
 {
-	return mPlayer;
+	return mLevels[index];
 }

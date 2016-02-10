@@ -16,6 +16,14 @@ public:
 	sf::Vector2f getPosition();
 	void setPosition(float x, float y);
 	void moveToPosition(float x, float y);
+	sf::Vector2f getDirection();
+	void flipPlayer();
+	bool isFacingLeft();
+	sf::FloatRect getGlobalRect();
+	void setActiveAnimation(std::string animation);
+	void togglePlayer();
+	float getSpeed();
+	void setSpeed(float speed);
 
 private:
 	void move(float deltaTime);
@@ -25,10 +33,29 @@ private:
 	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
 
+	float mSpeed;
+
+	bool mFacingLeft;
 	bool isOnPosition;
 	sf::FloatRect mRect;
 	sf::FloatRect mMoveToRect;
 	void waitForClick(sf::RenderWindow &window);
-	
+	bool mThomasActive;
+
+	//Animations
+	bool mWalk;
+	bool mPush;
+	//Animation Values
+	int mCurrentFrame;
+	int mFrameYOffset;
+	int mFrameXOffset;
+	float mCurrentTime;
+	float mFrameTime;
+	std::string mActiveAnimation;
+
+	//Animation Textures
+	sf::Texture mThomasTexture;
+	sf::Texture mHilmaTexture;
+	sf::Texture mHilmaPushTexture;
 };
 #endif
