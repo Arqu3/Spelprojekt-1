@@ -15,6 +15,9 @@ public:
 	void addItem(Item *item);
 	void removeItem(Item *item);
 
+	//Player
+	Player* getPlayer();
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();
@@ -42,7 +45,15 @@ public:
 	void toggleActive();
 	bool isActive();
 
+	//Eventstuff
+	void eventListen(sf::RenderWindow &window);
+	void mouseClick(sf::Event &event);
+	void update(sf::RenderWindow &window, float deltaTime);
+
 private:
+
+	//Player
+	Player *mPlayer;
 
 	//Rectangles
 	rectVector mRects;
@@ -70,9 +81,6 @@ private:
 	Item* mHoolaHoop;
 	Item* mBeigeBall;
 	Item* mRedApple;
-
-
-	
 };
 
 #endif

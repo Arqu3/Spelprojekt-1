@@ -1,7 +1,9 @@
 #ifndef INCLUDED_GAME
 #define INCLUDED_GAME
 
-#include "EventHandler.h"
+#include "LevelHandler.h"
+#include "DialogueSystem.h"
+#include "ResourceHandler.h"
 #include "SFML\System.hpp"
 #include "SFML\Window.hpp"
 
@@ -17,7 +19,8 @@ private:
 	//Handlers
 	ResourceHandler mRHandler;
 	LevelHandler mLHandler;
-	EventHandler mEventHandler;
+
+	DialogueSystem dSystem;
 
 	//Deltatime
 	sf::Clock deltaClock;

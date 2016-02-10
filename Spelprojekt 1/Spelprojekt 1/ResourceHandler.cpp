@@ -35,10 +35,12 @@ void ResourceHandler::loadLevel1()
 	internalClear();
 
 	//Thomas
-	addTexture("Thomas.png");
+	addTexture("ThomasWalk.png");
 	//Hilma
-	addTexture("Hilma.png");
+	addTexture("HilmaWalk.png");
+	addTexture("HilmaPush.png");
 
+	// Level1
 	//Textures
 	//Thomas rum items
 	addTexture("thomasstar.png");
@@ -48,14 +50,16 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomasastronaut.png");
 	addTexture("thomasbowl.png");
 	addTexture("thomascube.png");
-	//Thomas rum bakgrund
+	//Thomas room background, playground, foreground
 	addTexture("thomasbg.png");
 	addTexture("thomaspg.png");
 	addTexture("thomasfg.png");
-	//Thomas zoom bakgrund
+	//Thomas zoom background, playground, foreground
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
+	//Textbubbla
+	addTexture("textbubble.png");
 
 	//Music
 	addMusic("Level1Music.ogg");

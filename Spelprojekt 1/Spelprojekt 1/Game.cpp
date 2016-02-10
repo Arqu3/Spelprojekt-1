@@ -5,7 +5,7 @@ using namespace std;
 Game::Game():
 mRHandler(),
 mLHandler(mRHandler),
-mEventHandler(mLHandler)
+dSystem(mRHandler)
 {
 	music.openFromFile(mRHandler.getMusic("Level1Music.ogg"));
 }
@@ -22,6 +22,8 @@ void Game::update()
 
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
+	mLHandler.setActiveLevel(0);
+
 	while (window.isOpen())
 	{
 		window.clear(sf::Color::Black);
@@ -29,10 +31,12 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		mLHandler.update(deltaTime);
+		mLHandler.update(deltaTime, window);
 		mLHandler.draw(window);
-		mEventHandler.eventListen(window);
-		mEventHandler.update(window);
+		mLHandler.getActiveLevel()->eventListen(window);
+
+		/*dSystem.update(deltaTime);
+		dSystem.drawDialogue(window);*/
 
 		deltaClock.restart();
 		window.display();

@@ -192,14 +192,6 @@ void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex
 	//Safety checks
 	if (inputVector.size() > 1 && inputIndex != swapIndex && inputIndex >= 0)
 	{
-		//Temporary crafting
-		if ((inputVector[inputIndex]->getId() == "Magnet" && inputVector[swapIndex]->getId() == "String") ||
-			(inputVector[inputIndex]->getId() == "String" && inputVector[swapIndex]->getId() == "Magnet"))
-		{
-			//removeItem(inputVector[inputIndex]);
-			//removeItem(inputVector[swapIndex]);
-		}
-
 		//Swap index
 		std::swap(inputVector[inputIndex], inputVector[swapIndex]);
 

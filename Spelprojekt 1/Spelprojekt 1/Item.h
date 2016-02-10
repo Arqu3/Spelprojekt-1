@@ -49,10 +49,21 @@ public:
 	//Set position of item
 	void setPosition(float x, float y);
 
+	void moveToPosition(float x, float y);
+
+	void move(float deltaTime);
+
+	bool getIsOnPosition();
+
 	//Set scale of item
 	void setScale(float x, float y);
 
 	sf::Sprite getSprite();
+
+	void update(float deltaTime);
+
+	float getSpeed();
+	void setSpeed(float speed);
 
 private:
 	bool mIsActive;
@@ -69,7 +80,14 @@ private:
 	std::string mDescription;
 
 	sf::Vector2f mPosition;
+	sf::Vector2f mDirection;
+	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
+
+	sf::FloatRect mMoveToRect;
+	bool isOnPosition;
+
+	float mSpeed;
 };
 
 #endif
