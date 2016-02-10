@@ -29,6 +29,8 @@ public:
 	Level* getActiveLevel();
 	Level* getLevel(int index);
 
+	Player* getPlayer();
+
 private:
 	//Items
 	ItemVector mItems;
@@ -42,6 +44,8 @@ private:
 
 	//2
 	LastLevel* mLastLevel;
+
+	Player *mPlayer;
 
 };
 
