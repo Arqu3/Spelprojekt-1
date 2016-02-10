@@ -7,7 +7,9 @@ mIsActive(false),
 mItemInteraction(false),
 mInventoryMode(false)
 {
-	// Room Textures
+	handler.loadLevel1();
+
+	//Room Textures
 	//Background texture
 	background.setSize(sf::Vector2f(1024, 576));
 	background.setTexture(handler.getTexture("thomasbg.png"));
@@ -33,6 +35,12 @@ mInventoryMode(false)
 	foregroundZoom.setSize(sf::Vector2f(1024, 576));
 	foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
 
+<<<<<<< HEAD
+=======
+	//Sound/music
+	//music.openFromFile("Level1Music.ogg");
+
+>>>>>>> refs/remotes/origin/master
 	//Help rectangles
 	rectangle.setPosition(sf::Vector2f(0, 0));
 	rectangle.setSize(sf::Vector2f(0, 0));

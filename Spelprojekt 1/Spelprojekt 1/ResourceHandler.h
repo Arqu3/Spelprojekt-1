@@ -24,6 +24,10 @@ public:
 	sf::SoundBuffer* getSound(std::string name);
 	std::string getMusic(std::string name);
 
+	void loadLevel1();
+
+	void loadLastLevel();
+
 private:
 	//Clear
 	void internalClear();
