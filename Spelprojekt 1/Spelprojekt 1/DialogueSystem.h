@@ -32,6 +32,7 @@ public:
 	void setState();
 
 	//Dialogues (functions with strings)
+	//Thomas' room
 	void displayBooksDialogue();
 	void displayLampDialogue();
 	void displayRubicCubeDialogue();
@@ -46,6 +47,47 @@ public:
 	void displayAstronautDialogue();
 	void displayMagnetDialogue();
 	void displayStringDialogue();
+
+	//Grandma's Livingroom
+	void displayBooks2Dialogue();
+	void displayJewelryCaseDialogue();
+	void displayMaskDialogue();
+	void displayTextileCartDialogue();
+	void displayEarthGlobeDialogue();
+	void displayGramophoneDialogue();
+	void displayFishTrophyDialogue();
+	void displayPlantDialogue();
+	void displayArmchairDialogue();
+
+	//Grandma's Kitchen
+	void displayRefridgeratorDialogue();
+	void displayCatDialogue();
+	void displayCatFoodBowlDialogue();
+	void displayMouseDwellingDialogue();
+	void displayWaterTapDialogue();
+	void displayFruitBowlDialogue();
+
+	//Grandma's Room
+	void displayPlanetsDialogue();
+	void displayMercuryDialogue();
+	void displayVenusDialogue();
+	void displayEmptyEarthDialogue();
+	void displayEmptyMarsDialogue();
+	void displayJupiterDialogue();
+	void displayEmptySaturnDialogue();
+	void displayUranusDialogue();
+	void displayNeptuneDialogue();
+	void displayEmptyPlutoDialogue();
+	void displayMarsDialogue();
+	void displayEarthDialogue();
+	void displaySaturnDialogue();
+	void displayPlutoDialogue();
+	void displaySwordsDialogue();
+	void displayDrawingsDialogue();
+	void displayBalconyDoorDialogue();
+	void displayDollHouseDialogue();
+	void displayPutteDialogue();
+	void displayPutteFamilyDialogue();
 
 private:
 	std::string mDialogue;
@@ -76,6 +118,47 @@ private:
 	bool mAstronaut;
 	bool mMagnet;
 	bool mString;
+
+	//Item bools (Grandma's Livingroom)
+	bool mBooks2;
+	bool mJewelryCase;
+	bool mMask;
+	bool mTextileCart;
+	bool mEarthGlobe;
+	bool mGramophone;
+	bool mFishTrophy;
+	bool mPlant;
+	bool mArmchair;
+
+	//Item bools (Grandma's Kitchen)
+	bool mRefridgerator;
+	bool mCat;
+	bool mCatFoodBowl;
+	bool mMouseDwelling;
+	bool mWaterTap;
+	bool mFruitBowl;
+
+	//Item bools (Grandma's Room)
+	bool mPlanets;
+	bool mMercury;
+	bool mVenus;
+	bool mEmptyEarth;
+	bool mEmptyMars;
+	bool mJupiter;
+	bool mEmptySaturn;
+	bool mUranus;
+	bool mNeptune;
+	bool mEmptyPluto;
+	bool mMars;
+	bool mEarth;
+	bool mSaturn;
+	bool mPluto;
+	bool mSwords;
+	bool mDrawings;
+	bool mBalconyDoor;
+	bool mDollHouse;
+	bool mPutte;
+	bool mPutteFamily;
 };
 
 #endif
