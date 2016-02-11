@@ -67,6 +67,7 @@ void ResourceHandler::loadLevel1()
 
 	//Music
 	addMusic("Level1Music.ogg");
+	addMusic("Barnhem_Prototyp.ogg");
 }
 
 void ResourceHandler::loadLastLevel()

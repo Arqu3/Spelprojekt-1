@@ -20,7 +20,7 @@ void Game::update()
 	music.setLoop(true);
 	music.play();
 
-	mLHandler.setActiveLevel(0);
+	mLHandler.setActiveLevel(1); //Change back!
 
 	while (window.isOpen())
 	{

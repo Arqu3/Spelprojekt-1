@@ -135,9 +135,19 @@ mSpeed(100.0f)
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
-	if (id == "Hoola Hoop")
+	if (id == "Gramophone")
 	{
 		mIndex = 12;
+		mName = "Grammofon";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.5f, 0.6f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Hoola Hoop")
+	{
+		mIndex = 13;
 		mName = "Rockring";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -147,7 +157,7 @@ mSpeed(100.0f)
 
 	if (id == "Beige Ball")
 	{
-		mIndex = 13;
+		mIndex = 14;
 		mName = "Beige Boll";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -157,12 +167,22 @@ mSpeed(100.0f)
 
 	if (id == "Red Apple")
 	{
-		mIndex = 14;
+		mIndex = 15;
 		mName = "Rött Äpple";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+	}
+
+	if (id == "Fruitbowl")
+	{
+		mIndex = 16;
+		mName = "Fruktskål";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.5f, 0.6f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 }
 

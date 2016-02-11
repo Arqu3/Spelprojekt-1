@@ -31,6 +31,7 @@ mIsActive(false)
 	//Foreground Texture scene 3
 
 	//Add sound
+	music.openFromFile("Level1Music.ogg");
 
 	//Add HelpRect
 	rectangle.setPosition(sf::Vector2f(1158, 2));
@@ -43,15 +44,22 @@ mIsActive(false)
 	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
 	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
 	mFish = new Item(handler, sf::Vector2f(840, 37), "Fish");
+	mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
 	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
+	mFruitbowl = new Item(handler, sf::Vector2f(0, 0), "Fruitbowl");
 	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
 	mCat = new Item(handler, sf::Vector2f(0, 0), "Cat");
 	mFruitbowl = new Item(handler, sf::Vector2f(0, 0),"Fruitbowl");
 
 	//View
-	mView.setCenter(512, 288);
 	mView.setSize(1024, 576);
+
+	//Player
+	mPlayer = new Player(handler, sf::Vector2f(400, 400));
+
+	//Inventory
+	mInventory = new Inventory();
 
 	
 }
@@ -99,8 +107,8 @@ Player* LastLevel::getPlayer()
 
 void LastLevel::playBackgroundMusic()
 {
-	backgroundMusic.setPitch(0.5); //Does this even work??
-	backgroundMusic.play();
+	
+	music.play();
 }
 
 
@@ -115,13 +123,16 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 	window.setView(mView);
 	if (mActiveScene == 0)
 	{
+		mView.setCenter(512, 288);
 		window.draw(background);
 
 	}
 
 	else if (mActiveScene == 1)
 	{
+		
 		window.draw(background2);
+	
 		
 	}
 	else if (mActiveScene == 2)
@@ -136,7 +147,10 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 
 void LastLevel::drawForeground(sf::RenderWindow &window)
 {
-
+	if (mInventoryMode)
+	{
+		mInventory->draw(window);
+	}
 }
 
 
@@ -269,6 +283,8 @@ void LastLevel::internalSwap(int num)
 	}
 	else if (num == 1)
 	{
+
+		mView.setCenter(1000, 288);
 		//Scene 2
 		mActiveScene = 1;
 
@@ -276,7 +292,7 @@ void LastLevel::internalSwap(int num)
 		mPlayRects.push_back(createRect(100, 354, 944, 216));
 		mPlayRects.push_back(createRect(1044, 440, 476, 132));
 
-		//Door
+		//Door to scene 3
 		mRects.push_back(createRect(0, 39, 70, 357));
 
 		//Books
@@ -286,18 +302,18 @@ void LastLevel::internalSwap(int num)
 		mRects.push_back(createRect(486, 314, 84, 36));
 
 		//Yarn Basket
-		mRects.push_back(createRect(271, 255, 74, 43));
+		mRects.push_back(createRect(271, 255, 74, 43)); //Remove!
 
 		//Crotch Rocket
 		mRects.push_back(createRect(377, 249, 23, 49));
 
 		//Gramophone
-		mRects.push_back(createRect(437, 108, 96, 123));
+		mRects.push_back(createRect(437, 108, 96, 123)); //Remove!
 
 		//Mask
 		mRects.push_back(createRect(1158, 2, 70, 168));
 
-		//Stairs
+		//Stairs to scene 1
 		mRects.push_back(createRect(1466, 246,44, 178));
 
 		
@@ -306,12 +322,27 @@ void LastLevel::internalSwap(int num)
 		//Items Active
 		mNeedle->toggleActive();
 		mEarth->toggleActive();
+		mGramophone->toggleActive();
 		mFish->toggleActive();
+
+		//Item Lookable
+		mNeedle->toggleLookable();
+		mEarth->toggleLookable();
+		mFish->toggleLookable();
+
+		//Items Pickupable
+		mNeedle->togglePickupable();
+		mEarth->togglePickupable();
+		
+		
+		//Items Interactable
+		mGramophone->toggleInteractable();
 
 		//Add items to ItemVector
 		addItem(mNeedle);
 		addItem(mEarth);
 		addItem(mFish);
+		addItem(mGramophone);
 
 
 	}
@@ -334,6 +365,9 @@ void LastLevel::internalSwap(int num)
 
 		//Tap
 		mRects.push_back(createRect(352, 167, 32, 67));
+
+		//Door
+		mRects.push_back(createRect(941, 93, 83, 302));
 
 		
 
@@ -380,17 +414,603 @@ sf::FloatRect* LastLevel::createRect(int positionX, int positionY, int sizeX, in
 	return floatRect;
 }
 
+//Check collision between a single rectangle and a point
+int LastLevel::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point)
+{
+	if (boundingBox.contains(point))
+	{
+		return 1;
+	}
+	return 0;
+}
+//Check collision between a single rectangle and a point
+int LastLevel::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point)
+{
+	if (boundingBox->contains(point))
+	{
+		return 1;
+	}
+	return 0;
+}
+//Check collision between a vector of rectangles and a point
+int LastLevel::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point)
+{
+	for (std::vector<sf::FloatRect*>::size_type i = 0; i < RectVector.size(); i++)
+	{
+		if (RectVector[i]->contains(point))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
 void LastLevel::eventListen(sf::RenderWindow &window)
 {
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+		// get the current mouse position in the window
+		mPixelPos = sf::Mouse::getPosition(window);
+		// convert it to world coordinates
+		mWorldPos = window.mapPixelToCoords(mPixelPos);
+		switch (event.type)
+		{
+			//window closed
+		case sf::Event::Closed:
+			window.close();
+			break;
 
+			//mouse button pressed
+		case sf::Event::MouseButtonPressed:
+			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
+			if (mInventoryMode)
+			{
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+			}
+			else if (!mDisableClick)
+			{
+				mouseClick(event);
+			}
+			break;
+
+		case sf::Event::KeyPressed:
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				window.close();
+			}
+			if (event.key.code == sf::Keyboard::I)
+			{
+				for (Level::ItemVector::size_type i = 0; i < mInventory->getItems().size(); i++)
+				{
+					std::cout << mInventory->getItemId(i) << " ";
+				}
+			}
+			if (event.key.code == sf::Keyboard::M)
+			{
+				mInventoryMode = !mInventoryMode;
+			}
+			if (event.key.code == sf::Keyboard::P)
+			{
+				mPlayer->togglePlayer();
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
 }
+
 
 void LastLevel::mouseClick(sf::Event &event)
 {
+	std::cout << "Mouse Pressed" << std::endl;
+	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
-}
+	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+
+	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
+
+	//Check if playrect collision
+	if (checkCollision(getPlayRects(), point))
+	{
+		mPlayer->setActiveAnimation("Walk");
+		mPlayer->moveToPosition(point.x, point.y);
+		mItemInteraction = false;
+	}
+
+	//Check Item collision
+	//Loop through all Items in active level
+	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+	{
+		//Check if mouse collided with Item
+		if (checkCollision(getItems()[i]->getRectangle(), point))
+		{
+			//Check if Item is Active
+			if (getItems()[i]->getActive())
+			{
+				mPlayer->setActiveAnimation("Walk");
+				//Check Id of that Item
+				if (getItems()[i]->getId() == "Gramophone")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(477, 366);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+				   std::cout << "Klickade på grammofon";
+
+				}
+
+				if (getItems()[i]->getId() == "Earth")
+				{
+					mPlayer->moveToPosition(323, 368);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på jordglob";
+				}
+
+				if (getItems()[i]->getId() == "Fish")
+				{
+					mPlayer->moveToPosition(930, 365);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på fisk";
+				}
+
+				if (getItems()[i]->getId() == "Needle")
+				{
+					
+					mPlayer->moveToPosition(323, 368);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på nål";
+				
+				}
+
+				if (getItems()[i]->getId() == "Astronaut")
+				{
+					if (getActiveScene() == 0)
+					{
+						mPlayer->moveToPosition(560, 365);
+					}
+					else
+					{
+						mPlayer->moveToPosition(490, 500);
+					}
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "String")
+				{
+					mPlayer->moveToPosition(340, 370);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				if (getItems()[i]->getId() == "Star")
+				{
+					mPlayer->moveToPosition(480, 450);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+			}
+		}
+	}
+
+	//Check Rect Collisions
+	//Separate for each level, getLevel(1) is LastLevel
+	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
+	{
+		if (checkCollision(getRects()[i], point))
+		{
+			mPlayer->setActiveAnimation("Walk");
+			// i == 0 is Dollhouse if ActiveScene is 0, or Door if ActiveScene is 1, or Refrigerator if ActiveScene is 2.
+			if (i == 0)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Dollhouse!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Door to scene 3!";
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(70, 370);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(70, 370), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = false;
+					//Set starting position of Player in new Scene
+					mSceneChangePlayerPos = sf::Vector2f(950, 480);
+					//Set which Scene will be the new Scene
+					mNewScene = 2;
+				}
+				else
+				{
+					std::cout << "Refrigerator!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+			}
+
+			// i == 1 is Planet 1 if ActiveScene is 0, Books if ActiveLevel is 1, Catbowl if ActiveScene is 2
+			else if (i == 1)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 1!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Books!";
+					//mPlayer->moveToPosition(70, 370);
+
+				}
+				else
+				{
+					std::cout << "Catbowl!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+
+			}
+
+			// i == 2 is Planet 2 if ActiveScene is 0, Jewelry Box if ActiveScene is 1, Hole if ActiveSCene is 2
+			else if (i == 2)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 2!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Jewelry Box!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else
+				{
+					std::cout << "Hole!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+			}
+
+			// i == 3 is Planet 3 if ActiveScene is 0, Yarn Basket if ActiveScene is 1, Tap if ActiveScene is 2
+			else if (i == 3)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 3!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Yarn Basket!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else
+				{
+					std::cout << "Tap!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+			}
+
+			// i == 4 is Planet 4 if ActiveScene is 0, Crotch Rocket if ActiveScene is 1, Door scene 3
+			else if (i == 4)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 4!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Crotch Rocket!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else
+				{
+					std::cout << "Door to scene 2!";
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(950, 480);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(950, 480), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = false;
+					//Set starting position of Player in new Scene
+					mSceneChangePlayerPos = sf::Vector2f(70, 370);
+					//Set which Scene will be the new Scene
+					mNewScene = 1;
+				}
+			}
+
+			// i == 5 is Planet 5 if ActiveScene is 0, Gramophone if ActiveScene is 1
+			else if (i == 5)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 5!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else if (getActiveScene() == 1)
+				{
+					//TODO - Make the gramophone play music so the fish can fall down
+					std::cout << "Gramophone!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else
+				{
+
+				}
+			}
+
+			// i == 6 is Planet 6 if ActiveScene is 0, Mask if ActiveScene is 1
+			else if (i == 6)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 6!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Mask!";
+					//mPlayer->moveToPosition(70, 370);
+				}
+				else
+				{
+
+				}
+			}
+
+			// i == 7 is Planet 7 if ActiveScene is 0, Stairs if ActiveScene is 1
+			else if (i == 7)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 7!";
+					//mPlayer->moveToPosition(70, 370);
+
+				}
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Stairs to Scene 1!";
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(1470, 450);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1470, 450), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = false;
+					//Set starting position of Player in new Scene
+					mSceneChangePlayerPos = sf::Vector2f(101, 349);
+					//Set which Scene will be the new Scene
+					mNewScene = 0;
+
+				}
+			}
+
+			// i == 8 is Planet 8 if ActiveScene is 0, 
+			else if (i == 8)
+			{
+				std::cout << "Planet 8!";
+				//mPlayer->moveToPosition(70, 370);
+			}
+
+			// i == 9 is Planet 9 if ActiveScene is 0,
+			else if (i == 9)
+			{
+				std::cout << "Planet 9!";
+				//mPlayer->moveToPosition(70, 370);
+			}
+
+			// i == 10 is Door if ActiveScene is 0,
+			else if (i == 10)
+			{
+				std::cout << "BalconyDoor!";
+				//mPlayer->moveToPosition(70, 370);
+			}
+
+			// i == 11 is Stairs if ActiveScene is 0,
+			else if (i == 11)
+			{
+				if (getActiveScene() == 0)
+				{
+
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(101, 349);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(101, 349), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = false;
+					//Set starting position of Player in new Scene
+					mSceneChangePlayerPos = sf::Vector2f(1437, 440);
+					//Set which Scene will be the new Scene
+					mNewScene = 1;
+					std::cout << "Stairs to scene 2!";
+				}
+
+			
+			}
+		}
+	}
+	}
+
+
 
 void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 {
 
+	//Only do this if the level needs moving camera
+	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
+	
+		//Scene 1 is the big, second room in LastLevel, change as necessary
+		if (getActiveScene() == 1)
+		{
+			//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
+			//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary
+			//In this case the camera scrolls while the Player is between 520 and 1000.
+			if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1000)
+			{
+				//Make camera follow Player position
+				moveViewWithPlayer(mPlayer->getPosition().x);
+			}
+		}
+	
+
+
+	//Check if Player is in position to change Scene
+	if (mPlayer->getRect().intersects(mSceneChangeRect))
+	{
+		//Toggle Player if the new Scene needs it
+		if (mPlayerToggle)
+		{
+			mPlayer->togglePlayer();
+		}
+		//Set Player position to the starting position of the new Scene
+		mPlayer->setPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
+		mPlayer->moveToPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
+		//Change to the new Scene
+		changeScene(mNewScene);
+	}
+
+	//Check if Item interaction is enabled, which it only is when an Item is clicked
+	if (mItemInteraction)
+	{
+		//Check if any part of the Player intersects with the Item
+		if (mPlayer->getGlobalRect().intersects(mTargetItem->getRectangle()))
+		{
+			//Check if Item has already been looked at
+			if (!mTargetItem->isLookedAt())
+			{
+				mTargetItem->toggleIsLookedAt(); //Fixa dialoger i funktion
+				
+			}
+			//Check if Item can be picked up
+			else if (mTargetItem->getPickupable())
+			{
+				//Make Item inactive when it is picked up
+				mTargetItem->toggleActive();
+
+				if (mTargetItem->getId() == "Magic Clam")         //Ska den va här?
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Musslaaaa!";
+				}
+				if (mTargetItem->getId() == "Earth")
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Jordglob";
+				}
+				if (mTargetItem->getId() == "Needle")       
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Nål i garnkorg!";
+				}
+				if (mTargetItem->getId() == "Fish")
+				{
+					mInventory->addItem(mTargetItem);
+
+				}
+			//Check if Item can be interacted with
+			else if (mTargetItem->getInteractable())
+			{
+				//Check if Item has already been interacted with
+				if (!mTargetItem->isInteracted())
+				{
+					mTargetItem->toggleInteractable();
+					if (mTargetItem->getId() == "Block")
+					{
+						mDisableClick = true;
+
+						mPlayer->setSpeed(50.0f);
+						mTargetItem->setSpeed(50.0f);
+
+						mPlayer->setActiveAnimation("Push");
+						mPlayer->moveToPosition(615, 500);
+
+						mTargetItem->moveToPosition(860, 315);
+						mTargetItem->toggleInteracted();
+
+						//Find Astronaut in ItemVector and make it active
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Astronaut")
+							{
+								getItems()[i]->toggleActive();
+							}
+						}
+
+						std::cout << "Knuffade Klossen";
+					}
+
+					if (mTargetItem->getId() == "Star")
+					{
+						mTargetItem->setPosition(900, 190);
+						std::cout << "Satte stjärnan på väggen";
+					}
+
+					if (mTargetItem->getId() == "Gramophone")
+					{
+						
+						//Play sound! Fixa ordning senare
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Fish")
+							{
+								getItems()[i]->togglePickupable();
+								getItems()[i]->moveToPosition(0, 0);
+
+							}
+						}
+
+						std::cout << "Spelar ljud, fisk ramlar ner";
+					}
+
+				}
+			}
+			//Disable Item interaction when done
+			mItemInteraction = false;
+		}
+	}
+	
+
+	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
+	if (mPlayer->getDirection().x < 0 && !mPlayer->isFacingLeft())
+	{
+		mPlayer->flipPlayer();
+	}
+	//If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
+	if (mPlayer->getDirection().x > 0 && mPlayer->isFacingLeft())
+	{
+		mPlayer->flipPlayer();
+	}
+
+	//Inventory
+	mInventory->update(window);
+
+	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
+	if (mTargetItem != NULL)
+	{
+		mTargetItem->update(deltaTime);
+		//Put everything back to normal after the "Pushing cutscene"
+		if (mTargetItem->getIsOnPosition())
+		{
+			if (mDisableClick)
+			{
+				mDisableClick = false;
+				mPlayer->setActiveAnimation("Idle");
+				mPlayer->setSpeed(100.0f);
+				mTargetItem->setSpeed(100.0f);
+			}
+		}
+	}
 }
+}
+
+
+
