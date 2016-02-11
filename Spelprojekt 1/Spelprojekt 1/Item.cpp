@@ -141,7 +141,7 @@ mSpeed(100.0f)
 		mName = "Grammofon";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(1.5f, 0.6f)); //Fixa
+		mSprite.setScale(sf::Vector2f(0.75f, 1.0f)); //Fixa
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
@@ -181,7 +181,17 @@ mSpeed(100.0f)
 		mName = "Fruktskål";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(1.5f, 0.6f)); //Fixa
+		mSprite.setScale(sf::Vector2f(0.5f, 0.5f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Cat")
+	{
+		mIndex = 17;
+		mName = "Katt";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.7f, 0.7f)); //Fixa
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 }

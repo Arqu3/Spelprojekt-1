@@ -40,17 +40,17 @@ mIsActive(false)
 	
 	//Add items
 	
-	mMagicClam = new Item(handler, sf::Vector2f(193, 257), "Magic Clam");
+	mMagicClam = new Item(handler, sf::Vector2f(0,0), "Magic Clam");
 	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
 	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
 	mFish = new Item(handler, sf::Vector2f(840, 37), "Fish");
 	mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
 	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
-	mFruitbowl = new Item(handler, sf::Vector2f(0, 0), "Fruitbowl");
+	mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
 	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
-	mCat = new Item(handler, sf::Vector2f(0, 0), "Cat");
-	mFruitbowl = new Item(handler, sf::Vector2f(0, 0),"Fruitbowl");
+	mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
+	
 
 	//View
 	mView.setSize(1024, 576);
@@ -158,7 +158,11 @@ void LastLevel::drawItems(ItemVector items, sf::RenderWindow &window)
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		mItems[i]->draw(window);
+		if (mItems[i]->getActive())
+		{
+			mItems[i]->draw(window);
+
+		}
 	}
 }
 
@@ -209,12 +213,6 @@ void LastLevel::toggleActive()
 		//Playground
 		mPlayRects.push_back(createRect(108, 378, 610, 192));
 		mPlayRects.push_back(createRect(347, 324, 370, 52));
-
-		
-
-
-		//Items - set as active
-		mMagicClam->toggleActive();
 		
 
 		//Add items to itemVector
@@ -301,14 +299,9 @@ void LastLevel::internalSwap(int num)
 		//Jewelry Box
 		mRects.push_back(createRect(486, 314, 84, 36));
 
-		//Yarn Basket
-		mRects.push_back(createRect(271, 255, 74, 43)); //Remove!
-
 		//Crotch Rocket
 		mRects.push_back(createRect(377, 249, 23, 49));
 
-		//Gramophone
-		mRects.push_back(createRect(437, 108, 96, 123)); //Remove!
 
 		//Mask
 		mRects.push_back(createRect(1158, 2, 70, 168));
@@ -333,7 +326,6 @@ void LastLevel::internalSwap(int num)
 		//Items Pickupable
 		mNeedle->togglePickupable();
 		mEarth->togglePickupable();
-		
 		
 		//Items Interactable
 		mGramophone->toggleInteractable();
@@ -373,11 +365,16 @@ void LastLevel::internalSwap(int num)
 
 
 		//Items active
-		mHoolaHoop->toggleActive();
-		mBeigeBall->toggleActive();
-		mRedApple->toggleActive();
 		mCat->toggleActive();
 		mFruitbowl->toggleActive();
+
+		//Items Lookable
+		mFruitbowl->toggleLookable();
+		mCat->toggleLookable();
+
+		//Items Interactable
+		mFruitbowl->toggleInteractable();
+		mCat->toggleInteractable();
 
 		//Add Items to vector
 		addItem(mHoolaHoop);
@@ -615,7 +612,7 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Dollhouse!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(348, 382);
 				}
 				else if (getActiveScene() == 1)
 				{
@@ -634,7 +631,7 @@ void LastLevel::mouseClick(sf::Event &event)
 				else
 				{
 					std::cout << "Refrigerator!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(870, 349);
 				}
 			}
 
@@ -644,18 +641,18 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Planet 1!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
 					std::cout << "Books!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(356, 377);
 
 				}
 				else
 				{
 					std::cout << "Catbowl!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(816, 422);
 				}
 
 			}
@@ -666,17 +663,17 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Planet 2!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
 					std::cout << "Jewelry Box!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(591, 391);
 				}
 				else
 				{
 					std::cout << "Hole!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(248, 386);
 				}
 			}
 
@@ -686,17 +683,17 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Planet 3!";
-					//mPlayer->moveToPosition(70, 370);
+				    mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Yarn Basket!";
-					//mPlayer->moveToPosition(70, 370);
+					std::cout << "Crotch Rocket!";
+					mPlayer->moveToPosition(452, 379);
 				}
 				else
 				{
 					std::cout << "Tap!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(419, 388);
 				}
 			}
 
@@ -706,12 +703,12 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Planet 4!";
-					//mPlayer->moveToPosition(70, 370);
+					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Crotch Rocket!";
-					//mPlayer->moveToPosition(70, 370);
+					std::cout << "Mask!";
+					mPlayer->moveToPosition(1263, 458);
 				}
 				else
 				{
@@ -735,47 +732,7 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Planet 5!";
-					//mPlayer->moveToPosition(70, 370);
-				}
-				else if (getActiveScene() == 1)
-				{
-					//TODO - Make the gramophone play music so the fish can fall down
-					std::cout << "Gramophone!";
-					//mPlayer->moveToPosition(70, 370);
-				}
-				else
-				{
-
-				}
-			}
-
-			// i == 6 is Planet 6 if ActiveScene is 0, Mask if ActiveScene is 1
-			else if (i == 6)
-			{
-				if (getActiveScene() == 0)
-				{
-					std::cout << "Planet 6!";
-					//mPlayer->moveToPosition(70, 370);
-				}
-				else if (getActiveScene() == 1)
-				{
-					std::cout << "Mask!";
-					//mPlayer->moveToPosition(70, 370);
-				}
-				else
-				{
-
-				}
-			}
-
-			// i == 7 is Planet 7 if ActiveScene is 0, Stairs if ActiveScene is 1
-			else if (i == 7)
-			{
-				if (getActiveScene() == 0)
-				{
-					std::cout << "Planet 7!";
-					//mPlayer->moveToPosition(70, 370);
-
+					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
@@ -790,6 +747,42 @@ void LastLevel::mouseClick(sf::Event &event)
 					mSceneChangePlayerPos = sf::Vector2f(101, 349);
 					//Set which Scene will be the new Scene
 					mNewScene = 0;
+				}
+				else
+				{
+
+				}
+			}
+
+			// i == 6 is Planet 6 if ActiveScene is 0, Mask if ActiveScene is 1
+			else if (i == 6)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 6!";
+					mPlayer->moveToPosition(535, 437);
+				}
+				else if (getActiveScene() == 1)
+				{
+					
+				}
+				else
+				{
+
+				}
+			}
+
+			// i == 7 is Planet 7 if ActiveScene is 0, Stairs if ActiveScene is 1
+			else if (i == 7)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 7!";
+					mPlayer->moveToPosition(535, 437);
+				}
+				else if (getActiveScene() == 1)
+				{
+					
 
 				}
 			}
@@ -798,21 +791,21 @@ void LastLevel::mouseClick(sf::Event &event)
 			else if (i == 8)
 			{
 				std::cout << "Planet 8!";
-				//mPlayer->moveToPosition(70, 370);
+				mPlayer->moveToPosition(535, 437);
 			}
 
 			// i == 9 is Planet 9 if ActiveScene is 0,
 			else if (i == 9)
 			{
 				std::cout << "Planet 9!";
-				//mPlayer->moveToPosition(70, 370);
+				mPlayer->moveToPosition(535, 437);
 			}
 
 			// i == 10 is Door if ActiveScene is 0,
 			else if (i == 10)
 			{
 				std::cout << "BalconyDoor!";
-				//mPlayer->moveToPosition(70, 370);
+				mPlayer->moveToPosition(496, 334);
 			}
 
 			// i == 11 is Stairs if ActiveScene is 0,
@@ -888,7 +881,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 			if (!mTargetItem->isLookedAt())
 			{
 				mTargetItem->toggleIsLookedAt(); //Fixa dialoger i funktion
-				
+				mItemInteraction = false;
 			}
 			//Check if Item can be picked up
 			else if (mTargetItem->getPickupable())
@@ -979,16 +972,16 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	}
 	
 
-	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
-	if (mPlayer->getDirection().x < 0 && !mPlayer->isFacingLeft())
-	{
-		mPlayer->flipPlayer();
-	}
-	//If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
-	if (mPlayer->getDirection().x > 0 && mPlayer->isFacingLeft())
-	{
-		mPlayer->flipPlayer();
-	}
+	////If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
+	//if (mPlayer->getDirection().x < 0 && !mPlayer->isFacingLeft())
+	//{
+	//	mPlayer->flipPlayer();
+	//}
+	////If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
+	//if (mPlayer->getDirection().x > 0 && mPlayer->isFacingLeft())
+	//{
+	//	mPlayer->flipPlayer();
+	//}
 
 	//Inventory
 	mInventory->update(window);
