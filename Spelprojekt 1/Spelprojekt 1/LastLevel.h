@@ -82,6 +82,8 @@ private:
 
 	//Items
 	ItemVector mItems;
+	Item* mPutte;
+	Item* mDollhouse;
 	Item* mMagicClam;
 	Item* mNeedle;
 	Item* mEarth;
@@ -92,7 +94,7 @@ private:
 	Item* mFruitbowl;
 	Item* mRedApple;
 	Item* mCat;
-	
+	Item* mFoodBowl;
 
 	//Inventory
 	Inventory *mInventory;
@@ -111,6 +113,7 @@ private:
 	sf::FloatRect mSceneChangeRect;
 	sf::Vector2f mSceneChangePlayerPos;
 	int mNewScene;
+	int mLastScene;
 
 	bool mPlayerToggle;
 	bool mInventoryMode;

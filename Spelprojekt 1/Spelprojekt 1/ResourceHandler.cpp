@@ -64,6 +64,7 @@ void ResourceHandler::loadLevel1()
 	addTexture("flickrum.png");
 	addTexture("LastLevel_ItemTest1.png");
 	addTexture("Barnhem_Scene3.jpg");
+	addTexture("transparent.png");
 
 	//Music
 	addMusic("Level1Music.ogg");

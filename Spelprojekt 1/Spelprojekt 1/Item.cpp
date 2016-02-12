@@ -141,8 +141,8 @@ mSpeed(100.0f)
 		mName = "Grammofon";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.75f, 1.0f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.75f, 1.0f)); 
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
 	}
 
 	if (id == "Hoola Hoop")
@@ -193,6 +193,36 @@ mSpeed(100.0f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.7f, 0.7f)); //Fixa
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Foodbowl")
+	{
+		mIndex = 18;
+		mName = "Matskål";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Putte")
+	{
+		mIndex = 19;
+		mName = "Putte";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Dollhouse")
+	{
+		mIndex = 19;
+		mName = "Dockhus";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.2f, 1.25f)); 
+		mSprite.setTexture(*handler.getTexture("transparent.png")); 
 	}
 }
 

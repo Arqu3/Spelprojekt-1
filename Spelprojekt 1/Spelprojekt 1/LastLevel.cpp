@@ -41,15 +41,19 @@ mIsActive(false)
 	//Add items
 	
 	mMagicClam = new Item(handler, sf::Vector2f(0,0), "Magic Clam");
+	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
+	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
+	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
+
+	mPutte = new Item(handler, sf::Vector2f(193, 257), "Putte");
+	mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
 	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
 	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
 	mFish = new Item(handler, sf::Vector2f(840, 37), "Fish");
 	mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
-	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
-	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 	mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
-	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
 	mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
+	mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
 	
 
 	//View
@@ -217,6 +221,50 @@ void LastLevel::toggleActive()
 
 		//Add items to itemVector
 		addItem(mMagicClam);
+		addItem(mPutte);
+		addItem(mDollhouse);
+
+		//Items Active
+		mNeedle->toggleActive();
+		mEarth->toggleActive();
+		mGramophone->toggleActive();
+		mFish->toggleActive();
+		mDollhouse->toggleActive();
+		mCat->toggleActive();
+		mFruitbowl->toggleActive();
+		mFoodBowl->toggleActive();
+
+		//Items Lookable scene 1
+		mDollhouse->toggleLookable();
+
+		//Items interactable scene 1
+		mDollhouse->toggleInteractable();
+
+		//Item Lookable scene 2
+		mNeedle->toggleLookable();
+		mEarth->toggleLookable();
+		mFish->toggleLookable();
+		mGramophone->toggleLookable();
+
+		//Items Pickupable scene 2
+		mNeedle->togglePickupable();
+		mEarth->togglePickupable();
+
+		//Items Interactable scene 2
+		mGramophone->toggleInteractable();
+
+
+		//Items Lookable scene 3
+		mFruitbowl->toggleLookable();
+		mCat->toggleLookable();
+		mFoodBowl->toggleLookable();
+
+		//Items Interactable scene 3
+		mFruitbowl->toggleInteractable();
+		mCat->toggleInteractable();
+		mFoodBowl->toggleInteractable();
+
+		mLastScene = 0;
 		
 
 	}
@@ -258,6 +306,9 @@ void LastLevel::internalSwap(int num)
 		mPlayRects.push_back(createRect(108, 378, 610, 192));
 		mPlayRects.push_back(createRect(347, 324, 370, 52));
 
+		//Dollhouse
+		mRects.push_back(createRect(193, 257, 150, 100));
+
 		//Planets 1-9
 		mRects.push_back(createRect(243, 44, 25, 25));
 		mRects.push_back(createRect(317, 52, 40, 40));
@@ -269,20 +320,36 @@ void LastLevel::internalSwap(int num)
 		mRects.push_back(createRect(742, 55, 28, 28));
 		mRects.push_back(createRect(797, 56, 13, 13));
 
-		//Dollhouse
-		mRects.push_back(createRect(193, 257, 150, 100));
-
+	
 		//BalconyDoor
 		mRects.push_back(createRect(445, 186, 80, 50));
 
 		//Stairs to scene 2
 		mRects.push_back(createRect(0, 70, 108, 350));
 
+		//Add item to vector
+		if (mDollhouse->getActive())
+		{
+			addItem(mDollhouse);
+		}
+		if (mPutte->getActive())
+		{
+			addItem(mPutte);
+		}
+		
+
 	}
 	else if (num == 1)
 	{
+		if (mLastScene == 0)
+		{
+			mView.setCenter(1000, 288);
+		}
+		else if (mLastScene == 2)
+		{
+			mView.setCenter(524, 288);
+		}
 
-		mView.setCenter(1000, 288);
 		//Scene 2
 		mActiveScene = 1;
 
@@ -309,34 +376,25 @@ void LastLevel::internalSwap(int num)
 		//Stairs to scene 1
 		mRects.push_back(createRect(1466, 246,44, 178));
 
-		
-
-
-		//Items Active
-		mNeedle->toggleActive();
-		mEarth->toggleActive();
-		mGramophone->toggleActive();
-		mFish->toggleActive();
-
-		//Item Lookable
-		mNeedle->toggleLookable();
-		mEarth->toggleLookable();
-		mFish->toggleLookable();
-
-		//Items Pickupable
-		mNeedle->togglePickupable();
-		mEarth->togglePickupable();
-		
-		//Items Interactable
-		mGramophone->toggleInteractable();
-
 		//Add items to ItemVector
-		addItem(mNeedle);
-		addItem(mEarth);
-		addItem(mFish);
-		addItem(mGramophone);
-
-
+		if (mNeedle->getActive())
+		{
+			addItem(mNeedle);
+		}
+		if (mEarth->getActive())
+		{
+			addItem(mEarth);
+		}
+		if (mFish->getActive())
+		{
+			addItem(mFish);
+		}
+		if (mGramophone->getActive())
+		{
+			addItem(mGramophone);
+		}
+		
+	
 	}
 	else if (num == 2)
 	{
@@ -346,11 +404,13 @@ void LastLevel::internalSwap(int num)
 		//Walkable Area
 		mPlayRects.push_back(createRect(133, 379,799 , 189));
 
+		//Rectangles
+
 		//Refrigerator
 		mRects.push_back(createRect(789, 105, 126, 269));
 
 		//Catbowl
-		mRects.push_back(createRect(714, 396, 54, 24));
+		mRects.push_back(createRect(714, 396, 54, 24)); //Remove 
 
 		//Hole
 		mRects.push_back(createRect(183, 346, 45, 31));
@@ -362,26 +422,32 @@ void LastLevel::internalSwap(int num)
 		mRects.push_back(createRect(941, 93, 83, 302));
 
 		
-
-
-		//Items active
-		mCat->toggleActive();
-		mFruitbowl->toggleActive();
-
-		//Items Lookable
-		mFruitbowl->toggleLookable();
-		mCat->toggleLookable();
-
-		//Items Interactable
-		mFruitbowl->toggleInteractable();
-		mCat->toggleInteractable();
-
 		//Add Items to vector
-		addItem(mHoolaHoop);
-		addItem(mBeigeBall);
-		addItem(mRedApple);
-		addItem(mCat);
-		addItem(mFruitbowl);
+		if (mHoolaHoop->getActive())
+		{
+			addItem(mHoolaHoop);
+		}
+		if (mBeigeBall->getActive())
+		{
+			addItem(mBeigeBall);
+		}
+		if (mRedApple->getActive())
+		{
+			addItem(mRedApple);
+		}
+		if (mCat->getActive())
+		{
+			addItem(mCat);
+		}
+		if (mFruitbowl->getActive())
+		{
+			addItem(mFruitbowl);
+		}
+		if (mFoodBowl->getActive())
+		{
+			addItem(mFoodBowl);
+		}
+
 	}
 }
 
@@ -570,30 +636,54 @@ void LastLevel::mouseClick(sf::Event &event)
 				
 				}
 
-				if (getItems()[i]->getId() == "Astronaut")
+				if (getItems()[i]->getId() == "Cat")
 				{
-					if (getActiveScene() == 0)
-					{
-						mPlayer->moveToPosition(560, 365);
-					}
-					else
-					{
-						mPlayer->moveToPosition(490, 500);
-					}
+
+					mPlayer->moveToPosition(351, 403);
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
+					std::cout << "Klickade på katt";
+
 				}
-				if (getItems()[i]->getId() == "String")
+
+				if (getItems()[i]->getId() == "Fruitbowl")
 				{
-					mPlayer->moveToPosition(340, 370);
+
+					mPlayer->moveToPosition(643, 394);
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
+					std::cout << "Klickade på fruktskål";
+
 				}
-				if (getItems()[i]->getId() == "Star")
+
+				if (getItems()[i]->getId() == "Foodbowl")
 				{
-					mPlayer->moveToPosition(480, 450);
+
+					mPlayer->moveToPosition(700, 422);
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
+					std::cout << "Klickade på matskål";
+
+				}
+
+				if (getItems()[i]->getId() == "Putte")
+				{
+
+					mPlayer->moveToPosition(348, 382);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på Putte";
+
+				}
+
+				if (getItems()[i]->getId() == "Dollhouse")
+				{
+
+					mPlayer->moveToPosition(348, 382);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på dockhus";
+
 				}
 			}
 		}
@@ -611,8 +701,7 @@ void LastLevel::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Dollhouse!";
-					mPlayer->moveToPosition(348, 382);
+					//REMOVE
 				}
 				else if (getActiveScene() == 1)
 				{
@@ -627,6 +716,7 @@ void LastLevel::mouseClick(sf::Event &event)
 					mSceneChangePlayerPos = sf::Vector2f(950, 480);
 					//Set which Scene will be the new Scene
 					mNewScene = 2;
+					mLastScene = 1;
 				}
 				else
 				{
@@ -652,7 +742,7 @@ void LastLevel::mouseClick(sf::Event &event)
 				else
 				{
 					std::cout << "Catbowl!";
-					mPlayer->moveToPosition(816, 422);
+					mPlayer->moveToPosition(700, 422);
 				}
 
 			}
@@ -677,7 +767,7 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 			}
 
-			// i == 3 is Planet 3 if ActiveScene is 0, Yarn Basket if ActiveScene is 1, Tap if ActiveScene is 2
+			// i == 3 is Planet 3 if ActiveScene is 0, Rocket if ActiveScene is 1, Tap if ActiveScene is 2
 			else if (i == 3)
 			{
 				if (getActiveScene() == 0)
@@ -697,7 +787,7 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 			}
 
-			// i == 4 is Planet 4 if ActiveScene is 0, Crotch Rocket if ActiveScene is 1, Door scene 3
+			// i == 4 is Planet 4 if ActiveScene is 0, Mask if ActiveScene is 1, Door scene 3
 			else if (i == 4)
 			{
 				if (getActiveScene() == 0)
@@ -723,10 +813,11 @@ void LastLevel::mouseClick(sf::Event &event)
 					mSceneChangePlayerPos = sf::Vector2f(70, 370);
 					//Set which Scene will be the new Scene
 					mNewScene = 1;
+					mLastScene = 2;
 				}
 			}
 
-			// i == 5 is Planet 5 if ActiveScene is 0, Gramophone if ActiveScene is 1
+			// i == 5 is Planet 5 if ActiveScene is 0, Stairs if scene 2
 			else if (i == 5)
 			{
 				if (getActiveScene() == 0)
@@ -747,6 +838,7 @@ void LastLevel::mouseClick(sf::Event &event)
 					mSceneChangePlayerPos = sf::Vector2f(101, 349);
 					//Set which Scene will be the new Scene
 					mNewScene = 0;
+					mLastScene = 2;
 				}
 				else
 				{
@@ -825,6 +917,7 @@ void LastLevel::mouseClick(sf::Event &event)
 					//Set which Scene will be the new Scene
 					mNewScene = 1;
 					std::cout << "Stairs to scene 2!";
+					mLastScene = 0;
 				}
 
 			
@@ -889,26 +982,22 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 				//Make Item inactive when it is picked up
 				mTargetItem->toggleActive();
 
-				if (mTargetItem->getId() == "Magic Clam")         //Ska den va här?
-				{
-					mInventory->addItem(mTargetItem);
-					std::cout << "Musslaaaa!";
-				}
 				if (mTargetItem->getId() == "Earth")
 				{
 					mInventory->addItem(mTargetItem);
-					std::cout << "Jordglob";
+					std::cout << "Plockade upp Jordglob";
 				}
 				if (mTargetItem->getId() == "Needle")       
 				{
 					mInventory->addItem(mTargetItem);
-					std::cout << "Nål i garnkorg!";
+					std::cout << "Plockade upp nål!!";
 				}
 				if (mTargetItem->getId() == "Fish")
 				{
 					mInventory->addItem(mTargetItem);
-
+					std::cout << "Plockade upp fisk!";
 				}
+			}
 			//Check if Item can be interacted with
 			else if (mTargetItem->getInteractable())
 			{
@@ -916,37 +1005,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 				if (!mTargetItem->isInteracted())
 				{
 					mTargetItem->toggleInteractable();
-					if (mTargetItem->getId() == "Block")
-					{
-						mDisableClick = true;
-
-						mPlayer->setSpeed(50.0f);
-						mTargetItem->setSpeed(50.0f);
-
-						mPlayer->setActiveAnimation("Push");
-						mPlayer->moveToPosition(615, 500);
-
-						mTargetItem->moveToPosition(860, 315);
-						mTargetItem->toggleInteracted();
-
-						//Find Astronaut in ItemVector and make it active
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-						{
-							if (getItems()[i]->getId() == "Astronaut")
-							{
-								getItems()[i]->toggleActive();
-							}
-						}
-
-						std::cout << "Knuffade Klossen";
-					}
-
-					if (mTargetItem->getId() == "Star")
-					{
-						mTargetItem->setPosition(900, 190);
-						std::cout << "Satte stjärnan på väggen";
-					}
-
+					
 					if (mTargetItem->getId() == "Gramophone")
 					{
 						
@@ -956,12 +1015,78 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 							if (getItems()[i]->getId() == "Fish")
 							{
 								getItems()[i]->togglePickupable();
-								getItems()[i]->moveToPosition(0, 0);
+								getItems()[i]->setSpeed(300.0f);
+								getItems()[i]->moveToPosition(861, 349);
+								mTargetItem = getItems()[i];
+								mDisableClick = true;
+							
 
 							}
 						}
 
 						std::cout << "Spelar ljud, fisk ramlar ner";
+					}
+
+
+					if (mTargetItem->getId() == "Fruitbowl")
+					{
+
+						//Change texture to bowl without apple
+
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Red Apple")
+							{
+								//Adds RedApple to the inventory
+								mInventory->addItem(getItems()[i]);
+							}
+						}
+
+						std::cout << "Plockar upp äpple!";
+					}
+
+					if (mTargetItem->getId() == "Foodbowl")
+					{
+
+						//Change texture to bowl with food in it
+
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Cat")
+							{
+								mTargetItem = getItems()[i];
+								mDisableClick = true;
+								getItems()[i]->setSpeed(300.0f);
+								getItems()[i]->moveToPosition(700, 396);
+								
+
+							}
+						}
+
+						std::cout << "Katten äter mat!";
+					}
+
+					if (mTargetItem->getId() == "Putte")
+					{
+
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Magic Clam")
+							{
+								mTargetItem = getItems()[i];
+								mInventory->addItem(getItems()[i]);
+							}
+						}
+
+						std::cout << "Putte ger dig en mussla!";
+					}
+
+					if (mTargetItem->getId() == "Dollhouse")
+					{
+						
+						mPutte->toggleActive();
+						mPutte->toggleLookable();
+						mPutte->toggleInteractable();
 					}
 
 				}
@@ -996,14 +1121,12 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 			if (mDisableClick)
 			{
 				mDisableClick = false;
-				mPlayer->setActiveAnimation("Idle");
-				mPlayer->setSpeed(100.0f);
 				mTargetItem->setSpeed(100.0f);
 			}
 		}
 	}
 }
-}
+
 
 
 
