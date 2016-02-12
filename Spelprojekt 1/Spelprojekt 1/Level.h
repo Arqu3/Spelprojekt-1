@@ -44,7 +44,7 @@ public:
 	virtual void internalSwap(int num) = 0;
 	virtual void changeScene(int num) = 0;
 	virtual int getActiveScene() = 0;
-	virtual void toggleActive() = 0;
+	virtual void toggleActive(ResourceHandler &handler) = 0;
 	virtual bool isActive() = 0;
 
 	//Eventstuff

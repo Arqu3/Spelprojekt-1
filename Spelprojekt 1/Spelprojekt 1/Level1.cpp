@@ -6,70 +6,10 @@ mPlayRects(),
 mIsActive(false),
 mItemInteraction(false),
 mInventoryMode(false),
-mLookedAtAquarium(false)
+mLookedAtAquarium(false),
+mUpdateTime(0)
 {
-	handler.loadLevel1();
-
-	//Room Textures
-	//Background texture
-	background.setSize(sf::Vector2f(1024, 576));
-	background.setTexture(handler.getTexture("thomasbg.png"));
-
-	//Playground texture
-	playground.setSize(sf::Vector2f(1024, 576));
-	playground.setTexture(handler.getTexture("thomaspg.png"));
-
-	//Foreground texture
-	foreground.setSize(sf::Vector2f(1024, 576));
-	foreground.setTexture(handler.getTexture("thomasfg.png"));
-
-	// Zoom Textures
-	//Background Zoom texture
-	backgroundZoom.setSize(sf::Vector2f(1024, 576));
-	backgroundZoom.setTexture(handler.getTexture("thomaszoombg.png"));
-
-	//Playground Zoom texture
-	playgroundZoom.setSize(sf::Vector2f(1024, 576));
-	playgroundZoom.setTexture(handler.getTexture("thomaszoompg.png"));
-
-	//Foreground Zoom texture
-	foregroundZoom.setSize(sf::Vector2f(1024, 576));
-	foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
-
-	//Help rectangles
-	rectangle.setPosition(sf::Vector2f(0, 0));
-	rectangle.setSize(sf::Vector2f(0, 0));
-
-	//Mouse Rectangle
-	mMouseRect.setSize(sf::Vector2f(5, 5));
-	mMouseRect.setOrigin(sf::Vector2f(2.5f, 2.5f));
-	mMouseRect.setFillColor(sf::Color::Green);
-
-	//Sound/music
-	music.openFromFile("Level1Music.ogg");
-
-	//View
-	mView.setCenter(512, 288);
-	mView.setSize(1024, 576);
-
-	//Player
-	mPlayer = new Player(handler, sf::Vector2f(400, 400));
-
-	//Inventory
-	mInventory = new Inventory();
-
-	//DialogueSystem
-	mDialogueSystem = new DialogueSystem(handler);
-
-	//Create Items
-	mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
-	mMagnet = new Item(handler, sf::Vector2f(325, 270), "Magnet");
-	mStar = new Item(handler, sf::Vector2f(475, 435), "Star");
-	mAstronaut = new Item(handler, sf::Vector2f(560, 160), "Astronaut");
-	mBlock = new Item(handler, sf::Vector2f(570, 160), "Block");
-	mString = new Item(handler, sf::Vector2f(250, 370), "String");
-	mBowl = new Item(handler, sf::Vector2f(320, 158), "Bowl");
-	mCube = new Item(handler, sf::Vector2f(352, 222), "Cube");
+	
 }
 
 
@@ -202,10 +142,75 @@ const Level::rectVector Level1::getPlayRects()
 }
 
 
-void Level1::toggleActive()
+void Level1::toggleActive(ResourceHandler &handler)
 {
 	if (!mIsActive)
 	{
+		handler.loadLevel1();
+
+		//Room Textures
+		//Background texture
+		background.setSize(sf::Vector2f(1024, 576));
+		background.setTexture(handler.getTexture("thomasbg.png"));
+
+		//Playground texture
+		playground.setSize(sf::Vector2f(1024, 576));
+		playground.setTexture(handler.getTexture("thomaspg.png"));
+
+		//Foreground texture
+		foreground.setSize(sf::Vector2f(1024, 576));
+		foreground.setTexture(handler.getTexture("thomasfg.png"));
+
+		// Zoom Textures
+		//Background Zoom texture
+		backgroundZoom.setSize(sf::Vector2f(1024, 576));
+		backgroundZoom.setTexture(handler.getTexture("thomaszoombg.png"));
+
+		//Playground Zoom texture
+		playgroundZoom.setSize(sf::Vector2f(1024, 576));
+		playgroundZoom.setTexture(handler.getTexture("thomaszoompg.png"));
+
+		//Foreground Zoom texture
+		foregroundZoom.setSize(sf::Vector2f(1024, 576));
+		foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
+
+		//Help rectangles
+		rectangle.setPosition(sf::Vector2f(0, 0));
+		rectangle.setSize(sf::Vector2f(0, 0));
+
+		//Mouse Rectangle
+		mMouseRect.setSize(sf::Vector2f(5, 5));
+		mMouseRect.setOrigin(sf::Vector2f(2.5f, 2.5f));
+		mMouseRect.setFillColor(sf::Color::Green);
+
+		//Sound/music
+		music.openFromFile("Level1Music.ogg");
+
+		//View
+		mView.setCenter(512, 288);
+		mView.setSize(1024, 576);
+
+		//Player
+		mPlayer = new Player(handler, sf::Vector2f(400, 400));
+
+		//Inventory
+		mInventory = new Inventory();
+
+		//DialogueSystem
+		mDialogueSystem = new DialogueSystem(handler);
+
+		//Create Items
+		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
+		mMagnet = new Item(handler, sf::Vector2f(325, 270), "Magnet");
+		mStar = new Item(handler, sf::Vector2f(475, 435), "Star");
+		mAstronaut = new Item(handler, sf::Vector2f(560, 160), "Astronaut");
+		mBlock = new Item(handler, sf::Vector2f(570, 160), "Block");
+		mString = new Item(handler, sf::Vector2f(250, 370), "String");
+		mBowl = new Item(handler, sf::Vector2f(320, 158), "Bowl");
+		mCube = new Item(handler, sf::Vector2f(352, 222), "Cube");
+
+
+
 		//Playground rectangles
 		mPlayRects.push_back(createRect(110, 360, 610, 200));
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
@@ -225,6 +230,8 @@ void Level1::toggleActive()
 		mRects.push_back(createRect(750, 420, 50, 70));
 		//Rug
 		mRects.push_back(createRect(380, 400, 40, 40));
+		//Door
+		mRects.push_back(createRect(690, 50, 150, 275));
 
 		//Items - Set as Active, Pickupable, Interactable
 		mMagnet->toggleActive();
@@ -307,6 +314,8 @@ void Level1::internalSwap(int num)
 		mRects.push_back(createRect(750, 420, 50, 70));
 		//Rug
 		mRects.push_back(createRect(380, 400, 40, 40));
+		//Door
+		mRects.push_back(createRect(690, 50, 150, 275));
 
 		//Repopulate ItemVector with active items
 		if (mMagnet->getActive())
@@ -705,11 +714,19 @@ void Level1::mouseClick(sf::Event &event)
 				mDialogueSystem->hasClicked("mat", mPlayer);
 				mDialogueMode = true;
 			}
+			// i == 7 is the door
+			else if (i == 7)
+			{
+				//TODO - Add check for if Screwdevice is in Inventory
+				/*mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("thomasdoor", mPlayer);
+				mDialogueMode = true;*/
+			}
 		}
 	}
 }
 
-
+//Change mouse cursor depending on what it is hovering over
 void Level1::mouseHover()
 {
 	mMouseRect.setFillColor(sf::Color::Green);
@@ -779,7 +796,13 @@ void Level1::mouseHover()
 			// i == 6 is bump in the rug
 			else if (i == 6)
 			{
-				//TODO - Add check for if Astronaut is in Inventory
+				//TODO - Add check for if Astronaut is in Inventory, and change FillColor
+				mMouseRect.setFillColor(sf::Color::White);
+			}
+			// i == 7 is door
+			else if (i == 7)
+			{
+				//TODO - Add check for if Screwdevice is in Inventory, and change FillColor
 				mMouseRect.setFillColor(sf::Color::White);
 			}
 			else
@@ -811,7 +834,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	if (mItemInteraction)
 	{
 		//Check if any part of the Player intersects with the Item
-		if (mPlayer->getGlobalRect().intersects(mTargetItem->getRectangle()))
+		if (mPlayer->getGlobalRect().intersects(mTargetItem->getRectangle()) && mPlayer->getIsOnPosition())
 		{
 			//Check if Item has already been looked at
 			if (!mTargetItem->isLookedAt())
@@ -947,6 +970,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
+	//Change mouse cursor on hover
 	mMouseRect.setPosition(sf::Vector2f(mWorldPos));
 	if (!mDialogueMode && !mInventoryMode && mUpdateTime > 60)
 	{

@@ -42,7 +42,7 @@ public:
 	void internalSwap(int num);
 	void changeScene(int num);
 	int getActiveScene();
-	void toggleActive();
+	void toggleActive(ResourceHandler &handler);
 	bool isActive();
 
 	//Eventstuff

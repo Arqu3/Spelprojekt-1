@@ -33,7 +33,7 @@ public:
 	const rectVector getPlayRects();
 
 	//Active Level
-	void toggleActive();
+	void toggleActive(ResourceHandler &handler);
 	bool isActive();
 
 	//View

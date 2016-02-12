@@ -140,7 +140,7 @@ void LastLevel::addRect(sf::FloatRect *rect)
 }
 
 
-void LastLevel::toggleActive()
+void LastLevel::toggleActive(ResourceHandler &handler)
 {
 	mIsActive = !mIsActive;
 }

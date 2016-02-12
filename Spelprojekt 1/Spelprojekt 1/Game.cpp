@@ -6,7 +6,8 @@ Game::Game():
 mRHandler(),
 mLHandler(mRHandler)
 {
-	music.openFromFile(mRHandler.getMusic("Level1Music.ogg"));
+	loadScreenTexture.loadFromFile("Resources/Textures/loadscreen.jpg");
+	loadScreen.setTexture(loadScreenTexture);
 }
 
 Game::~Game()
@@ -17,12 +18,13 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
+	window.clear(sf::Color::Black);
+	window.draw(loadScreen);
+	window.display();
+
 	window.setMouseCursorVisible(false);
 
-	music.setLoop(true);
-	music.play();
-
-	mLHandler.setActiveLevel(0);
+	mLHandler.setActiveLevel(0, mRHandler);
 
 	while (window.isOpen())
 	{

@@ -348,3 +348,8 @@ void Player::setSpeed(float speed)
 {
 	mSpeed = speed;
 }
+
+bool Player::getIsOnPosition()
+{
+	return isOnPosition;
+}
