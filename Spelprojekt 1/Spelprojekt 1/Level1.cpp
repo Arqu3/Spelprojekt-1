@@ -40,6 +40,11 @@ mLookedAtAquarium(false)
 	rectangle.setPosition(sf::Vector2f(0, 0));
 	rectangle.setSize(sf::Vector2f(0, 0));
 
+	//Mouse Rectangle
+	mMouseRect.setSize(sf::Vector2f(5, 5));
+	mMouseRect.setOrigin(sf::Vector2f(2.5f, 2.5f));
+	mMouseRect.setFillColor(sf::Color::Green);
+
 	//Sound/music
 	music.openFromFile("Level1Music.ogg");
 
@@ -155,6 +160,10 @@ void Level1::drawForeground(sf::RenderWindow &window)
 	if (mInventoryMode)
 	{
 		mInventory->draw(window);
+	}
+	else
+	{
+		window.draw(mMouseRect);
 	}
 	if (mDialogueMode)
 	{
@@ -428,6 +437,27 @@ int Level1::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vec
 	}
 	return 0;
 }
+//Check collision between two rectangles
+int Level1::checkCollision(sf::FloatRect* &boundingBox, sf::FloatRect &rect)
+{
+	if (boundingBox->intersects(rect))
+	{
+		return 1;
+	}
+	return 0;
+}
+//Check collision between a vector of rectangles and a rectangle
+int Level1::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect)
+{
+	for (std::vector<sf::FloatRect*>::size_type i = 0; i < RectVector.size(); i++)
+	{
+		if (RectVector[i]->intersects(rect))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
 
 
 void Level1::eventListen(sf::RenderWindow &window)
@@ -587,7 +617,6 @@ void Level1::mouseClick(sf::Event &event)
 	}
 
 	//Check Rect Collisions
-	//Separate for each level, getLevel(0) is Level1
 	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
 	{
 		if (checkCollision(getRects()[i], point))
@@ -680,6 +709,86 @@ void Level1::mouseClick(sf::Event &event)
 	}
 }
 
+
+void Level1::mouseHover()
+{
+	mMouseRect.setFillColor(sf::Color::Green);
+
+	//Check if playrect collision
+	if (checkCollision(getPlayRects(), mMouseRect.getGlobalBounds()))
+	{
+		mMouseRect.setFillColor(sf::Color::Magenta);
+	}
+
+	//Check Item collision
+	//Loop through all Items in active level
+	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+	{
+		//Check if mouse collided with Item
+		if (getItems()[i]->getRectangle().intersects(mMouseRect.getGlobalBounds()))
+		{
+			//Check if Item is Active
+			if (getItems()[i]->getActive())
+			{
+				if (!getItems()[i]->isLookedAt())
+				{
+					mMouseRect.setFillColor(sf::Color::White);
+				}
+				//Check if Item can be picked up
+				else if (getItems()[i]->getPickupable())
+				{
+					mMouseRect.setFillColor(sf::Color::Cyan);
+				}
+				//Check if Item can be interacted with
+				else if (getItems()[i]->getInteractable())
+				{
+					//Check if Item has already been interacted with
+					if (!getItems()[i]->isInteracted())
+					{
+						mMouseRect.setFillColor(sf::Color::Yellow);
+					}
+				}
+			}
+		}
+	}
+
+	//Check Rect Collisions
+	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
+	{
+		if (checkCollision(getRects()[i], mMouseRect.getGlobalBounds()))
+		{
+			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
+			if (i == 0)
+			{
+				if (getActiveScene() == 0)
+				{
+					if (!mLookedAtAquarium)
+					{
+						mMouseRect.setFillColor(sf::Color::White);
+					}
+					else
+					{
+						mMouseRect.setFillColor(sf::Color::Black);
+					}
+				}
+				else
+				{
+					mMouseRect.setFillColor(sf::Color::Black);
+				}
+			}
+			// i == 6 is bump in the rug
+			else if (i == 6)
+			{
+				//TODO - Add check for if Astronaut is in Inventory
+				mMouseRect.setFillColor(sf::Color::White);
+			}
+			else
+			{
+				mMouseRect.setFillColor(sf::Color::White);
+			}
+		}
+	}
+}
 
 void Level1::update(sf::RenderWindow &window, float deltaTime)
 {
@@ -836,5 +945,16 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				mTargetItem->setSpeed(100.0f);
 			}
 		}
+	}
+
+	mMouseRect.setPosition(sf::Vector2f(mWorldPos));
+	if (!mDialogueMode && !mInventoryMode && mUpdateTime > 60)
+	{
+		mouseHover();
+		mUpdateTime = 0;
+	}
+	else
+	{
+		mUpdateTime++;
 	}
 }

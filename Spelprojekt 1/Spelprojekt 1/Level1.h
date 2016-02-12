@@ -50,9 +50,12 @@ public:
 	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
 	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* &boundingBox, sf::FloatRect &rect);
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect);
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
+	void mouseHover();
 
 private:
 	
@@ -67,6 +70,7 @@ private:
 	sf::RectangleShape foregroundZoom;
 	sf::RectangleShape rectangle;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
+	sf::RectangleShape mMouseRect;
 
 	//Sound
 	sf::Music music;
@@ -115,5 +119,7 @@ private:
 	bool mDialogueMode;
 	bool mDisableClick;
 	bool mLookedAtAquarium;
+
+	int mUpdateTime;
 };
 #endif
