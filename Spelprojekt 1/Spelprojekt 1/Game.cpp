@@ -4,8 +4,7 @@ using namespace std;
 
 Game::Game():
 mRHandler(),
-mLHandler(mRHandler),
-dSystem(mRHandler)
+mLHandler(mRHandler)
 {
 	music.openFromFile(mRHandler.getMusic("Level1Music.ogg"));
 }
@@ -17,6 +16,8 @@ Game::~Game()
 void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
+
+	window.setMouseCursorVisible(false);
 
 	music.setLoop(true);
 	music.play();
@@ -33,9 +34,6 @@ void Game::update()
 		mLHandler.update(deltaTime, window);
 		mLHandler.draw(window);
 		mLHandler.getActiveLevel()->eventListen(window);
-
-		/*dSystem.update(deltaTime);
-		dSystem.drawDialogue(window);*/
 
 		deltaClock.restart();
 		window.display();

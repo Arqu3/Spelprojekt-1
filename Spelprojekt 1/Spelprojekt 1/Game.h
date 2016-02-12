@@ -20,8 +20,6 @@ private:
 	ResourceHandler mRHandler;
 	LevelHandler mLHandler;
 
-	DialogueSystem dSystem;
-
 	//Deltatime
 	sf::Clock deltaClock;
 
