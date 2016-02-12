@@ -811,17 +811,6 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
-	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
-	if (mPlayer->getDirection().x < 0 && !mPlayer->isFacingLeft())
-	{
-		mPlayer->flipPlayer();
-	}
-	//If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
-	if (mPlayer->getDirection().x > 0 && mPlayer->isFacingLeft())
-	{
-		mPlayer->flipPlayer();
-	}
-
 	//Inventory
 	mInventory->update(window);
 

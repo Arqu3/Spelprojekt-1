@@ -55,6 +55,17 @@ void Player::move(float deltaTime)
 		mPosition += mDirection * mSpeed * deltaTime;
 	}
 
+	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
+	if (getDirection().x < 0 && !isFacingLeft())
+	{
+		flipPlayer();
+	}
+	//If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
+	if (getDirection().x > 0 && isFacingLeft())
+	{
+		flipPlayer();
+	}
+
 }
 
 void Player::setPosition(float x, float y)
