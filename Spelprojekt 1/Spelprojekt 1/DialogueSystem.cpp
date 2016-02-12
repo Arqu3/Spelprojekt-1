@@ -8,10 +8,17 @@ mTime(0),
 mText(),
 mFont(),
 mIsActive(false),
-mFinishedDialogue(false)
+mAdvancedIsActive(false),
+mFinishedDialogue(false),
+mHandler(handler),
+mFirstCharacter(),
+mSecondCharacter()
 {
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
+	mTextBox.setTexture(*handler.getTexture("textbox.png"));
+	mSepia.setSize(sf::Vector2f(1024, 576));
+	mSepia.setTexture(handler.getTexture("testSepia.png"));
 }
 
 DialogueSystem::~DialogueSystem()
@@ -31,6 +38,17 @@ void DialogueSystem::text(std::string text, sf::Vector2f &position, float x, flo
 	mText.setString(text);
 }
 
+void DialogueSystem::advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY)
+{
+	mText.setFont(mFont);
+	mText.setCharacterSize(24);
+	mText.setStyle(sf::Text::Bold);
+	mText.setColor(sf::Color::White);
+	mText.setPosition(posX, posY);
+	mText.move(offsetX, offsetY);
+	mText.setString(advancedText);
+}
+
 //Draw function for game to use
 void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 {
@@ -38,14 +56,44 @@ void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 	{
 		window.draw(mBubble);
 	}
+	if (mAdvancedIsActive)
+	{
+		window.draw(mSepia);
+		window.draw(mFirstCharacter);
+		window.draw(mSecondCharacter);
+		window.draw(mTextBox);
+	}
 	window.draw(mText);
 }
 
-void DialogueSystem::createTalkBubble(sf::Vector2f &position, float OffSetX, float OffSetY, float x, float y)
+void DialogueSystem::createTalkBubble(sf::Vector2f &position, float offsetX, float offsetY, float scaleX, float scaleY)
 {
 	mBubble.setPosition(position);
-	mBubble.setScale(sf::Vector2f(x, y));
-	mBubble.move(OffSetX, OffSetY);
+	mBubble.setScale(sf::Vector2f(scaleX, scaleY));
+	mBubble.move(offsetX, offsetY);
+}
+
+void DialogueSystem::createTextBox(float x, float y, float offsetX, float offsetY, float scaleX, float scaleY)
+{
+	mTextBox.setPosition(x, y);
+	mTextBox.setScale(scaleX, scaleY);
+	mTextBox.move(offsetX, offsetY);
+}
+
+void DialogueSystem::drawFirstCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character)
+{
+	mFirstCharacter.setPosition(x, y);
+	mFirstCharacter.setScale(scaleX, scaleY);
+	mFirstCharacter.move(offsetX, offsetY);
+	mFirstCharacter.setTexture(*handler.getTexture(character));
+}
+
+void DialogueSystem::drawSecondCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character)
+{
+	mSecondCharacter.setPosition(x, y);
+	mSecondCharacter.setScale(scaleX, scaleY);
+	mSecondCharacter.move(offsetX, offsetY);
+	mSecondCharacter.setTexture(*handler.getTexture(character));
 }
 
 //Function to check if the player has clicked on an object
@@ -305,6 +353,13 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 		mPutteFamily = true;
 		mHasClicked = true;
 	}
+
+	//Advanced Dialogue
+	if (indexName == "hilmaTest" && mHasClicked == false)
+	{
+		mHilmaTest = true;
+		mHasClicked = true;
+	}
 	else
 		mHasClicked = false;
 }
@@ -525,6 +580,11 @@ void DialogueSystem::update(float time)
 	{
 		displayPutteFamilyDialogue();
 	}
+
+	if (mHilmaTest == true)
+	{
+		displayHilmaTestAdvancedDialogue();
+	}
 }
 
 void DialogueSystem::setState()
@@ -535,6 +595,46 @@ void DialogueSystem::setState()
 bool DialogueSystem::isDialogueFinished()
 {
 	return mFinishedDialogue;
+}
+
+//Advanced Dialogues
+void DialogueSystem::displayHilmaTestAdvancedDialogue()
+{
+	std::string testHilma = "Hej!";
+	std::string testThomas = "Håll käft!";
+	std::string testHilma2 = "Nu var du allt dum, du!";
+
+	if (mState == 3)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mHilmaTest = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(testHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "hilmaTest.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "thomasTest.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 1)
+	{
+		advancedText(testThomas, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "hilmaTest.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "thomasTest.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 2)
+	{
+		advancedText(testHilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "hilmaTest.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "thomasTest.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
 }
 
 //Dialogue functions down below

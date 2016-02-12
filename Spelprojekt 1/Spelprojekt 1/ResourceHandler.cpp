@@ -60,6 +60,12 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomaszoomfg.png");
 	//Textbubbla
 	addTexture("textbubble.png");
+	addTexture("textbox.png");
+	//HilmaTest
+	addTexture("hilmaTest.png");
+	addTexture("thomasTest.png");
+	//Sepia
+	addTexture("testSepia.png");
 
 	//Music
 	addMusic("Level1Music.ogg");

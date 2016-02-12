@@ -137,7 +137,6 @@ void Level1::drawBackground(sf::RenderWindow &window)
 	}
 	window.draw(rectangle); // Help rectangle
 	drawItems(mItems, window);
-	mDialogueSystem->drawDialogue(window);
 }
 
 
@@ -156,6 +155,7 @@ void Level1::drawForeground(sf::RenderWindow &window)
 	{
 		mInventory->draw(window);
 	}
+	mDialogueSystem->drawDialogue(window);
 }
 
 
@@ -692,7 +692,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				}
 				if (mTargetItem->getId() == "Bowl")
 				{
-					//mDialogueSystem->displayBowlDialogue();
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("hilmaTest", mPlayer);
+					mDialogueMode = true;
 					std::cout << "Skål!";
 				}
 				if (mTargetItem->getId() == "Block")
