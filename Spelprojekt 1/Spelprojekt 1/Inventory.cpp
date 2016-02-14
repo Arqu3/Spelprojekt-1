@@ -10,11 +10,15 @@ mInitialXOffset(100),
 mInitialYOffset(100),
 mXIncrease(80),
 mYIncrease(80),
-mHasSelected(false),
 mItems(),
 mEvent(),
 mSelectedItem1(-1),
-mSelectedItem2(-1)
+mSelectedItem2(-1),
+mCraftSelect1(-1),
+mCraftSelect2(-1),
+mIsCraftable(false),
+mHasCraft1(false),
+mHasCraft2(false)
 {
 	//Size check
 	cout << mItems.size() << endl;
@@ -25,6 +29,24 @@ mSelectedItem2(-1)
 	//Rows and columns
 	cout << "Number of columns: " << mCol + 1 << endl;
 	cout << "Number of rows: " << mRow + 1 << endl;
+
+	//Crafting rectangles
+	mItem1Rect.setSize(sf::Vector2f(70, 70));
+	mItem1Rect.setPosition(sf::Vector2f(500, 100));
+	mItem1Rect.setFillColor(sf::Color::Cyan);
+
+	mItem2Rect.setSize(sf::Vector2f(70, 70));
+	mItem2Rect.setPosition(sf::Vector2f(620, 100));
+	mItem2Rect.setFillColor(sf::Color::Cyan);
+
+	//Result rectangle
+	mResultRect.setSize(sf::Vector2f(80, 80));
+	mResultRect.setPosition(sf::Vector2f(560, 275));
+
+	//Craft button
+	mCraftButton.setSize(sf::Vector2f(60, 40));
+	mCraftButton.setPosition(sf::Vector2f(560, 200));
+	mCraftButton.setFillColor(sf::Color::Yellow);
 
 	//Mouse rectangle
 	mRectShape.setSize(sf::Vector2f(10, 10));
@@ -59,8 +81,7 @@ void Inventory::update(sf::RenderWindow &window)
 	if (mSelectedItem1 != -1 && mSelectedItem2 != -1)
 	{
 		swapItems(mItems, mSelectedItem1, mSelectedItem2);
-		mSelectedItem1 = -1;
-		mSelectedItem2 = -1;
+		deSelect();
 	}
 }
 
@@ -72,8 +93,33 @@ void Inventory::draw(sf::RenderWindow &window)
 	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
+		//Set opacity to 50% if item is selected
+		if (mCraftSelect1 != -1)
+		{
+			mItems[mCraftSelect1]->getSprite().setColor(sf::Color(255, 255, 255, 177));
+		}
+		if (mCraftSelect2 != -1)
+		{
+			mItems[mCraftSelect2]->getSprite().setColor(sf::Color(255, 255, 255, 177));
+		}
+
 		window.draw(mItems[i]->getSprite());
 	}
+
+	window.draw(mItem1Rect);
+	window.draw(mItem2Rect);
+	window.draw(mCraftButton);
+	window.draw(mResultRect);
+
+	if (mHasCraft1)
+	{
+		window.draw(mItem1->getSprite());
+	}
+	if (mHasCraft2)
+	{
+		window.draw(mItem2->getSprite());
+	}
+
 	window.draw(mRectShape);
 }
 
@@ -89,9 +135,13 @@ Inventory::ItemVector Inventory::getItems()
 }
 
 //Function to get the id of an item in the ItemVector
-std::string Inventory::getItemId(int index)
+string Inventory::getItemId(int index)
 {
-	return mItems[index]->getId();
+	if (index >= 0 && (unsigned)index < mItems.size())
+	{
+		return mItems[index]->getId();
+	}
+	return "ERROR, INDEX OUT OF RANGE";
 }
 
 void Inventory::setInitialGrid()
@@ -131,23 +181,33 @@ void Inventory::setDynamicGrid()
 }
 
 
-void Inventory::removeItem(Item* item)
+//Removes item at specific index
+void Inventory::removeItem(int index)
 {
-	//Reverse additem functionality 
-	//mItems.pop_back();
-
-	if (mItems.size() > 1)
+	//Reverse additem functionality
+	//If index is not last
+	if (mItems.size() > 0)
 	{
-		for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+		if ((unsigned)index != mItems.size() - 1)
 		{
-			if (item->getId() == mItems[i]->getId())
+			swap(mItems[index], mItems.back());
+			swapPos(*mItems[index], *mItems.back());
+			mItems.pop_back();
+
+			//Sorts index and position
+			for (index; (unsigned)index < mItems.size(); index++)
 			{
-				/*Swaps the chosen element and the last element in the vector
-				and removes the new last element*/
-				std::swap(mItems[i], mItems.back());
-				mItems.pop_back();
-				break;
+				if ((unsigned)index + 1 != mItems.size())
+				{
+					swapPos(*mItems[index], *mItems[index + 1]);
+					swap(mItems[index], mItems[index + 1]);
+				}
 			}
+		}
+		//If index is last
+		else
+		{
+			mItems.pop_back();
 		}
 	}
 
@@ -180,9 +240,83 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point)
 				mSelectedItem2 = i;
 				cout << "Second selected item is: " << mSelectedItem2 << endl;
 			}
-			cout << i << endl;
+			return;
 		}
 	}
+	deSelect();
+}
+
+void Inventory::setCraftPos(int index)
+{
+	//Offset position
+	sf::Vector2f pos1(mItem1Rect.getPosition().x + 3, mItem1Rect.getPosition().y + 3);
+	sf::Vector2f pos2(mItem2Rect.getPosition().x + 3, mItem2Rect.getPosition().y + 3);
+
+	if (mSelectedItem1 != -1)
+	{
+		//If has selected item and clicks first position
+		if (mItem1Rect.getGlobalBounds().contains(mWorldPos))
+		{
+			mCraftSelect1 = index;
+			if (mCraftSelect1 != mCraftSelect2)
+			{
+				//If pointer is null, place item
+				if (!mHasCraft1)
+				{
+					mHasCraft1 = true;
+					mItem1 = new Item(*mItems[index]);
+					mItem1->setPosition(pos1.x, pos1.y);
+				}
+			}
+			mSelectedItem1 = -1;
+		}
+
+		//If has selected item and clicks position 2
+		else if (mItem2Rect.getGlobalBounds().contains(mWorldPos))
+		{
+			mCraftSelect2 = index;
+			if (mCraftSelect2 != mCraftSelect1)
+			{
+				//If pointer is null, place item
+				if (!mHasCraft2)
+				{
+					mHasCraft2 = true;
+					mItem2 = new Item(*mItems[index]);
+					mItem2->setPosition(pos2.x, pos2.y);
+				}
+			}
+			mSelectedItem1 = -1;
+		}
+		return;
+	}
+	deSelect();
+}
+
+void Inventory::craftItem(int index1, int index2)
+{
+	//Remove highest index first to prevent index mismatch
+	if (index1 > index2)
+	{
+		removeItem(index1);
+		removeItem(index2);
+	}
+	else if (index2 > index1)
+	{
+		removeItem(index2);
+		removeItem(index1);
+	}
+
+	mCraftSelect1 = -1;
+	mCraftSelect2 = -1;
+
+	//Set crafts to false
+	mHasCraft1 = false;
+	mHasCraft2 = false;
+
+	//TODO - Add appropriate item
+	//How to do this?
+	//mItems.push_back(); //Issue, how to add item
+	//setDynamicGrid();
 }
 
 //Swaps elements in given vector, passed by referens to avoid copy
@@ -195,16 +329,63 @@ void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex
 		//Swap index
 		std::swap(inputVector[inputIndex], inputVector[swapIndex]);
 
-		//Swap position
-		sf::Vector2f tempPos(inputVector[inputIndex]->getPosition());
-		inputVector[inputIndex]->setPosition(inputVector[swapIndex]->getPosition().x, inputVector[swapIndex]->getPosition().y);
-		inputVector[swapIndex]->setPosition(tempPos.x, tempPos.y);
+		swapPos(*inputVector[inputIndex], *inputVector[swapIndex]);
 
 		cout << "Swapped" << endl;
 	}
 }
 
-void Inventory::invertSelect()
+void Inventory::swapPos(Item &item1, Item &item2)
 {
-	mHasSelected = !mHasSelected;
+	sf::Vector2f tempPos(item1.getPosition());
+	item1.setPosition(item2.getPosition().x, item2.getPosition().y);
+	item2.setPosition(tempPos.x, tempPos.y);
+}
+
+void Inventory::deSelect()
+{
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		//Deselect if you click on nothing interactable
+		if (!mItems[i]->getRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos))
+		{
+			mSelectedItem1 = -1;
+			mSelectedItem2 = -1;
+		}
+	}
+}
+
+bool Inventory::craftCheck()
+{
+	if (mCraftButton.getGlobalBounds().contains(mWorldPos))
+	{
+		//TODO - Add real craftcheck
+		if (mCraftSelect1 != -1 && mCraftSelect2 != -1 && mCraftSelect1 != mCraftSelect2)
+		{
+			mIsCraftable = true;
+		}
+		else
+		{
+			mIsCraftable = false;
+		}
+
+		return mIsCraftable;
+	}
+
+	return false;
+}
+
+int Inventory::getSelectedItem()
+{
+	return mSelectedItem1;
+}
+
+int Inventory::getCraftSelect1()
+{
+	return mCraftSelect1;
+}
+
+int Inventory::getCraftSelect2()
+{
+	return mCraftSelect2;
 }

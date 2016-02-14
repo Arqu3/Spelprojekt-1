@@ -21,24 +21,34 @@ public:
 	~Inventory();
 
 	//Vectors
-	typedef std::vector<sf::Texture> TextureVector;
-	typedef std::vector<sf::Sprite> SpriteVector;
 	typedef std::vector<Item*> ItemVector;
 
 	void update(sf::RenderWindow &window);
 	void draw(sf::RenderWindow &window);
 
+	//Items
 	void addItem(Item* item);
 	ItemVector getItems();
 	std::string getItemId(int index);
-	void setDynamicGrid();
-	void removeItem(Item* item);
-	void checkCollision(ItemVector items, sf::Vector2f point);
+	void removeItem(int index);
+	void craftItem(int index1, int index2);
 	void swapItems(ItemVector &inputVector, int inputIndex, int swapIndex);
-	void invertSelect();
+
+	//Grid
+	void setDynamicGrid();
+	void checkCollision(ItemVector items, sf::Vector2f point);
+	void setCraftPos(int index);
+	bool craftCheck();
+
+	//Get values
+	int getSelectedItem();
+	int getCraftSelect1();
+	int getCraftSelect2();
 
 private:
 	void setInitialGrid();
+	void swapPos(Item &item1, Item &item2);
+	void deSelect();
 
 	//Grid specific
 	float mRow;
@@ -58,11 +68,24 @@ private:
 	ItemVector mCraftableItems;
 
 	//Item specific - grid
-	bool mHasSelected;
 	sf::RectangleShape mSelectRect;
-	sf::Vector2f mSelecPos;
+	sf::Vector2f mSelectPos;
 	int mSelectedItem1;
 	int mSelectedItem2;
+
+	//Item specific - crafting
+	sf::RectangleShape mItem1Rect;
+	sf::RectangleShape mItem2Rect;
+	sf::RectangleShape mResultRect;
+	sf::RectangleShape mCraftButton;
+	Item *mItem1;
+	Item *mItem2;
+	//Item mResultItem;
+	int mCraftSelect1;
+	int mCraftSelect2;
+	bool mIsCraftable;
+	bool mHasCraft1;
+	bool mHasCraft2;
 
 	//Mouse
 	sf::RectangleShape mRectShape;

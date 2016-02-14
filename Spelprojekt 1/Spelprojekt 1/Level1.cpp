@@ -403,7 +403,7 @@ int Level1::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point
 	return 0;
 }
 //Check collision between a single rectangle and a point
-int Level1::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point)
+int Level1::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point) //Pointer-reference YOU FUCKING WOT M8?
 {
 	if (boundingBox->contains(point))
 	{
@@ -447,6 +447,13 @@ void Level1::eventListen(sf::RenderWindow &window)
 			if (mInventoryMode)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+
+				mInventory->setCraftPos(mInventory->getSelectedItem());
+
+				if (mInventory->craftCheck())
+				{
+					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
+				}
 			}
 			else if (mDialogueMode)
 			{
@@ -477,6 +484,13 @@ void Level1::eventListen(sf::RenderWindow &window)
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mPlayer->togglePlayer();
+			}
+			if (event.key.code == sf::Keyboard::B)
+			{
+				if (mInventoryMode)
+				{
+					mInventory->removeItem(0);
+				}
 			}
 			break;
 
