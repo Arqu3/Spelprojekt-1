@@ -721,6 +721,7 @@ void Level1::mouseClick(sf::Event &event)
 				/*mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("thomasdoor", mPlayer);
 				mDialogueMode = true;*/
+				mPlayer->moveToPosition(765, 340);
 			}
 		}
 	}
