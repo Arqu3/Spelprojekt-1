@@ -20,14 +20,15 @@ private:
 	ResourceHandler mRHandler;
 	LevelHandler mLHandler;
 
-	DialogueSystem dSystem;
-
 	//Deltatime
 	sf::Clock deltaClock;
 
 	//Sound
 	sf::Music music;
 
+	//Loading screen
+	sf::Texture loadScreenTexture;
+	sf::Sprite loadScreen;
 };
 
 #endif

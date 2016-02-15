@@ -4,10 +4,10 @@ using namespace std;
 
 Game::Game():
 mRHandler(),
-mLHandler(mRHandler),
-dSystem(mRHandler)
+mLHandler(mRHandler)
 {
-	music.openFromFile(mRHandler.getMusic("Level1Music.ogg"));
+	loadScreenTexture.loadFromFile("Resources/Textures/loadscreen.jpg");
+	loadScreen.setTexture(loadScreenTexture);
 }
 
 Game::~Game()
@@ -18,10 +18,13 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
-	music.setLoop(true);
-	music.play();
+	window.clear(sf::Color::Black);
+	window.draw(loadScreen);
+	window.display();
 
-	mLHandler.setActiveLevel(0);
+	//window.setMouseCursorVisible(false);
+
+	mLHandler.setActiveLevel(0, mRHandler);
 
 	while (window.isOpen())
 	{
@@ -33,9 +36,6 @@ void Game::update()
 		mLHandler.update(deltaTime, window);
 		mLHandler.draw(window);
 		mLHandler.getActiveLevel()->eventListen(window);
-
-		/*dSystem.update(deltaTime);
-		dSystem.drawDialogue(window);*/
 
 		deltaClock.restart();
 		window.display();
