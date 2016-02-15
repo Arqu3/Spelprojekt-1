@@ -4,36 +4,53 @@
 #include "ResourceHandler.h"
 #include "SFML\System.hpp"
 
-class Cursor{
+class Menu{
 public:
-	Cursor(ResourceHandler &handler);
-	~Cursor();
+	Menu(ResourceHandler &handler);
+	~Menu();
 
-	enum Menu
+	enum ActiveMenu
 	{
 		HAT,
+		MAIN,
 		INVENTORY,
-		CLUE,
-		SETTINGS
+		CLUES,
+		MEMORIES,
+		SETTINGS,
+		EXIT,
+		NONE
 	};
 
 	void update();
 	void draw(sf::RenderWindow &window);
 
-	void setMode(Menu newMode);
-	void setPosition(sf::Vector2f position);
+	void checkCollision(sf::Vector2f point);
 
-	Menu getMode();
-	sf::Vector2f getPosition();
-	sf::FloatRect getRect();
+	void setActiveMenu(ActiveMenu newMode);
+
+	ActiveMenu getActiveMenu();
+	sf::FloatRect getHatIconRect();
+	sf::FloatRect getMenuIconRect();
 
 private:
-	Menu menu;
+	ActiveMenu menu;
 
+	//Menu Sprites
 	sf::Sprite mHatIcon;
 	sf::Sprite mMenuIcon;
 	sf::Sprite mHatMenu;
-	sf::Sprite mMenu;
+	sf::Sprite mMainMenu;
+	sf::Sprite mInventoryMenu;
+
+	//Menu Rects
+	sf::FloatRect mInventoryRect;
+	sf::FloatRect mCluesRect;
+	sf::FloatRect mMemoriesRect;
+	sf::FloatRect mSettingsRect;
+	sf::FloatRect mExitRect;
+
+	//Help Rectangle
+	sf::RectangleShape mHelpRectangle;
 };
 
 #endif

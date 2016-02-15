@@ -114,14 +114,9 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 
 void Level1::drawUI(sf::RenderWindow &window)
 {
-	window.draw(mHatIcon);
-	window.draw(mMenuIcon);
+	mMenu->draw(window);
 
-	if (mCursor->getMode() == Cursor::MENU)
-	{
-		window.draw(mHatMenu);
-	}
-	if (mCursor->getMode() == Cursor::INVENTORY)
+	if (mMenu->getActiveMenu() == Menu::INVENTORY)
 	{
 		mInventory->draw(window);
 	}
@@ -188,20 +183,6 @@ void Level1::toggleActive(ResourceHandler &handler)
 		rectangle.setPosition(sf::Vector2f(0, 0));
 		rectangle.setSize(sf::Vector2f(0, 0));
 
-		//UI Icons
-		handler.getTexture("haticon.png")->setSmooth(true);
-		handler.getTexture("menuicon.png")->setSmooth(true);
-		mHatIcon.setTexture(*handler.getTexture("haticon.png"));
-		mMenuIcon.setTexture(*handler.getTexture("menuicon.png"));
-		mHatIcon.setPosition(sf::Vector2f(10, 470));
-		mMenuIcon.setPosition(sf::Vector2f(90, 510));
-		mHatIcon.setScale(sf::Vector2f(0.3f, 0.3f));
-		mMenuIcon.setScale(sf::Vector2f(0.3f, 0.3f));
-		//UI Menus
-		mHatMenu.setTexture(*handler.getTexture("hatmenu.png"));
-		mHatMenu.setPosition(sf::Vector2f(0, 285));
-		mHatMenu.setScale(sf::Vector2f(0.3f, 0.3f));
-
 		//Sound/music
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
 		music.setLoop(true);
@@ -223,6 +204,9 @@ void Level1::toggleActive(ResourceHandler &handler)
 
 		//Mouse Cursor
 		mCursor = new Cursor(handler);
+
+		//Menu
+		mMenu = new Menu(handler);
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -520,7 +504,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
-			if (mCursor->getMode() == Cursor::INVENTORY)
+			if (mMenu->getActiveMenu() == Menu::INVENTORY)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
 
@@ -535,9 +519,9 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mDialogueSystem->setState();
 			}
-			else if (mCursor->getMode() == Cursor::MENU)
+			else if (mMenu->getActiveMenu() != Menu::NONE)
 			{
-				//TODO - UI checkCollision() maybe?
+				mMenu->checkCollision(mWorldPos);
 			}
 			else if (mCursor->getMode() != Cursor::DISABLED)
 			{
@@ -552,19 +536,14 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::I)
 			{
-				for (Level::ItemVector::size_type i = 0; i < mInventory->getItems().size(); i++)
+				if (mMenu->getActiveMenu() == Menu::INVENTORY)
 				{
-					std::cout << mInventory->getItemId(i) << " ";
-				}
-			}
-			if (event.key.code == sf::Keyboard::M)
-			{
-				if (mCursor->getMode() == Cursor::INVENTORY)
-				{
+					mMenu->setActiveMenu(Menu::NONE);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else
 				{
+					mMenu->setActiveMenu(Menu::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 				}
 			}
@@ -593,29 +572,17 @@ void Level1::mouseClick(sf::Event &event)
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
 	//Check if Hat Icon is clicked
-	if (checkCollision(mHatIcon.getGlobalBounds(), point))
+	if (checkCollision(mMenu->getHatIconRect(), point))
 	{
-		if (mCursor->getMode() != Cursor::MENU)
-		{
-			mCursor->setMode(Cursor::MENU);
-		}
-		else
-		{
-			mCursor->setMode(Cursor::NORMAL);
-		}
+		mCursor->setMode(Cursor::MENU);
+		mMenu->setActiveMenu(Menu::HAT);
 	}
 
 	//Check if Menu Icon is clicked
-	if (checkCollision(mMenuIcon.getGlobalBounds(), point))
+	if (checkCollision(mMenu->getMenuIconRect(), point))
 	{
-		if (mCursor->getMode() != Cursor::MENU)
-		{
-			mCursor->setMode(Cursor::MENU);
-		}
-		else
-		{
-			mCursor->setMode(Cursor::NORMAL);
-		}
+		mCursor->setMode(Cursor::MENU);
+		mMenu->setActiveMenu(Menu::MAIN);
 	}
 
 	//Check if playrect collision

@@ -19,6 +19,7 @@ Cursor::~Cursor()
 {
 }
 
+//Update mouse cursor texture and origin depending on current active mode
 void Cursor::update()
 {
 	switch (mode){
@@ -87,6 +88,7 @@ sf::Vector2f Cursor::getPosition()
 	return mMouseCursor.getPosition();
 }
 
+//Return a small Rect at the mouse cursors position, small Rect makes sure cursor doesn't change "prematurely"
 sf::FloatRect Cursor::getRect()
 {
 	return sf::FloatRect(getPosition(), sf::Vector2f(1.0f, 1.0f));

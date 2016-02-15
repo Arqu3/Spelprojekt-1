@@ -2,7 +2,6 @@
 #define INCLUDED_LEVEL1
 
 #include "Level.h"
-#include "Cursor.h"
 #include "SFML\System.hpp"
 
 class Level1: public Level{
@@ -73,12 +72,6 @@ private:
 	sf::RectangleShape rectangle;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
 
-	//UI
-	sf::Sprite mHatIcon;
-	sf::Sprite mMenuIcon;
-	sf::Sprite mHatMenu;
-	sf::Sprite mMenu;
-
 	//Sound
 	sf::Music music;
 	sf::Sound mAmbientSound;
@@ -112,6 +105,9 @@ private:
 
 	//Mouse Cursor
 	Cursor *mCursor;
+
+	//Menu
+	Menu *mMenu;
 
 	//Eventstuff
 	sf::Vector2f mWorldPos;

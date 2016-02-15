@@ -5,6 +5,8 @@
 #include "Inventory.h"
 #include "DialogueSystem.h"
 #include "Player.h"
+#include "Cursor.h"
+#include "Menu.h"
 
 class Level
 {
