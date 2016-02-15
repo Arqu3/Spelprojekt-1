@@ -2,6 +2,7 @@
 #define INCLUDED_LEVEL1
 
 #include "Level.h"
+#include "Cursor.h"
 #include "SFML\System.hpp"
 
 class Level1: public Level{
@@ -78,14 +79,6 @@ private:
 	sf::Sprite mHatMenu;
 	sf::Sprite mMenu;
 
-	//Cursor
-	sf::Texture mNormalMouse;
-	sf::Texture mOpenHandMouse;
-	sf::Texture mClosedHandMouse;
-	sf::Texture mSpeechMouse;
-	sf::Texture mEyeMouse;
-	sf::Sprite mMouseCursor;
-
 	//Sound
 	sf::Music music;
 	sf::Sound mAmbientSound;
@@ -117,6 +110,9 @@ private:
 	//Player
 	Player *mPlayer;
 
+	//Mouse Cursor
+	Cursor *mCursor;
+
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
@@ -129,15 +125,11 @@ private:
 	int mNewScene;
 
 	bool mPlayerToggle;
-	bool mInventoryMode;
-	bool mDialogueMode;
-	bool mDisableClick;
 	bool mLookedAtAquarium;
 	bool mLookedAtRug;
 	bool mReadyForScrewdevice;
+	bool mPickedUpScrewdevice;
 	bool mReadyToLeave;
-	bool mHatMode;
-	bool mMenuMode;
 
 	int mUpdateTime;
 };

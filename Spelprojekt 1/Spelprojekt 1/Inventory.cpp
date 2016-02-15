@@ -133,7 +133,7 @@ void Inventory::draw(sf::RenderWindow &window)
 		window.draw(mResultItem->getSprite());
 	}
 
-	window.draw(mRectShape);
+	//window.draw(mRectShape);
 }
 
 void Inventory::addItem(Item* item)

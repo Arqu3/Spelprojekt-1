@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Crafting.cpp" />
+    <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DialogueSystem.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -98,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crafting.h" />
+    <ClInclude Include="Cursor.h" />
     <ClInclude Include="DialogueSystem.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Inventory.h" />
