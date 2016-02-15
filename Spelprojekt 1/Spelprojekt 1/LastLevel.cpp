@@ -113,6 +113,11 @@ void LastLevel::drawForeground(sf::RenderWindow &window)
 
 }
 
+void LastLevel::drawUI(sf::RenderWindow &window)
+{
+
+}
+
 
 void LastLevel::drawItems(ItemVector items, sf::RenderWindow &window)
 {

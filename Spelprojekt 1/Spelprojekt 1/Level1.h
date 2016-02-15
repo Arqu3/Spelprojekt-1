@@ -25,6 +25,7 @@ public:
 	void drawBackground(sf::RenderWindow &window);
 	void drawForeground(sf::RenderWindow &window);
 	void drawItems(ItemVector items, sf::RenderWindow &window);
+	void drawUI(sf::RenderWindow &window);
 
 	//Rectangles
 	rectVector getRects();
@@ -70,7 +71,18 @@ private:
 	sf::RectangleShape foregroundZoom;
 	sf::RectangleShape rectangle;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
-	sf::RectangleShape mMouseRect;
+
+	//UI
+	sf::Sprite mHatIcon;
+	sf::Sprite mMenuIcon;
+
+	//Cursor
+	sf::Texture mNormalMouse;
+	sf::Texture mOpenHandMouse;
+	sf::Texture mClosedHandMouse;
+	sf::Texture mSpeechMouse;
+	sf::Texture mEyeMouse;
+	sf::Sprite mMouseCursor;
 
 	//Sound
 	sf::Music music;

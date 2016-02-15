@@ -96,19 +96,6 @@ void Level1::drawForeground(sf::RenderWindow &window)
 	{
 		window.draw(foregroundZoom);
 	}
-
-	if (mInventoryMode)
-	{
-		mInventory->draw(window);
-	}
-	else
-	{
-		window.draw(mMouseRect);
-	}
-	if (mDialogueMode)
-	{
-		mDialogueSystem->drawDialogue(window);
-	}
 }
 
 
@@ -120,6 +107,25 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 		{
 			mItems[i]->draw(window);
 		}
+	}
+}
+
+void Level1::drawUI(sf::RenderWindow &window)
+{
+	window.draw(mHatIcon);
+	window.draw(mMenuIcon);
+
+	if (mInventoryMode)
+	{
+		mInventory->draw(window);
+	}
+	else
+	{
+		window.draw(mMouseCursor);
+	}
+	if (mDialogueMode)
+	{
+		mDialogueSystem->drawDialogue(window);
 	}
 }
 
@@ -178,10 +184,26 @@ void Level1::toggleActive(ResourceHandler &handler)
 		rectangle.setPosition(sf::Vector2f(0, 0));
 		rectangle.setSize(sf::Vector2f(0, 0));
 
-		//Mouse Rectangle
-		mMouseRect.setSize(sf::Vector2f(5, 5));
-		mMouseRect.setOrigin(sf::Vector2f(2.5f, 2.5f));
-		mMouseRect.setFillColor(sf::Color::Green);
+		//UI
+		handler.getTexture("haticon.png")->setSmooth(true);
+		handler.getTexture("menuicon.png")->setSmooth(true);
+		mHatIcon.setTexture(*handler.getTexture("haticon.png"));
+		mMenuIcon.setTexture(*handler.getTexture("menuicon.png"));
+		mHatIcon.setPosition(sf::Vector2f(10, 470));
+		mMenuIcon.setPosition(sf::Vector2f(90, 510));
+		mHatIcon.setScale(sf::Vector2f(0.3f, 0.3f));
+		mMenuIcon.setScale(sf::Vector2f(0.3f, 0.3f));
+
+		//Mouse Textures
+		mNormalMouse = *handler.getTexture("mousecursor.png");
+		mOpenHandMouse = *handler.getTexture("openhand.png");
+		mClosedHandMouse = *handler.getTexture("closedhand.png");
+		mSpeechMouse = *handler.getTexture("speechbubble.png");
+		mEyeMouse = *handler.getTexture("eyecursor.png");
+
+		//Mouse Cursor
+		mMouseCursor.setTexture(mEyeMouse);
+		mMouseCursor.setScale(sf::Vector2f(0.2f, 0.2f));
 
 		//Sound/music
 		music.openFromFile("Level1Music.ogg");
@@ -730,12 +752,18 @@ void Level1::mouseClick(sf::Event &event)
 //Change mouse cursor depending on what it is hovering over
 void Level1::mouseHover()
 {
-	mMouseRect.setFillColor(sf::Color::Green);
+	/*if (mInventory->getSelectedItem != NULL)
+	{
+		mMouseCursor.setTexture(mClosedHandMouse);
+	}*/
+	mMouseCursor.setTexture(mNormalMouse);
+	mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
 
 	//Check if playrect collision
-	if (checkCollision(getPlayRects(), mMouseRect.getGlobalBounds()))
+	if (checkCollision(getPlayRects(), mMouseCursor.getGlobalBounds()))
 	{
-		mMouseRect.setFillColor(sf::Color::Magenta);
+		mMouseCursor.setTexture(mNormalMouse); // TODO - Add walk cursor maybe?
+		mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
 	}
 
 	//Check Item collision
@@ -743,19 +771,20 @@ void Level1::mouseHover()
 	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
 	{
 		//Check if mouse collided with Item
-		if (getItems()[i]->getRectangle().intersects(mMouseRect.getGlobalBounds()))
+		if (getItems()[i]->getRectangle().intersects(mMouseCursor.getGlobalBounds()))
 		{
 			//Check if Item is Active
 			if (getItems()[i]->getActive())
 			{
 				if (!getItems()[i]->isLookedAt())
 				{
-					mMouseRect.setFillColor(sf::Color::White);
+					mMouseCursor.setTexture(mEyeMouse);
+					//mMouseCursor.setOrigin(sf::Vector2f(-5.0f, -5.0f));
 				}
 				//Check if Item can be picked up
 				else if (getItems()[i]->getPickupable())
 				{
-					mMouseRect.setFillColor(sf::Color::Cyan);
+					mMouseCursor.setTexture(mOpenHandMouse);
 				}
 				//Check if Item can be interacted with
 				else if (getItems()[i]->getInteractable())
@@ -763,7 +792,7 @@ void Level1::mouseHover()
 					//Check if Item has already been interacted with
 					if (!getItems()[i]->isInteracted())
 					{
-						mMouseRect.setFillColor(sf::Color::Yellow);
+						mMouseCursor.setTexture(mOpenHandMouse);
 					}
 				}
 			}
@@ -773,7 +802,7 @@ void Level1::mouseHover()
 	//Check Rect Collisions
 	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
 	{
-		if (checkCollision(getRects()[i], mMouseRect.getGlobalBounds()))
+		if (checkCollision(getRects()[i], mMouseCursor.getGlobalBounds()))
 		{
 			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
 			if (i == 0)
@@ -782,33 +811,39 @@ void Level1::mouseHover()
 				{
 					if (!mLookedAtAquarium)
 					{
-						mMouseRect.setFillColor(sf::Color::White);
+						mMouseCursor.setTexture(mEyeMouse);
+						//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
 					}
 					else
 					{
-						mMouseRect.setFillColor(sf::Color::Black);
+						mMouseCursor.setTexture(mNormalMouse); // TODO - Add scenechange cursor maybe?
+						//mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
 					}
 				}
 				else
 				{
-					mMouseRect.setFillColor(sf::Color::Black);
+					mMouseCursor.setTexture(mNormalMouse); // TODO - Add scenechange cursor maybe?
+					//mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
 				}
 			}
 			// i == 6 is bump in the rug
 			else if (i == 6)
 			{
-				//TODO - Add check for if Astronaut is in Inventory, and change FillColor
-				mMouseRect.setFillColor(sf::Color::White);
+				//TODO - Add check for if Astronaut is in Inventory, and change mMouseCursor texture
+				mMouseCursor.setTexture(mEyeMouse);
+				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
 			}
 			// i == 7 is door
 			else if (i == 7)
 			{
-				//TODO - Add check for if Screwdevice is in Inventory, and change FillColor
-				mMouseRect.setFillColor(sf::Color::White);
+				//TODO - Add check for if Screwdevice is in Inventory, and change mMouseCursor texture
+				mMouseCursor.setTexture(mEyeMouse);
+				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
 			}
 			else
 			{
-				mMouseRect.setFillColor(sf::Color::White);
+				mMouseCursor.setTexture(mEyeMouse);
+				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
 			}
 		}
 	}
@@ -972,8 +1007,8 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	}
 
 	//Change mouse cursor on hover
-	mMouseRect.setPosition(sf::Vector2f(mWorldPos));
-	if (!mDialogueMode && !mInventoryMode && mUpdateTime > 60)
+	mMouseCursor.setPosition(sf::Vector2f(mWorldPos));
+	if (!mDialogueMode && !mInventoryMode && mUpdateTime > 0)
 	{
 		mouseHover();
 		mUpdateTime = 0;

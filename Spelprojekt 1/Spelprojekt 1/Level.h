@@ -28,6 +28,7 @@ public:
 	//Draw
 	virtual void drawBackground(sf::RenderWindow &window) = 0;
 	virtual void drawForeground(sf::RenderWindow &window) = 0;
+	virtual void drawUI(sf::RenderWindow &window) = 0;
 
 	//Rectangle functions
 	virtual rectVector getRects() = 0;

@@ -26,6 +26,7 @@ public:
 	void drawItems(ItemVector items, sf::RenderWindow &window);
 	void drawBackground(sf::RenderWindow &window);
 	void drawForeground(sf::RenderWindow &window);
+	void drawUI(sf::RenderWindow &window);
 
 	//Rectangle functions
 	rectVector getRects();

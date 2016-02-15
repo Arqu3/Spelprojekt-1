@@ -43,6 +43,7 @@ void LevelHandler::draw(sf::RenderWindow &window)
 			mLevels[i]->drawBackground(window);
 			mLevels[i]->getPlayer()->draw(window);
 			mLevels[i]->drawForeground(window);
+			mLevels[i]->drawUI(window);
 		}
 	}
 }
