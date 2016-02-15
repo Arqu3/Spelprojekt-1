@@ -23,7 +23,7 @@ public:
 	//Draw
 	void draw(sf::RenderWindow &window);
 
-	void setActiveLevel(int num);
+	void setActiveLevel(int num, ResourceHandler &handler);
 
 	ItemVector getActiveItems();
 	Level* getActiveLevel();

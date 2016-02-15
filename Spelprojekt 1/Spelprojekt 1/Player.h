@@ -24,6 +24,7 @@ public:
 	void togglePlayer();
 	float getSpeed();
 	void setSpeed(float speed);
+	bool getIsOnPosition();
 
 private:
 	void move(float deltaTime);

@@ -40,6 +40,20 @@ void ResourceHandler::loadLevel1()
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 
+	//In-game UI
+	addTexture("haticon.png");
+	addTexture("menuicon.png");
+	addTexture("hatmenu.png");
+	addTexture("settingsmenu.png");
+	addTexture("inventory.png");
+
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
+
 	// Level1
 	//Textures
 	//Thomas rum items
