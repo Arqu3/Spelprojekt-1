@@ -81,7 +81,7 @@ private:
 	sf::RectangleShape mCraftButton;
 	Item *mItem1;
 	Item *mItem2;
-	//Item mResultItem;
+	Item *mResultItem;
 	int mCraftSelect1;
 	int mCraftSelect2;
 	bool mIsCraftable;

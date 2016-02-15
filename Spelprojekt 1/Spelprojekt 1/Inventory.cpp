@@ -95,15 +95,16 @@ void Inventory::draw(sf::RenderWindow &window)
 	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
+		//THIS DOESN'T WORK, NEEDS FIX
 		//Set opacity to 50% if item is selected
-		if (mCraftSelect1 != -1)
-		{
-			mItems[mCraftSelect1]->getSprite().setColor(sf::Color(255, 255, 255, 177));
-		}
-		if (mCraftSelect2 != -1)
-		{
-			mItems[mCraftSelect2]->getSprite().setColor(sf::Color(255, 255, 255, 177));
-		}
+		//if (mCraftSelect1 != -1)
+		//{
+		//	mItems[mCraftSelect1]->getSprite().setColor(sf::Color(255, 0, 255, 177));
+		//}
+		//if (mCraftSelect2 != -1)
+		//{
+		//	mItems[mCraftSelect2]->getSprite().setColor(sf::Color(255, 0, 255, 177));
+		//}
 
 		window.draw(mItems[i]->getSprite());
 	}
@@ -113,6 +114,7 @@ void Inventory::draw(sf::RenderWindow &window)
 	window.draw(mCraftButton);
 	window.draw(mResultRect);
 
+	//Draw selected items
 	if (mHasCraft1)
 	{
 		window.draw(mItem1->getSprite());
@@ -120,6 +122,15 @@ void Inventory::draw(sf::RenderWindow &window)
 	if (mHasCraft2)
 	{
 		window.draw(mItem2->getSprite());
+	}
+
+	//Draw result
+	if (mHasCraft1 && mHasCraft2)
+	{
+		int temp = mItems[mCraftSelect1]->getCraftIndex();
+		mResultItem = mCraftableItems[temp];
+		mResultItem->setPosition(mResultRect.getPosition().x, mResultRect.getPosition().y);
+		window.draw(mResultItem->getSprite());
 	}
 
 	window.draw(mRectShape);
@@ -188,7 +199,7 @@ void Inventory::removeItem(int index)
 {
 	//Reverse additem functionality
 	//If index is not last
-	if (mItems.size() > 0)
+	if (mItems.size() > 1)
 	{
 		if ((unsigned)index != mItems.size() - 1)
 		{
@@ -296,6 +307,25 @@ void Inventory::setCraftPos(int index)
 
 void Inventory::craftItem(int index1, int index2)
 {
+	mCraftSelect1 = -1;
+	mCraftSelect2 = -1;
+
+	//Set crafts to false
+	mHasCraft1 = false;
+	mHasCraft2 = false;
+
+	//More security checks
+	//Checks if items aren't the same (should never happen anyway)
+	if (mItems[index1]->getIndex() != mItems[index2]->getIndex())
+	{
+		//Check if items are craftable and have the same crafting index
+		if ((mItems[index1]->getCraftIndex() != -1 && mItems[index2]->getCraftIndex() != -1) && mItems[index1]->getCraftIndex() == mItems[index2]->getCraftIndex())
+		{
+			int temp = mItems[index1]->getCraftIndex();
+			addItem(mCraftableItems[temp]);
+		}
+	}
+
 	//Remove highest index first to prevent index mismatch
 	if (index1 > index2)
 	{
@@ -307,18 +337,6 @@ void Inventory::craftItem(int index1, int index2)
 		removeItem(index2);
 		removeItem(index1);
 	}
-
-	mCraftSelect1 = -1;
-	mCraftSelect2 = -1;
-
-	//Set crafts to false
-	mHasCraft1 = false;
-	mHasCraft2 = false;
-
-	//TODO - Add appropriate item
-	//How to do this?
-	//mItems.push_back(); //Issue, how to add item
-	//setDynamicGrid();
 }
 
 //Swaps elements in given vector, passed by referens to avoid copy
@@ -377,11 +395,17 @@ bool Inventory::craftCheck()
 	return false;
 }
 
+//Loads craftable items depending on level
 void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 {
 	if (index == 0)
 	{
-
+		if (mCraftableItems.size() > 0)
+		{
+			mCraftableItems.clear();
+		}
+		//MAKE SURE CRAFTING INDEX IN ITEM CLASS IS IN CORRECT ORDER
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "FishingRodMagnet"));
 	}
 }
 

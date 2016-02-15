@@ -205,7 +205,9 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mMouseCursor.setScale(sf::Vector2f(0.2f, 0.2f));
 
 		//Sound/music
-		music.openFromFile("Level1Music.ogg");
+		music.openFromFile(handler.getMusic("Level1Music.ogg"));
+		music.setLoop(true);
+		music.play();
 
 		//View
 		mView.setCenter(512, 288);
@@ -216,6 +218,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 
 		//Inventory
 		mInventory = new Inventory();
+		mInventory->setCraftableItems(handler, 0);
 
 		//DialogueSystem
 		mDialogueSystem = new DialogueSystem(handler);
