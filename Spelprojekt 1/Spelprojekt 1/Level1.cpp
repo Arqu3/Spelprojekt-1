@@ -693,7 +693,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Bowl")
 				{
 					mDialogueSystem->reset();
-					mDialogueSystem->hasClicked("hilmaTest", mPlayer);
+					mDialogueSystem->hasClicked("level1Start", mPlayer);
 					mDialogueMode = true;
 					std::cout << "Skål!";
 				}

@@ -58,14 +58,30 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
-	//Textbubbla
+	//Textbubble
 	addTexture("textbubble.png");
 	addTexture("textbox.png");
-	//HilmaTest
-	addTexture("hilmaTest.png");
-	addTexture("thomasTest.png");
+	//Character Expressions
+	addTexture("expressionHilmaAngry.png");
+	addTexture("expressionHilmaConfident.png");
+	addTexture("expressionHilmaDetermined.png");
+	addTexture("expressionHilmaGrumpy.png");
+	addTexture("expressionHilmaHappy.png");
+	addTexture("expressionHilmaNeutral.png");
+	addTexture("expressionHilmaSad.png");
+	addTexture("expressionHilmaSigh.png");
+	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasCry.png");
+	addTexture("expressionThomasGrumpy.png");
+	addTexture("expressionThomasHappy.png");
+	addTexture("expressionThomasNeutral.png");
+	addTexture("expressionThomasSad.png");
+	addTexture("expressionThomasSigh.png");
+	addTexture("expressionThomasSmile.png");
+	addTexture("expressionThomasSurprised.png");
 	//Sepia
-	addTexture("testSepia.png");
+	addTexture("sepia.png");
 
 	//Music
 	addMusic("Level1Music.ogg");

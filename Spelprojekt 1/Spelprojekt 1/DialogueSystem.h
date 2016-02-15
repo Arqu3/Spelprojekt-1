@@ -43,7 +43,8 @@ public:
 	bool isDialogueFinished();
 
 	//Advanced Dialogues
-	void displayHilmaTestAdvancedDialogue();
+	void displayLevel1StartAdvancedDialogue();
+	void displayLevel1EndAdvancedDialogue();
 
 	//Dialogues (functions with strings)
 	//Thomas' room
@@ -124,7 +125,7 @@ private:
 	ResourceHandler &mHandler;
 
 	//Advanced Dialogue
-	bool mHilmaTest;
+	bool mLevel1Start;
 
 	//Item bools (Thomas' Room)
 	bool mBooks;
