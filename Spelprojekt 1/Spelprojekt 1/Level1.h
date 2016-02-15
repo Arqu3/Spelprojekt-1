@@ -88,7 +88,7 @@ private:
 
 	//Sound
 	sf::Music music;
-	sf::Sound ambientSound;
+	sf::Sound mAmbientSound;
 
 	//Scene
 	bool mIsActive;

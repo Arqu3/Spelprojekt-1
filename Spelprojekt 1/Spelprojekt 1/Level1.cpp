@@ -9,7 +9,6 @@ mInventoryMode(false),
 mLookedAtAquarium(false),
 mUpdateTime(0)
 {
-	
 }
 
 
@@ -64,7 +63,7 @@ void Level1::playBackgroundMusic()
 
 void Level1::playAmbience()
 {
-	ambientSound.play();
+	mAmbientSound.play();
 }
 
 
@@ -215,7 +214,9 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mMouseCursor.setScale(sf::Vector2f(0.2f, 0.2f));
 
 		//Sound/music
-		music.openFromFile("Level1Music.ogg");
+		music.openFromFile(handler.getMusic("Level1Music.ogg"));
+		music.setLoop(true);
+		music.play();
 
 		//View
 		mView.setCenter(512, 288);
@@ -226,6 +227,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 
 		//Inventory
 		mInventory = new Inventory();
+		mInventory->setCraftableItems(handler, 0);
 
 		//DialogueSystem
 		mDialogueSystem = new DialogueSystem(handler);
@@ -522,6 +524,13 @@ void Level1::eventListen(sf::RenderWindow &window)
 			if (mInventoryMode)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+
+				mInventory->setCraftPos(mInventory->getSelectedItem());
+
+				if (mInventory->craftCheck())
+				{
+					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
+				}
 			}
 			else if (mDialogueMode)
 			{
@@ -552,6 +561,13 @@ void Level1::eventListen(sf::RenderWindow &window)
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mPlayer->togglePlayer();
+			}
+			if (event.key.code == sf::Keyboard::B)
+			{
+				if (mInventoryMode)
+				{
+					mInventory->removeItem(0);
+				}
 			}
 			break;
 

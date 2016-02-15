@@ -15,6 +15,9 @@ mFrameXOffset(0),
 mFrameYOffset(0),
 mSpeed(100.0f)
 {
+	//Sounds
+	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
+
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 	mSprite.setOrigin(400, 700);
@@ -103,6 +106,10 @@ void Player::update(float deltaTime)
 	// Walk Animations
 	if (mActiveAnimation == "Walk" && mWalk)
 	{
+		if (mWalkingSound.getStatus() != 2)
+		{
+			mWalkingSound.play();
+		}
 		if (mThomasActive)
 		{
 			if (mCurrentTime >= mFrameTime)
@@ -157,6 +164,10 @@ void Player::update(float deltaTime)
 				mCurrentTime = 0;
 			}
 		}
+	}
+	else
+	{
+		mWalkingSound.pause();
 	}
 
 	//Push Animation
