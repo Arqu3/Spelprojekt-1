@@ -22,7 +22,7 @@ void Game::update()
 	window.draw(loadScreen);
 	window.display();
 
-	//window.setMouseCursorVisible(false);
+	window.setMouseCursorVisible(false);
 
 	mLHandler.setActiveLevel(0, mRHandler);
 

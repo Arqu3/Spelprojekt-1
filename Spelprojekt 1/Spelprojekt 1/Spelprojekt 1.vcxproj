@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="DialogueSystem.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="ResourceHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Crafting.h" />
     <ClInclude Include="DialogueSystem.h" />
     <ClInclude Include="Game.h" />
@@ -106,6 +108,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="LevelHandler.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourceHandler.h" />
   </ItemGroup>
