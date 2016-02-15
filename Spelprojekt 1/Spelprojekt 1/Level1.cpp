@@ -426,7 +426,7 @@ int Level1::checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point
 	return 0;
 }
 //Check collision between a single rectangle and a point
-int Level1::checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point)
+int Level1::checkCollision(sf::FloatRect* boundingBox, sf::Vector2f &point)
 {
 	if (boundingBox->contains(point))
 	{
@@ -447,7 +447,7 @@ int Level1::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vec
 	return 0;
 }
 //Check collision between two rectangles
-int Level1::checkCollision(sf::FloatRect* &boundingBox, sf::FloatRect &rect)
+int Level1::checkCollision(sf::FloatRect* boundingBox, sf::FloatRect &rect)
 {
 	if (boundingBox->intersects(rect))
 	{
