@@ -33,6 +33,7 @@ public:
 	void removeItem(int index);
 	void craftItem(int index1, int index2);
 	void swapItems(ItemVector &inputVector, int inputIndex, int swapIndex);
+	void setCraftableItems(ResourceHandler &handler, int index);
 
 	//Grid
 	void setDynamicGrid();

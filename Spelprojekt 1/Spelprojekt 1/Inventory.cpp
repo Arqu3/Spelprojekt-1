@@ -11,6 +11,7 @@ mInitialYOffset(100),
 mXIncrease(80),
 mYIncrease(80),
 mItems(),
+mCraftableItems(),
 mEvent(),
 mSelectedItem1(-1),
 mSelectedItem2(-1),
@@ -60,6 +61,7 @@ mHasCraft2(false)
 Inventory::~Inventory()
 {
 	mItems.clear();
+	mCraftableItems.clear();
 }
 
 void Inventory::update(sf::RenderWindow &window)
@@ -373,6 +375,14 @@ bool Inventory::craftCheck()
 	}
 
 	return false;
+}
+
+void Inventory::setCraftableItems(ResourceHandler &handler, int index)
+{
+	if (index == 0)
+	{
+
+	}
 }
 
 int Inventory::getSelectedItem()
