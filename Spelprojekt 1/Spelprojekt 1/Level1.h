@@ -75,6 +75,8 @@ private:
 	//UI
 	sf::Sprite mHatIcon;
 	sf::Sprite mMenuIcon;
+	sf::Sprite mHatMenu;
+	sf::Sprite mMenu;
 
 	//Cursor
 	sf::Texture mNormalMouse;
@@ -131,6 +133,8 @@ private:
 	bool mDialogueMode;
 	bool mDisableClick;
 	bool mLookedAtAquarium;
+	bool mHatMode;
+	bool mMenuMode;
 
 	int mUpdateTime;
 };

@@ -115,6 +115,11 @@ void Level1::drawUI(sf::RenderWindow &window)
 	window.draw(mHatIcon);
 	window.draw(mMenuIcon);
 
+
+	if (mHatMode)
+	{
+		window.draw(mHatMenu);
+	}
 	if (mInventoryMode)
 	{
 		mInventory->draw(window);
@@ -184,7 +189,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 		rectangle.setPosition(sf::Vector2f(0, 0));
 		rectangle.setSize(sf::Vector2f(0, 0));
 
-		//UI
+		//UI Icons
 		handler.getTexture("haticon.png")->setSmooth(true);
 		handler.getTexture("menuicon.png")->setSmooth(true);
 		mHatIcon.setTexture(*handler.getTexture("haticon.png"));
@@ -193,6 +198,10 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mMenuIcon.setPosition(sf::Vector2f(90, 510));
 		mHatIcon.setScale(sf::Vector2f(0.3f, 0.3f));
 		mMenuIcon.setScale(sf::Vector2f(0.3f, 0.3f));
+		//UI Menus
+		mHatMenu.setTexture(*handler.getTexture("hatmenu.png"));
+		mHatMenu.setPosition(sf::Vector2f(0, 285));
+		mHatMenu.setScale(sf::Vector2f(0.3f, 0.3f));
 
 		//Mouse Textures
 		mNormalMouse = *handler.getTexture("mousecursor.png");
@@ -564,6 +573,34 @@ void Level1::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
+	//Check if Hat Icon is clicked
+	if (checkCollision(mHatIcon.getGlobalBounds(), point))
+	{
+		if (!mHatMode)
+		{
+			mHatMode = true;
+		}
+		else
+		{
+			mHatMode = false;
+		}
+	}
+
+	//Check if Menu Icon is clicked
+	if (checkCollision(mMenuIcon.getGlobalBounds(), point))
+	{
+		if (!mMenuMode)
+		{
+			mMenuMode = true;
+			mDisableClick = true;
+		}
+		else
+		{
+			mMenuMode = false;
+			mDisableClick = false;
+		}
+	}
+
 	//Check if playrect collision
 	if (checkCollision(getPlayRects(), point))
 	{
@@ -779,12 +816,13 @@ void Level1::mouseHover()
 				if (!getItems()[i]->isLookedAt())
 				{
 					mMouseCursor.setTexture(mEyeMouse);
-					//mMouseCursor.setOrigin(sf::Vector2f(-5.0f, -5.0f));
+					mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
 				}
 				//Check if Item can be picked up
 				else if (getItems()[i]->getPickupable())
 				{
 					mMouseCursor.setTexture(mOpenHandMouse);
+					mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
 				}
 				//Check if Item can be interacted with
 				else if (getItems()[i]->getInteractable())
@@ -793,6 +831,7 @@ void Level1::mouseHover()
 					if (!getItems()[i]->isInteracted())
 					{
 						mMouseCursor.setTexture(mOpenHandMouse);
+						mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
 					}
 				}
 			}
@@ -812,18 +851,18 @@ void Level1::mouseHover()
 					if (!mLookedAtAquarium)
 					{
 						mMouseCursor.setTexture(mEyeMouse);
-						//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+						mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
 					}
 					else
 					{
 						mMouseCursor.setTexture(mNormalMouse); // TODO - Add scenechange cursor maybe?
-						//mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+						mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
 					}
 				}
 				else
 				{
 					mMouseCursor.setTexture(mNormalMouse); // TODO - Add scenechange cursor maybe?
-					//mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+					mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
 				}
 			}
 			// i == 6 is bump in the rug
@@ -831,19 +870,19 @@ void Level1::mouseHover()
 			{
 				//TODO - Add check for if Astronaut is in Inventory, and change mMouseCursor texture
 				mMouseCursor.setTexture(mEyeMouse);
-				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+				mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
 			}
 			// i == 7 is door
 			else if (i == 7)
 			{
 				//TODO - Add check for if Screwdevice is in Inventory, and change mMouseCursor texture
 				mMouseCursor.setTexture(mEyeMouse);
-				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+				mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
 			}
 			else
 			{
 				mMouseCursor.setTexture(mEyeMouse);
-				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+				mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
 			}
 		}
 	}
