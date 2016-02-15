@@ -133,6 +133,9 @@ private:
 	bool mDialogueMode;
 	bool mDisableClick;
 	bool mLookedAtAquarium;
+	bool mLookedAtRug;
+	bool mReadyForScrewdevice;
+	bool mReadyToLeave;
 	bool mHatMode;
 	bool mMenuMode;
 

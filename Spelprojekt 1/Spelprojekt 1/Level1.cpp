@@ -102,7 +102,7 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		if (mItems[i]->getActive())
+		if (mItems[i]->getActive() && mItems[i]->getId() != "Screwdevice")
 		{
 			mItems[i]->draw(window);
 		}
@@ -267,6 +267,8 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mRects.push_back(createRect(690, 50, 150, 275));
 
 		//Items - Set as Active, Pickupable, Interactable
+		mScrewdevice->toggleActive();
+
 		mMagnet->toggleActive();
 		mMagnet->togglePickupable();
 
@@ -283,6 +285,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mCube->toggleActive();
 
 		//Add to ItemVector
+		addItem(mScrewdevice);
 		addItem(mMagnet);
 		addItem(mStar);
 		addItem(mBlock);
@@ -390,6 +393,10 @@ void Level1::internalSwap(int num)
 		if (mCube->getActive())
 		{
 			addItem(mCube);
+		}
+		if (mScrewdevice->getActive())
+		{
+			addItem(mScrewdevice);
 		}
 	}
 	// Fishtank Zoom
@@ -784,19 +791,42 @@ void Level1::mouseClick(sf::Event &event)
 			// i == 6 is bump in the rug
 			else if (i == 6)
 			{
-				//TODO - Add check for if Astronaut is in Inventory
-				mDialogueSystem->reset();
-				mDialogueSystem->hasClicked("mat", mPlayer);
-				mDialogueMode = true;
+				if (mReadyForScrewdevice)
+				{
+					if (!mLookedAtRug)
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("mat", mPlayer);
+						mDialogueMode = true;
+						mLookedAtRug = true;
+					}
+					else
+					{
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Screwdevice")
+							{
+								if (getItems()[i]->getActive())
+								{
+									mInventory->addItem(getItems()[i]);
+									getItems()[i]->toggleActive();
+								}
+							}
+						}
+					}
+				}
 			}
 			// i == 7 is the door
 			else if (i == 7)
 			{
-				//TODO - Add check for if Screwdevice is in Inventory
 				/*mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("thomasdoor", mPlayer);
 				mDialogueMode = true;*/
 				mPlayer->moveToPosition(765, 340);
+				if (mReadyToLeave)
+				{
+					// Change Level
+				}
 			}
 		}
 	}
@@ -884,16 +914,35 @@ void Level1::mouseHover()
 			// i == 6 is bump in the rug
 			else if (i == 6)
 			{
-				//TODO - Add check for if Astronaut is in Inventory, and change mMouseCursor texture
-				mMouseCursor.setTexture(mEyeMouse);
-				mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+				if (mLookedAtRug)
+				{
+					mMouseCursor.setTexture(mOpenHandMouse);
+					mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+				}
+				else if (mReadyForScrewdevice)
+				{
+					mMouseCursor.setTexture(mEyeMouse);
+					mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+				}
+				else
+				{
+					mMouseCursor.setTexture(mNormalMouse);
+					mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+				}
 			}
 			// i == 7 is door
 			else if (i == 7)
 			{
-				//TODO - Add check for if Screwdevice is in Inventory, and change mMouseCursor texture
-				mMouseCursor.setTexture(mEyeMouse);
-				mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+				if (mReadyToLeave)
+				{
+					mMouseCursor.setTexture(mNormalMouse);
+					mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+				}
+				else
+				{
+					mMouseCursor.setTexture(mEyeMouse);
+					mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+				}
 			}
 			else
 			{
@@ -988,7 +1037,20 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				{
 					mTargetItem->setScale(0.2f, 0.4f);
 					mInventory->addItem(mTargetItem);
-					std::cout << "Plockade upp tråd";
+					std::cout << "Plockade upp fiskespo";
+				}
+				if (mTargetItem->getId() == "Astronaut")
+				{
+					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+					{
+						//TODO - Add fishing animation
+						mInventory->addItem(mTargetItem);
+						mReadyForScrewdevice = true;
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
 				}
 			}
 			//Check if Item can be interacted with
@@ -1017,6 +1079,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 							if (getItems()[i]->getId() == "Astronaut")
 							{
 								getItems()[i]->toggleActive();
+								getItems()[i]->togglePickupable();
 							}
 						}
 

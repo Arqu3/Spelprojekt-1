@@ -125,7 +125,7 @@ void Inventory::draw(sf::RenderWindow &window)
 	}
 
 	//Draw result
-	if (mHasCraft1 && mHasCraft2)
+	if (mHasCraft1 && mHasCraft2 && (mItem1->getCraftIndex() != -1 || mItem2->getCraftIndex() != -1))
 	{
 		int temp = mItems[mCraftSelect1]->getCraftIndex();
 		mResultItem = mCraftableItems[temp];
@@ -191,6 +191,8 @@ void Inventory::setDynamicGrid()
 	mPosY = mInitialYOffset + (mRow * mYIncrease);
 
 	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
+	cout << mPosX << endl;
+	cout << mPosY << endl;
 }
 
 
@@ -337,6 +339,7 @@ void Inventory::craftItem(int index1, int index2)
 		removeItem(index2);
 		removeItem(index1);
 	}
+	mIsCraftable = false;
 }
 
 //Swaps elements in given vector, passed by referens to avoid copy
@@ -367,10 +370,14 @@ void Inventory::deSelect()
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//Deselect if you click on nothing interactable
-		if (!mItems[i]->getRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos))
+		if (!mItems[i]->getRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
 		{
 			mSelectedItem1 = -1;
 			mSelectedItem2 = -1;
+			mHasCraft1 = false;
+			mHasCraft2 = false;
+			mCraftSelect1 = -1;
+			mCraftSelect2 = -1;
 		}
 	}
 }
@@ -382,7 +389,13 @@ bool Inventory::craftCheck()
 		//TODO - Add real craftcheck
 		if (mCraftSelect1 != -1 && mCraftSelect2 != -1 && mCraftSelect1 != mCraftSelect2)
 		{
-			mIsCraftable = true;
+			if (mItems[mCraftSelect1]->getCraftIndex() != -1 && mItems[mCraftSelect2]->getCraftIndex() != -1)
+			{
+				if (mItems[mCraftSelect1]->getCraftIndex() == mItems[mCraftSelect2]->getCraftIndex())
+				{
+					mIsCraftable = true;
+				}
+			}
 		}
 		else
 		{
@@ -404,7 +417,7 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 		{
 			mCraftableItems.clear();
 		}
-		//MAKE SURE CRAFTING INDEX IN ITEM CLASS IS IN CORRECT ORDER
+		//MAKE SURE CRAFTING INDEX IN ITEM CLASS IS IN CORRECT ORDER!
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "FishingRodMagnet"));
 	}
 }
@@ -422,4 +435,16 @@ int Inventory::getCraftSelect1()
 int Inventory::getCraftSelect2()
 {
 	return mCraftSelect2;
+}
+
+Item* Inventory::selectedItem()
+{
+	if (mSelectedItem1 != -1)
+	{
+		return mItems[mSelectedItem1];
+	}
+	else
+	{
+		return NULL;
+	}
 }
