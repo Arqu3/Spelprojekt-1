@@ -219,3 +219,8 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 {
 
 }
+
+bool LastLevel::isLevelComplete()
+{
+	return mLevelComplete;
+}

@@ -51,6 +51,9 @@ public:
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 
+	//Level Complete
+	bool isLevelComplete();
+
 private:
 
 	//Player
@@ -82,6 +85,8 @@ private:
 	Item* mHoolaHoop;
 	Item* mBeigeBall;
 	Item* mRedApple;
+
+	bool mLevelComplete;
 };
 
 #endif

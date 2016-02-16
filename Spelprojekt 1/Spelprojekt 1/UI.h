@@ -4,12 +4,12 @@
 #include "ResourceHandler.h"
 #include "SFML\System.hpp"
 
-class Menu{
+class UI{
 public:
-	Menu(ResourceHandler &handler);
-	~Menu();
+	UI(ResourceHandler &handler);
+	~UI();
 
-	enum ActiveMenu
+	enum ActiveUI
 	{
 		HAT,
 		MAIN,
@@ -26,14 +26,14 @@ public:
 
 	void checkCollision(sf::Vector2f point);
 
-	void setActiveMenu(ActiveMenu newMode);
+	void setActiveUI(ActiveUI newUI);
 
-	ActiveMenu getActiveMenu();
+	ActiveUI getActiveUI();
 	sf::FloatRect getHatIconRect();
 	sf::FloatRect getMenuIconRect();
 
 private:
-	ActiveMenu menu;
+	ActiveUI menu;
 
 	//Menu Sprites
 	sf::Sprite mHatIcon;

@@ -6,8 +6,8 @@ Inventory::Inventory():
 mRow(0),
 mCol(-1),
 mColNum(3),
-mInitialXOffset(100),
-mInitialYOffset(100),
+mInitialXOffset(350),
+mInitialYOffset(150),
 mXIncrease(80),
 mYIncrease(80),
 mItems(),
@@ -32,21 +32,21 @@ mHasCraft2(false)
 	cout << "Number of rows: " << mRow + 1 << endl;
 
 	//Crafting rectangles
-	mItem1Rect.setSize(sf::Vector2f(70, 70));
-	mItem1Rect.setPosition(sf::Vector2f(500, 100));
+	mItem1Rect.setSize(sf::Vector2f(60, 65));
+	mItem1Rect.setPosition(sf::Vector2f(640, 100));
 	mItem1Rect.setFillColor(sf::Color::Cyan);
 
-	mItem2Rect.setSize(sf::Vector2f(70, 70));
-	mItem2Rect.setPosition(sf::Vector2f(620, 100));
+	mItem2Rect.setSize(sf::Vector2f(60, 65));
+	mItem2Rect.setPosition(sf::Vector2f(745, 100));
 	mItem2Rect.setFillColor(sf::Color::Cyan);
 
 	//Result rectangle
-	mResultRect.setSize(sf::Vector2f(80, 80));
-	mResultRect.setPosition(sf::Vector2f(560, 275));
+	mResultRect.setSize(sf::Vector2f(60, 60));
+	mResultRect.setPosition(sf::Vector2f(695, 208));
 
 	//Craft button
-	mCraftButton.setSize(sf::Vector2f(60, 40));
-	mCraftButton.setPosition(sf::Vector2f(560, 200));
+	mCraftButton.setSize(sf::Vector2f(60, 60));
+	mCraftButton.setPosition(sf::Vector2f(695, 208));
 	mCraftButton.setFillColor(sf::Color::Yellow);
 
 	//Mouse rectangle
@@ -109,10 +109,10 @@ void Inventory::draw(sf::RenderWindow &window)
 		window.draw(mItems[i]->getSprite());
 	}
 
-	window.draw(mItem1Rect);
-	window.draw(mItem2Rect);
-	window.draw(mCraftButton);
-	window.draw(mResultRect);
+	//window.draw(mItem1Rect);
+	//window.draw(mItem2Rect);
+	//window.draw(mCraftButton);
+	//window.draw(mResultRect);
 
 	//Draw selected items
 	if (mHasCraft1)
@@ -191,8 +191,6 @@ void Inventory::setDynamicGrid()
 	mPosY = mInitialYOffset + (mRow * mYIncrease);
 
 	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
-	cout << mPosX << endl;
-	cout << mPosY << endl;
 }
 
 

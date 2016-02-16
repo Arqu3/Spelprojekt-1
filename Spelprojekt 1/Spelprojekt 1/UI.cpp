@@ -1,8 +1,8 @@
-#include "Menu.h"
+#include "UI.h"
 
 using namespace std;
 
-Menu::Menu(ResourceHandler &handler) :
+UI::UI(ResourceHandler &handler) :
 menu(NONE)
 {
 	//UI Icons
@@ -46,11 +46,11 @@ menu(NONE)
 	mHelpRectangle.setSize(sf::Vector2f(85, 80));
 }
 
-Menu::~Menu()
+UI::~UI()
 {
 }
 
-void Menu::update()
+void UI::update()
 {
 	switch (menu){
 	case HAT:
@@ -74,7 +74,7 @@ void Menu::update()
 	}
 }
 
-void Menu::draw(sf::RenderWindow &window)
+void UI::draw(sf::RenderWindow &window)
 {
 	//window.draw(mHelpRectangle);
 
@@ -113,7 +113,7 @@ void Menu::draw(sf::RenderWindow &window)
 	window.draw(mMenuIcon);
 }
 
-void Menu::checkCollision(sf::Vector2f point)
+void UI::checkCollision(sf::Vector2f point)
 {
 	if (getHatIconRect().contains(point))
 	{
@@ -173,22 +173,22 @@ void Menu::checkCollision(sf::Vector2f point)
 	}
 }
 
-void Menu::setActiveMenu(ActiveMenu newMenu)
+void UI::setActiveUI(ActiveUI newUI)
 {
-	menu = newMenu;
+	menu = newUI;
 }
 
-Menu::ActiveMenu Menu::getActiveMenu()
+UI::ActiveUI UI::getActiveUI()
 {
 	return menu;
 }
 
-sf::FloatRect Menu::getHatIconRect()
+sf::FloatRect UI::getHatIconRect()
 {
 	return mHatIcon.getGlobalBounds();
 }
 
-sf::FloatRect Menu::getMenuIconRect()
+sf::FloatRect UI::getMenuIconRect()
 {
 	return mMenuIcon.getGlobalBounds();
 }

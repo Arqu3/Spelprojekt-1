@@ -58,6 +58,9 @@ public:
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
+	//Level Complete
+	bool isLevelComplete();
+
 private:
 	
 	//Rectangles
@@ -107,7 +110,7 @@ private:
 	Cursor *mCursor;
 
 	//Menu
-	Menu *mMenu;
+	UI *mUI;
 
 	//Eventstuff
 	sf::Vector2f mWorldPos;
@@ -125,7 +128,9 @@ private:
 	bool mLookedAtRug;
 	bool mReadyForScrewdevice;
 	bool mPickedUpScrewdevice;
+	bool mMovedStar;
 	bool mReadyToLeave;
+	bool mLevelComplete;
 
 	int mUpdateTime;
 };

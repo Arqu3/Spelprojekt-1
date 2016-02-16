@@ -9,6 +9,7 @@ mLookedAtAquarium(false),
 mLookedAtRug(false),
 mPickedUpScrewdevice(false),
 mReadyForScrewdevice(false),
+mMovedStar(false),
 mReadyToLeave(false),
 mUpdateTime(0)
 {
@@ -114,9 +115,9 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 
 void Level1::drawUI(sf::RenderWindow &window)
 {
-	mMenu->draw(window);
+	mUI->draw(window);
 
-	if (mMenu->getActiveMenu() == Menu::INVENTORY)
+	if (mUI->getActiveUI() == UI::INVENTORY)
 	{
 		mInventory->draw(window);
 	}
@@ -206,7 +207,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mCursor = new Cursor(handler);
 
 		//Menu
-		mMenu = new Menu(handler);
+		mUI = new UI(handler);
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -504,7 +505,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
-			if (mMenu->getActiveMenu() == Menu::INVENTORY)
+			if (mUI->getActiveUI() == UI::INVENTORY)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
 
@@ -519,9 +520,9 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mDialogueSystem->setState();
 			}
-			else if (mMenu->getActiveMenu() != Menu::NONE)
+			else if (mUI->getActiveUI() != UI::NONE)
 			{
-				mMenu->checkCollision(mWorldPos);
+				mUI->checkCollision(mWorldPos);
 			}
 			else if (mCursor->getMode() != Cursor::DISABLED)
 			{
@@ -536,14 +537,14 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::I)
 			{
-				if (mMenu->getActiveMenu() == Menu::INVENTORY)
+				if (mUI->getActiveUI() == UI::INVENTORY)
 				{
-					mMenu->setActiveMenu(Menu::NONE);
+					mUI->setActiveUI(UI::NONE);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else
 				{
-					mMenu->setActiveMenu(Menu::INVENTORY);
+					mUI->setActiveUI(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 				}
 			}
@@ -572,17 +573,17 @@ void Level1::mouseClick(sf::Event &event)
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
 	//Check if Hat Icon is clicked
-	if (checkCollision(mMenu->getHatIconRect(), point))
+	if (checkCollision(mUI->getHatIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mMenu->setActiveMenu(Menu::HAT);
+		mUI->setActiveUI(UI::HAT);
 	}
 
 	//Check if Menu Icon is clicked
-	if (checkCollision(mMenu->getMenuIconRect(), point))
+	if (checkCollision(mUI->getMenuIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mMenu->setActiveMenu(Menu::MAIN);
+		mUI->setActiveUI(UI::MAIN);
 	}
 
 	//Check if playrect collision
@@ -785,9 +786,16 @@ void Level1::mouseClick(sf::Event &event)
 				mDialogueSystem->hasClicked("thomasdoor", mPlayer);
 				mDialogueMode = true;*/
 				mPlayer->moveToPosition(765, 340);
-				if (mReadyToLeave)
+				if (mMovedStar && mPickedUpScrewdevice)
 				{
 					// Change Level
+					std::cout << "LEVEL COMPLETE GOOD JOB BUT IT'S NOT OVER YET, NEXT TIME ON HITTAREN HILMA STUFF HAPPENS" << std::endl;
+					mReadyToLeave = true;
+				}
+				else
+				{
+					std::cout << "IT'S NOT OVER YET" << std::endl;
+
 				}
 			}
 		}
@@ -1037,6 +1045,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 					if (mTargetItem->getId() == "Star")
 					{
 						mTargetItem->setPosition(900, 190);
+						mMovedStar = true;
 						std::cout << "Satte stjärnan på väggen";
 					}
 				}
@@ -1087,4 +1096,14 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	{
 		mUpdateTime++;
 	}
+
+	if (mReadyToLeave)
+	{
+		mLevelComplete = true; //TODO - Do more stuff probably
+	}
+}
+
+bool Level1::isLevelComplete()
+{
+	return mLevelComplete;
 }

@@ -6,7 +6,7 @@
 #include "DialogueSystem.h"
 #include "Player.h"
 #include "Cursor.h"
-#include "Menu.h"
+#include "UI.h"
 
 class Level
 {
@@ -54,6 +54,9 @@ public:
 	virtual void eventListen(sf::RenderWindow &window) = 0;
 	virtual void mouseClick(sf::Event &event) = 0;
 	virtual void update(sf::RenderWindow &window, float deltaTime) = 0;
+
+	//Level Complete
+	virtual bool isLevelComplete() = 0;
 };
 
 #endif
