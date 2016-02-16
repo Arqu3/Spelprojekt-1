@@ -12,7 +12,7 @@ public:
 	Button(ResourceHandler &handler, sf::Vector2f &pos, std::string textureName);
 	~Button();
 
-	bool isPressed();
+	bool isPressed(sf::RenderWindow &window);
 
 	void setPosition(float x, float y);
 	void setPosition(sf::Vector2f &pos);
@@ -28,12 +28,17 @@ public:
 	float setSpeed(float value);
 
 private:
+	//Variables
 	sf::RectangleShape mRect;
 	sf::Vector2f mMoveToPosition;
+	sf::Vector2f mDirection;
+	sf::Vector2f mSetPos;
 	bool mIsOnPosition;
 	float mSpeed;
 	sf::Sprite mSprite;
 	std::string mTextureName;
+	sf::Vector2i mPixelPos;
+	sf::Vector2f mWorldPos;
 
 	enum Mode
 	{
@@ -41,6 +46,9 @@ private:
 		Texture
 	};
 	Mode mMode;
+
+	//Functions
+	void move(float deltaTime);
 };
 
 #endif
