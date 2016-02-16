@@ -1,12 +1,16 @@
 #include "Level1.h"
 
-Level1::Level1(ResourceHandler &handler):
+Level1::Level1(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
 mIsActive(false),
 mItemInteraction(false),
-mInventoryMode(false),
 mLookedAtAquarium(false),
+mLookedAtRug(false),
+mPickedUpScrewdevice(false),
+mReadyForScrewdevice(false),
+mMovedStar(false),
+mReadyToLeave(false),
 mUpdateTime(0)
 {
 }
@@ -102,7 +106,7 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		if (mItems[i]->getActive())
+		if (mItems[i]->getActive() && mItems[i]->getId() != "Screwdevice")
 		{
 			mItems[i]->draw(window);
 		}
@@ -111,21 +115,18 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 
 void Level1::drawUI(sf::RenderWindow &window)
 {
-	window.draw(mHatIcon);
-	window.draw(mMenuIcon);
+	mUI->draw(window);
 
-	if (mInventoryMode)
+	if (mUI->getActiveUI() == UI::INVENTORY)
 	{
 		mInventory->draw(window);
 	}
-	else
-	{
-		window.draw(mMouseCursor);
-	}
-	if (mDialogueMode)
+	if (mCursor->getMode() == Cursor::DIALOGUE)
 	{
 		mDialogueSystem->drawDialogue(window);
 	}
+
+	mCursor->draw(window);
 }
 
 
@@ -183,27 +184,6 @@ void Level1::toggleActive(ResourceHandler &handler)
 		rectangle.setPosition(sf::Vector2f(0, 0));
 		rectangle.setSize(sf::Vector2f(0, 0));
 
-		//UI
-		handler.getTexture("haticon.png")->setSmooth(true);
-		handler.getTexture("menuicon.png")->setSmooth(true);
-		mHatIcon.setTexture(*handler.getTexture("haticon.png"));
-		mMenuIcon.setTexture(*handler.getTexture("menuicon.png"));
-		mHatIcon.setPosition(sf::Vector2f(10, 470));
-		mMenuIcon.setPosition(sf::Vector2f(90, 510));
-		mHatIcon.setScale(sf::Vector2f(0.3f, 0.3f));
-		mMenuIcon.setScale(sf::Vector2f(0.3f, 0.3f));
-
-		//Mouse Textures
-		mNormalMouse = *handler.getTexture("mousecursor.png");
-		mOpenHandMouse = *handler.getTexture("openhand.png");
-		mClosedHandMouse = *handler.getTexture("closedhand.png");
-		mSpeechMouse = *handler.getTexture("speechbubble.png");
-		mEyeMouse = *handler.getTexture("eyecursor.png");
-
-		//Mouse Cursor
-		mMouseCursor.setTexture(mEyeMouse);
-		mMouseCursor.setScale(sf::Vector2f(0.2f, 0.2f));
-
 		//Sound/music
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
 		music.setLoop(true);
@@ -222,6 +202,12 @@ void Level1::toggleActive(ResourceHandler &handler)
 
 		//DialogueSystem
 		mDialogueSystem = new DialogueSystem(handler);
+
+		//Mouse Cursor
+		mCursor = new Cursor(handler);
+
+		//Menu
+		mUI = new UI(handler);
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -258,6 +244,8 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mRects.push_back(createRect(690, 50, 150, 275));
 
 		//Items - Set as Active, Pickupable, Interactable
+		mScrewdevice->toggleActive();
+
 		mMagnet->toggleActive();
 		mMagnet->togglePickupable();
 
@@ -274,6 +262,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mCube->toggleActive();
 
 		//Add to ItemVector
+		addItem(mScrewdevice);
 		addItem(mMagnet);
 		addItem(mStar);
 		addItem(mBlock);
@@ -381,6 +370,10 @@ void Level1::internalSwap(int num)
 		if (mCube->getActive())
 		{
 			addItem(mCube);
+		}
+		if (mScrewdevice->getActive())
+		{
+			addItem(mScrewdevice);
 		}
 	}
 	// Fishtank Zoom
@@ -512,7 +505,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
-			if (mInventoryMode)
+			if (mUI->getActiveUI() == UI::INVENTORY)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
 
@@ -523,11 +516,15 @@ void Level1::eventListen(sf::RenderWindow &window)
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
 				}
 			}
-			else if (mDialogueMode)
+			else if (mCursor->getMode() == Cursor::DIALOGUE)
 			{
 				mDialogueSystem->setState();
 			}
-			else if (!mDisableClick)
+			else if (mUI->getActiveUI() != UI::NONE)
+			{
+				mUI->checkCollision(mWorldPos);
+			}
+			else if (mCursor->getMode() != Cursor::DISABLED)
 			{
 				mouseClick(event);
 			}
@@ -540,25 +537,20 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::I)
 			{
-				for (Level::ItemVector::size_type i = 0; i < mInventory->getItems().size(); i++)
+				if (mUI->getActiveUI() == UI::INVENTORY)
 				{
-					std::cout << mInventory->getItemId(i) << " ";
+					mUI->setActiveUI(UI::NONE);
+					mCursor->setMode(Cursor::NORMAL);
 				}
-			}
-			if (event.key.code == sf::Keyboard::M)
-			{
-				mInventoryMode = !mInventoryMode;
+				else
+				{
+					mUI->setActiveUI(UI::INVENTORY);
+					mCursor->setMode(Cursor::INVENTORY);
+				}
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mPlayer->togglePlayer();
-			}
-			if (event.key.code == sf::Keyboard::B)
-			{
-				if (mInventoryMode)
-				{
-					mInventory->removeItem(0);
-				}
 			}
 			break;
 
@@ -579,6 +571,20 @@ void Level1::mouseClick(sf::Event &event)
 	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
+
+	//Check if Hat Icon is clicked
+	if (checkCollision(mUI->getHatIconRect(), point))
+	{
+		mCursor->setMode(Cursor::MENU);
+		mUI->setActiveUI(UI::HAT);
+	}
+
+	//Check if Menu Icon is clicked
+	if (checkCollision(mUI->getMenuIconRect(), point))
+	{
+		mCursor->setMode(Cursor::MENU);
+		mUI->setActiveUI(UI::MAIN);
+	}
 
 	//Check if playrect collision
 	if (checkCollision(getPlayRects(), point))
@@ -678,7 +684,7 @@ void Level1::mouseClick(sf::Event &event)
 					{
 						mDialogueSystem->reset();
 						mDialogueSystem->hasClicked("aquarium", mPlayer);
-						mDialogueMode = true;
+						mCursor->setMode(Cursor::DIALOGUE);
 						mLookedAtAquarium = true;
 					}
 					else
@@ -714,52 +720,83 @@ void Level1::mouseClick(sf::Event &event)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("books", mPlayer);
-				mDialogueMode = true;
+				mCursor->setMode(Cursor::DIALOGUE);
 			}
 			// i == 2 is lamp on table
 			else if (i == 2)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("lamp", mPlayer);
-				mDialogueMode = true;
+				mCursor->setMode(Cursor::DIALOGUE);
 			}
 			// i == 3 is radio on table
 			else if (i == 3)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("radio", mPlayer);
-				mDialogueMode = true;
+				mCursor->setMode(Cursor::DIALOGUE);
 			}
 			// i == 4 is posters on wall
 			else if (i == 4)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("poster", mPlayer);
-				mDialogueMode = true;
+				mCursor->setMode(Cursor::DIALOGUE);
 			}
 			// i == 5 is backpack near bed
 			else if (i == 5)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("backpack", mPlayer);
-				mDialogueMode = true;
+				mCursor->setMode(Cursor::DIALOGUE);
 			}
 			// i == 6 is bump in the rug
 			else if (i == 6)
 			{
-				//TODO - Add check for if Astronaut is in Inventory
-				mDialogueSystem->reset();
-				mDialogueSystem->hasClicked("mat", mPlayer);
-				mDialogueMode = true;
+				if (mReadyForScrewdevice)
+				{
+					if (!mLookedAtRug)
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("mat", mPlayer);
+						mCursor->setMode(Cursor::DIALOGUE);
+						mLookedAtRug = true;
+					}
+					else
+					{
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Screwdevice")
+							{
+								if (getItems()[i]->getActive())
+								{
+									mInventory->addItem(getItems()[i]);
+									getItems()[i]->toggleActive();
+									mPickedUpScrewdevice = true;
+								}
+							}
+						}
+					}
+				}
 			}
 			// i == 7 is the door
 			else if (i == 7)
 			{
-				//TODO - Add check for if Screwdevice is in Inventory
 				/*mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("thomasdoor", mPlayer);
 				mDialogueMode = true;*/
 				mPlayer->moveToPosition(765, 340);
+				if (mMovedStar && mPickedUpScrewdevice)
+				{
+					// Change Level
+					std::cout << "LEVEL COMPLETE GOOD JOB BUT IT'S NOT OVER YET, NEXT TIME ON HITTAREN HILMA STUFF HAPPENS" << std::endl;
+					mReadyToLeave = true;
+				}
+				else
+				{
+					std::cout << "IT'S NOT OVER YET" << std::endl;
+
+				}
 			}
 		}
 	}
@@ -768,18 +805,12 @@ void Level1::mouseClick(sf::Event &event)
 //Change mouse cursor depending on what it is hovering over
 void Level1::mouseHover()
 {
-	/*if (mInventory->getSelectedItem != NULL)
-	{
-		mMouseCursor.setTexture(mClosedHandMouse);
-	}*/
-	mMouseCursor.setTexture(mNormalMouse);
-	mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+	mCursor->setMode(Cursor::NORMAL);
 
 	//Check if playrect collision
-	if (checkCollision(getPlayRects(), mMouseCursor.getGlobalBounds()))
+	if (checkCollision(getPlayRects(), mCursor->getRect()))
 	{
-		mMouseCursor.setTexture(mNormalMouse); // TODO - Add walk cursor maybe?
-		mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+		mCursor->setMode(Cursor::NORMAL); // TODO - Add walk cursor maybe?
 	}
 
 	//Check Item collision
@@ -787,20 +818,19 @@ void Level1::mouseHover()
 	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
 	{
 		//Check if mouse collided with Item
-		if (getItems()[i]->getRectangle().intersects(mMouseCursor.getGlobalBounds()))
+		if (getItems()[i]->getRectangle().intersects(mCursor->getRect()))
 		{
 			//Check if Item is Active
-			if (getItems()[i]->getActive())
+			if (getItems()[i]->getActive() && getItems()[i]->getId() != "Screwdevice")
 			{
 				if (!getItems()[i]->isLookedAt())
 				{
-					mMouseCursor.setTexture(mEyeMouse);
-					//mMouseCursor.setOrigin(sf::Vector2f(-5.0f, -5.0f));
+					mCursor->setMode(Cursor::EYE);
 				}
 				//Check if Item can be picked up
 				else if (getItems()[i]->getPickupable())
 				{
-					mMouseCursor.setTexture(mOpenHandMouse);
+					mCursor->setMode(Cursor::OPENHAND);
 				}
 				//Check if Item can be interacted with
 				else if (getItems()[i]->getInteractable())
@@ -808,7 +838,7 @@ void Level1::mouseHover()
 					//Check if Item has already been interacted with
 					if (!getItems()[i]->isInteracted())
 					{
-						mMouseCursor.setTexture(mOpenHandMouse);
+						mCursor->setMode(Cursor::OPENHAND);
 					}
 				}
 			}
@@ -818,7 +848,7 @@ void Level1::mouseHover()
 	//Check Rect Collisions
 	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
 	{
-		if (checkCollision(getRects()[i], mMouseCursor.getGlobalBounds()))
+		if (checkCollision(getRects()[i], mCursor->getRect()))
 		{
 			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
 			if (i == 0)
@@ -827,41 +857,56 @@ void Level1::mouseHover()
 				{
 					if (!mLookedAtAquarium)
 					{
-						mMouseCursor.setTexture(mEyeMouse);
-						//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+						mCursor->setMode(Cursor::EYE);
 					}
 					else
 					{
-						mMouseCursor.setTexture(mNormalMouse); // TODO - Add scenechange cursor maybe?
-						//mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+						mCursor->setMode(Cursor::NORMAL); // TODO - Add scenechange cursor maybe?
 					}
 				}
 				else
 				{
-					mMouseCursor.setTexture(mNormalMouse); // TODO - Add scenechange cursor maybe?
-					//mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+					mCursor->setMode(Cursor::NORMAL); // TODO - Add scenechange cursor maybe?
 				}
 			}
 			// i == 6 is bump in the rug
 			else if (i == 6)
 			{
-				//TODO - Add check for if Astronaut is in Inventory, and change mMouseCursor texture
-				mMouseCursor.setTexture(mEyeMouse);
-				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+				if (mLookedAtRug && !mPickedUpScrewdevice)
+				{
+					mCursor->setMode(Cursor::OPENHAND);
+				}
+				else if (mReadyForScrewdevice && !mPickedUpScrewdevice)
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::NORMAL);
+				}
 			}
 			// i == 7 is door
 			else if (i == 7)
 			{
-				//TODO - Add check for if Screwdevice is in Inventory, and change mMouseCursor texture
-				mMouseCursor.setTexture(mEyeMouse);
-				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+				if (mReadyToLeave)
+				{
+					mCursor->setMode(Cursor::NORMAL);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
 			}
 			else
 			{
-				mMouseCursor.setTexture(mEyeMouse);
-				//mMouseCursor.setOrigin(sf::Vector2f(-2.5f, -2.5f));
+				mCursor->setMode(Cursor::EYE);
 			}
 		}
+	}
+
+	if (mInventory->selectedItem() != NULL)
+	{
+		mCursor->setMode(Cursor::CLOSEDHAND);
 	}
 }
 
@@ -896,43 +941,43 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("rubicCube", mPlayer);
-					mDialogueMode = true;
+					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "Magnet")
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("magnet", mPlayer);
-					mDialogueMode = true;
+					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "Bowl")
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("bowl", mPlayer);
-					mDialogueMode = true;
+					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "Block")
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("block", mPlayer);
-					mDialogueMode = true;
+					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "Astronaut")
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("astronaut", mPlayer);
-					mDialogueMode = true;
+					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "String")
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("string", mPlayer);
-					mDialogueMode = true;
+					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "Star")
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("star", mPlayer);
-					mDialogueMode = true;
+					mCursor->setMode(Cursor::DIALOGUE);
 				}
 			}
 			//Check if Item can be picked up
@@ -949,7 +994,20 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				{
 					mTargetItem->setScale(0.2f, 0.4f);
 					mInventory->addItem(mTargetItem);
-					std::cout << "Plockade upp tråd";
+					std::cout << "Plockade upp fiskespo";
+				}
+				if (mTargetItem->getId() == "Astronaut")
+				{
+					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+					{
+						//TODO - Add fishing animation
+						mInventory->addItem(mTargetItem);
+						mReadyForScrewdevice = true;
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
 				}
 			}
 			//Check if Item can be interacted with
@@ -961,7 +1019,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 					mTargetItem->toggleInteractable();
 					if (mTargetItem->getId() == "Block")
 					{
-						mDisableClick = true;
+						mCursor->setMode(Cursor::DISABLED);
 
 						mPlayer->setSpeed(50.0f);
 						mTargetItem->setSpeed(50.0f);
@@ -978,6 +1036,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 							if (getItems()[i]->getId() == "Astronaut")
 							{
 								getItems()[i]->toggleActive();
+								getItems()[i]->togglePickupable();
 							}
 						}
 
@@ -986,6 +1045,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 					if (mTargetItem->getId() == "Star")
 					{
 						mTargetItem->setPosition(900, 190);
+						mMovedStar = true;
 						std::cout << "Satte stjärnan på väggen";
 					}
 				}
@@ -1002,7 +1062,8 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	mDialogueSystem->update(deltaTime);
 	if (mDialogueSystem->isDialogueFinished())
 	{
-		mDialogueMode = false;
+		mCursor->setMode(Cursor::NORMAL);
+		mDialogueSystem->reset();
 	}
 
 	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
@@ -1012,9 +1073,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		//Put everything back to normal after the "Pushing cutscene"
 		if (mTargetItem->getIsOnPosition())
 		{
-			if (mDisableClick)
+			if (mCursor->getMode() == Cursor::DISABLED)
 			{
-				mDisableClick = false;
+				mCursor->setMode(Cursor::NORMAL);
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setSpeed(100.0f);
 				mTargetItem->setSpeed(100.0f);
@@ -1022,9 +1083,11 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
+	mCursor->setPosition(sf::Vector2f(mWorldPos));
+	mCursor->update();
+
 	//Change mouse cursor on hover
-	mMouseCursor.setPosition(sf::Vector2f(mWorldPos));
-	if (!mDialogueMode && !mInventoryMode && mUpdateTime > 0)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU && mUpdateTime > 0)
 	{
 		mouseHover();
 		mUpdateTime = 0;
@@ -1033,4 +1096,14 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	{
 		mUpdateTime++;
 	}
+
+	if (mReadyToLeave)
+	{
+		mLevelComplete = true; //TODO - Do more stuff probably
+	}
+}
+
+bool Level1::isLevelComplete()
+{
+	return mLevelComplete;
 }

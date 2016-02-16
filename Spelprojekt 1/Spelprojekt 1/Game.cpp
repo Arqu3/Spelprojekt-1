@@ -24,7 +24,7 @@ void Game::update()
 
 	window.setMouseCursorVisible(false);
 
-	mLHandler.setActiveLevel(0, mRHandler);
+	mLHandler.setActiveLevel(0, mRHandler, true);
 
 	while (window.isOpen())
 	{
@@ -33,7 +33,7 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		mLHandler.update(deltaTime, window);
+		mLHandler.update(deltaTime, window, mRHandler);
 		mLHandler.draw(window);
 		mLHandler.getActiveLevel()->eventListen(window);
 
