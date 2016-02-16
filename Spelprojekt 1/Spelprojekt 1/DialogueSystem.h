@@ -126,6 +126,7 @@ private:
 
 	//Advanced Dialogue
 	bool mLevel1Start;
+	bool mLevel1End;
 
 	//Item bools (Thomas' Room)
 	bool mBooks;

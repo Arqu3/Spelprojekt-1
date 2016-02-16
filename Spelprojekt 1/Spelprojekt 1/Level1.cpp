@@ -693,7 +693,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Bowl")
 				{
 					mDialogueSystem->reset();
-					mDialogueSystem->hasClicked("level1Start", mPlayer);
+					mDialogueSystem->hasClicked("level1End", mPlayer);
 					mDialogueMode = true;
 					std::cout << "Skål!";
 				}
@@ -709,7 +709,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				}
 				if (mTargetItem->getId() == "String")
 				{
-					//mDialogueSystem->displayStringDialogue();
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("level1Start", mPlayer);
+					mDialogueMode = true;
 					std::cout << "En tråd på golvet.";
 				}
 				if (mTargetItem->getId() == "Star")
