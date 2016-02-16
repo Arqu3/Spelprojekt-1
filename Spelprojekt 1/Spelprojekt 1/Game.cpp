@@ -26,6 +26,7 @@ void Game::update()
 
 	mLHandler.setActiveLevel(0, mRHandler, true);
 
+
 	while (window.isOpen())
 	{
 		window.clear(sf::Color::Black);

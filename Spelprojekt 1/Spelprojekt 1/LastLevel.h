@@ -47,6 +47,9 @@ public:
 	bool isActive();
 
 	//Eventstuff
+	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
@@ -62,11 +65,24 @@ private:
 	//Rectangles
 	rectVector mRects;
 	rectVector mPlayRects;
+
 	sf::RectangleShape background;
+	sf::RectangleShape playground;
+	sf::RectangleShape foreground;
+
+	sf::RectangleShape background2;
+	sf::RectangleShape playground2;
+	sf::RectangleShape foreground2;
+
+	sf::RectangleShape background3;
+	sf::RectangleShape playground3;
+	sf::RectangleShape foreground3;
+
+	sf::RectangleShape rectangle; //HelpRect
 	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
 
 	//Sound
-	sf::Music backgroundMusic;
+	sf::Music music;
 	sf::Sound ambientSound;
 
 	//Scene
@@ -78,15 +94,47 @@ private:
 
 	//Items
 	ItemVector mItems;
+	Item* mPutte;
+	Item* mDollhouse;
 	Item* mMagicClam;
 	Item* mNeedle;
 	Item* mEarth;
 	Item* mFish;
+	Item* mGramophone;
 	Item* mHoolaHoop;
 	Item* mBeigeBall;
+	Item* mFruitbowl;
 	Item* mRedApple;
+	Item* mCat;
+	Item* mFoodBowl;
+	Item* mKids;
 
 	bool mLevelComplete;
+
+	//Inventory
+	Inventory *mInventory;
+
+	//DialogueSystem
+	DialogueSystem *mDialogueSystem;
+
+
+	//Eventstuff
+	sf::Vector2f mWorldPos;
+	sf::Vector2i mPixelPos;
+	sf::Vector2f mViewMoveTo;
+	Item* mTargetItem;
+	bool mItemInteraction;
+	//Scene change
+	sf::FloatRect mSceneChangeRect;
+	sf::Vector2f mSceneChangePlayerPos;
+	int mNewScene;
+	int mLastScene;
+
+	bool mPlayerToggle;
+	bool mInventoryMode;
+	bool mDisableClick;
+
+	ResourceHandler &handler;
 };
 
 #endif
