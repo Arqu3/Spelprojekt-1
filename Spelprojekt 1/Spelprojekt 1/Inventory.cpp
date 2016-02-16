@@ -6,8 +6,8 @@ Inventory::Inventory():
 mRow(0),
 mCol(-1),
 mColNum(3),
-mInitialXOffset(100),
-mInitialYOffset(100),
+mInitialXOffset(350),
+mInitialYOffset(150),
 mXIncrease(80),
 mYIncrease(80),
 mItems(),
@@ -32,21 +32,21 @@ mHasCraft2(false)
 	cout << "Number of rows: " << mRow + 1 << endl;
 
 	//Crafting rectangles
-	mItem1Rect.setSize(sf::Vector2f(70, 70));
-	mItem1Rect.setPosition(sf::Vector2f(500, 100));
+	mItem1Rect.setSize(sf::Vector2f(60, 65));
+	mItem1Rect.setPosition(sf::Vector2f(640, 100));
 	mItem1Rect.setFillColor(sf::Color::Cyan);
 
-	mItem2Rect.setSize(sf::Vector2f(70, 70));
-	mItem2Rect.setPosition(sf::Vector2f(620, 100));
+	mItem2Rect.setSize(sf::Vector2f(60, 65));
+	mItem2Rect.setPosition(sf::Vector2f(745, 100));
 	mItem2Rect.setFillColor(sf::Color::Cyan);
 
 	//Result rectangle
-	mResultRect.setSize(sf::Vector2f(80, 80));
-	mResultRect.setPosition(sf::Vector2f(560, 275));
+	mResultRect.setSize(sf::Vector2f(60, 60));
+	mResultRect.setPosition(sf::Vector2f(695, 208));
 
 	//Craft button
-	mCraftButton.setSize(sf::Vector2f(60, 40));
-	mCraftButton.setPosition(sf::Vector2f(560, 200));
+	mCraftButton.setSize(sf::Vector2f(60, 60));
+	mCraftButton.setPosition(sf::Vector2f(695, 208));
 	mCraftButton.setFillColor(sf::Color::Yellow);
 
 	//Mouse rectangle
@@ -109,10 +109,10 @@ void Inventory::draw(sf::RenderWindow &window)
 		window.draw(mItems[i]->getSprite());
 	}
 
-	window.draw(mItem1Rect);
-	window.draw(mItem2Rect);
-	window.draw(mCraftButton);
-	window.draw(mResultRect);
+	//window.draw(mItem1Rect);
+	//window.draw(mItem2Rect);
+	//window.draw(mCraftButton);
+	//window.draw(mResultRect);
 
 	//Draw selected items
 	if (mHasCraft1)
@@ -125,7 +125,7 @@ void Inventory::draw(sf::RenderWindow &window)
 	}
 
 	//Draw result
-	if (mHasCraft1 && mHasCraft2)
+	if (mHasCraft1 && mHasCraft2 && (mItem1->getCraftIndex() != -1 || mItem2->getCraftIndex() != -1))
 	{
 		int temp = mItems[mCraftSelect1]->getCraftIndex();
 		mResultItem = mCraftableItems[temp];
@@ -133,7 +133,7 @@ void Inventory::draw(sf::RenderWindow &window)
 		window.draw(mResultItem->getSprite());
 	}
 
-	window.draw(mRectShape);
+	//window.draw(mRectShape);
 }
 
 void Inventory::addItem(Item* item)
@@ -337,6 +337,7 @@ void Inventory::craftItem(int index1, int index2)
 		removeItem(index2);
 		removeItem(index1);
 	}
+	mIsCraftable = false;
 }
 
 //Swaps elements in given vector, passed by referens to avoid copy
@@ -367,10 +368,14 @@ void Inventory::deSelect()
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//Deselect if you click on nothing interactable
-		if (!mItems[i]->getRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos))
+		if (!mItems[i]->getRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
 		{
 			mSelectedItem1 = -1;
 			mSelectedItem2 = -1;
+			mHasCraft1 = false;
+			mHasCraft2 = false;
+			mCraftSelect1 = -1;
+			mCraftSelect2 = -1;
 		}
 	}
 }
@@ -382,7 +387,13 @@ bool Inventory::craftCheck()
 		//TODO - Add real craftcheck
 		if (mCraftSelect1 != -1 && mCraftSelect2 != -1 && mCraftSelect1 != mCraftSelect2)
 		{
-			mIsCraftable = true;
+			if (mItems[mCraftSelect1]->getCraftIndex() != -1 && mItems[mCraftSelect2]->getCraftIndex() != -1)
+			{
+				if (mItems[mCraftSelect1]->getCraftIndex() == mItems[mCraftSelect2]->getCraftIndex())
+				{
+					mIsCraftable = true;
+				}
+			}
 		}
 		else
 		{
@@ -404,7 +415,7 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 		{
 			mCraftableItems.clear();
 		}
-		//MAKE SURE CRAFTING INDEX IN ITEM CLASS IS IN CORRECT ORDER
+		//MAKE SURE CRAFTING INDEX IN ITEM CLASS IS IN CORRECT ORDER!
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "FishingRodMagnet"));
 	}
 }
@@ -422,4 +433,16 @@ int Inventory::getCraftSelect1()
 int Inventory::getCraftSelect2()
 {
 	return mCraftSelect2;
+}
+
+Item* Inventory::selectedItem()
+{
+	if (mSelectedItem1 != -1)
+	{
+		return mItems[mSelectedItem1];
+	}
+	else
+	{
+		return NULL;
+	}
 }

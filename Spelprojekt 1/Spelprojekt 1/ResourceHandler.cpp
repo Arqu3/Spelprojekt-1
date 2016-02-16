@@ -44,7 +44,7 @@ void ResourceHandler::loadLevel1()
 	addTexture("haticon.png");
 	addTexture("menuicon.png");
 	addTexture("hatmenu.png");
-	addTexture("settingsmenu.png");
+	addTexture("menu.png");
 	addTexture("inventory.png");
 
 	//Cursors
