@@ -58,6 +58,9 @@ public:
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
+	//Level Complete
+	bool isLevelComplete();
+
 private:
 	
 	//Rectangles
@@ -71,18 +74,6 @@ private:
 	sf::RectangleShape foregroundZoom;
 	sf::RectangleShape rectangle;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
-
-	//UI
-	sf::Sprite mHatIcon;
-	sf::Sprite mMenuIcon;
-
-	//Cursor
-	sf::Texture mNormalMouse;
-	sf::Texture mOpenHandMouse;
-	sf::Texture mClosedHandMouse;
-	sf::Texture mSpeechMouse;
-	sf::Texture mEyeMouse;
-	sf::Sprite mMouseCursor;
 
 	//Sound
 	sf::Music music;
@@ -115,6 +106,12 @@ private:
 	//Player
 	Player *mPlayer;
 
+	//Mouse Cursor
+	Cursor *mCursor;
+
+	//Menu
+	UI *mUI;
+
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
@@ -127,10 +124,13 @@ private:
 	int mNewScene;
 
 	bool mPlayerToggle;
-	bool mInventoryMode;
-	bool mDialogueMode;
-	bool mDisableClick;
 	bool mLookedAtAquarium;
+	bool mLookedAtRug;
+	bool mReadyForScrewdevice;
+	bool mPickedUpScrewdevice;
+	bool mMovedStar;
+	bool mReadyToLeave;
+	bool mLevelComplete;
 
 	int mUpdateTime;
 };

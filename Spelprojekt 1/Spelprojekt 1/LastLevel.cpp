@@ -984,7 +984,6 @@ void LastLevel::mouseClick(sf::Event &event)
 
 void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 {
-
 	//Only do this if the level needs moving camera
 	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
 	
@@ -1201,6 +1200,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	}
 }
 
-
-
-
+bool LastLevel::isLevelComplete()
+{
+	return mLevelComplete;
+}

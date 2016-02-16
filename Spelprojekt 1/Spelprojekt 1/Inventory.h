@@ -46,6 +46,8 @@ public:
 	int getCraftSelect1();
 	int getCraftSelect2();
 
+	Item* selectedItem();
+
 private:
 	void setInitialGrid();
 	void swapPos(Item &item1, Item &item2);

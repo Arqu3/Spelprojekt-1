@@ -54,6 +54,9 @@ public:
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 
+	//Level Complete
+	bool isLevelComplete();
+
 private:
 
 	//Player
@@ -106,6 +109,8 @@ private:
 	Item* mFoodBowl;
 	Item* mKids;
 
+	bool mLevelComplete;
+
 	//Inventory
 	Inventory *mInventory;
 
@@ -130,10 +135,6 @@ private:
 	bool mDisableClick;
 
 	ResourceHandler &handler;
-
-
-	
-
 };
 
 #endif

@@ -18,12 +18,12 @@ public:
 	typedef std::vector<Level*> LevelVector;
 
 	//Update
-	void update(float deltaTime, sf::RenderWindow &window);
+	void update(float deltaTime, sf::RenderWindow &window, ResourceHandler &handler);
 
 	//Draw
 	void draw(sf::RenderWindow &window);
 
-	void setActiveLevel(int num, ResourceHandler &handler);
+	void setActiveLevel(int num, ResourceHandler &handler, bool firstStart);
 
 	ItemVector getActiveItems();
 	Level* getActiveLevel();

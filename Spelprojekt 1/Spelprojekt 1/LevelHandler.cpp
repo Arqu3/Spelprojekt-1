@@ -20,7 +20,7 @@ LevelHandler::~LevelHandler()
 	mLevels.clear();
 }
 
-void LevelHandler::update(float deltaTime, sf::RenderWindow &window)
+void LevelHandler::update(float deltaTime, sf::RenderWindow &window, ResourceHandler &handler)
 {
 	for (LevelVector::size_type i = 0; i < mLevels.size(); i++)
 	{
@@ -29,6 +29,10 @@ void LevelHandler::update(float deltaTime, sf::RenderWindow &window)
 		{
 			mLevels[i]->getPlayer()->update(deltaTime);
 			mLevels[i]->update(window, deltaTime);
+			if (mLevels[i]->isLevelComplete())
+			{
+				setActiveLevel(i + 1, handler, false); //Add safety check for last level in LevelVector
+			}
 		}
 	}
 }
@@ -48,17 +52,24 @@ void LevelHandler::draw(sf::RenderWindow &window)
 	}
 }
 
-void LevelHandler::setActiveLevel(int index, ResourceHandler &handler)
+void LevelHandler::setActiveLevel(int index, ResourceHandler &handler, bool firstStart)
 {
 	assert(index >= 0);
-	//Toggles active level
-	//TODO - ADD THIS BACK LATER
-	//if (index > 0)
-	//{
-	//	//If level to be toggled is greater than 0, toggle last level to be inactive
-	//	mLevels[index - 1]->toggleActive();
-	//}
-	mLevels[index]->toggleActive(handler);
+
+	if (firstStart)
+	{
+		mLevels[index]->toggleActive(handler);
+	}
+	else
+	{
+		//Toggles active level
+		if (index > 0)
+		{
+			//If level to be toggled is greater than 0, toggle last level to be inactive
+			mLevels[index - 1]->toggleActive(handler);
+		}
+		mLevels[index]->toggleActive(handler);
+	}
 }
 
 LevelHandler::ItemVector LevelHandler::getActiveItems()

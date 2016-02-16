@@ -16,6 +16,7 @@ mSpeed(100.0f)
 	if (id == "Screwdevice")
 	{
 		mIndex = 0;
+		mCraftIndex = -1;
 		mName = "Skruvmakapär";
 		mDescription = "Testar Description!";
 		mSprite.setPosition(mPosition);
