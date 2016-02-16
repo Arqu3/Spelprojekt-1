@@ -68,6 +68,9 @@ public:
 	float getSpeed();
 	void setSpeed(float speed);
 
+	//Change texture
+	void changeTexture(ResourceHandler &handler, std::string filename);
+
 private:
 	bool mIsActive;
 	bool mIsLookable;

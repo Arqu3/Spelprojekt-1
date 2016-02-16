@@ -13,7 +13,8 @@ mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mSpeed(100.0f)
+mSpeed(1000.0f),
+mFacingLeft(true)
 {
 	//Sounds
 	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
@@ -39,7 +40,7 @@ Player::~Player()
 
 void Player::move(float deltaTime)
 {
-	mMoveToRect = sf::FloatRect(moveTo.x, moveTo.y, 2, 2);
+	mMoveToRect = sf::FloatRect(moveTo.x, moveTo.y, 10, 10);
 
 	if (mRect.intersects(mMoveToRect))
 	{
@@ -95,6 +96,23 @@ void Player::moveToPosition(float x, float y)
 
 	sf::Vector2f unit(mDirection.x / root, mDirection.y / root);
 	mDirection = unit;
+
+	//if (mDirection.x < 0)
+	//{
+	//	if (!mFacingLeft)
+	//	{
+	//		mSprite.setScale(sf::Vector2f(-1, 1));
+	//	}
+	//	mFacingLeft = true;
+	//}
+	//else if (mDirection.x > 0)
+	//{
+	//	if (mFacingLeft)
+	//	{
+	//		mSprite.setScale(sf::Vector2f(-1, 1));
+	//	}
+	//	mFacingLeft = false;
+	//}
 }
 
 
@@ -197,6 +215,19 @@ void Player::update(float deltaTime)
 			}
 			mCurrentTime = 0;
 		}
+	}
+
+	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
+	if (getDirection().x < 0 && !isFacingLeft())
+	{
+		flipPlayer();
+		cout << mFacingLeft << endl;
+	}
+	//If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
+	if (getDirection().x > 0 && isFacingLeft())
+	{
+		flipPlayer();
+		cout << mFacingLeft << endl;
 	}
 
 	mRect = sf::FloatRect(mPosition.x, mPosition.y, 10, 10);
