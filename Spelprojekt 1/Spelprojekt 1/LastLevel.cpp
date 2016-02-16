@@ -191,6 +191,11 @@ void LastLevel::drawForeground(sf::RenderWindow &window)
 	}
 }
 
+void LastLevel::drawUI(sf::RenderWindow &window)
+{
+
+}
+
 
 void LastLevel::drawItems(ItemVector items, sf::RenderWindow &window)
 {
@@ -222,7 +227,7 @@ void LastLevel::addRect(sf::FloatRect *rect)
 }
 
 
-void LastLevel::toggleActive()
+void LastLevel::toggleActive(ResourceHandler &handler)
 {
 	if (!mIsActive)
 	{

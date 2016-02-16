@@ -46,6 +46,9 @@ public:
 	//Get position of item
 	sf::Vector2f getPosition();
 
+	//Get crafting index of item
+	int getCraftIndex();
+
 	//Set position of item
 	void setPosition(float x, float y);
 
@@ -77,6 +80,7 @@ private:
 	bool mInteracted;
 
 	int mIndex;
+	int mCraftIndex;
 
 	std::string mId;
 	std::string mName;

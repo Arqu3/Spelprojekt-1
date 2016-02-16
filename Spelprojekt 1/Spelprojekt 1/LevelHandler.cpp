@@ -43,11 +43,12 @@ void LevelHandler::draw(sf::RenderWindow &window)
 			mLevels[i]->drawBackground(window);
 			mLevels[i]->getPlayer()->draw(window);
 			mLevels[i]->drawForeground(window);
+			mLevels[i]->drawUI(window);
 		}
 	}
 }
 
-void LevelHandler::setActiveLevel(int index)
+void LevelHandler::setActiveLevel(int index, ResourceHandler &handler)
 {
 	assert(index >= 0);
 	//Toggles active level
@@ -57,7 +58,7 @@ void LevelHandler::setActiveLevel(int index)
 	//	//If level to be toggled is greater than 0, toggle last level to be inactive
 	//	mLevels[index - 1]->toggleActive();
 	//}
-	mLevels[index]->toggleActive();
+	mLevels[index]->toggleActive(handler);
 }
 
 LevelHandler::ItemVector LevelHandler::getActiveItems()
@@ -82,4 +83,9 @@ Level* LevelHandler::getActiveLevel()
 Level* LevelHandler::getLevel(int index)
 {
 	return mLevels[index];
+}
+
+Player* LevelHandler::getPlayer()
+{
+	return mPlayer;
 }

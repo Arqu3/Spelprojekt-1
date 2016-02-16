@@ -28,6 +28,7 @@ public:
 	//Draw
 	virtual void drawBackground(sf::RenderWindow &window) = 0;
 	virtual void drawForeground(sf::RenderWindow &window) = 0;
+	virtual void drawUI(sf::RenderWindow &window) = 0;
 
 	//Rectangle functions
 	virtual rectVector getRects() = 0;
@@ -44,7 +45,7 @@ public:
 	virtual void internalSwap(int num) = 0;
 	virtual void changeScene(int num) = 0;
 	virtual int getActiveScene() = 0;
-	virtual void toggleActive() = 0;
+	virtual void toggleActive(ResourceHandler &handler) = 0;
 	virtual bool isActive() = 0;
 
 	//Eventstuff

@@ -45,16 +45,18 @@ mSpeed(100.0f)
 	if (id == "String")
 	{
 		mIndex = 3;
-		mName = "Tråd";
+		mCraftIndex = 0;
+		mName = "Fiskespö";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
-		mSprite.setTexture(*handler.getTexture("thomasstring.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("FishingRod.png")); //Add correct texture
 	}
 
 	if (id == "Magnet")
 	{
 		mIndex = 4;
+		mCraftIndex = 0;
 		mName = "Magnet";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -65,6 +67,7 @@ mSpeed(100.0f)
 	if (id == "Astronaut")
 	{
 		mIndex = 5;
+		mCraftIndex = -1;
 		mName = "Astronaut";
 		mDescription = "Skruvar på saker";
 		mSprite.setPosition(mPosition);
@@ -217,7 +220,7 @@ mSpeed(100.0f)
 
 	if (id == "Dollhouse")
 	{
-		mIndex = 19;
+		mIndex = 20;
 		mName = "Dockhus";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -227,12 +230,23 @@ mSpeed(100.0f)
 
 	if (id == "Kids")
 	{
-		mIndex = 20;
+		mIndex = 21;
 		mName = "Barn";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.2f, 1.25f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+	}
+
+	if (id == "FishingRodMagnet")
+	{
+		mIndex = 22;
+		mCraftIndex = -1;
+		mName = "Fiskespö med magnet";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
 	}
 }
 
@@ -459,7 +473,12 @@ void Item::setSpeed(float speed)
 	mSpeed = speed;
 }
 
+
 void Item::changeTexture(ResourceHandler &handler, std::string filename)
 {
 	mSprite.setTexture(*handler.getTexture(filename));
+}
+int Item::getCraftIndex()
+{
+	return mCraftIndex;
 }

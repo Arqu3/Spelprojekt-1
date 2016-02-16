@@ -16,6 +16,9 @@ mFrameYOffset(0),
 mSpeed(1000.0f),
 mFacingLeft(true)
 {
+	//Sounds
+	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
+
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 	mSprite.setOrigin(400, 700);
@@ -54,6 +57,17 @@ void Player::move(float deltaTime)
 	if (isOnPosition == false)
 	{
 		mPosition += mDirection * mSpeed * deltaTime;
+	}
+
+	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
+	if (getDirection().x < 0 && !isFacingLeft())
+	{
+		flipPlayer();
+	}
+	//If Player is moving to the right (getDirection.x > 0) and is facing left, flip Player
+	if (getDirection().x > 0 && isFacingLeft())
+	{
+		flipPlayer();
 	}
 
 }
@@ -110,6 +124,10 @@ void Player::update(float deltaTime)
 	// Walk Animations
 	if (mActiveAnimation == "Walk" && mWalk)
 	{
+		if (mWalkingSound.getStatus() != 2)
+		{
+			mWalkingSound.play();
+		}
 		if (mThomasActive)
 		{
 			if (mCurrentTime >= mFrameTime)
@@ -164,6 +182,10 @@ void Player::update(float deltaTime)
 				mCurrentTime = 0;
 			}
 		}
+	}
+	else
+	{
+		mWalkingSound.pause();
 	}
 
 	//Push Animation
@@ -367,4 +389,9 @@ float Player::getSpeed()
 void Player::setSpeed(float speed)
 {
 	mSpeed = speed;
+}
+
+bool Player::getIsOnPosition()
+{
+	return isOnPosition;
 }
