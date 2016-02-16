@@ -63,8 +63,16 @@ private:
 	rectVector mPlayRects;
 
 	sf::RectangleShape background;
+	sf::RectangleShape playground;
+	sf::RectangleShape foreground;
+
 	sf::RectangleShape background2;
+	sf::RectangleShape playground2;
+	sf::RectangleShape foreground2;
+
 	sf::RectangleShape background3;
+	sf::RectangleShape playground3;
+	sf::RectangleShape foreground3;
 
 	sf::RectangleShape rectangle; //HelpRect
 	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
@@ -95,6 +103,7 @@ private:
 	Item* mRedApple;
 	Item* mCat;
 	Item* mFoodBowl;
+	Item* mKids;
 
 	//Inventory
 	Inventory *mInventory;
@@ -118,6 +127,8 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
+
+	ResourceHandler &handler;
 
 
 	

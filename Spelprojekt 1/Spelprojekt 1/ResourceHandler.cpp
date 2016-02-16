@@ -60,11 +60,26 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomaszoomfg.png");
 
 	//LastLevel
-	addTexture("Barn hem.png");
-	addTexture("flickrum.png");
-	addTexture("LastLevel_ItemTest1.png");
-	addTexture("Barnhem_Scene3.jpg");
+	addTexture("ARBETSRUMbakgrund.png");
+	addTexture("ARBETSRUMmellangrund.png");
+	addTexture("ARBETSRUMförgrund.png");
+
+	addTexture("VARDAGSRUMbakgrund.png");
+	addTexture("VARDAGSRUMmellangrund.png");
+	addTexture("VARDAGSRUMförgrund.png");
+	addTexture("Fisk1.png");
+	addTexture("Fisk2.png");
+	addTexture("Jordglob.png");
+
+	addTexture("KÖKbakgrund.png");
+	addTexture("KÖKmellangrund.png");
+	addTexture("KÖKförgrund.png");
+	addTexture("Apelsin.png");
+	addTexture("Tavlan.png");
+
+
 	addTexture("transparent.png");
+	addTexture("LastLevel_ItemTest1.png");
 
 	//Music
 	addMusic("Level1Music.ogg");

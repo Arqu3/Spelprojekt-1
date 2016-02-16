@@ -3,32 +3,46 @@
 LastLevel::LastLevel(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
-mIsActive(false)
+mIsActive(false),
+handler(handler)
 {
 
 	//Background Texture scene 1
 	background.setSize(sf::Vector2f(1024,576));  
-	background.setTexture(handler.getTexture("flickrum.png")); //Add correct texture
+	background.setTexture(handler.getTexture("ARBETSRUMbakgrund.png")); 
 
 	//Playground Texture scene 1
+	playground.setSize(sf::Vector2f(1024, 576));
+	playground.setTexture(handler.getTexture("ARBETSRUMmellangrund.png"));
 
 	//Foreground Texture scene 1
+	foreground.setSize(sf::Vector2f(1024, 576));
+	foreground.setTexture(handler.getTexture("ARBETSRUMförgrund.png"));
 
 	//Background Texture scene 2
 	background2.setSize(sf::Vector2f(1536, 576));
-	background2.setTexture(handler.getTexture("Barn hem.png")); //Add correct texture
+	background2.setTexture(handler.getTexture("VARDAGSRUMbakgrund.png")); 
 
 	//Playground Texture scene 2
+	playground2.setSize(sf::Vector2f(1536, 576));
+	playground2.setTexture(handler.getTexture("VARDAGSRUMmellangrund.png"));
 
 	//Foreground Texture scene 2
+	foreground2.setSize(sf::Vector2f(1536, 576));
+	foreground2.setTexture(handler.getTexture("VARDAGSRUMförgrund.png"));
+
 
 	//Background Texture scene 3
 	background3.setSize(sf::Vector2f(1024, 576));
-	background3.setTexture(handler.getTexture("Barnhem_Scene3.jpg")); //Add correct texture
+	background3.setTexture(handler.getTexture("KÖKbakgrund.png")); 
 
 	//Playground Texture scene 3
+	playground3.setSize(sf::Vector2f(1024, 576));
+	playground3.setTexture(handler.getTexture("KÖKmellangrund.png"));
 
 	//Foreground Texture scene 3
+	foreground3.setSize(sf::Vector2f(1024, 576));
+	foreground3.setTexture(handler.getTexture("KÖKförgrund.png"));
 
 	//Add sound
 	music.openFromFile("Level1Music.ogg");
@@ -49,11 +63,12 @@ mIsActive(false)
 	mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
 	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
 	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
-	mFish = new Item(handler, sf::Vector2f(840, 37), "Fish");
+	mFish = new Item(handler, sf::Vector2f(830, 30), "Fish");
 	mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
 	mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
 	mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
 	mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
+	mKids = new Item(handler, sf::Vector2f(200, 300), "Kids");
 	
 
 	//View
@@ -129,6 +144,7 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 	{
 		mView.setCenter(512, 288);
 		window.draw(background);
+		window.draw(playground);
 
 	}
 
@@ -136,13 +152,16 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 	{
 		
 		window.draw(background2);
+		window.draw(playground2);
 	
 		
 	}
+
 	else if (mActiveScene == 2)
 	{
 		mView.setCenter(512, 288);
 		window.draw(background3);
+		window.draw(playground3);
 	}
 	//window.draw(rectangle);
 	drawItems(mItems, window);
@@ -151,6 +170,21 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 
 void LastLevel::drawForeground(sf::RenderWindow &window)
 {
+	if (mActiveScene == 0)
+	{
+		window.draw(foreground);
+
+	}
+
+	else if (mActiveScene == 1)
+	{
+		window.draw(foreground2);
+	}
+	else if (mActiveScene == 2)
+	{
+		window.draw(foreground3);
+	}
+
 	if (mInventoryMode)
 	{
 		mInventory->draw(window);
@@ -233,6 +267,7 @@ void LastLevel::toggleActive()
 		mCat->toggleActive();
 		mFruitbowl->toggleActive();
 		mFoodBowl->toggleActive();
+		
 
 		//Items Lookable scene 1
 		mDollhouse->toggleLookable();
@@ -446,6 +481,10 @@ void LastLevel::internalSwap(int num)
 		if (mFoodBowl->getActive())
 		{
 			addItem(mFoodBowl);
+		}
+		if (mKids->getActive())
+		{
+			addItem(mKids);
 		}
 
 	}
@@ -683,6 +722,16 @@ void LastLevel::mouseClick(sf::Event &event)
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
 					std::cout << "Klickade på dockhus";
+
+				}
+
+				if (getItems()[i]->getId() == "Kids")
+				{
+
+					mPlayer->moveToPosition(700, 422);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på Barnen";
 
 				}
 			}
@@ -1010,6 +1059,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 					{
 						
 						//Play sound! Fixa ordning senare
+
 						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
 						{
 							if (getItems()[i]->getId() == "Fish")
@@ -1030,18 +1080,8 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 
 					if (mTargetItem->getId() == "Fruitbowl")
 					{
-
-						//Change texture to bowl without apple
-
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-						{
-							if (getItems()[i]->getId() == "Red Apple")
-							{
-								//Adds RedApple to the inventory
-								mInventory->addItem(getItems()[i]);
-							}
-						}
-
+						mInventory->addItem(mTargetItem); 
+						mTargetItem->changeTexture(handler, "Apelsin.png");
 						std::cout << "Plockar upp äpple!";
 					}
 
@@ -1058,12 +1098,22 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 								mDisableClick = true;
 								getItems()[i]->setSpeed(300.0f);
 								getItems()[i]->moveToPosition(700, 396);
-								
-
+							
 							}
 						}
 
-						std::cout << "Katten äter mat!";
+
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Kids")
+							{
+								getItems()[i]->toggleActive();
+								getItems()[i]->toggleLookable();
+								getItems()[i]->toggleInteractable();
+							}
+						}
+
+						std::cout << "Katten äter mat! Barnen kommer fram!";
 					}
 
 					if (mTargetItem->getId() == "Putte")
@@ -1087,6 +1137,25 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 						mPutte->toggleActive();
 						mPutte->toggleLookable();
 						mPutte->toggleInteractable();
+					}
+
+					if (mTargetItem->getId() == "Kids")
+					{
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Hoola Hoop")
+							{
+								mTargetItem = getItems()[i];
+								mInventory->addItem(getItems()[i]);
+							}
+
+							if (getItems()[i]->getId() == "Beige Ball")
+							{
+								mTargetItem = getItems()[i];
+								mInventory->addItem(getItems()[i]);
+							}
+						}
+						
 					}
 
 				}

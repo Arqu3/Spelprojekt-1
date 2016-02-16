@@ -121,8 +121,8 @@ mSpeed(100.0f)
 		mName = "Jordglob";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.7f, 0.8f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.22f, 0.22f));
+		mSprite.setTexture(*handler.getTexture("Jordglob.png")); //Add correct texture
 	}
 
 	if (id == "Fish")
@@ -131,8 +131,8 @@ mSpeed(100.0f)
 		mName = "Fisk";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(1.5f, 0.6f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.28f, 0.28f));
+		mSprite.setTexture(*handler.getTexture("Fisk1.png")); //Add correct texture
 	}
 
 	if (id == "Gramophone")
@@ -172,7 +172,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Apelsin.png")); 
 	}
 
 	if (id == "Fruitbowl")
@@ -182,7 +182,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.5f, 0.5f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); 
 	}
 
 	if (id == "Cat")
@@ -202,7 +202,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
 	}
 
 	if (id == "Putte")
@@ -223,6 +223,16 @@ mSpeed(100.0f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.2f, 1.25f)); 
 		mSprite.setTexture(*handler.getTexture("transparent.png")); 
+	}
+
+	if (id == "Kids")
+	{
+		mIndex = 20;
+		mName = "Barn";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.2f, 1.25f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
 	}
 }
 
@@ -447,4 +457,9 @@ float Item::getSpeed()
 void Item::setSpeed(float speed)
 {
 	mSpeed = speed;
+}
+
+void Item::changeTexture(ResourceHandler &handler, std::string filename)
+{
+	mSprite.setTexture(*handler.getTexture(filename));
 }

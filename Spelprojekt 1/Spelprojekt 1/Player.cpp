@@ -37,7 +37,7 @@ Player::~Player()
 
 void Player::move(float deltaTime)
 {
-	mMoveToRect = sf::FloatRect(moveTo.x, moveTo.y, 2, 2);
+	mMoveToRect = sf::FloatRect(moveTo.x, moveTo.y, 10, 10);
 
 	if (mRect.intersects(mMoveToRect))
 	{
