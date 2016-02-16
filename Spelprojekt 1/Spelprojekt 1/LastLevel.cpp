@@ -232,8 +232,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		//Inventory
 		mInventory = new Inventory();
 
-		std::cout << "AFTER INVENTORY TOGGLE ACTIVE LASTLEVEL" << std::endl;
-
 
 		//Rectangles
 
@@ -261,7 +259,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mPlayRects.push_back(createRect(108, 378, 610, 192));
 		mPlayRects.push_back(createRect(347, 324, 370, 52));
 		
-		std::cout << "BEFORE ITEMS IN TOGGLE ACTIVE LASTLEVEL" << std::endl;
 
 		//Add items to itemVector
 		addItem(mMagicClam);
@@ -311,7 +308,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		mLastScene = 0;
 		
-		std::cout << "END OF TOGGLE ACTIVE LASTLEVEL" << std::endl;
 	}
 
 	mIsActive = !mIsActive;

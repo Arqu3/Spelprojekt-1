@@ -56,8 +56,6 @@ mHasCraft2(false)
 	//Select rectangle
 	mSelectRect.setSize(sf::Vector2f(70, 70));
 	mSelectRect.setFillColor(sf::Color::Yellow);
-
-	std::cout << "END OF INVENTORY CONSTRUCTOR" << std::endl;
 }
 
 Inventory::~Inventory()

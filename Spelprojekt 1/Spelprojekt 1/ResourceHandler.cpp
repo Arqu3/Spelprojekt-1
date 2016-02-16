@@ -12,6 +12,7 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
+	addTexture("loadscreen.jpg");
 }
 
 ResourceHandler::~ResourceHandler()
@@ -35,7 +36,7 @@ void ResourceHandler::internalClear()
 
 void ResourceHandler::loadLevel1()
 {
-	internalClear();
+	//internalClear();
 
 	//Thomas
 	addTexture("ThomasWalk.png");

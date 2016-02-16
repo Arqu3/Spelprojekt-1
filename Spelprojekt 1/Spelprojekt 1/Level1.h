@@ -126,6 +126,7 @@ private:
 	bool mPlayerToggle;
 	bool mLookedAtAquarium;
 	bool mLookedAtRug;
+	bool mPushingBlock;
 	bool mReadyForScrewdevice;
 	bool mPickedUpScrewdevice;
 	bool mMovedStar;

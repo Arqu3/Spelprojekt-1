@@ -7,6 +7,7 @@ mIsActive(false),
 mItemInteraction(false),
 mLookedAtAquarium(false),
 mLookedAtRug(false),
+mPushingBlock(false),
 mReadyForScrewdevice(false),
 mPickedUpScrewdevice(false),
 mMovedStar(false),
@@ -271,8 +272,6 @@ void Level1::toggleActive(ResourceHandler &handler)
 		addItem(mString);
 		addItem(mBowl);
 		addItem(mCube);
-
-		std::cout << "END OF TOGGLE ACTIVE LEVEL1" << std::endl;
 	}
 
 	mIsActive = !mIsActive;
@@ -1023,6 +1022,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 					if (mTargetItem->getId() == "Block")
 					{
 						mCursor->setMode(Cursor::DISABLED);
+						mPushingBlock = true;
 
 						mPlayer->setSpeed(50.0f);
 						mTargetItem->setSpeed(50.0f);
@@ -1076,8 +1076,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		//Put everything back to normal after the "Pushing cutscene"
 		if (mTargetItem->getIsOnPosition())
 		{
-			if (mCursor->getMode() == Cursor::DISABLED)
+			if (mPushingBlock)
 			{
+				mPushingBlock = false;
 				mCursor->setMode(Cursor::NORMAL);
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setSpeed(100.0f);

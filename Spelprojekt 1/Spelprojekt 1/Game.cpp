@@ -6,8 +6,7 @@ Game::Game():
 mRHandler(),
 mLHandler(mRHandler)
 {
-	loadScreenTexture.loadFromFile("Resources/Textures/loadscreen.jpg");
-	loadScreen.setTexture(loadScreenTexture);
+	loadScreen.setTexture(*mRHandler.getTexture("loadscreen.jpg"));
 }
 
 Game::~Game()
