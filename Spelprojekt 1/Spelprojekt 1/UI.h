@@ -1,5 +1,5 @@
-#ifndef INCLUDED_MENU
-#define INCLUDED_MENU
+#ifndef INCLUDED_UI
+#define INCLUDED_UI
 
 #include "ResourceHandler.h"
 #include "SFML\System.hpp"

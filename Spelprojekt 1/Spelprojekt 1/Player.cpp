@@ -13,7 +13,7 @@ mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mSpeed(1000.0f),
+mSpeed(100.0f),
 mFacingLeft(true)
 {
 	//Sounds

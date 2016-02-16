@@ -15,6 +15,17 @@ mMode(FloatRect)
 	mRect.setFillColor(col);
 }
 
+Button::Button(float width, float height, sf::Color col):
+mRect(sf::Vector2f(width, height)),
+mIsOnPosition(true),
+mDirection(0, 0),
+mSpeed(100),
+mMode(FloatRect)
+{
+	mRect.setPosition(0, 0);
+	mRect.setFillColor(col);
+}
+
 //Creates a sf::rectangleshape representing a button with given color
 Button::Button(sf::RectangleShape &rect, sf::Color col) :
 mRect(rect),
@@ -135,24 +146,35 @@ void Button::setPosition(sf::Vector2f &pos)
 
 void Button::moveTo(float x, float y)
 {
+	float deltaX;
+    float deltaY;
+
+	float squareX;
+	float squareY;
+
+	float added;
+	float root;
+
+	sf::Vector2f unit;
+
 	switch (mMode)
 	{
 	case FloatRect:
 		//Creates a unit-direction vector that the player follows
 		mMoveToPosition = sf::Vector2f(x, y);
 
-		float deltaX = (mMoveToPosition.x - mRect.getPosition().x);
-		float deltaY = (mMoveToPosition.y - mRect.getPosition().y);
+		deltaX = (mMoveToPosition.x - mRect.getPosition().x);
+		deltaY = (mMoveToPosition.y - mRect.getPosition().y);
 
 		mDirection = sf::Vector2f(deltaX, deltaY);
 
-		float squareX = (deltaX * deltaX);
-		float squareY = (deltaY * deltaY);
+		squareX = (deltaX * deltaX);
+		squareY = (deltaY * deltaY);
 
-		float added = (squareX + squareY);
-		float root = sqrt(added);
+		added = (squareX + squareY);
+		root = sqrt(added);
 
-		sf::Vector2f unit(mDirection.x / root, mDirection.y / root);
+		unit = sf::Vector2f(mDirection.x / root, mDirection.y / root);
 		mDirection = unit;
 		break;
 
@@ -160,42 +182,53 @@ void Button::moveTo(float x, float y)
 		//Creates a unit-direction vector that the player follows
 		mMoveToPosition = sf::Vector2f(x, y);
 
-		float deltaX = (mMoveToPosition.x - mSprite.getPosition().x);
-		float deltaY = (mMoveToPosition.y - mSprite.getPosition().y);
+		deltaX = (mMoveToPosition.x - mSprite.getPosition().x);
+		deltaY = (mMoveToPosition.y - mSprite.getPosition().y);
 
 		mDirection = sf::Vector2f(deltaX, deltaY);
 
-		float squareX = (deltaX * deltaX);
-		float squareY = (deltaY * deltaY);
+		squareX = (deltaX * deltaX);
+		squareY = (deltaY * deltaY);
 
-		float added = (squareX + squareY);
-		float root = sqrt(added);
+		added = (squareX + squareY);
+		root = sqrt(added);
 
-		sf::Vector2f unit(mDirection.x / root, mDirection.y / root);
+		unit = sf::Vector2f(mDirection.x / root, mDirection.y / root);
 		mDirection = unit;
 		break;
 	}
 }
 void Button::moveTo(sf::Vector2f &pos)
 {
+	float deltaX;
+	float deltaY;
+
+	float squareX;
+	float squareY;
+
+	float added;
+	float root;
+
+	sf::Vector2f unit;
+
 	switch (mMode)
 	{
 	case FloatRect:
 		//Creates a unit-direction vector that the player follows
 		mMoveToPosition = pos;
 
-		float deltaX = (mMoveToPosition.x - mRect.getPosition().x);
-		float deltaY = (mMoveToPosition.y - mRect.getPosition().y);
+		deltaX = (mMoveToPosition.x - mRect.getPosition().x);
+		deltaY = (mMoveToPosition.y - mRect.getPosition().y);
 
 		mDirection = sf::Vector2f(deltaX, deltaY);
 
-		float squareX = (deltaX * deltaX);
-		float squareY = (deltaY * deltaY);
+		squareX = (deltaX * deltaX);
+		squareY = (deltaY * deltaY);
 
-		float added = (squareX + squareY);
-		float root = sqrt(added);
+		added = (squareX + squareY);
+		root = sqrt(added);
 
-		sf::Vector2f unit(mDirection.x / root, mDirection.y / root);
+		unit = sf::Vector2f(mDirection.x / root, mDirection.y / root);
 		mDirection = unit;
 		break;
 
@@ -203,18 +236,18 @@ void Button::moveTo(sf::Vector2f &pos)
 		//Creates a unit-direction vector that the player follows
 		mMoveToPosition = pos;
 
-		float deltaX = (mMoveToPosition.x - mSprite.getPosition().x);
-		float deltaY = (mMoveToPosition.y - mSprite.getPosition().y);
+		deltaX = (mMoveToPosition.x - mSprite.getPosition().x);
+		deltaY = (mMoveToPosition.y - mSprite.getPosition().y);
 
 		mDirection = sf::Vector2f(deltaX, deltaY);
 
-		float squareX = (deltaX * deltaX);
-		float squareY = (deltaY * deltaY);
+		squareX = (deltaX * deltaX);
+		squareY = (deltaY * deltaY);
 
-		float added = (squareX + squareY);
-		float root = sqrt(added);
+		added = (squareX + squareY);
+		root = sqrt(added);
 
-		sf::Vector2f unit(mDirection.x / root, mDirection.y / root);
+		unit = sf::Vector2f(mDirection.x / root, mDirection.y / root);
 		mDirection = unit;
 		break;
 	}
@@ -222,10 +255,11 @@ void Button::moveTo(sf::Vector2f &pos)
 
 void Button::move(float deltaTime)
 {
+	sf::FloatRect mMoveToRect;
 	switch (mMode)
 	{
 	case FloatRect:
-		sf::FloatRect mMoveToRect(mMoveToPosition.x, mMoveToPosition.y, 2, 2);
+		mMoveToRect = sf::FloatRect(mMoveToPosition.x, mMoveToPosition.y, 10, 10);
 
 		if (mRect.getGlobalBounds().intersects(mMoveToRect))
 		{
@@ -244,7 +278,7 @@ void Button::move(float deltaTime)
 		break;
 
 	case Texture:
-		sf::FloatRect mMoveToRect(mMoveToPosition.x, mMoveToPosition.y, 2, 2);
+		mMoveToRect = sf::FloatRect(mMoveToPosition.x, mMoveToPosition.y, 10, 10);
 
 		if (mSprite.getGlobalBounds().intersects(mMoveToRect))
 		{
@@ -309,7 +343,7 @@ std::string Button::getTexureName()
 		break;
 	}
 }
-float Button::setSpeed(float value)
+void Button::setSpeed(float value)
 {
 	mSpeed = value;
 }

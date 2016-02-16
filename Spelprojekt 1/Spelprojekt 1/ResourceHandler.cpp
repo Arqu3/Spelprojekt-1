@@ -80,11 +80,8 @@ void ResourceHandler::loadLevel1()
 	//Textbubbla
 	addTexture("textbubble.png");
 
-	
-
 	//Music
 	addMusic("Level1Music.ogg");
-
 
 	//Sound
 	addSound("FootSteps.ogg");
@@ -120,7 +117,7 @@ void ResourceHandler::loadLastLevel()
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
 
-        //Thomas
+     //Thomas
 	addTexture("ThomasWalk.png");
 
 	//Hilma
@@ -140,6 +137,9 @@ void ResourceHandler::loadLastLevel()
 	addTexture("closedhand.png");
 	addTexture("speechbubble.png");
 	addTexture("eyecursor.png");
+
+	//Sounds
+	addSound("FootSteps.ogg");
 
 }
 

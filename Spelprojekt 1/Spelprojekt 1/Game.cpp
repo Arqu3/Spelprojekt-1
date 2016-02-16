@@ -4,7 +4,8 @@ using namespace std;
 
 Game::Game():
 mRHandler(),
-mLHandler(mRHandler)
+mLHandler(mRHandler),
+mMenu()
 {
 	loadScreenTexture.loadFromFile("Resources/Textures/loadscreen.jpg");
 	loadScreen.setTexture(loadScreenTexture);
@@ -33,9 +34,16 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		mLHandler.update(deltaTime, window, mRHandler);
+		mMenu.update(deltaTime);
+
+		if (mMenu.getState() == Menu::State::InGame)
+		{
+			mLHandler.update(deltaTime, window, mRHandler);
+			mLHandler.getActiveLevel()->eventListen(window);
+		}
+
 		mLHandler.draw(window);
-		mLHandler.getActiveLevel()->eventListen(window);
+		mMenu.draw(window);
 
 		deltaClock.restart();
 		window.display();
