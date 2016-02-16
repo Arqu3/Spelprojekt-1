@@ -4,83 +4,9 @@ LastLevel::LastLevel(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
 mIsActive(false),
-handler(handler)
+handler(handler),
+mLevelComplete(false)
 {
-
-	//Background Texture scene 1
-	background.setSize(sf::Vector2f(1024,576));  
-	background.setTexture(handler.getTexture("ARBETSRUMbakgrund.png")); 
-
-	//Playground Texture scene 1
-	playground.setSize(sf::Vector2f(1024, 576));
-	playground.setTexture(handler.getTexture("ARBETSRUMmellangrund.png"));
-
-	//Foreground Texture scene 1
-	foreground.setSize(sf::Vector2f(1024, 576));
-	foreground.setTexture(handler.getTexture("ARBETSRUMförgrund.png"));
-
-	//Background Texture scene 2
-	background2.setSize(sf::Vector2f(1536, 576));
-	background2.setTexture(handler.getTexture("VARDAGSRUMbakgrund.png")); 
-
-	//Playground Texture scene 2
-	playground2.setSize(sf::Vector2f(1536, 576));
-	playground2.setTexture(handler.getTexture("VARDAGSRUMmellangrund.png"));
-
-	//Foreground Texture scene 2
-	foreground2.setSize(sf::Vector2f(1536, 576));
-	foreground2.setTexture(handler.getTexture("VARDAGSRUMförgrund.png"));
-
-
-	//Background Texture scene 3
-	background3.setSize(sf::Vector2f(1024, 576));
-	background3.setTexture(handler.getTexture("KÖKbakgrund.png")); 
-
-	//Playground Texture scene 3
-	playground3.setSize(sf::Vector2f(1024, 576));
-	playground3.setTexture(handler.getTexture("KÖKmellangrund.png"));
-
-	//Foreground Texture scene 3
-	foreground3.setSize(sf::Vector2f(1024, 576));
-	foreground3.setTexture(handler.getTexture("KÖKförgrund.png"));
-
-	//Add sound
-	music.openFromFile("Level1Music.ogg");
-
-	//Add HelpRect
-	rectangle.setPosition(sf::Vector2f(1158, 2));
-	rectangle.setSize(sf::Vector2f(70, 168));
-	rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
-	
-	//Add items
-	
-	mMagicClam = new Item(handler, sf::Vector2f(0,0), "Magic Clam");
-	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
-	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
-	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
-
-	mPutte = new Item(handler, sf::Vector2f(193, 257), "Putte");
-	mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
-	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
-	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
-	mFish = new Item(handler, sf::Vector2f(830, 30), "Fish");
-	mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
-	mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
-	mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
-	mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
-	mKids = new Item(handler, sf::Vector2f(200, 300), "Kids");
-	
-
-	//View
-	mView.setSize(1024, 576);
-
-	//Player
-	mPlayer = new Player(handler, sf::Vector2f(400, 400));
-
-	//Inventory
-	mInventory = new Inventory();
-
-	
 }
 
 LastLevel::~LastLevel()
@@ -231,6 +157,84 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 {
 	if (!mIsActive)
 	{
+		handler.loadLastLevel();
+
+		//Background Texture scene 1
+		background.setSize(sf::Vector2f(1024, 576));
+		background.setTexture(handler.getTexture("ARBETSRUMbakgrund.png"));
+
+		//Playground Texture scene 1
+		playground.setSize(sf::Vector2f(1024, 576));
+		playground.setTexture(handler.getTexture("ARBETSRUMmellangrund.png"));
+
+		//Foreground Texture scene 1
+		foreground.setSize(sf::Vector2f(1024, 576));
+		foreground.setTexture(handler.getTexture("ARBETSRUMförgrund.png"));
+
+		//Background Texture scene 2
+		background2.setSize(sf::Vector2f(1536, 576));
+		background2.setTexture(handler.getTexture("VARDAGSRUMbakgrund.png"));
+
+		//Playground Texture scene 2
+		playground2.setSize(sf::Vector2f(1536, 576));
+		playground2.setTexture(handler.getTexture("VARDAGSRUMmellangrund.png"));
+
+		//Foreground Texture scene 2
+		foreground2.setSize(sf::Vector2f(1536, 576));
+		foreground2.setTexture(handler.getTexture("VARDAGSRUMförgrund.png"));
+
+
+		//Background Texture scene 3
+		background3.setSize(sf::Vector2f(1024, 576));
+		background3.setTexture(handler.getTexture("KÖKbakgrund.png"));
+
+		//Playground Texture scene 3
+		playground3.setSize(sf::Vector2f(1024, 576));
+		playground3.setTexture(handler.getTexture("KÖKmellangrund.png"));
+
+		//Foreground Texture scene 3
+		foreground3.setSize(sf::Vector2f(1024, 576));
+		foreground3.setTexture(handler.getTexture("KÖKförgrund.png"));
+
+		//Add sound
+		music.openFromFile("Level1Music.ogg");
+
+		//Add HelpRect
+		rectangle.setPosition(sf::Vector2f(1158, 2));
+		rectangle.setSize(sf::Vector2f(70, 168));
+		rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
+
+		//Add items
+
+		mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
+		mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
+		mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
+		mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
+
+		mPutte = new Item(handler, sf::Vector2f(193, 257), "Putte");
+		mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
+		mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
+		mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
+		mFish = new Item(handler, sf::Vector2f(830, 30), "Fish");
+		mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
+		mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
+		mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
+		mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
+		mKids = new Item(handler, sf::Vector2f(200, 300), "Kids");
+
+
+		//View
+		mView.setSize(1024, 576);
+
+		//Player
+		mPlayer = new Player(handler, sf::Vector2f(400, 400));
+
+		//Inventory
+		mInventory = new Inventory();
+
+		std::cout << "AFTER INVENTORY TOGGLE ACTIVE LASTLEVEL" << std::endl;
+
+
 		//Rectangles
 
 		//Dollhouse
@@ -257,6 +261,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mPlayRects.push_back(createRect(108, 378, 610, 192));
 		mPlayRects.push_back(createRect(347, 324, 370, 52));
 		
+		std::cout << "BEFORE ITEMS IN TOGGLE ACTIVE LASTLEVEL" << std::endl;
 
 		//Add items to itemVector
 		addItem(mMagicClam);
@@ -306,7 +311,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		mLastScene = 0;
 		
-
+		std::cout << "END OF TOGGLE ACTIVE LASTLEVEL" << std::endl;
 	}
 
 	mIsActive = !mIsActive;

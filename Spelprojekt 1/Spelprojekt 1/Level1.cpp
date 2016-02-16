@@ -7,10 +7,11 @@ mIsActive(false),
 mItemInteraction(false),
 mLookedAtAquarium(false),
 mLookedAtRug(false),
-mPickedUpScrewdevice(false),
 mReadyForScrewdevice(false),
+mPickedUpScrewdevice(false),
 mMovedStar(false),
 mReadyToLeave(false),
+mLevelComplete(false),
 mUpdateTime(0)
 {
 }
@@ -270,6 +271,8 @@ void Level1::toggleActive(ResourceHandler &handler)
 		addItem(mString);
 		addItem(mBowl);
 		addItem(mCube);
+
+		std::cout << "END OF TOGGLE ACTIVE LEVEL1" << std::endl;
 	}
 
 	mIsActive = !mIsActive;

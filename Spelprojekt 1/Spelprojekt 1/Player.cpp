@@ -13,11 +13,11 @@ mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mSpeed(1000.0f),
+mSpeed(100.0f),
 mFacingLeft(true)
 {
 	//Sounds
-	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
+	//mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
 
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));

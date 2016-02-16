@@ -21,6 +21,9 @@ ResourceHandler::~ResourceHandler()
 
 void ResourceHandler::internalClear()
 {
+	textureCounter = 0;
+	soundCounter = 0;
+	musicCounter = 0;
 	mTextures.clear();
 	mTextureNames.clear();
 
@@ -96,9 +99,29 @@ void ResourceHandler::loadLevel1()
 
 void ResourceHandler::loadLastLevel()
 {
-	internalClear();
+	//internalClear();
 
-        //LastLevel
+	////Thomas
+	//addTexture("ThomasWalk.png");
+	////Hilma
+	//addTexture("HilmaWalk.png");
+	//addTexture("HilmaPush.png");
+
+	////In-game UI
+	//addTexture("haticon.png");
+	//addTexture("menuicon.png");
+	//addTexture("hatmenu.png");
+	//addTexture("menu.png");
+	//addTexture("inventory.png");
+
+	////Cursors
+	//addTexture("mousecursor.png");
+	//addTexture("openhand.png");
+	//addTexture("closedhand.png");
+	//addTexture("speechbubble.png");
+	//addTexture("eyecursor.png");
+
+    //LastLevel
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");
@@ -119,27 +142,6 @@ void ResourceHandler::loadLastLevel()
 
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
-
-        //Thomas
-	addTexture("ThomasWalk.png");
-
-	//Hilma
-	addTexture("HilmaWalk.png");
-	addTexture("HilmaPush.png");
-
-	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
-	addTexture("hatmenu.png");
-	addTexture("settingsmenu.png");
-	addTexture("inventory.png");
-
-	//Cursors
-	addTexture("mousecursor.png");
-	addTexture("openhand.png");
-	addTexture("closedhand.png");
-	addTexture("speechbubble.png");
-	addTexture("eyecursor.png");
 
 }
 
