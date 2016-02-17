@@ -13,8 +13,6 @@ class LevelHandler
 public:
 	LevelHandler(ResourceHandler &handler);
 	~LevelHandler();
-
-	typedef std::vector<Item*> ItemVector;
 	typedef std::vector<Level*> LevelVector;
 
 	//Update
@@ -23,18 +21,12 @@ public:
 	//Draw
 	void draw(sf::RenderWindow &window);
 
-	void setActiveLevel(int num, ResourceHandler &handler, bool firstStart);
+	void setActiveLevel(int num, ResourceHandler &handler);
 
-	ItemVector getActiveItems();
 	Level* getActiveLevel();
 	Level* getLevel(int index);
 
-	Player* getPlayer();
-
 private:
-	//Items
-	ItemVector mItems;
-	void setActiveItems();
 
 	//Levels
 	LevelVector mLevels;
@@ -44,9 +36,6 @@ private:
 
 	//2
 	LastLevel* mLastLevel;
-
-	Player *mPlayer;
-
 };
 
 #endif
