@@ -8,10 +8,17 @@ mTime(0),
 mText(),
 mFont(),
 mIsActive(false),
-mFinishedDialogue(false)
+mAdvancedIsActive(false),
+mFinishedDialogue(false),
+mHandler(handler),
+mFirstCharacter(),
+mSecondCharacter()
 {
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
+	mTextBox.setTexture(*handler.getTexture("textbox.png"));
+	mSepia.setSize(sf::Vector2f(1024, 576));
+	mSepia.setTexture(handler.getTexture("sepia.png"));
 }
 
 DialogueSystem::~DialogueSystem()
@@ -31,6 +38,59 @@ void DialogueSystem::text(std::string text, sf::Vector2f &position, float x, flo
 	mText.setString(text);
 }
 
+void DialogueSystem::advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY)
+{
+	mText.setFont(mFont);
+	mText.setCharacterSize(24);
+	mText.setStyle(sf::Text::Bold);
+	mText.setColor(sf::Color::White);
+	mText.move(offsetX, offsetY);
+
+	if (advancedText.length() > 70)
+	{
+		std::string::size_type spacePos = advancedText.rfind(' ', 70);
+		if (spacePos == std::string::npos)
+		{
+			spacePos = advancedText.find(' ', 70);
+		}
+		if (spacePos != std::string::npos)
+		{
+			advancedText[spacePos] = '\n';
+		}
+	}
+
+	if (advancedText.length() > 140)
+	{
+		std::string::size_type spacePos = advancedText.rfind(' ', 140);
+		if (spacePos == std::string::npos)
+		{
+			spacePos = advancedText.find(' ', 140);
+		}
+		if (spacePos != std::string::npos)
+		{
+			advancedText[spacePos] = '\n';
+			posY = posY -25;
+		}
+	}
+
+	if (advancedText.length() > 210)
+	{
+		std::string::size_type spacePos = advancedText.rfind(' ', 210);
+		if (spacePos == std::string::npos)
+		{
+			spacePos = advancedText.find(' ', 210);
+		}
+		if (spacePos != std::string::npos)
+		{
+			advancedText[spacePos] = '\n';
+			posY = posY - 25;
+		}
+	}
+
+	mText.setPosition(posX, posY);
+	mText.setString(advancedText);
+}
+
 //Draw function for game to use
 void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 {
@@ -38,20 +98,62 @@ void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 	{
 		window.draw(mBubble);
 	}
+	if (mAdvancedIsActive)
+	{
+		window.draw(mSepia);
+		window.draw(mFirstCharacter);
+		window.draw(mSecondCharacter);
+		window.draw(mTextBox);
+	}
 	window.draw(mText);
 }
 
-void DialogueSystem::createTalkBubble(sf::Vector2f &position, float OffSetX, float OffSetY, float x, float y)
+void DialogueSystem::createTalkBubble(sf::Vector2f &position, float offsetX, float offsetY, float scaleX, float scaleY)
 {
 	mBubble.setPosition(position);
-	mBubble.setScale(sf::Vector2f(x, y));
-	mBubble.move(OffSetX, OffSetY);
+	mBubble.setScale(sf::Vector2f(scaleX, scaleY));
+	mBubble.move(offsetX, offsetY);
+}
+
+void DialogueSystem::createTextBox(float x, float y, float offsetX, float offsetY, float scaleX, float scaleY)
+{
+	mTextBox.setPosition(x, y);
+	mTextBox.setScale(scaleX, scaleY);
+	mTextBox.move(offsetX, offsetY);
+}
+
+void DialogueSystem::drawFirstCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character)
+{
+	mFirstCharacter.setPosition(x, y);
+	mFirstCharacter.setScale(scaleX, scaleY);
+	mFirstCharacter.move(offsetX, offsetY);
+	mFirstCharacter.setTexture(*handler.getTexture(character));
+}
+
+void DialogueSystem::drawSecondCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character)
+{
+	mSecondCharacter.setPosition(x, y);
+	mSecondCharacter.setScale(scaleX, scaleY);
+	mSecondCharacter.move(offsetX, offsetY);
+	mSecondCharacter.setTexture(*handler.getTexture(character));
 }
 
 //Function to check if the player has clicked on an object
 void DialogueSystem::hasClicked(std::string indexName, Player *player)
 {
 	mPlayer = player;
+
+	//Advanced Dialogue
+	if (indexName == "level1Start" && mHasClicked == false)
+	{
+		mLevel1Start = true;
+		mHasClicked = true;
+	}
+	if (indexName == "level1End" && mHasClicked == false)
+	{
+		mLevel1End = true;
+		mHasClicked = true;
+	}
 
 	//Thomas' Room
 	if (indexName == "books" && mHasClicked == false)
@@ -305,6 +407,7 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 		mPutteFamily = true;
 		mHasClicked = true;
 	}
+
 	else
 		mHasClicked = false;
 }
@@ -322,6 +425,16 @@ void DialogueSystem::reset()
 //Update function
 void DialogueSystem::update(float time)
 {
+	//Advanced Dialogue
+	if (mLevel1Start == true)
+	{
+		displayLevel1StartAdvancedDialogue();
+	}
+	if (mLevel1End == true)
+	{
+		displayLevel1EndAdvancedDialogue();
+	}
+
 	//Thomas' Room
 	if (mBooks == true)
 	{
@@ -537,6 +650,366 @@ bool DialogueSystem::isDialogueFinished()
 	return mFinishedDialogue;
 }
 
+//Advanced Dialogues
+void DialogueSystem::displayLevel1StartAdvancedDialogue()
+{
+	std::string level1StartHilma = "För bövelingen! Nu är min flygfarkost alldeles förstörd! Förbaskade flygfän som alltid ska vara så livliga... Nähej, nu måste jag laga detta!";
+	std::string level1StartTeller = "Den vresiga lilla hittaren tog av sin mössa och började leta i den. Hon ietade och letade längre ned i mössan. Det enda man kunde se av henne var hennes små, små fötter. Det var som om det inte någon botten i mössan! Tillslut hoppade hittaren ut ur mössan. Men nu var hon helt röd i hela ansiktet.";
+	std::string level1StartHilma2 = "MEN VAD SJUTTON ÄR DET HÄR??? ÄR DEN BORTA? ALLT ÄR BORTA?!! DET HÄR KAN INTE VARA SANT!";
+	std::string level1StartHilma3 = "Det var det bästa utbytet jag hittills har fått! Jag som hade hittat så bra...";
+	std::string level1StartThomas = "V-v- vad har du tappat?";
+	std::string level1StartHilma4 = "För det första, jag har inte tappat bort något. För det andra, är det en mycket ovärderlig sak som tog väldigt lång tid att få. Det var en fantastisk skruvmackapär. Med den skulle jag bygga en mycket finare flygfarkost än denna... skrothög. Men nu har jag INGENTING att laga skrothögen med.";
+	std::string level1StartTeller2 = "Pojken tyckte synd om den lilla varelsen. Han tänkte och tänkte. Tillslut kom han på en idé.";
+	std::string level1StartThomas2 = "J-jag kanske... har en skruvmackapär-";
+	std::string level1StartHilma5 = "Jamen då så! Var har du den?";
+	std::string level1StartThomas3 = "Eumh... jag vet inte...";
+	std::string level1StartHilma6 = "Men oj då, det var verkligen till stor hjälp! Kan det vara så att du har tappat bort den?";
+	std::string level1StartHilma7 = "Du får väl tacka vinden för att den var så bångstyrig idag. För du fick turen att träffa på mig! Det råkar vara så att jag är en hittare!";
+	std::string level1StartTeller3 = "En hittare? Vad kunde det vara? Pojken hade aldrig hört talas om det innan.";
+	std::string level1StartHilma8 = "Jajamän! Vi Hittare har funnits länge och hållit reda på er slarviga människor. Tappar ni bort något så hittar vi det åt er. Det råkar vara så att  jag har en egen hittarbyrå! Jag kan hitta vad och var som helst!";
+	std::string level1StartThomas4 = "O-o-m du verkligen är en h-hittare. Kan du... Kan du hitta tre saker åt mig-";
+	std::string level1StartHilma9 = "För att bevisa för dig att jag är en hittare? Utmaning godtagen! Vad är det du vill att jag ska hitta? Kom igen nu, vela inte så mycket!";
+	std::string level1StartThomas5 = "Hitta en självlysande stjärna... den föll från väggen, min favorit Astronaut och... Skruvmackapären...";
+	std::string level1StartHilma10 = "Vad får jag i utbyte? Jag måste få min hittarebyrå att gå runt på något sätt!";
+	std::string level1StartThomas6 = "Hur mycket kostar det?";
+	std::string level1StartHilma11 = "Inte pengar! Ge mig något användbart som jag kan bygga med!";
+	std::string level1StartHilma12 = "Ge mig skruvmackapären sen när jag har hittat den, det blir ett bra utbyte!";
+	std::string level1StartHilma13 = "Justja! Hilma heter jag. Vad är ditt namn?";
+	std::string level1StartThomas7 = "... Thomas";
+	std::string level1StartHilma14 = "Då så, Thomas. Då ska jag hitta en stjärna, en astronaut och en skruvmackapär åt dig!";
+	std::string level1StartInterlude = "*Thomas nickar tveksamt*";
+
+	if (mState == 25)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mLevel1Start = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level1StartHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 1)
+	{
+		advancedText(level1StartTeller, 100.f, 420.f, 1.f, 1.f);
+	}
+	if (mState == 2)
+	{
+		advancedText(level1StartHilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+	}
+	if (mState == 3)
+	{
+		advancedText(level1StartHilma3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSad.png");
+	}
+	if (mState == 4)
+	{
+		advancedText(level1StartThomas, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+	}
+	if (mState == 5)
+	{
+		advancedText(level1StartHilma4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+	}
+	if (mState == 6)
+	{
+		advancedText(level1StartTeller2, 100.f, 420.f, 1.f, 1.f);
+	}
+	if (mState == 7)
+	{
+		advancedText(level1StartThomas2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSmile.png");
+	}
+	if (mState == 8)
+	{
+		advancedText(level1StartHilma5, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+	}
+	if (mState == 9)
+	{
+		advancedText(level1StartThomas3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+	}
+	if (mState == 10)
+	{
+		advancedText(level1StartHilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+	}
+	if (mState == 11)
+	{
+		advancedText(level1StartHilma7, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+	}
+	if (mState == 12)
+	{
+		advancedText(level1StartTeller3, 100.f, 420.f, 1.f, 1.f);
+	}
+	if (mState == 13)
+	{
+		advancedText(level1StartHilma8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+	}
+	if (mState == 14)
+	{
+		advancedText(level1StartThomas4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSigh.png");
+	}
+	if (mState == 15)
+	{
+		advancedText(level1StartHilma9, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+	}
+	if (mState == 16)
+	{
+		advancedText(level1StartThomas5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasGrumpy.png");
+	}
+	if (mState == 17)
+	{
+		advancedText(level1StartHilma10, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+	}
+	if (mState == 18)
+	{
+		advancedText(level1StartThomas6, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
+	}
+	if (mState == 19)
+	{
+		advancedText(level1StartHilma11, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+	}
+	if (mState == 20)
+	{
+		advancedText(level1StartHilma12, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+	}
+	if (mState == 21)
+	{
+		advancedText(level1StartInterlude, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSigh.png");
+	}
+	if (mState == 22)
+	{
+		advancedText(level1StartHilma13, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+	}
+	if (mState == 23)
+	{
+		advancedText(level1StartThomas7, 100.f, 420.f, 1.f, 1.f);
+	}
+	if (mState == 24)
+	{
+		advancedText(level1StartHilma14, 100.f, 420.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayLevel1EndAdvancedDialogue()
+{
+	std::string level1EndHilma = "Här är alla! Precis vad du bad om. Har jag övertygat dig tillräckligt?";
+	std::string level1EndTeller = "När Thomas fick syn på alla föremål kunde han inte tro sina ögon. Han som hade letat så mycket själv! Hans mamma hade sagt att när något försvann i hans stökiga rum, var det försvunnen för alltid. Tydligen inte för en hittare.";
+	std::string level1EndHilma2 = "Jag sa ju det! Jag hittar vad som helst, var som helst!";
+	std::string level1EndTeller2 = "Då fick han ett litet, litet leende på läpparna. Han tackade så mycket för Hilmas hjälp. Men hans leende försvann snabbt när han såg skruvmackapären.";
+	std::string level1EndTeller3 = "Han blev alldeles tyst och stirrade på den. Plötsligt kunde han inte bara ge den till den hjälpsamma hittaren. Han höll hårdare i skruvmackapären. Nu började Hilma bli otålig med Thomas tvekanden.";
+	std::string level1EndHilma3 = "Hallå? Jorden anropar!";
+	std::string level1EndThomas = "F- förlåt jag- jag... *tar ett andetag* Det är bara det att det inte är min skruvmackapär jag ger dig.";
+	std::string level1EndHilma4 = "Jaha ja, vems är det då om man får fråga? Har du stulit den?";
+	std::string level1EndThomas2 = "Ne-Nej! Absolut inte! Det... *djupt andetag* Jag lånade den av min... mormor.";
+	std::string level1EndHilma5 = "Din mormors? Vem är denne mormor då som låter en slarvgosse som du ta hand om en skruvmackapär?";
+	std::string level1EndThomas3 = "Min mormor är den bästa mekanikern och rymdpiloten som har någonsin funnits!";
+	std::string level1EndHilma6 = "Jaha jaså ja... Vad kan den här mormor bygga då?";
+	std::string level1EndThomas4 = "Hon kan bygga allt... och laga allt. Hon lagar bilar, cykelpunkor och bygger de bästa lådbilarna, flygplanen... och! Och just nu bygger vi en rymdraket som ska ta oss till månen! Där ska vi bo och jobba som rymdcowboys-";
+	std::string level1EndThomas5 = "Det var det hon sa vi skulle göra i alla fall...";
+	std::string level1EndHilma7 = "Jaså vad då då, törs hon inte eller?";
+	std::string level1EndThomas6 = "Så klart hon törs! Det är inte det... Hon... hon är- hon är borta...";
+	std::string level1EndThomas7 = "Hon har försvunnit och ingen har hittat henne!";
+	std::string level1EndTeller4 = "Stackars pojke! Skulle de flesta ha sagt. Det råkar vara så att Hilma inte är så förtjust i gråtande barn. Men det pojken sade, gav henne en idé. Hon visste inte själv om hon kunde göra det, men om pojken skulle sluta gråta var det nog till hjälp.";
+	std::string level1EndHilma8 = "Din mormor är borttappad eller hur? Och vad är mitt jobb?";
+	std::string level1EndThomas8 = "...Att hitta bortappade saker?";
+	std::string level1EndHilma9 = "Jamen se där ja! Du är ju inte helt bakom flötet! Du förstår, jag har aldrig letat efter borttappade människor. Men det ska nog gå ändå, för jag är den bästa hittaren och hantverkaren du någonsin kommer få träffa! Jag ska hitta mormor åt dig!";
+	std::string level1EndTeller5 = "Ja, Hilmas plan verkade fungera. För nu slutade tårarna rinna på Thomas. Kunde verkligen Hilma hitta mormor? Thomas sken upp i lycka.";
+	std::string level1EndThomas9 = "Verkligen? Kan du hitta henne?";
+	std::string level1EndHilma10 = "Ja! Men! På ett villkor!";
+	std::string level1EndThomas10 = "Vad vill du ha i utbyte?";
+	std::string level1EndHilma11 = "Rymdskeppet som du och mormor byggde på. Om hon kan verkligen bygga fantastiska saker borde den vara bättre än min flygfarkost, vilket jag tvivlar. Men, men! Vad väntar vi på? Nu ska vi hitta din mormor!";
+	std::string level1EndTeller6 = "Thomas nickade och leendet kom sakta tillbaka. Ett hopp hade grott inom honom. Det var en början på ett äventyr han aldrig skulle glömma.";
+
+	if (mState == 27)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mLevel1End = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level1EndHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 1)
+	{
+		advancedText(level1EndTeller, 100.f, 420.f, 1.f, 1.f);
+	}
+	if (mState == 2)
+	{
+		advancedText(level1EndHilma2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 3)
+	{
+		advancedText(level1EndTeller2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 4)
+	{
+		advancedText(level1EndTeller3, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 5)
+	{
+		advancedText(level1EndHilma3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 6)
+	{
+		advancedText(level1EndThomas, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 7)
+	{
+		advancedText(level1EndHilma4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 8)
+	{
+		advancedText(level1EndThomas2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSigh.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 9)
+	{
+		advancedText(level1EndHilma5, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 10)
+	{
+		advancedText(level1EndThomas3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasGrumpy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 11)
+	{
+		advancedText(level1EndHilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 12)
+	{
+		advancedText(level1EndThomas4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 13)
+	{
+		advancedText(level1EndThomas5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSigh.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 14)
+	{
+		advancedText(level1EndHilma7, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 15)
+	{
+		advancedText(level1EndThomas6, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasGrumpy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 16)
+	{
+		advancedText(level1EndThomas7, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasCry.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 17)
+	{
+		advancedText(level1EndTeller4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 18)
+	{
+		advancedText(level1EndHilma8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 19)
+	{
+		advancedText(level1EndThomas8, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 20)
+	{
+		advancedText(level1EndHilma9, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 21)
+	{
+		advancedText(level1EndTeller5, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 22)
+	{
+		advancedText(level1EndThomas9, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSmile.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 23)
+	{
+		advancedText(level1EndHilma10, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 24)
+	{
+		advancedText(level1EndThomas10, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 25)
+	{
+		advancedText(level1EndHilma11, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+	if (mState == 26)
+	{
+		advancedText(level1EndTeller6, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-5.f, 320.f, 1.f, 1.f, 5.2f, 5.f);
+	}
+}
+
 //Dialogue functions down below
 //Thomas' Room
 void DialogueSystem::displayBooksDialogue()
@@ -632,17 +1105,17 @@ void DialogueSystem::displayRubicCubeDialogue()
 	{
 		mIsActive = true;
 		text(rubicHilma, mPlayer->getPosition(), -180, -180);
-		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
+		createTalkBubble(mPlayer->getPosition(), -200, -190, 0.2f, 0.1f);
 	}
 	if (mState == 1)
 	{
 		text(rubicThomas, mPlayer->getPosition(), 60, -250);
-		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
+		createTalkBubble(mPlayer->getPosition(), 320, -260, -0.35f, 0.2f);
 	}
 	if (mState == 2)
 	{
-		text(rubicHilma2, mPlayer->getPosition(), -250, -250);
-		createTalkBubble(mPlayer->getPosition(), -250, -250, 2.5f, 1.f);
+		text(rubicHilma2, mPlayer->getPosition(), -300, -250);
+		createTalkBubble(mPlayer->getPosition(), -325, -265, 0.35f, 0.2f);
 	}
 }
 
