@@ -1105,17 +1105,17 @@ void DialogueSystem::displayRubicCubeDialogue()
 	{
 		mIsActive = true;
 		text(rubicHilma, mPlayer->getPosition(), -180, -180);
-		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
+		createTalkBubble(mPlayer->getPosition(), -200, -190, 0.2f, 0.1f);
 	}
 	if (mState == 1)
 	{
 		text(rubicThomas, mPlayer->getPosition(), 60, -250);
-		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
+		createTalkBubble(mPlayer->getPosition(), 320, -260, -0.35f, 0.2f);
 	}
 	if (mState == 2)
 	{
-		text(rubicHilma2, mPlayer->getPosition(), -250, -250);
-		createTalkBubble(mPlayer->getPosition(), -250, -250, 2.5f, 1.f);
+		text(rubicHilma2, mPlayer->getPosition(), -300, -250);
+		createTalkBubble(mPlayer->getPosition(), -325, -265, 0.35f, 0.2f);
 	}
 }
 
