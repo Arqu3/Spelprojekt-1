@@ -5,7 +5,7 @@ using namespace std;
 Game::Game():
 mRHandler(),
 mLHandler(mRHandler),
-mMenu()
+mMenu(mRHandler)
 {
 	loadScreenTexture.loadFromFile("Resources/Textures/loadscreen.jpg");
 	loadScreen.setTexture(loadScreenTexture);
@@ -23,7 +23,7 @@ void Game::update()
 	window.draw(loadScreen);
 	window.display();
 
-	window.setMouseCursorVisible(false);
+	//window.setMouseCursorVisible(false);
 
 	mLHandler.setActiveLevel(0, mRHandler, true);
 
@@ -35,6 +35,11 @@ void Game::update()
 		float deltaTime = elapsed.asSeconds();
 
 		mMenu.update(deltaTime);
+
+		if (mMenu.getState() != Menu::State::InGame)
+		{
+			mMenu.eventListen(window);
+		}
 
 		if (mMenu.getState() == Menu::State::InGame)
 		{

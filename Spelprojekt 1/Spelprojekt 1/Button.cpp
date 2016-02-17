@@ -72,42 +72,34 @@ Button::~Button()
 
 bool Button::isPressed(sf::RenderWindow &window)
 {
-	sf::Event event;
-	while (window.pollEvent(event))
+	mPixelPos = sf::Mouse::getPosition(window);
+	mWorldPos = window.mapPixelToCoords(mPixelPos);
+
+	switch (mMode)
 	{
-		mPixelPos = sf::Mouse::getPosition(window);
-		mWorldPos = window.mapPixelToCoords(mPixelPos);
-
-		switch (event.type)
+	case FloatRect:
+		if (mRect.getGlobalBounds().contains(mWorldPos))
 		{
-		case sf::Event::MouseButtonPressed:
-			switch (mMode)
-			{
-			case FloatRect:
-				if (mRect.getGlobalBounds().contains(mWorldPos))
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-				break;
-
-			case Texture:
-				if (mSprite.getGlobalBounds().contains(mWorldPos))
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-				break;
-			}
-			break;
+			return true;
 		}
+		else
+		{
+			return false;
+		}
+		break;
+
+	case Texture:
+		if (mSprite.getGlobalBounds().contains(mWorldPos))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		break;
 	}
+	return false;
 }
 
 void Button::setPosition(float x, float y)
@@ -328,6 +320,7 @@ sf::FloatRect Button::getRect()
 		return mSprite.getGlobalBounds();
 		break;
 	}
+	return sf::FloatRect();
 }
 
 std::string Button::getTexureName()
@@ -335,13 +328,14 @@ std::string Button::getTexureName()
 	switch (mMode)
 	{
 	case FloatRect:
-		return "";
+		return "NULL";
 		break;
 
 	case Texture:
 		return mTextureName;
 		break;
 	}
+	return "NULL";
 }
 void Button::setSpeed(float value)
 {

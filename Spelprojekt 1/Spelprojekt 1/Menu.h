@@ -6,11 +6,12 @@
 class Menu
 {
 public:
-	Menu();
+	Menu(ResourceHandler &handler);
 	~Menu();
 
 	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
+	void eventListen(sf::RenderWindow &window);
 
 	enum State
 	{
@@ -21,12 +22,13 @@ public:
 	State mState;
 
 	State getState();
-	void ChangeState(State state);
+	void setState(State state);
 
 private:
 	typedef std::vector<Button*> ButtonVector;
 	ButtonVector mMainButtons;
 	ButtonVector mPauseButtons;
+	sf::RectangleShape mBackground;
 };
 
 #endif
