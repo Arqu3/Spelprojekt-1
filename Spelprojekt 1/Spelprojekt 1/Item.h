@@ -46,6 +46,9 @@ public:
 	//Get position of item
 	sf::Vector2f getPosition();
 
+	//Get crafting index of item
+	int getCraftIndex();
+
 	//Set position of item
 	void setPosition(float x, float y);
 
@@ -65,6 +68,9 @@ public:
 	float getSpeed();
 	void setSpeed(float speed);
 
+	//Change texture
+	void changeTexture(ResourceHandler &handler, std::string filename);
+
 private:
 	bool mIsActive;
 	bool mIsLookable;
@@ -74,6 +80,7 @@ private:
 	bool mInteracted;
 
 	int mIndex;
+	int mCraftIndex;
 
 	std::string mId;
 	std::string mName;

@@ -25,6 +25,7 @@ public:
 	void drawBackground(sf::RenderWindow &window);
 	void drawForeground(sf::RenderWindow &window);
 	void drawItems(ItemVector items, sf::RenderWindow &window);
+	void drawUI(sf::RenderWindow &window);
 
 	//Rectangles
 	rectVector getRects();
@@ -33,7 +34,7 @@ public:
 	const rectVector getPlayRects();
 
 	//Active Level
-	void toggleActive();
+	void toggleActive(ResourceHandler &handler);
 	bool isActive();
 
 	//View
@@ -48,11 +49,17 @@ public:
 
 	//Eventstuff
 	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
-	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* boundingBox, sf::Vector2f &point);
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* boundingBox, sf::FloatRect &rect);
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect);
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
+	void mouseHover();
+
+	//Level Complete
+	bool isLevelComplete();
 
 private:
 	
@@ -70,7 +77,7 @@ private:
 
 	//Sound
 	sf::Music music;
-	sf::Sound ambientSound;
+	sf::Sound mAmbientSound;
 
 	//Scene
 	bool mIsActive;
@@ -99,6 +106,12 @@ private:
 	//Player
 	Player *mPlayer;
 
+	//Mouse Cursor
+	Cursor *mCursor;
+
+	//Menu
+	UI *mUI;
+
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
@@ -111,8 +124,14 @@ private:
 	int mNewScene;
 
 	bool mPlayerToggle;
-	bool mInventoryMode;
-	bool mDialogueMode;
-	bool mDisableClick;
+	bool mLookedAtAquarium;
+	bool mLookedAtRug;
+	bool mReadyForScrewdevice;
+	bool mPickedUpScrewdevice;
+	bool mMovedStar;
+	bool mReadyToLeave;
+	bool mLevelComplete;
+
+	int mUpdateTime;
 };
 #endif

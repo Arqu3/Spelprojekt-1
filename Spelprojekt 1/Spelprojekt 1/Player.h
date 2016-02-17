@@ -24,6 +24,7 @@ public:
 	void togglePlayer();
 	float getSpeed();
 	void setSpeed(float speed);
+	bool getIsOnPosition();
 
 private:
 	void move(float deltaTime);
@@ -53,6 +54,14 @@ private:
 	float mFrameTime;
 	std::string mActiveAnimation;
 
+	//Animation Sprites
+	sf::Image mThomasWalk;
+	sf::Image mHilmaWalk;
+	sf::Texture mTexture;
+
+	//Sounds
+	sf::Sound mWalkingSound;
+	
 	//Animation Textures
 	sf::Texture mThomasTexture;
 	sf::Texture mHilmaTexture;

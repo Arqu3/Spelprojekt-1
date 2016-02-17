@@ -40,6 +40,20 @@ void ResourceHandler::loadLevel1()
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 
+	//In-game UI
+	addTexture("haticon.png");
+	addTexture("menuicon.png");
+	addTexture("hatmenu.png");
+	addTexture("menu.png");
+	addTexture("inventory.png");
+
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
+
 	// Level1
 	//Textures
 	//Thomas rum items
@@ -50,10 +64,14 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomasastronaut.png");
 	addTexture("thomasbowl.png");
 	addTexture("thomascube.png");
+	addTexture("FishingRod.png");
+	addTexture("FishingRodMagnet.png");
+
 	//Thomas room background, playground, foreground
 	addTexture("thomasbg.png");
 	addTexture("thomaspg.png");
 	addTexture("thomasfg.png");
+
 	//Thomas zoom background, playground, foreground
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
@@ -83,16 +101,67 @@ void ResourceHandler::loadLevel1()
 	//Sepia
 	addTexture("sepia.png");
 
+	
+
 	//Music
 	addMusic("Level1Music.ogg");
+
+
+	//Sound
+	addSound("FootSteps.ogg");
+	addSound("Level1Ambience.ogg");
+
+	
+
 }
 
 void ResourceHandler::loadLastLevel()
 {
 	internalClear();
 
-	//LastLevel
-	addTexture("LastLevel_BackgroundTest1.png");
+        //LastLevel
+	addTexture("ARBETSRUMbakgrund.png");
+	addTexture("ARBETSRUMmellangrund.png");
+	addTexture("ARBETSRUMförgrund.png");
+
+	addTexture("VARDAGSRUMbakgrund.png");
+	addTexture("VARDAGSRUMmellangrund.png");
+	addTexture("VARDAGSRUMförgrund.png");
+	addTexture("Fisk1.png");
+	addTexture("Fisk2.png");
+	addTexture("Jordglob.png");
+
+	addTexture("KÖKbakgrund.png");
+	addTexture("KÖKmellangrund.png");
+	addTexture("KÖKförgrund.png");
+	addTexture("Apelsin.png");
+	addTexture("Tavlan.png");
+
+
+	addTexture("transparent.png");
+	addTexture("LastLevel_ItemTest1.png");
+
+        //Thomas
+	addTexture("ThomasWalk.png");
+
+	//Hilma
+	addTexture("HilmaWalk.png");
+	addTexture("HilmaPush.png");
+
+	//In-game UI
+	addTexture("haticon.png");
+	addTexture("menuicon.png");
+	addTexture("hatmenu.png");
+	addTexture("settingsmenu.png");
+	addTexture("inventory.png");
+
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
+
 }
 
 //Adds a texture to the texture vector
