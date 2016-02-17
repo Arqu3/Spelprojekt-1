@@ -32,7 +32,7 @@ void ResourceHandler::internalClear()
 
 void ResourceHandler::loadLevel1()
 {
-	internalClear();
+	//internalClear();
 
 	//Thomas
 	addTexture("ThomasWalk.png");
@@ -96,9 +96,9 @@ void ResourceHandler::loadLevel1()
 
 void ResourceHandler::loadLastLevel()
 {
-	internalClear();
+	//internalClear();
 
-        //LastLevel
+    //Scenes
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");
@@ -120,7 +120,7 @@ void ResourceHandler::loadLastLevel()
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
 
-        //Thomas
+    //Thomas
 	addTexture("ThomasWalk.png");
 
 	//Hilma
@@ -131,7 +131,7 @@ void ResourceHandler::loadLastLevel()
 	addTexture("haticon.png");
 	addTexture("menuicon.png");
 	addTexture("hatmenu.png");
-	addTexture("settingsmenu.png");
+	addTexture("menu.png");
 	addTexture("inventory.png");
 
 	//Cursors
@@ -140,6 +140,9 @@ void ResourceHandler::loadLastLevel()
 	addTexture("closedhand.png");
 	addTexture("speechbubble.png");
 	addTexture("eyecursor.png");
+
+	//Sound
+
 
 }
 

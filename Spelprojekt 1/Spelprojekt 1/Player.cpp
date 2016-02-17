@@ -17,7 +17,7 @@ mSpeed(1000.0f),
 mFacingLeft(true)
 {
 	//Sounds
-	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
+	//mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
 
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));

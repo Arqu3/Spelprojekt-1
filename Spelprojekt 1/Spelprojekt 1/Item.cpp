@@ -116,7 +116,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
 	}
 
 	if (id == "Earth")
@@ -136,7 +136,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.28f, 0.28f));
-		mSprite.setTexture(*handler.getTexture("Fisk1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Fisk2.png")); //Add correct texture
 	}
 
 	if (id == "Gramophone")
@@ -248,6 +248,17 @@ mSpeed(100.0f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
+	}
+
+	if (id == "Hole")
+	{
+		mIndex = 22;
+		mCraftIndex = -1;
+		mName = "Hål";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.5f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 }
 

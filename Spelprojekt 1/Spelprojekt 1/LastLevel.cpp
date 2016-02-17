@@ -6,81 +6,6 @@ mPlayRects(),
 mIsActive(false),
 handler(handler)
 {
-
-	//Background Texture scene 1
-	background.setSize(sf::Vector2f(1024,576));  
-	background.setTexture(handler.getTexture("ARBETSRUMbakgrund.png")); 
-
-	//Playground Texture scene 1
-	playground.setSize(sf::Vector2f(1024, 576));
-	playground.setTexture(handler.getTexture("ARBETSRUMmellangrund.png"));
-
-	//Foreground Texture scene 1
-	foreground.setSize(sf::Vector2f(1024, 576));
-	foreground.setTexture(handler.getTexture("ARBETSRUMförgrund.png"));
-
-	//Background Texture scene 2
-	background2.setSize(sf::Vector2f(1536, 576));
-	background2.setTexture(handler.getTexture("VARDAGSRUMbakgrund.png")); 
-
-	//Playground Texture scene 2
-	playground2.setSize(sf::Vector2f(1536, 576));
-	playground2.setTexture(handler.getTexture("VARDAGSRUMmellangrund.png"));
-
-	//Foreground Texture scene 2
-	foreground2.setSize(sf::Vector2f(1536, 576));
-	foreground2.setTexture(handler.getTexture("VARDAGSRUMförgrund.png"));
-
-
-	//Background Texture scene 3
-	background3.setSize(sf::Vector2f(1024, 576));
-	background3.setTexture(handler.getTexture("KÖKbakgrund.png")); 
-
-	//Playground Texture scene 3
-	playground3.setSize(sf::Vector2f(1024, 576));
-	playground3.setTexture(handler.getTexture("KÖKmellangrund.png"));
-
-	//Foreground Texture scene 3
-	foreground3.setSize(sf::Vector2f(1024, 576));
-	foreground3.setTexture(handler.getTexture("KÖKförgrund.png"));
-
-	//Add sound
-	music.openFromFile("Level1Music.ogg");
-
-	//Add HelpRect
-	rectangle.setPosition(sf::Vector2f(1158, 2));
-	rectangle.setSize(sf::Vector2f(70, 168));
-	rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
-	
-	//Add items
-	
-	mMagicClam = new Item(handler, sf::Vector2f(0,0), "Magic Clam");
-	mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
-	mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
-	mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
-
-	mPutte = new Item(handler, sf::Vector2f(193, 257), "Putte");
-	mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
-	mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
-	mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
-	mFish = new Item(handler, sf::Vector2f(830, 30), "Fish");
-	mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
-	mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
-	mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
-	mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
-	mKids = new Item(handler, sf::Vector2f(200, 300), "Kids");
-	
-
-	//View
-	mView.setSize(1024, 576);
-
-	//Player
-	mPlayer = new Player(handler, sf::Vector2f(400, 400));
-
-	//Inventory
-	mInventory = new Inventory();
-
-	
 }
 
 LastLevel::~LastLevel()
@@ -193,7 +118,18 @@ void LastLevel::drawForeground(sf::RenderWindow &window)
 
 void LastLevel::drawUI(sf::RenderWindow &window)
 {
+	mUI->draw(window);
 
+	if (mUI->getActiveUI() == UI::INVENTORY)
+	{
+		mInventory->draw(window);
+	}
+	if (mCursor->getMode() == Cursor::DIALOGUE)
+	{
+		mDialogueSystem->drawDialogue(window);
+	}
+
+	mCursor->draw(window);
 }
 
 
@@ -231,21 +167,103 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 {
 	if (!mIsActive)
 	{
+		handler.loadLastLevel();
+
+		//Background Texture scene 1
+		background.setSize(sf::Vector2f(1024, 576));
+		background.setTexture(handler.getTexture("ARBETSRUMbakgrund.png"));
+
+		//Playground Texture scene 1
+		playground.setSize(sf::Vector2f(1024, 576));
+		playground.setTexture(handler.getTexture("ARBETSRUMmellangrund.png"));
+
+		//Foreground Texture scene 1
+		foreground.setSize(sf::Vector2f(1024, 576));
+		foreground.setTexture(handler.getTexture("ARBETSRUMförgrund.png"));
+
+		//Background Texture scene 2
+		background2.setSize(sf::Vector2f(1536, 576));
+		background2.setTexture(handler.getTexture("VARDAGSRUMbakgrund.png"));
+
+		//Playground Texture scene 2
+		playground2.setSize(sf::Vector2f(1536, 576));
+		playground2.setTexture(handler.getTexture("VARDAGSRUMmellangrund.png"));
+
+		//Foreground Texture scene 2
+		foreground2.setSize(sf::Vector2f(1536, 576));
+		foreground2.setTexture(handler.getTexture("VARDAGSRUMförgrund.png"));
+
+
+		//Background Texture scene 3
+		background3.setSize(sf::Vector2f(1024, 576));
+		background3.setTexture(handler.getTexture("KÖKbakgrund.png"));
+
+		//Playground Texture scene 3
+		playground3.setSize(sf::Vector2f(1024, 576));
+		playground3.setTexture(handler.getTexture("KÖKmellangrund.png"));
+
+		//Foreground Texture scene 3
+		foreground3.setSize(sf::Vector2f(1024, 576));
+		foreground3.setTexture(handler.getTexture("KÖKförgrund.png"));
+
+		//Add sound
+		music.openFromFile("Level1Music.ogg");
+
+		//Add HelpRect
+		rectangle.setPosition(sf::Vector2f(1158, 2));
+		rectangle.setSize(sf::Vector2f(70, 168));
+		rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
+
+		//Add items
+
+		mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
+		mRedApple = new Item(handler, sf::Vector2f(0, 0), "Red Apple");
+		mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
+		mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
+
+		mPutte = new Item(handler, sf::Vector2f(193, 257), "Putte");
+		mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
+		mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
+		mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
+		mFish = new Item(handler, sf::Vector2f(830, 30), "Fish");
+		mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
+
+		mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
+		mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
+		mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
+		mKids = new Item(handler, sf::Vector2f(200, 350), "Kids");
+		mHole = new Item(handler, sf::Vector2f(180, 335), "Hole");
+
+
+		//View
+		mView.setSize(1024, 576);
+
+		//Player
+		mPlayer = new Player(handler, sf::Vector2f(400, 400));
+
+		//Inventory
+		mInventory = new Inventory();
+
+		//Cursor
+		mCursor = new Cursor(handler);
+
+		//UI
+		mUI = new UI(handler);
+
+
+
 		//Rectangles
 
-		//Dollhouse
-		mRects.push_back(createRect(193, 257, 150, 100));
-
 		//Planets 1-9
-		mRects.push_back(createRect(243, 44, 25, 25));
+		mRects.push_back(createRect(289, 62, 25, 25));
 		mRects.push_back(createRect(317, 52, 40, 40));
 		mRects.push_back(createRect(395, 47, 25, 25));
 		mRects.push_back(createRect(458, 42, 23, 23));
-		mRects.push_back(createRect(518, 38, 70, 70));
-		mRects.push_back(createRect(620, 50, 30, 30));
-		mRects.push_back(createRect(680, 55, 28, 28));
-		mRects.push_back(createRect(742, 55, 28, 28));
-		mRects.push_back(createRect(797, 56, 13, 13));
+		mRects.push_back(createRect(503, 45, 70, 70));
+		mRects.push_back(createRect(606, 44, 30, 30));
+		mRects.push_back(createRect(664, 59, 28, 28));
+		mRects.push_back(createRect(723, 53, 28, 28));
+		mRects.push_back(createRect(772, 38, 13, 13));
 
 		//Door
 		mRects.push_back(createRect(445, 186, 80, 50));
@@ -272,6 +290,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mCat->toggleActive();
 		mFruitbowl->toggleActive();
 		mFoodBowl->toggleActive();
+		mHole->toggleActive();
 		
 
 		//Items Lookable scene 1
@@ -298,11 +317,12 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mFruitbowl->toggleLookable();
 		mCat->toggleLookable();
 		mFoodBowl->toggleLookable();
+		mHole->toggleLookable();
 
 		//Items Interactable scene 3
 		mFruitbowl->toggleInteractable();
-		mCat->toggleInteractable();
 		mFoodBowl->toggleInteractable();
+		mHole->toggleInteractable();
 
 		mLastScene = 0;
 		
@@ -346,19 +366,17 @@ void LastLevel::internalSwap(int num)
 		mPlayRects.push_back(createRect(108, 378, 610, 192));
 		mPlayRects.push_back(createRect(347, 324, 370, 52));
 
-		//Dollhouse
-		mRects.push_back(createRect(193, 257, 150, 100));
 
 		//Planets 1-9
-		mRects.push_back(createRect(243, 44, 25, 25));
+		mRects.push_back(createRect(289, 62, 25, 25));
 		mRects.push_back(createRect(317, 52, 40, 40));
 		mRects.push_back(createRect(395, 47, 25, 25));
 		mRects.push_back(createRect(458, 42, 23, 23));
-		mRects.push_back(createRect(518, 38, 70, 70));
-		mRects.push_back(createRect(620, 50, 30, 30));
-		mRects.push_back(createRect(680, 55, 28, 28));
-		mRects.push_back(createRect(742, 55, 28, 28));
-		mRects.push_back(createRect(797, 56, 13, 13));
+		mRects.push_back(createRect(503, 45, 70, 70));
+		mRects.push_back(createRect(606, 44, 30, 30));
+		mRects.push_back(createRect(664, 59, 28, 28));
+		mRects.push_back(createRect(723, 53, 28, 28));
+		mRects.push_back(createRect(772, 38, 13, 13));
 
 	
 		//BalconyDoor
@@ -444,16 +462,8 @@ void LastLevel::internalSwap(int num)
 		//Walkable Area
 		mPlayRects.push_back(createRect(133, 379,799 , 189));
 
-		//Rectangles
-
 		//Refrigerator
 		mRects.push_back(createRect(789, 105, 126, 269));
-
-		//Catbowl
-		mRects.push_back(createRect(714, 396, 54, 24)); //Remove 
-
-		//Hole
-		mRects.push_back(createRect(183, 346, 45, 31));
 
 		//Tap
 		mRects.push_back(createRect(352, 167, 32, 67));
@@ -490,6 +500,10 @@ void LastLevel::internalSwap(int num)
 		if (mKids->getActive())
 		{
 			addItem(mKids);
+		}
+		if (mHole->getActive())
+		{
+			addItem(mHole);
 		}
 
 	}
@@ -551,6 +565,29 @@ int LastLevel::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::
 	}
 	return 0;
 }
+
+//Check collision between two rectangles
+int LastLevel::checkCollision(sf::FloatRect* boundingBox, sf::FloatRect &rect)
+{
+	if (boundingBox->intersects(rect))
+	{
+		return 1;
+	}
+	return 0;
+}
+//Check collision between a vector of rectangles and a rectangle
+int LastLevel::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect)
+{
+	for (std::vector<sf::FloatRect*>::size_type i = 0; i < RectVector.size(); i++)
+	{
+		if (RectVector[i]->intersects(rect))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
 
 
 void LastLevel::eventListen(sf::RenderWindow &window)
@@ -683,7 +720,6 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getItems()[i]->getId() == "Cat")
 				{
 
-					mPlayer->moveToPosition(351, 403);
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
 					std::cout << "Klickade på katt";
@@ -739,6 +775,25 @@ void LastLevel::mouseClick(sf::Event &event)
 					std::cout << "Klickade på Barnen";
 
 				}
+
+				if (getItems()[i]->getId() == "Hole")
+				{
+
+					mPlayer->moveToPosition(220, 350);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på Hål";
+
+				}
+
+				if (getItems()[i]->getId() == "Red Apple")
+				{
+
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+					std::cout << "Klickade på Apelsin";
+
+				}
 			}
 		}
 	}
@@ -750,12 +805,13 @@ void LastLevel::mouseClick(sf::Event &event)
 		if (checkCollision(getRects()[i], point))
 		{
 			mPlayer->setActiveAnimation("Walk");
-			// i == 0 is Dollhouse if ActiveScene is 0, or Door if ActiveScene is 1, or Refrigerator if ActiveScene is 2.
+			// i == 0 is Planet 1 if ActiveScene is 0, or Door if ActiveScene is 1, or Refrigerator if ActiveScene is 2.
 			if (i == 0)
 			{
 				if (getActiveScene() == 0)
 				{
-					//REMOVE
+					std::cout << "Planet 1!";
+					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
@@ -779,12 +835,12 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 			}
 
-			// i == 1 is Planet 1 if ActiveScene is 0, Books if ActiveLevel is 1, Catbowl if ActiveScene is 2
+			// i == 1 is Planet 2 if ActiveScene is 0, Books if ActiveLevel is 1, Tap if ActiveScene is 2
 			else if (i == 1)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Planet 1!";
+					std::cout << "Planet 2!";
 					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
@@ -795,18 +851,18 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 				else
 				{
-					std::cout << "Catbowl!";
-					mPlayer->moveToPosition(700, 422);
+					std::cout << "Tap!";
+					mPlayer->moveToPosition(419, 388);
 				}
 
 			}
 
-			// i == 2 is Planet 2 if ActiveScene is 0, Jewelry Box if ActiveScene is 1, Hole if ActiveSCene is 2
+			// i == 2 is Planet 3 if ActiveScene is 0, Jewelry Box if ActiveScene is 1, Door if ActiveScene is 2
 			else if (i == 2)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Planet 2!";
+					std::cout << "Planet 3!";
 					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
@@ -816,33 +872,20 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 				else
 				{
-					std::cout << "Hole!";
-					mPlayer->moveToPosition(248, 386);
+					std::cout << "Door to scene 2!";
+					
+					mPlayer->moveToPosition(950, 480);
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(950, 480), sf::Vector2f(10, 10));
+					mPlayerToggle = false;
+					mSceneChangePlayerPos = sf::Vector2f(70, 370);
+					
+					mNewScene = 1;
+					mLastScene = 2;
 				}
 			}
 
-			// i == 3 is Planet 3 if ActiveScene is 0, Rocket if ActiveScene is 1, Tap if ActiveScene is 2
+			// i == 3 is Planet 4 if ActiveScene is 0, Rocket if ActiveScene is 1
 			else if (i == 3)
-			{
-				if (getActiveScene() == 0)
-				{
-					std::cout << "Planet 3!";
-				    mPlayer->moveToPosition(535, 437);
-				}
-				else if (getActiveScene() == 1)
-				{
-					std::cout << "Crotch Rocket!";
-					mPlayer->moveToPosition(452, 379);
-				}
-				else
-				{
-					std::cout << "Tap!";
-					mPlayer->moveToPosition(419, 388);
-				}
-			}
-
-			// i == 4 is Planet 4 if ActiveScene is 0, Mask if ActiveScene is 1, Door scene 3
-			else if (i == 4)
 			{
 				if (getActiveScene() == 0)
 				{
@@ -851,28 +894,14 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Mask!";
-					mPlayer->moveToPosition(1263, 458);
+					std::cout << "Crotch Rocket!";
+					mPlayer->moveToPosition(452, 379);
 				}
-				else
-				{
-					std::cout << "Door to scene 2!";
-					//Make Player get into position for Scene change
-					mPlayer->moveToPosition(950, 480);
-					//Set Collision Rect to Scene change position
-					mSceneChangeRect = sf::FloatRect(sf::Vector2f(950, 480), sf::Vector2f(10, 10));
-					//Set if Player should toggle on Scene Change
-					mPlayerToggle = false;
-					//Set starting position of Player in new Scene
-					mSceneChangePlayerPos = sf::Vector2f(70, 370);
-					//Set which Scene will be the new Scene
-					mNewScene = 1;
-					mLastScene = 2;
-				}
+				
 			}
 
-			// i == 5 is Planet 5 if ActiveScene is 0, Stairs if scene 2
-			else if (i == 5)
+			// i == 4 is Planet 5 if ActiveScene is 0, Mask if ActiveScene is 1
+			else if (i == 4)
 			{
 				if (getActiveScene() == 0)
 				{
@@ -881,7 +910,24 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 				else if (getActiveScene() == 1)
 				{
+					std::cout << "Mask!";
+					mPlayer->moveToPosition(1263, 458);
+				}
+				
+			}
+
+			// i == 5 is Planet 6 if ActiveScene is 0, Stairs if ActiveScene is 1
+			else if (i == 5)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 6!";
+					mPlayer->moveToPosition(535, 437);
+				}
+				else if (getActiveScene() == 1)
+				{
 					std::cout << "Stairs to Scene 1!";
+
 					//Make Player get into position for Scene change
 					mPlayer->moveToPosition(1470, 450);
 					//Set Collision Rect to Scene change position
@@ -894,87 +940,55 @@ void LastLevel::mouseClick(sf::Event &event)
 					mNewScene = 0;
 					mLastScene = 2;
 				}
-				else
-				{
-
-				}
+				
 			}
 
-			// i == 6 is Planet 6 if ActiveScene is 0, Mask if ActiveScene is 1
+			// i == 6 is Planet 7 if ActiveScene is 0
 			else if (i == 6)
-			{
-				if (getActiveScene() == 0)
-				{
-					std::cout << "Planet 6!";
-					mPlayer->moveToPosition(535, 437);
-				}
-				else if (getActiveScene() == 1)
-				{
-					
-				}
-				else
-				{
-
-				}
-			}
-
-			// i == 7 is Planet 7 if ActiveScene is 0, Stairs if ActiveScene is 1
-			else if (i == 7)
 			{
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Planet 7!";
 					mPlayer->moveToPosition(535, 437);
 				}
-				else if (getActiveScene() == 1)
-				{
-					
+			}
 
+			// i == 7 is Planet 8 if ActiveScene is 0
+			else if (i == 7)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Planet 8!";
+					mPlayer->moveToPosition(535, 437);
 				}
 			}
 
-			// i == 8 is Planet 8 if ActiveScene is 0, 
+			// i == 8 is Planet 9 if ActiveScene is 0
 			else if (i == 8)
-			{
-				std::cout << "Planet 8!";
-				mPlayer->moveToPosition(535, 437);
-			}
-
-			// i == 9 is Planet 9 if ActiveScene is 0,
-			else if (i == 9)
 			{
 				std::cout << "Planet 9!";
 				mPlayer->moveToPosition(535, 437);
 			}
 
-			// i == 10 is Door if ActiveScene is 0,
-			else if (i == 10)
+			// i == 9 is Balconydoor if ActiveScene is 0
+			else if (i == 9)
 			{
 				std::cout << "BalconyDoor!";
 				mPlayer->moveToPosition(496, 334);
 			}
 
-			// i == 11 is Stairs if ActiveScene is 0,
-			else if (i == 11)
+			// i == 10 is Door if ActiveScene is 0
+			else if (i == 10)
 			{
-				if (getActiveScene() == 0)
-				{
+				
+				mPlayer->moveToPosition(101, 349);
+				mSceneChangeRect = sf::FloatRect(sf::Vector2f(101, 349), sf::Vector2f(10, 10));
+				mPlayerToggle = false;
+				mSceneChangePlayerPos = sf::Vector2f(1437, 440);
+				mNewScene = 1;
 
-					//Make Player get into position for Scene change
-					mPlayer->moveToPosition(101, 349);
-					//Set Collision Rect to Scene change position
-					mSceneChangeRect = sf::FloatRect(sf::Vector2f(101, 349), sf::Vector2f(10, 10));
-					//Set if Player should toggle on Scene Change
-					mPlayerToggle = false;
-					//Set starting position of Player in new Scene
-					mSceneChangePlayerPos = sf::Vector2f(1437, 440);
-					//Set which Scene will be the new Scene
-					mNewScene = 1;
-					std::cout << "Stairs to scene 2!";
-					mLastScene = 0;
-				}
-
-			
+				std::cout << "Stairs to scene 2!";
+				mLastScene = 0;
 			}
 		}
 	}
@@ -1043,6 +1057,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Needle")       
 				{
 					mInventory->addItem(mTargetItem);
+					mTargetItem->changeTexture(handler, "LastLevel_ItemTest1.png");
 					std::cout << "Plockade upp nål!!";
 				}
 				if (mTargetItem->getId() == "Fish")
@@ -1084,8 +1099,19 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 
 					if (mTargetItem->getId() == "Fruitbowl")
 					{
-						mInventory->addItem(mTargetItem); 
-						mTargetItem->changeTexture(handler, "Apelsin.png");
+						
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)  
+						{
+							if (getItems()[i]->getId() == "Red Apple")
+							{
+								mTargetItem = getItems()[i];
+								mTargetItem->toggleActive();
+								mInventory->addItem(mTargetItem);
+								mDisableClick = true;
+								
+
+							}
+						}
 						std::cout << "Plockar upp äpple!";
 					}
 
@@ -1094,7 +1120,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 
 						//Change texture to bowl with food in it
 
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)  //OBSOBS man ska använda fisk på matskål
 						{
 							if (getItems()[i]->getId() == "Cat")
 							{
@@ -1141,6 +1167,14 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 						mPutte->toggleActive();
 						mPutte->toggleLookable();
 						mPutte->toggleInteractable();
+					}
+
+					if (mTargetItem->getId() == "Hole")
+					{
+
+						mKids->toggleActive();
+						mKids->toggleLookable();
+						mKids->toggleInteractable();
 					}
 
 					if (mTargetItem->getId() == "Kids")
@@ -1197,6 +1231,126 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 				mTargetItem->setSpeed(100.0f);
 			}
 		}
+	}
+
+	mCursor->setPosition(sf::Vector2f(mWorldPos));
+	mCursor->update();
+
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU && mUpdateTime > 0)
+	{
+		mouseHover();
+		mUpdateTime = 0;
+	}
+	else
+	{
+		mUpdateTime++;
+	}
+}
+
+void LastLevel::mouseHover()
+{
+	mCursor->setMode(Cursor::NORMAL);
+
+	//Check if playrect collision
+	if (checkCollision(getPlayRects(), mCursor->getRect()))
+	{
+		mCursor->setMode(Cursor::NORMAL); // TODO - Add walk cursor maybe?
+	}
+
+	//Check Item collision
+	//Loop through all Items in active level
+	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+	{
+		//Check if mouse collided with Item
+		if (getItems()[i]->getRectangle().intersects(mCursor->getRect()))
+		{
+			//Check if Item is Active
+			if (getItems()[i]->getActive() && getItems()[i]->getId() != "Screwdevice")
+			{
+				if (!getItems()[i]->isLookedAt())
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				//Check if Item can be picked up
+				else if (getItems()[i]->getPickupable())
+				{
+					mCursor->setMode(Cursor::OPENHAND);
+				}
+				//Check if Item can be interacted with
+				else if (getItems()[i]->getInteractable())
+				{
+					//Check if Item has already been interacted with
+					if (!getItems()[i]->isInteracted())
+					{
+						mCursor->setMode(Cursor::OPENHAND);
+					}
+				}
+			}
+		}
+	}
+
+	//Check Rect Collisions
+	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
+	{
+		if (checkCollision(getRects()[i], mCursor->getRect()))
+		{
+			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
+			if (i == 0)
+			{
+				//if (getActiveScene() == 0)
+				//{
+				//	if (!mLookedAtAquarium)
+				//	{
+				//		mCursor->setMode(Cursor::EYE);
+				//	}
+				//	else
+				//	{
+				//		mCursor->setMode(Cursor::NORMAL); // TODO - Add scenechange cursor maybe?
+				//	}
+				//}
+				//else
+				//{
+				//	mCursor->setMode(Cursor::NORMAL); // TODO - Add scenechange cursor maybe?
+				//}
+			}
+			// i == 6 is bump in the rug
+			else if (i == 6)
+			{
+				/*if (mLookedAtRug && !mPickedUpScrewdevice)
+				{
+					mCursor->setMode(Cursor::OPENHAND);
+				}
+				else if (mReadyForScrewdevice && !mPickedUpScrewdevice)
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::NORMAL);
+				}*/
+			}
+			// i == 7 is door
+			else if (i == 7)
+			{
+				/*if (mReadyToLeave)
+				{
+					mCursor->setMode(Cursor::NORMAL);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::EYE);
+				}*/
+			}
+			else
+			{
+				mCursor->setMode(Cursor::EYE);
+			}
+		}
+	}
+
+	if (mInventory->selectedItem() != NULL)
+	{
+		mCursor->setMode(Cursor::CLOSEDHAND);
 	}
 }
 
