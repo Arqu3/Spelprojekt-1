@@ -273,6 +273,11 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 		mArmchair = true;
 		mHasClicked = true;
 	}
+	if (indexName == "glassesAndNuts" && mHasClicked == false)
+	{
+		mGlassesAndNuts = true;
+		mHasClicked = true;
+	}
 
 	//Grandma's Kitchen
 	if (indexName == "refridgerator" && mHasClicked == false)
@@ -303,6 +308,21 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 	if (indexName == "fruitBowl" && mHasClicked == false)
 	{
 		mFruitBowl = true;
+		mHasClicked = true;
+	}
+	if (indexName == "flowers" && mHasClicked == false)
+	{
+		mFlowers = true;
+		mHasClicked = true;
+	}
+	if (indexName == "rocketDrawings" && mHasClicked == false)
+	{
+		mRocketDrawings = true;
+		mHasClicked = true;
+	}
+	if (indexName == "tools" && mHasClicked == false)
+	{
+		mTools = true;
 		mHasClicked = true;
 	}
 
@@ -530,6 +550,10 @@ void DialogueSystem::update(float time)
 	{
 		displayArmchairDialogue();
 	}
+	if (mGlassesAndNuts == true)
+	{
+		displayGlassesAndNutsDialogue();
+	}
 
 	//Grandma's Kitchen
 	if (mRefridgerator == true)
@@ -555,6 +579,18 @@ void DialogueSystem::update(float time)
 	if (mFruitBowl == true)
 	{
 		displayFruitBowlDialogue();
+	}
+	if (mFlowers == true)
+	{
+		displayFlowersDialogue();
+	}
+	if (mRocketDrawings == true)
+	{
+		displayRocketDrawingsDialogue();
+	}
+	if (mTools == true)
+	{
+		displayToolsDialogue();
 	}
 	
 	//Grandma's Room
@@ -1451,7 +1487,7 @@ void DialogueSystem::displayBooks2Dialogue()
 
 void DialogueSystem::displayJewelryCaseDialogue()
 {
-	std::string jewelryCaseThomas = "Mormors smyckesskrin.";
+	std::string jewelryCaseThomas = "Ett smyckesskrin.";
 	std::string jewelryCaseHilma = "Vi öppnar och kollar vad som finns i den!";
 	std::string jewelryCaseHilma2 = "Den är bara full av muttrar!";
 
@@ -1486,7 +1522,7 @@ void DialogueSystem::displayJewelryCaseDialogue()
 
 void DialogueSystem::displayMaskDialogue()
 {
-	std::string maskHilma = "Vilken lustig mask! Var kommer den ifrån?";
+	std::string maskHilma = "Vilka lustiga masker! Var kommer de ifrån?";
 	std::string maskThomas = "Någonstans i Afrika tror jag. Mormor reste mycket när hon var ung.";
 
 	if (mState == 2)
@@ -1652,10 +1688,38 @@ void DialogueSystem::displayArmchairDialogue()
 	}
 }
 
+void DialogueSystem::displayGlassesAndNutsDialogue()
+{
+	std::string glassesAndNutsHilma = "Det ser ut som att någon suttit här och läst.";
+	std::string glassesAndNutsThomas = "Det måste vara mormor, hon använde alltid läsglasögon.";
+
+	if (mState == 2)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mGlassesAndNuts = false;
+		mIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	if (mState == 0)
+	{
+		mIsActive = true;
+		text(glassesAndNutsHilma, mPlayer->getPosition(), -180, -180);
+		createTalkBubble(mPlayer->getPosition(), -180, -200, 2.1f, 1.f);
+	}
+
+	if (mState == 1)
+	{
+		text(glassesAndNutsThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
+	}
+}
+
 //Grandma's Kitchen
 void DialogueSystem::displayRefridgeratorDialogue()
 {
-	std::string refridgeratorThomas = "Ett gammalt kylskåp";
+	std::string refridgeratorThomas = "Ett gammalt kylskåp.";
 
 	if (mState == 1)
 	{
@@ -1803,6 +1867,69 @@ void DialogueSystem::displayFruitBowlDialogue()
 	{
 		mIsActive = true;
 		text(fruitBowlThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
+	}
+}
+
+void DialogueSystem::displayFlowersDialogue()
+{
+	std::string flowersThomas = "Blommorna är fräscha, mormor måste ta hand om dem.";
+
+	if (mState == 1)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mFlowers = false;
+		mIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	if (mState == 0)
+	{
+		mIsActive = true;
+		text(flowersThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
+	}
+}
+
+void DialogueSystem::displayRocketDrawingsDialogue()
+{
+	std::string rocketDrawingsThomas = "Dem här liknar ritningarna på raketen jag och mormor byggde, men dem här ser jättekomplicerade ut!";
+
+	if (mState == 1)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mRocketDrawings = false;
+		mIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	if (mState == 0)
+	{
+		mIsActive = true;
+		text(rocketDrawingsThomas, mPlayer->getPosition(), 60, -250);
+		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
+	}
+}
+
+void DialogueSystem::displayToolsDialogue()
+{
+	std::string toolsThomas = "Det här är ju mormors verkstyg. Vad har hon byggt här?";
+
+	if (mState == 1)
+	{
+		mText.setString("");
+		mHasClicked = false;
+		mTools = false;
+		mIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	if (mState == 0)
+	{
+		mIsActive = true;
+		text(toolsThomas, mPlayer->getPosition(), 60, -250);
 		createTalkBubble(mPlayer->getPosition(), 60, -250, 2.5f, 1.f);
 	}
 }

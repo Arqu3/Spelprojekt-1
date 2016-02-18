@@ -73,6 +73,7 @@ public:
 	void displayFishTrophyDialogue();
 	void displayPlantDialogue();
 	void displayArmchairDialogue();
+	void displayGlassesAndNutsDialogue();
 
 	//Grandma's Kitchen
 	void displayRefridgeratorDialogue();
@@ -81,6 +82,9 @@ public:
 	void displayMouseDwellingDialogue();
 	void displayWaterTapDialogue();
 	void displayFruitBowlDialogue();
+	void displayFlowersDialogue();
+	void displayRocketDrawingsDialogue();
+	void displayToolsDialogue();
 
 	//Grandma's Room
 	void displayPlanetsDialogue();
@@ -154,6 +158,7 @@ private:
 	bool mFishTrophy;
 	bool mPlant;
 	bool mArmchair;
+	bool mGlassesAndNuts;
 
 	//Item bools (Grandma's Kitchen)
 	bool mRefridgerator;
@@ -162,6 +167,9 @@ private:
 	bool mMouseDwelling;
 	bool mWaterTap;
 	bool mFruitBowl;
+	bool mFlowers;
+	bool mRocketDrawings;
+	bool mTools;
 
 	//Item bools (Grandma's Room)
 	bool mPlanets;
