@@ -2,7 +2,11 @@
 #define INCLUDED_LEVEL
 
 #include "ResourceHandler.h"
-#include "Item.h"
+#include "Inventory.h"
+#include "DialogueSystem.h"
+#include "Player.h"
+#include "Cursor.h"
+#include "UI.h"
 
 class Level
 {
@@ -12,6 +16,9 @@ public:
 	virtual ItemVector getItems() = 0;
 	virtual void addItem(Item* item) = 0;
 	virtual void removeItem(Item* item) = 0;
+
+	//Player
+	virtual Player* getPlayer() = 0;
 
 	//Rectangle for levels
 	typedef std::vector<sf::FloatRect*> rectVector;
@@ -23,6 +30,7 @@ public:
 	//Draw
 	virtual void drawBackground(sf::RenderWindow &window) = 0;
 	virtual void drawForeground(sf::RenderWindow &window) = 0;
+	virtual void drawUI(sf::RenderWindow &window) = 0;
 
 	//Rectangle functions
 	virtual rectVector getRects() = 0;
@@ -39,8 +47,16 @@ public:
 	virtual void internalSwap(int num) = 0;
 	virtual void changeScene(int num) = 0;
 	virtual int getActiveScene() = 0;
-	virtual void toggleActive() = 0;
+	virtual void toggleActive(ResourceHandler &handler) = 0;
 	virtual bool isActive() = 0;
+
+	//Eventstuff
+	virtual void eventListen(sf::RenderWindow &window) = 0;
+	virtual void mouseClick(sf::Event &event) = 0;
+	virtual void update(sf::RenderWindow &window, float deltaTime) = 0;
+
+	//Level Complete
+	virtual bool isLevelComplete() = 0;
 };
 
 #endif

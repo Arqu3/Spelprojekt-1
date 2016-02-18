@@ -14,6 +14,9 @@ public:
 	void addItem(Item* item);
 	void removeItem(Item* item);
 
+	//Player
+	Player* getPlayer();
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();
@@ -22,12 +25,17 @@ public:
 	void drawBackground(sf::RenderWindow &window);
 	void drawForeground(sf::RenderWindow &window);
 	void drawItems(ItemVector items, sf::RenderWindow &window);
+	void drawUI(sf::RenderWindow &window);
 
 	//Rectangles
 	rectVector getRects();
 	void removeRect(int index);
 	void addRect(sf::FloatRect* rect);
 	const rectVector getPlayRects();
+
+	//Active Level
+	void toggleActive(ResourceHandler &handler);
+	bool isActive();
 
 	//View
 	sf::View getView();
@@ -38,9 +46,20 @@ public:
 	void internalSwap(int num);
 	void changeScene(int num);
 	int getActiveScene();
-	void toggleActive();
-	bool isActive();
 
+	//Eventstuff
+	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* boundingBox, sf::Vector2f &point);
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* boundingBox, sf::FloatRect &rect);
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect);
+	void eventListen(sf::RenderWindow &window);
+	void mouseClick(sf::Event &event);
+	void update(sf::RenderWindow &window, float deltaTime);
+	void mouseHover();
+
+	//Level Complete
+	bool isLevelComplete();
 
 private:
 	
@@ -58,7 +77,7 @@ private:
 
 	//Sound
 	sf::Music music;
-	sf::Sound ambientSound;
+	sf::Sound mAmbientSound;
 
 	//Scene
 	bool mIsActive;
@@ -77,5 +96,42 @@ private:
 	Item* mAstronaut;
 	Item* mBowl;
 	Item* mCube;
+
+	//Inventory
+	Inventory *mInventory;
+
+	//DialogueSystem
+	DialogueSystem *mDialogueSystem;
+
+	//Player
+	Player *mPlayer;
+
+	//Mouse Cursor
+	Cursor *mCursor;
+
+	//Menu
+	UI *mUI;
+
+	//Eventstuff
+	sf::Vector2f mWorldPos;
+	sf::Vector2i mPixelPos;
+	sf::Vector2f mViewMoveTo;
+	Item* mTargetItem;
+	bool mItemInteraction;
+	//Scene change
+	sf::FloatRect mSceneChangeRect;
+	sf::Vector2f mSceneChangePlayerPos;
+	int mNewScene;
+
+	bool mPlayerToggle;
+	bool mLookedAtAquarium;
+	bool mLookedAtRug;
+	bool mReadyForScrewdevice;
+	bool mPickedUpScrewdevice;
+	bool mMovedStar;
+	bool mReadyToLeave;
+	bool mLevelComplete;
+
+	int mUpdateTime;
 };
 #endif

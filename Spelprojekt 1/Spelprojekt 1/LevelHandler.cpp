@@ -10,11 +10,6 @@ mItems()
 	mLevel1 = new Level1(handler);
 	mLastLevel = new LastLevel(handler);
 
-	mThomas = new Player(handler, sf::Vector2f(400, 400), "Thomas.png");
-	mHilma = new Player(handler, sf::Vector2f(400, 400), "Hilma.png");
-	activePlayer = "Hilma"; // THIS IS
-	togglePlayer();			// STUPID, FIX (note to self)
-
 	//Add levels to member list
 	mLevels.push_back(mLevel1);
 	mLevels.push_back(mLastLevel);
@@ -25,9 +20,21 @@ LevelHandler::~LevelHandler()
 	mLevels.clear();
 }
 
-void LevelHandler::update(float deltaTime)
+void LevelHandler::update(float deltaTime, sf::RenderWindow &window, ResourceHandler &handler)
 {
-	mPlayer->update(deltaTime);
+	for (LevelVector::size_type i = 0; i < mLevels.size(); i++)
+	{
+		//Only update active level
+		if (mLevels[i]->isActive())
+		{
+			mLevels[i]->getPlayer()->update(deltaTime);
+			mLevels[i]->update(window, deltaTime);
+			if (mLevels[i]->isLevelComplete())
+			{
+				setActiveLevel(i + 1, handler, false); //Add safety check for last level in LevelVector
+			}
+		}
+	}
 }
 
 void LevelHandler::draw(sf::RenderWindow &window)
@@ -38,23 +45,31 @@ void LevelHandler::draw(sf::RenderWindow &window)
 		if (mLevels[i]->isActive())
 		{
 			mLevels[i]->drawBackground(window);
-			mPlayer->draw(window);
+			mLevels[i]->getPlayer()->draw(window);
 			mLevels[i]->drawForeground(window);
+			mLevels[i]->drawUI(window);
 		}
 	}
 }
 
-void LevelHandler::setActiveLevel(int index)
+void LevelHandler::setActiveLevel(int index, ResourceHandler &handler, bool firstStart)
 {
 	assert(index >= 0);
-	//Toggles active level
-	//TODO - ADD THIS BACK LATER
-	//if (index > 0)
-	//{
-	//	//If level to be toggled is greater than 0, toggle last level to be inactive
-	//	mLevels[index - 1]->toggleActive();
-	//}
-	mLevels[index]->toggleActive();
+
+	if (firstStart)
+	{
+		mLevels[index]->toggleActive(handler);
+	}
+	else
+	{
+		//Toggles active level
+		if (index > 0)
+		{
+			//If level to be toggled is greater than 0, toggle last level to be inactive
+			mLevels[index - 1]->toggleActive(handler);
+		}
+		mLevels[index]->toggleActive(handler);
+	}
 }
 
 LevelHandler::ItemVector LevelHandler::getActiveItems()
@@ -84,20 +99,4 @@ Level* LevelHandler::getLevel(int index)
 Player* LevelHandler::getPlayer()
 {
 	return mPlayer;
-}
-
-void LevelHandler::togglePlayer()
-{
-	if (activePlayer == "Thomas")
-	{
-		activePlayer = "Hilma";
-		mPlayer = mHilma;
-		mPlayer->setThomasActive(false);
-	}
-	else
-	{
-		activePlayer = "Thomas";
-		mPlayer = mThomas;
-		mPlayer->setThomasActive(true);
-	}
 }

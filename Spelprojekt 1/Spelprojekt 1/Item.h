@@ -46,13 +46,30 @@ public:
 	//Get position of item
 	sf::Vector2f getPosition();
 
+	//Get crafting index of item
+	int getCraftIndex();
+
 	//Set position of item
 	void setPosition(float x, float y);
+
+	void moveToPosition(float x, float y);
+
+	void move(float deltaTime);
+
+	bool getIsOnPosition();
 
 	//Set scale of item
 	void setScale(float x, float y);
 
 	sf::Sprite getSprite();
+
+	void update(float deltaTime);
+
+	float getSpeed();
+	void setSpeed(float speed);
+
+	//Change texture
+	void changeTexture(ResourceHandler &handler, std::string filename);
 
 private:
 	bool mIsActive;
@@ -63,13 +80,21 @@ private:
 	bool mInteracted;
 
 	int mIndex;
+	int mCraftIndex;
 
 	std::string mId;
 	std::string mName;
 	std::string mDescription;
 
 	sf::Vector2f mPosition;
+	sf::Vector2f mDirection;
+	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
+
+	sf::FloatRect mMoveToRect;
+	bool isOnPosition;
+
+	float mSpeed;
 };
 
 #endif

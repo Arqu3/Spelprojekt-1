@@ -18,30 +18,23 @@ public:
 	typedef std::vector<Level*> LevelVector;
 
 	//Update
-	void update(float deltaTime);
+	void update(float deltaTime, sf::RenderWindow &window, ResourceHandler &handler);
 
 	//Draw
 	void draw(sf::RenderWindow &window);
 
-	void setActiveLevel(int num);
+	void setActiveLevel(int num, ResourceHandler &handler, bool firstStart);
 
 	ItemVector getActiveItems();
 	Level* getActiveLevel();
 	Level* getLevel(int index);
 
 	Player* getPlayer();
-	void togglePlayer();
 
 private:
 	//Items
 	ItemVector mItems;
 	void setActiveItems();
-
-	//Player
-	Player* mPlayer;
-	Player* mThomas;
-	Player* mHilma;
-	std::string activePlayer;
 
 	//Levels
 	LevelVector mLevels;
@@ -51,6 +44,8 @@ private:
 
 	//2
 	LastLevel* mLastLevel;
+
+	Player *mPlayer;
 
 };
 
