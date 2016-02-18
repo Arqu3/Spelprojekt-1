@@ -526,7 +526,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mUI->checkCollision(mWorldPos);
 			}
-			else if (mCursor->getMode() != Cursor::DISABLED)
+			else if (mCursor->getMode() != Cursor::DISABLED && !mPushingBlock)
 			{
 				mouseClick(event);
 			}
@@ -591,10 +591,6 @@ void Level1::mouseClick(sf::Event &event)
 	//Check if playrect collision
 	if (checkCollision(getPlayRects(), point))
 	{
-		if (!mPlayer->getIsOnPosition())
-		{
-			mPlayer->setActiveAnimation("Walk");
-		}
 		mPlayer->moveToPosition(point.x, point.y);
 		mItemInteraction = false;
 	}
@@ -609,10 +605,6 @@ void Level1::mouseClick(sf::Event &event)
 			//Check if Item is Active
 			if (getItems()[i]->getActive())
 			{
-				if (!mPlayer->getIsOnPosition())
-				{
-					mPlayer->setActiveAnimation("Walk");
-				}
 				//Check Id of that Item
 				if (getItems()[i]->getId() == "Cube")
 				{
@@ -682,10 +674,6 @@ void Level1::mouseClick(sf::Event &event)
 	{
 		if (checkCollision(getRects()[i], point))
 		{
-			if (!mPlayer->getIsOnPosition())
-			{
-				mPlayer->setActiveAnimation("Walk");
-			}
 			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
 			if (i == 0)
 			{
@@ -1113,6 +1101,11 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	if (mReadyToLeave)
 	{
 		mLevelComplete = true; //TODO - Do more stuff probably
+	}
+
+	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push")
+	{
+		mPlayer->setActiveAnimation("Walk");
 	}
 }
 

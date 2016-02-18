@@ -21,6 +21,7 @@ public:
 	bool isFacingLeft();
 	sf::FloatRect getGlobalRect();
 	void setActiveAnimation(std::string animation);
+	std::string getActiveAnimation();
 	void togglePlayer();
 	float getSpeed();
 	void setSpeed(float speed);

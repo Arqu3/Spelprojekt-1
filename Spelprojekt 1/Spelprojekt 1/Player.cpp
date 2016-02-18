@@ -322,6 +322,11 @@ void Player::setActiveAnimation(std::string animation)
 	mActiveAnimation = animation;
 }
 
+std::string Player::getActiveAnimation()
+{
+	return mActiveAnimation;
+}
+
 void Player::togglePlayer()
 {
 	mThomasActive = !mThomasActive;
