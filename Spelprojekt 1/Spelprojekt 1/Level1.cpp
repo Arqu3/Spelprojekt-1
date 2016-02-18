@@ -9,8 +9,8 @@ mLookedAtAquarium(false),
 mLookedAtRug(false),
 mPushingBlock(false),
 mReadyForScrewdevice(false),
-mPickedUpScrewdevice(true),
-mMovedStar(true),
+mPickedUpScrewdevice(false),
+mMovedStar(false),
 mReadyToLeave(false),
 mLevelComplete(false),
 mUpdateTime(0)
@@ -591,7 +591,10 @@ void Level1::mouseClick(sf::Event &event)
 	//Check if playrect collision
 	if (checkCollision(getPlayRects(), point))
 	{
-		mPlayer->setActiveAnimation("Walk");
+		if (!mPlayer->getIsOnPosition())
+		{
+			mPlayer->setActiveAnimation("Walk");
+		}
 		mPlayer->moveToPosition(point.x, point.y);
 		mItemInteraction = false;
 	}
@@ -606,7 +609,10 @@ void Level1::mouseClick(sf::Event &event)
 			//Check if Item is Active
 			if (getItems()[i]->getActive())
 			{
-				mPlayer->setActiveAnimation("Walk");
+				if (!mPlayer->getIsOnPosition())
+				{
+					mPlayer->setActiveAnimation("Walk");
+				}
 				//Check Id of that Item
 				if (getItems()[i]->getId() == "Cube")
 				{
@@ -676,7 +682,10 @@ void Level1::mouseClick(sf::Event &event)
 	{
 		if (checkCollision(getRects()[i], point))
 		{
-			mPlayer->setActiveAnimation("Walk");
+			if (!mPlayer->getIsOnPosition())
+			{
+				mPlayer->setActiveAnimation("Walk");
+			}
 			// i == 0 is the fishtankplace, or Thomas Room if in fishtankplace
 			if (i == 0)
 			{
