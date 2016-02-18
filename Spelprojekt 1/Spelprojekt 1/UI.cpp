@@ -3,7 +3,7 @@
 using namespace std;
 
 UI::UI(ResourceHandler &handler) :
-ui(NONE)
+ui(INGAME)
 {
 	//UI Icons
 	//HatIcon
@@ -50,12 +50,14 @@ UI::~UI()
 {
 }
 
-void UI::update(Menu &menu)
+void UI::update()
 {
 	switch (ui){
 	case HAT:
 		break;
-	case MAIN:
+	case MAINUI:
+		break;
+	case MAINMENU:
 		break;
 	case INVENTORY:
 		break;
@@ -66,10 +68,8 @@ void UI::update(Menu &menu)
 	case SETTINGS:
 		break;
 	case EXIT:
-		menu.setState(Menu::Exit);
 		break;
-	case NONE:
-		menu.setState(Menu::InGame);
+	case INGAME:
 		break;
 	default:
 		break;
@@ -84,7 +84,7 @@ void UI::draw(sf::RenderWindow &window)
 	{
 		window.draw(mHatMenu);
 	}
-	if (ui == MAIN)
+	if (ui == MAINUI)
 	{
 		window.draw(mMainMenu);
 	}
@@ -125,18 +125,18 @@ void UI::checkCollision(sf::Vector2f point)
 		}
 		else
 		{
-			ui = NONE;
+			ui = INGAME;
 		}
 	}
 	if (getMenuIconRect().contains(point))
 	{
-		if (ui != MAIN)
+		if (ui != MAINUI)
 		{
-			ui = MAIN;
+			ui = MAINUI;
 		}
 		else
 		{
-			ui = NONE;
+			ui = INGAME;
 		}
 	}
 
@@ -160,7 +160,7 @@ void UI::checkCollision(sf::Vector2f point)
 	}
 
 	//Check appropriate Rect collisions when "Main" Menu is open
-	if (ui == MAIN)
+	if (ui == MAINUI)
 	{
 		if (mSettingsRect.contains(point))
 		{

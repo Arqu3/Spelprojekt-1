@@ -2,7 +2,7 @@
 #define INCLUDED_UI
 
 #include "SFML\System.hpp"
-#include "Menu.h"
+#include "Button.h"
 
 class UI{
 public:
@@ -12,16 +12,17 @@ public:
 	enum ActiveUI
 	{
 		HAT,
-		MAIN,
+		MAINUI,
+		MAINMENU,
 		INVENTORY,
 		CLUES,
 		MEMORIES,
 		SETTINGS,
 		EXIT,
-		NONE
+		INGAME
 	};
 
-	void update(Menu &menu);
+	void update();
 	void draw(sf::RenderWindow &window);
 
 	void checkCollision(sf::Vector2f point);
@@ -35,14 +36,21 @@ public:
 private:
 	ActiveUI ui;
 
-	//Menu Sprites
+	//Buttons
+	typedef std::vector<Button*> ButtonVector;
+	ButtonVector mMainButtons;
+	ButtonVector mExitButtons;
+	ButtonVector mUIButtons;
+	sf::RectangleShape mBackground;
+
+	//UI Sprites
 	sf::Sprite mHatIcon;
 	sf::Sprite mMenuIcon;
 	sf::Sprite mHatMenu;
 	sf::Sprite mMainMenu;
 	sf::Sprite mInventoryMenu;
 
-	//Menu Rects
+	//UI Rects
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
 	sf::FloatRect mMemoriesRect;

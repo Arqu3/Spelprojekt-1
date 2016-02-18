@@ -41,7 +41,6 @@ void Game::update()
 			mMenu.eventListen(window);
 		}
 
-		mMenu.draw(window);
 
 		if (mMenu.getState() != Menu::Main)
 		{
@@ -49,6 +48,8 @@ void Game::update()
 			mLHandler.getActiveLevel()->eventListen(window, mMenu);
 			mLHandler.draw(window);
 		}
+
+		mMenu.draw(window);
 
 		deltaClock.restart();
 		window.display();

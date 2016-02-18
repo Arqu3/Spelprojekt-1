@@ -9,7 +9,7 @@ mMoveToPosition(x, y),
 mIsOnPosition(true),
 mDirection(0, 0),
 mSpeed(100),
-mMode(FloatRect)
+mMode(RectangleShape)
 {
 	mRect.setPosition(x, y);
 	mRect.setFillColor(col);
@@ -22,7 +22,7 @@ mMoveToPosition(x, y),
 mIsOnPosition(true),
 mDirection(0, 0),
 mSpeed(100),
-mMode(FloatRect)
+mMode(RectangleShape)
 {
 	mRect.setPosition(x, y);
 }
@@ -32,7 +32,7 @@ mRect(sf::Vector2f(width, height)),
 mIsOnPosition(true),
 mDirection(0, 0),
 mSpeed(100),
-mMode(FloatRect)
+mMode(RectangleShape)
 {
 	mRect.setPosition(0, 0);
 	mRect.setFillColor(col);
@@ -43,7 +43,7 @@ mRect(sf::Vector2f(width, height)),
 mIsOnPosition(true),
 mDirection(0, 0),
 mSpeed(100),
-mMode(FloatRect)
+mMode(RectangleShape)
 {
 	mRect.setPosition(0, 0);
 }
@@ -55,7 +55,7 @@ mMoveToPosition(rect.getPosition().x, rect.getPosition().y),
 mDirection(0, 0),
 mIsOnPosition(true),
 mSpeed(100),
-mMode(FloatRect)
+mMode(RectangleShape)
 {
 	mRect.setPosition(rect.getPosition().x, rect.getPosition().y);
 	mRect.setFillColor(col);
@@ -68,7 +68,7 @@ mMoveToPosition(x, y),
 mDirection(0, 0),
 mIsOnPosition(true),
 mSpeed(100),
-mMode(Texture)
+mMode(RectangleShape)
 {
 	mSprite.setTexture(*handler.getTexture(textureName));
 	mSprite.setPosition(x, y);
@@ -99,7 +99,7 @@ bool Button::isPressed(sf::RenderWindow &window)
 
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		if (mRect.getGlobalBounds().contains(mWorldPos))
 		{
 			return true;
@@ -128,7 +128,7 @@ void Button::setPosition(float x, float y)
 {
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		mRect.setPosition(x, y);
 		mMoveToPosition = sf::Vector2f(x, y);
 		mDirection = sf::Vector2f(0, 0);
@@ -145,7 +145,7 @@ void Button::setPosition(sf::Vector2f &pos)
 {
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		mRect.setPosition(pos);
 		mMoveToPosition = pos;
 		mDirection = sf::Vector2f(0, 0);
@@ -173,7 +173,7 @@ void Button::moveTo(float x, float y)
 
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		//Creates a unit-direction vector that the player follows
 		mMoveToPosition = sf::Vector2f(x, y);
 
@@ -227,7 +227,7 @@ void Button::moveTo(sf::Vector2f &pos)
 
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		//Creates a unit-direction vector that the player follows
 		mMoveToPosition = pos;
 
@@ -272,7 +272,7 @@ void Button::move(float deltaTime)
 	sf::FloatRect mMoveToRect;
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		mMoveToRect = sf::FloatRect(mMoveToPosition.x, mMoveToPosition.y, 10, 10);
 
 		if (mRect.getGlobalBounds().intersects(mMoveToRect))
@@ -320,7 +320,7 @@ void Button::draw(sf::RenderWindow &window)
 {
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		window.draw(mRect);
 		break;
 
@@ -334,7 +334,7 @@ sf::FloatRect Button::getRect()
 {
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		return mRect.getGlobalBounds();
 		break;
 
@@ -349,7 +349,7 @@ std::string Button::getTexureName()
 {
 	switch (mMode)
 	{
-	case FloatRect:
+	case RectangleShape:
 		return "NULL";
 		break;
 

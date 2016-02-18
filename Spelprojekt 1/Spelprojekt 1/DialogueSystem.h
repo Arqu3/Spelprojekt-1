@@ -13,10 +13,19 @@ public:
 
 	//Talk functions
 	void text(std::string text, sf::Vector2f &position, float x, float y);
+	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
-	void createTalkBubble(sf::Vector2f &position, float OffSetX, float OffSetY, float x, float y);
+	void createTalkBubble(sf::Vector2f &position, float offsetX, float offsetY, float scaleX, float scaleY);
+	void createTextBox(float x, float y, float offsetX, float offsetY, float scaleX, float scaleY);
+
+	//Character Draw
+	void drawFirstCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
+	void drawSecondCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
+
+	//Sepia
+	void drawSepiaBackground();
 
 	//Function that checks if an object has been clicked on
 	void hasClicked(std::string indexName, Player *player);
@@ -32,6 +41,10 @@ public:
 
 	//Function to check in dialogue is finished
 	bool isDialogueFinished();
+
+	//Advanced Dialogues
+	void displayLevel1StartAdvancedDialogue();
+	void displayLevel1EndAdvancedDialogue();
 
 	//Dialogues (functions with strings)
 	//Thomas' room
@@ -60,6 +73,7 @@ public:
 	void displayFishTrophyDialogue();
 	void displayPlantDialogue();
 	void displayArmchairDialogue();
+	void displayGlassesAndNutsDialogue();
 
 	//Grandma's Kitchen
 	void displayRefridgeratorDialogue();
@@ -68,6 +82,9 @@ public:
 	void displayMouseDwellingDialogue();
 	void displayWaterTapDialogue();
 	void displayFruitBowlDialogue();
+	void displayFlowersDialogue();
+	void displayRocketDrawingsDialogue();
+	void displayToolsDialogue();
 
 	//Grandma's Room
 	void displayPlanetsDialogue();
@@ -96,13 +113,24 @@ private:
 	float mTime;
 	bool mHasClicked;
 	bool mIsActive;
+	bool mAdvancedIsActive;
 	bool mFinishedDialogue;
 	int mState;
+	std::string mTexture;
 	sf::Text mText;
 	sf::Clock mClock;
 	sf::Font mFont;
 	sf::Sprite mBubble;
+	sf::Sprite mTextBox;
+	sf::Sprite mFirstCharacter;
+	sf::Sprite mSecondCharacter;
+	sf::RectangleShape mSepia;
 	Player *mPlayer;
+	ResourceHandler &mHandler;
+
+	//Advanced Dialogue
+	bool mLevel1Start;
+	bool mLevel1End;
 
 	//Item bools (Thomas' Room)
 	bool mBooks;
@@ -130,6 +158,7 @@ private:
 	bool mFishTrophy;
 	bool mPlant;
 	bool mArmchair;
+	bool mGlassesAndNuts;
 
 	//Item bools (Grandma's Kitchen)
 	bool mRefridgerator;
@@ -138,6 +167,9 @@ private:
 	bool mMouseDwelling;
 	bool mWaterTap;
 	bool mFruitBowl;
+	bool mFlowers;
+	bool mRocketDrawings;
+	bool mTools;
 
 	//Item bools (Grandma's Room)
 	bool mPlanets;

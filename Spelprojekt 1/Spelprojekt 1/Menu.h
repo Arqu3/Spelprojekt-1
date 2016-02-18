@@ -25,10 +25,10 @@ public:
 	void setState(State state);
 
 private:
-	typedef std::vector<Button*> ButtonVector;
-	ButtonVector mMainButtons;
-	ButtonVector mExitButtons;
-	sf::RectangleShape mBackground;
+	//typedef std::vector<Button*> ButtonVector;
+	//ButtonVector mMainButtons;
+	//ButtonVector mExitButtons;
+	//sf::RectangleShape mBackground;
 };
 
 #endif

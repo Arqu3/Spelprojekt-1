@@ -33,6 +33,7 @@ public:
 private:
 	//Variables
 	sf::RectangleShape mRect;
+	sf::FloatRect mFRect;
 	sf::Vector2f mMoveToPosition;
 	sf::Vector2f mDirection;
 	sf::Vector2f mSetPos;
@@ -45,7 +46,7 @@ private:
 
 	enum Mode
 	{
-		FloatRect,
+		RectangleShape,
 		Texture
 	};
 	Mode mMode;

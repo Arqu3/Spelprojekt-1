@@ -102,6 +102,17 @@ void Menu::eventListen(sf::RenderWindow &window)
 					window.close();
 				}
 				break;
+
+			case Menu::Exit:
+				if (mExitButtons[0]->isPressed(window))
+				{
+					setState(Main);
+				}
+				if (mExitButtons[1]->isPressed(window))
+				{
+					setState(InGame);
+				}
+				break;
 			}
 			break;
 		}
