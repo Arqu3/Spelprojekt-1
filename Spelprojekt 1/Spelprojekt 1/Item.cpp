@@ -215,8 +215,8 @@ mSpeed(100.0f)
 		mName = "Putte";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.01f, 0.01f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("PutteSad.png")); //Add correct texture
 	}
 
 	if (id == "Dollhouse")

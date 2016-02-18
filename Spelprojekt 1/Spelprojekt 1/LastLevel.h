@@ -146,6 +146,7 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
+	bool mFishFalling;
 
 	ResourceHandler &handler;
 

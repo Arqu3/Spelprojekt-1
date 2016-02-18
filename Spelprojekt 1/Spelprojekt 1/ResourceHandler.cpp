@@ -130,6 +130,7 @@ void ResourceHandler::loadLastLevel()
 	//Karaktärer
 	addTexture("Katten.png");
 	addTexture("Lisa.png");
+	addTexture("PutteSad.png");
 
 	//In-game UI
 	addTexture("haticon.png");

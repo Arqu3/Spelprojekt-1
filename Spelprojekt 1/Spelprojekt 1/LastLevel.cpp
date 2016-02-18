@@ -221,7 +221,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 		mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 
-		mPutte = new Item(handler, sf::Vector2f(193, 257), "Putte");
+		mPutte = new Item(handler, sf::Vector2f(308, 316), "Putte");
 		mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
 		mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
 		mEarth = new Item(handler, sf::Vector2f(286, 122), "Earth");
@@ -243,6 +243,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		//Inventory
 		mInventory = new Inventory();
+		mInventory->setCraftableItems(handler, 1);
 
 		//Cursor
 		mCursor = new Cursor(handler);
@@ -278,7 +279,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		//Add items to itemVector
 		addItem(mMagicClam);
-		addItem(mPutte);
+		//addItem(mPutte);
 		addItem(mDollhouse);
 
 		//Items Active
@@ -291,13 +292,16 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mFruitbowl->toggleActive();
 		mFoodBowl->toggleActive();
 		mHole->toggleActive();
+		mPutte->toggleActive();
 		
 
 		//Items Lookable scene 1
 		mDollhouse->toggleLookable();
+		mPutte->toggleLookable();
 
 		//Items interactable scene 1
 		mDollhouse->toggleInteractable();
+		mPutte->toggleInteractable();
 
 		//Item Lookable scene 2
 		mNeedle->toggleLookable();
@@ -390,13 +394,13 @@ void LastLevel::internalSwap(int num)
 		{
 			addItem(mDollhouse);
 		}
-		if (mPutte->getActive())
-		{
-			addItem(mPutte);
-		}
+			
+		addItem(mMagicClam);
+		addItem(mPutte);
 		
-
+		
 	}
+
 	else if (num == 1)
 	{
 		if (mLastScene == 0)
@@ -599,11 +603,26 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
-			if (mInventoryMode)
+			if (mUI->getActiveUI() == UI::INVENTORY)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+
+				mInventory->setCraftPos(mInventory->getSelectedItem());
+
+				if (mInventory->craftCheck())
+				{
+					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
+				}
 			}
-			else if (!mDisableClick)
+			else if (mCursor->getMode() == Cursor::DIALOGUE)
+			{
+				mDialogueSystem->setState();
+			}
+			else if (mUI->getActiveUI() != UI::NONE)
+			{
+				mUI->checkCollision(mWorldPos);
+			}
+			else if (mCursor->getMode() != Cursor::DISABLED)
 			{
 				mouseClick(event);
 			}
@@ -616,14 +635,16 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::I)
 			{
-				for (Level::ItemVector::size_type i = 0; i < mInventory->getItems().size(); i++)
+				if (mUI->getActiveUI() == UI::INVENTORY)
 				{
-					std::cout << mInventory->getItemId(i) << " ";
+					mUI->setActiveUI(UI::NONE);
+					mCursor->setMode(Cursor::NORMAL);
 				}
-			}
-			if (event.key.code == sf::Keyboard::M)
-			{
-				mInventoryMode = !mInventoryMode;
+				else
+				{
+					mUI->setActiveUI(UI::INVENTORY);
+					mCursor->setMode(Cursor::INVENTORY);
+				}
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
@@ -633,6 +654,8 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 
 		default:
 			break;
+		
+	
 		}
 	}
 }
@@ -648,6 +671,21 @@ void LastLevel::mouseClick(sf::Event &event)
 	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
+
+	//Check if Hat Icon is clicked
+	if (checkCollision(mUI->getHatIconRect(), point))
+	{
+		mCursor->setMode(Cursor::MENU);
+		mUI->setActiveUI(UI::HAT);
+	}
+
+	//Check if Menu Icon is clicked
+	if (checkCollision(mUI->getMenuIconRect(), point))
+	{
+		mCursor->setMode(Cursor::MENU);
+		mUI->setActiveUI(UI::MAIN);
+	}
+
 
 	//Check if playrect collision
 	if (checkCollision(getPlayRects(), point))
@@ -739,7 +777,7 @@ void LastLevel::mouseClick(sf::Event &event)
 				if (getItems()[i]->getId() == "Putte")
 				{
 
-					mPlayer->moveToPosition(348, 382);
+					mPlayer->moveToPosition(340, 382);
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
 					std::cout << "Klickade på Putte";
@@ -1078,9 +1116,9 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 								getItems()[i]->setSpeed(300.0f);
 								getItems()[i]->moveToPosition(861, 349);
 								mTargetItem = getItems()[i];
-								mDisableClick = true;
+								mCursor->setMode(Cursor::DISABLED);
+								mFishFalling = true;
 							
-
 							}
 						}
 
@@ -1109,30 +1147,33 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 					if (mTargetItem->getId() == "Foodbowl")
 					{
 
-						//Change texture to bowl with food in it
-
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)  //OBSOBS man ska använda fisk på matskål
+						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Fish")
 						{
-							if (getItems()[i]->getId() == "Cat")
+							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)  
 							{
-								mTargetItem = getItems()[i];
-								mDisableClick = true;
-								getItems()[i]->setSpeed(300.0f);
-								getItems()[i]->moveToPosition(700, 396);
+								if (getItems()[i]->getId() == "Cat")
+								{
+									mTargetItem = getItems()[i];
+									mDisableClick = true;
+									mTargetItem->setSpeed(300.0f);
+									mTargetItem->moveToPosition(700, 396);
+
+								}
+								
+								if (getItems()[i]->getId() == "Kids")
+								{
+									getItems()[i]->toggleActive();
+									getItems()[i]->toggleLookable();
+									getItems()[i]->toggleInteractable();
+								}
+								
+							}
+
 							
-							}
 						}
-
-						//Make the kids wait!
-
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						else
 						{
-							if (getItems()[i]->getId() == "Kids")
-							{
-								getItems()[i]->toggleActive();
-								getItems()[i]->toggleLookable();
-								getItems()[i]->toggleInteractable();
-							}
+							mTargetItem->toggleActive();
 						}
 
 						std::cout << "Katten äter mat! Barnen kommer fram!";
@@ -1157,10 +1198,8 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 					//Dollhouse
 					if (mTargetItem->getId() == "Dollhouse")
 					{
-						
-						mPutte->toggleActive();
-						mPutte->toggleLookable();
-						mPutte->toggleInteractable();
+						addItem(mPutte);
+			
 					}
 
 					//Hole
@@ -1215,9 +1254,10 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 		//Put everything back to normal after the "Pushing cutscene"
 		if (mTargetItem->getIsOnPosition())
 		{
-			if (mDisableClick)
+			if (mFishFalling)
 			{
-				mDisableClick = false;
+				mFishFalling = false;
+				mCursor->setMode(Cursor::NORMAL);
 				mTargetItem->setSpeed(100.0f);
 			}
 		}
