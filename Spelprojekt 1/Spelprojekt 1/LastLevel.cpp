@@ -575,7 +575,7 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mInventoryMode)
 			{
-				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 			}
 			else if (!mDisableClick)
 			{

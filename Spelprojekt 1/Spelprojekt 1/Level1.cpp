@@ -509,7 +509,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mUI->getActiveUI() == UI::INVENTORY)
 			{
-				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 
 				mInventory->setCraftPos(mInventory->getSelectedItem());
 

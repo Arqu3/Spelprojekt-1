@@ -117,6 +117,8 @@ private:
 	//DialogueSystem
 	DialogueSystem *mDialogueSystem;
 
+	//UI
+	UI *mUI;
 
 	//Eventstuff
 	sf::Vector2f mWorldPos;
