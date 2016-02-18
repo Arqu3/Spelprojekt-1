@@ -156,7 +156,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Beige Ball")
@@ -166,7 +166,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Red Apple")
@@ -195,8 +195,8 @@ mSpeed(100.0f)
 		mName = "Katt";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.7f, 0.7f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.01f, 0.01f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("Katten.png")); //Add correct texture
 	}
 
 	if (id == "Foodbowl")
@@ -235,8 +235,8 @@ mSpeed(100.0f)
 		mName = "Barn";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(1.2f, 1.25f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mSprite.setScale(sf::Vector2f(0.03f, 0.03f));
+		mSprite.setTexture(*handler.getTexture("Lisa.png"));
 	}
 
 	if (id == "FishingRodMagnet")
@@ -258,7 +258,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.5f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
 	}
 }
 

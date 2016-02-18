@@ -127,6 +127,10 @@ void ResourceHandler::loadLastLevel()
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 
+	//Karaktärer
+	addTexture("Katten.png");
+	addTexture("Lisa.png");
+
 	//In-game UI
 	addTexture("haticon.png");
 	addTexture("menuicon.png");
