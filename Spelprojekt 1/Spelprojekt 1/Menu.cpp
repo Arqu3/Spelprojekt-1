@@ -4,7 +4,7 @@ using namespace std;
 
 Menu::Menu(ResourceHandler &handler):
 mMainButtons(),
-mPauseButtons(),
+mExitButtons(),
 mState(Main)
 {
 	mBackground.setSize(sf::Vector2f(1024, 576));
@@ -20,21 +20,19 @@ mState(Main)
 		mMainButtons[i]->setPosition(512.0f - mMainButtons[0]->getRect().width / 2, 100.0f + (160.0f * i));
 	}
 
-	//Adds pause menu buttons
-	mPauseButtons.push_back(new Button(100, 100, sf::Color::Red));
-	mPauseButtons.push_back(new Button(100, 100, sf::Color::Black));
-	mPauseButtons.push_back(new Button(100, 100, sf::Color::Cyan));
+	mExitButtons.push_back(new Button(200, 100, sf::Color::Red));
+	mExitButtons.push_back(new Button(200, 100, sf::Color::Green));
 
-	for (ButtonVector::size_type i = 0; i < mPauseButtons.size(); i++)
+	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
 	{
-		mPauseButtons[i]->setPosition(500.0f, 120.0f * i);
+		mExitButtons[i]->setPosition(512.0f - mExitButtons[0]->getRect().width + (260.0f * i), 288);
 	}
 }
 
 Menu::~Menu()
 {
 	mMainButtons.clear();
-	mPauseButtons.clear();
+	mExitButtons.clear();
 }
 
 void Menu::update(float deltaTime)
@@ -48,10 +46,10 @@ void Menu::update(float deltaTime)
 		}
 		break;
 
-	case Menu::Paused:
-		for (ButtonVector::size_type i = 0; i < mPauseButtons.size(); i++)
+	case Menu::Exit:
+		for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
 		{
-			mPauseButtons[i]->update(deltaTime);
+			mExitButtons[i]->update(deltaTime);
 		}
 		break;
 
@@ -81,7 +79,7 @@ void Menu::eventListen(sf::RenderWindow &window)
 				}
 				break;
 
-			case Menu::Paused:
+			case Menu::Exit:
 				if (event.key.code == sf::Keyboard::Escape)
 				{
 					setState(InGame);
@@ -122,10 +120,10 @@ void Menu::draw(sf::RenderWindow &window)
 		}
 		break;
 
-	case Menu::Paused:
-		for (ButtonVector::size_type i = 0; i < mPauseButtons.size(); i++)
+	case Menu::Exit:
+		for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
 		{
-			mPauseButtons[i]->draw(window);
+			mExitButtons[i]->draw(window);
 		}
 		break;
 

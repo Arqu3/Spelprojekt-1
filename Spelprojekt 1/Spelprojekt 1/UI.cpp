@@ -3,7 +3,7 @@
 using namespace std;
 
 UI::UI(ResourceHandler &handler) :
-menu(NONE)
+ui(NONE)
 {
 	//UI Icons
 	//HatIcon
@@ -50,9 +50,9 @@ UI::~UI()
 {
 }
 
-void UI::update()
+void UI::update(Menu &menu)
 {
-	switch (menu){
+	switch (ui){
 	case HAT:
 		break;
 	case MAIN:
@@ -66,8 +66,10 @@ void UI::update()
 	case SETTINGS:
 		break;
 	case EXIT:
+		menu.setState(Menu::Exit);
 		break;
 	case NONE:
+		menu.setState(Menu::InGame);
 		break;
 	default:
 		break;
@@ -78,35 +80,35 @@ void UI::draw(sf::RenderWindow &window)
 {
 	//window.draw(mHelpRectangle);
 
-	if (menu == HAT)
+	if (ui == HAT)
 	{
 		window.draw(mHatMenu);
 	}
-	if (menu == MAIN)
+	if (ui == MAIN)
 	{
 		window.draw(mMainMenu);
 	}
-	if (menu == INVENTORY)
+	if (ui == INVENTORY)
 	{
 		window.draw(mHatMenu);
 		window.draw(mInventoryMenu);
 	}
-	if (menu == CLUES)
+	if (ui == CLUES)
 	{
 		//TODO - Draw clues menu
 	}
-	if (menu == MEMORIES)
+	if (ui == MEMORIES)
 	{
 		//TODO - Draw memories menu
 	}
-	if (menu == SETTINGS)
+	if (ui == SETTINGS)
 	{
 		//TODO - Draw settings menu
 	}
-	if (menu == EXIT)
+	if (ui == EXIT)
 	{
 		//TODO - Draw confirmation menu
-		window.close();
+		//window.close();
 	}
 
 	window.draw(mHatIcon);
@@ -117,57 +119,57 @@ void UI::checkCollision(sf::Vector2f point)
 {
 	if (getHatIconRect().contains(point))
 	{
-		if (menu != HAT)
+		if (ui != HAT)
 		{
-			menu = HAT;
+			ui = HAT;
 		}
 		else
 		{
-			menu = NONE;
+			ui = NONE;
 		}
 	}
 	if (getMenuIconRect().contains(point))
 	{
-		if (menu != MAIN)
+		if (ui != MAIN)
 		{
-			menu = MAIN;
+			ui = MAIN;
 		}
 		else
 		{
-			menu = NONE;
+			ui = NONE;
 		}
 	}
 
 	//Check appropriate Rect collisions when Hat Menu is open
-	if (menu == HAT)
+	if (ui == HAT)
 	{
 		if (mInventoryRect.contains(point))
 		{
-			menu = INVENTORY;
+			ui = INVENTORY;
 		}
 		if (mCluesRect.contains(point))
 		{
-			menu = CLUES;
+			ui = CLUES;
 			cout << "CLUES MENU ENGAGED" << endl;
 		}
 		if (mMemoriesRect.contains(point))
 		{
-			menu = MEMORIES;
+			ui = MEMORIES;
 			cout << "MEMORIES OF THE DEAD" << endl;
 		}
 	}
 
 	//Check appropriate Rect collisions when "Main" Menu is open
-	if (menu == MAIN)
+	if (ui == MAIN)
 	{
 		if (mSettingsRect.contains(point))
 		{
-			menu = SETTINGS;
+			ui = SETTINGS;
 			cout << "SETTINGS ALREADY PERFECT" << endl;
 		}
 		if (mExitRect.contains(point))
 		{
-			menu = EXIT;
+			ui = EXIT;
 			cout << "NOOOOOOOOOOOOOO" << endl;
 		}
 	}
@@ -175,12 +177,12 @@ void UI::checkCollision(sf::Vector2f point)
 
 void UI::setActiveUI(ActiveUI newUI)
 {
-	menu = newUI;
+	ui = newUI;
 }
 
 UI::ActiveUI UI::getActiveUI()
 {
-	return menu;
+	return ui;
 }
 
 sf::FloatRect UI::getHatIconRect()

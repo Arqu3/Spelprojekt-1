@@ -36,19 +36,19 @@ void Game::update()
 
 		mMenu.update(deltaTime);
 
-		if (mMenu.getState() != Menu::State::InGame)
+		if (mMenu.getState() == Menu::Main)
 		{
 			mMenu.eventListen(window);
 		}
 
-		if (mMenu.getState() == Menu::State::InGame)
+		mMenu.draw(window);
+
+		if (mMenu.getState() != Menu::Main)
 		{
 			mLHandler.update(deltaTime, window, mRHandler);
 			mLHandler.getActiveLevel()->eventListen(window, mMenu);
+			mLHandler.draw(window);
 		}
-
-		mLHandler.draw(window);
-		mMenu.draw(window);
 
 		deltaClock.restart();
 		window.display();

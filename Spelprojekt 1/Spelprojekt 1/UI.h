@@ -1,8 +1,8 @@
 #ifndef INCLUDED_UI
 #define INCLUDED_UI
 
-#include "ResourceHandler.h"
 #include "SFML\System.hpp"
+#include "Menu.h"
 
 class UI{
 public:
@@ -21,7 +21,7 @@ public:
 		NONE
 	};
 
-	void update();
+	void update(Menu &menu);
 	void draw(sf::RenderWindow &window);
 
 	void checkCollision(sf::Vector2f point);
@@ -33,7 +33,7 @@ public:
 	sf::FloatRect getMenuIconRect();
 
 private:
-	ActiveUI menu;
+	ActiveUI ui;
 
 	//Menu Sprites
 	sf::Sprite mHatIcon;

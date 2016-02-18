@@ -493,6 +493,7 @@ int Level1::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Flo
 void Level1::eventListen(sf::RenderWindow &window, Menu &menu)
 {
 	sf::Event event;
+	mUI->update(menu);
 	while (window.pollEvent(event))
 	{
 		// get the current mouse position in the window
@@ -535,13 +536,13 @@ void Level1::eventListen(sf::RenderWindow &window, Menu &menu)
 			break;
 
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Escape)
-			{
-				if (menu.getState() == Menu::InGame)
-				{
-					menu.setState(Menu::Paused);
-				}
-			}
+			//if (event.key.code == sf::Keyboard::Escape)
+			//{
+			//	if (menu.getState() == Menu::InGame)
+			//	{
+			//		menu.setState(Menu::Exit);
+			//	}
+			//}
 			if (event.key.code == sf::Keyboard::I)
 			{
 				if (mUI->getActiveUI() == UI::INVENTORY)
@@ -1090,7 +1091,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
-	mCursor->setPosition(sf::Vector2f(mWorldPos));
+	mCursor->setPosition(mWorldPos);
 	mCursor->update();
 
 	//Change mouse cursor on hover

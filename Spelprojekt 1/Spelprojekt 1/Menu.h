@@ -17,7 +17,7 @@ public:
 	{
 		Main,
 		InGame,
-		Paused
+		Exit
 	};
 	State mState;
 
@@ -27,7 +27,7 @@ public:
 private:
 	typedef std::vector<Button*> ButtonVector;
 	ButtonVector mMainButtons;
-	ButtonVector mPauseButtons;
+	ButtonVector mExitButtons;
 	sf::RectangleShape mBackground;
 };
 
