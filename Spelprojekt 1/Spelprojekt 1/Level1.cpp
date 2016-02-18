@@ -187,6 +187,11 @@ void Level1::toggleActive(ResourceHandler &handler)
 		//Sound/music
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
 		music.setLoop(true);
+		music.play();
+
+		mAmbientSound.setBuffer(*handler.getSound("Level1Ambience.ogg"));
+		mAmbientSound.setLoop(true);
+		mAmbientSound.play();
 
 		//View
 		mView.setCenter(512, 288);
