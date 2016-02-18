@@ -15,6 +15,18 @@ mMode(FloatRect)
 	mRect.setFillColor(col);
 }
 
+//Creates a sf::rectangleshape without color
+Button::Button(float x, float y, float width, float height) :
+mRect(sf::Vector2f(width, height)),
+mMoveToPosition(x, y),
+mIsOnPosition(true),
+mDirection(0, 0),
+mSpeed(100),
+mMode(FloatRect)
+{
+	mRect.setPosition(x, y);
+}
+
 Button::Button(float width, float height, sf::Color col):
 mRect(sf::Vector2f(width, height)),
 mIsOnPosition(true),
@@ -24,6 +36,16 @@ mMode(FloatRect)
 {
 	mRect.setPosition(0, 0);
 	mRect.setFillColor(col);
+}
+
+Button::Button(float width, float height) :
+mRect(sf::Vector2f(width, height)),
+mIsOnPosition(true),
+mDirection(0, 0),
+mSpeed(100),
+mMode(FloatRect)
+{
+	mRect.setPosition(0, 0);
 }
 
 //Creates a sf::rectangleshape representing a button with given color

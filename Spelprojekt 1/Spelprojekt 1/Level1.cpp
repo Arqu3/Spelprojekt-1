@@ -490,7 +490,7 @@ int Level1::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Flo
 }
 
 
-void Level1::eventListen(sf::RenderWindow &window)
+void Level1::eventListen(sf::RenderWindow &window, Menu &menu)
 {
 	sf::Event event;
 	while (window.pollEvent(event))
@@ -537,7 +537,10 @@ void Level1::eventListen(sf::RenderWindow &window)
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				window.close();
+				if (menu.getState() == Menu::InGame)
+				{
+					menu.setState(Menu::Paused);
+				}
 			}
 			if (event.key.code == sf::Keyboard::I)
 			{

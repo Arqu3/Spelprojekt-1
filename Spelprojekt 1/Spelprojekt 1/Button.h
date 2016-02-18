@@ -7,7 +7,9 @@ class Button
 {
 public:
 	Button(float x, float y, float width, float height, sf::Color col);
+	Button(float x, float y, float width, float height);
 	Button(float width, float height, sf::Color col);
+	Button(float width, float height);
 	Button(sf::RectangleShape &rect, sf::Color col);
 	Button(ResourceHandler &handler, float x, float y, std::string textureName);
 	Button(ResourceHandler &handler, sf::Vector2f &pos, std::string textureName);

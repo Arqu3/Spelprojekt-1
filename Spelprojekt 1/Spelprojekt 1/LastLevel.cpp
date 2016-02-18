@@ -553,7 +553,7 @@ int LastLevel::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::
 }
 
 
-void LastLevel::eventListen(sf::RenderWindow &window)
+void LastLevel::eventListen(sf::RenderWindow &window, Menu &menu)
 {
 	sf::Event event;
 	while (window.pollEvent(event))

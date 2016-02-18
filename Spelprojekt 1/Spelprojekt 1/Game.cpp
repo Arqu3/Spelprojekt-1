@@ -44,7 +44,7 @@ void Game::update()
 		if (mMenu.getState() == Menu::State::InGame)
 		{
 			mLHandler.update(deltaTime, window, mRHandler);
-			mLHandler.getActiveLevel()->eventListen(window);
+			mLHandler.getActiveLevel()->eventListen(window, mMenu);
 		}
 
 		mLHandler.draw(window);

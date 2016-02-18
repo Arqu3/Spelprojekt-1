@@ -53,7 +53,7 @@ public:
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
 	int checkCollision(sf::FloatRect* boundingBox, sf::FloatRect &rect);
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect);
-	void eventListen(sf::RenderWindow &window);
+	void eventListen(sf::RenderWindow &window, Menu &menu);
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();

@@ -80,6 +80,13 @@ void Menu::eventListen(sf::RenderWindow &window)
 					window.close();
 				}
 				break;
+
+			case Menu::Paused:
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					setState(InGame);
+				}
+				break;
 			}
 			break;
 
