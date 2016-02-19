@@ -12,6 +12,7 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
+	addTexture("loadscreen.jpg");
 	addTexture("MainMenuBackground.png");
 }
 
@@ -22,6 +23,9 @@ ResourceHandler::~ResourceHandler()
 
 void ResourceHandler::internalClear()
 {
+	textureCounter = 0;
+	soundCounter = 0;
+	musicCounter = 0;
 	mTextures.clear();
 	mTextureNames.clear();
 
@@ -40,6 +44,7 @@ void ResourceHandler::loadLevel1()
 	//Hilma
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
+	addTexture("HilmaFishing.png");
 
 	//In-game UI
 	addTexture("haticon.png");

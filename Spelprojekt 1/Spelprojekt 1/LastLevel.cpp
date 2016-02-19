@@ -4,8 +4,9 @@ LastLevel::LastLevel(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
 mIsActive(false),
-handler(handler)
-{	
+handler(handler),
+mLevelComplete(false)
+{
 }
 
 LastLevel::~LastLevel()
@@ -306,7 +307,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		mLastScene = 0;
 		
-
 	}
 
 	mIsActive = !mIsActive;
@@ -574,7 +574,7 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mInventoryMode)
 			{
-				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 			}
 			else if (!mDisableClick)
 			{
