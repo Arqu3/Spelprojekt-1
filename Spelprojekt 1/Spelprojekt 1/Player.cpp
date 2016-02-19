@@ -23,9 +23,10 @@ mFacingLeft(true)
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 	mSprite.setOrigin(400, 700);
 
-	mThomasTexture = *handler.getTexture("ThomasWalk.png");
+	//mThomasTexture = *handler.getTexture("ThomasWalk.png");
 	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
 	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
+	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
@@ -188,6 +189,35 @@ void Player::update(float deltaTime)
 		}
 	}
 
+	//Fishing Animation
+	if (mActiveAnimation == "Fishing")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 34)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 8 == 7)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 7)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 34;
+				mFrameXOffset = 6;
+				mFrameYOffset = 4;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
 	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
 	if (getDirection().x < 0 && !isFacingLeft())
 	{
@@ -300,6 +330,14 @@ void Player::setActiveAnimation(std::string animation)
 		mSprite.setTexture(mHilmaPushTexture);
 		mWalk = false;
 	}
+	else if (animation == "Fishing")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+		mSprite.setTexture(mHilmaFishingTexture);
+		mWalk = false;
+	}
 	else if (animation == "Idle")
 	{
 		if (mThomasActive)
@@ -368,4 +406,9 @@ void Player::setSpeed(float speed)
 bool Player::getIsOnPosition()
 {
 	return isOnPosition;
+}
+
+void Player::setScale(sf::Vector2f scale)
+{
+	mSprite.setScale(scale);
 }

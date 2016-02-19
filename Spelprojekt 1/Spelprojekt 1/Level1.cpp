@@ -810,6 +810,7 @@ void Level1::updateTargetItem(float deltaTime)
 				mInventory->addItem(mTargetItem);
 				mReadyForScrewdevice = true;
 				mPlayer->setActiveAnimation("Idle");
+				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
 				mPlayer->setPosition(490, 500);
 				mPlayer->moveToPosition(490, 500);
 				mCursor->setMode(Cursor::NORMAL);
@@ -884,9 +885,15 @@ void Level1::pickupTargetItem()
 	{
 		if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
 		{
-			//TODO - Add fishing animation, hand maybe?
-			mPlayer->setPosition(650, 315);
-			mPlayer->moveToPosition(650, 315);
+			//TODO - Add hand maybe?
+			mPlayer->setPosition(600, 315);
+			mPlayer->moveToPosition(600, 315);
+			if (!mPlayer->isFacingLeft())
+			{
+				mPlayer->flipPlayer();
+			}
+			mPlayer->setActiveAnimation("Fishing");
+			mPlayer->setScale(sf::Vector2f(0.45f, 0.45f));
 			mFishing = true;
 			mCursor->setMode(Cursor::DISABLED);
 			//TODO - Check if fishing animation is done before doing this

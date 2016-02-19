@@ -26,6 +26,7 @@ public:
 	float getSpeed();
 	void setSpeed(float speed);
 	bool getIsOnPosition();
+	void setScale(sf::Vector2f scale);
 
 private:
 	void move(float deltaTime);
@@ -55,11 +56,6 @@ private:
 	float mFrameTime;
 	std::string mActiveAnimation;
 
-	//Animation Sprites
-	sf::Image mThomasWalk;
-	sf::Image mHilmaWalk;
-	sf::Texture mTexture;
-
 	//Sounds
 	sf::Sound mWalkingSound;
 	
@@ -67,5 +63,6 @@ private:
 	sf::Texture mThomasTexture;
 	sf::Texture mHilmaTexture;
 	sf::Texture mHilmaPushTexture;
+	sf::Texture mHilmaFishingTexture;
 };
 #endif

@@ -43,6 +43,7 @@ void ResourceHandler::loadLevel1()
 	//Hilma
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
+	addTexture("HilmaFishing.png");
 
 	//In-game UI
 	addTexture("haticon.png");
