@@ -953,7 +953,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Bowl")
 				{
 					mDialogueSystem->reset();
-					mDialogueSystem->hasClicked("level1Start", mPlayer);
+					mDialogueSystem->hasClicked("bowl", mPlayer);
 					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "Block")
@@ -971,7 +971,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "String")
 				{
 					mDialogueSystem->reset();
-					mDialogueSystem->hasClicked("level1End", mPlayer);
+					mDialogueSystem->hasClicked("string", mPlayer);
 					mCursor->setMode(Cursor::DIALOGUE);
 				}
 				if (mTargetItem->getId() == "Star")
