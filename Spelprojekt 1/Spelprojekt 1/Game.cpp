@@ -4,8 +4,7 @@ using namespace std;
 
 Game::Game():
 mRHandler(),
-mLHandler(mRHandler),
-mMenu(mRHandler)
+mLHandler(mRHandler)
 {
 	loadScreenTexture.loadFromFile("Resources/Textures/loadscreen.jpg");
 	loadScreen.setTexture(loadScreenTexture);
@@ -23,7 +22,7 @@ void Game::update()
 	window.draw(loadScreen);
 	window.display();
 
-	//window.setMouseCursorVisible(false);
+	window.setMouseCursorVisible(false);
 
 	mLHandler.setActiveLevel(0, mRHandler, true);
 
@@ -34,22 +33,24 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		mMenu.update(deltaTime);
-
-		if (mMenu.getState() == Menu::Main)
+		if (mLHandler.getActiveLevel()->getUI()->getState() == UI::MAINMENU)
 		{
-			mMenu.eventListen(window);
+			mLHandler.getActiveLevel()->getUI()->eventListen(window);
+			mLHandler.getActiveLevel()->getUI()->drawMainMenu(window);
 		}
-
-
-		if (mMenu.getState() != Menu::Main)
+		else if (mLHandler.getActiveLevel()->getUI()->getState() != UI::MAINMENU)
 		{
 			mLHandler.update(deltaTime, window, mRHandler);
-			mLHandler.getActiveLevel()->eventListen(window, mMenu);
+			if (mLHandler.getActiveLevel()->getUI()->getState() != UI::EXIT)
+			{
+				mLHandler.getActiveLevel()->eventListen(window);
+			}
+			else
+			{
+				mLHandler.getActiveLevel()->getUI()->eventListen(window);
+			}
 			mLHandler.draw(window);
 		}
-
-		mMenu.draw(window);
 
 		deltaClock.restart();
 		window.display();

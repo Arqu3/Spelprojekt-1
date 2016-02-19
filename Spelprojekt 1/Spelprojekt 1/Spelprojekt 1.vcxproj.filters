@@ -40,9 +40,6 @@
     <ClCompile Include="ResourceHandler.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.cpp">
-      <Filter>.cpp</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
@@ -79,9 +76,6 @@
       <Filter>.h</Filter>
     </ClInclude>
     <ClInclude Include="LevelHandler.h">
-      <Filter>.h</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.h">
       <Filter>.h</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">

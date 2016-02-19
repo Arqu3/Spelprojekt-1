@@ -18,6 +18,9 @@ public:
 	//Player
 	Player* getPlayer();
 
+	//UI
+	UI* getUI();
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();
@@ -50,7 +53,7 @@ public:
 	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
 	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
-	void eventListen(sf::RenderWindow &window, Menu &menu);
+	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 

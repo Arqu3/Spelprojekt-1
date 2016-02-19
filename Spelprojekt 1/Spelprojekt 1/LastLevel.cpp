@@ -553,7 +553,7 @@ int LastLevel::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::
 }
 
 
-void LastLevel::eventListen(sf::RenderWindow &window, Menu &menu)
+void LastLevel::eventListen(sf::RenderWindow &window)
 {
 	sf::Event event;
 	while (window.pollEvent(event))
@@ -1203,4 +1203,10 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 bool LastLevel::isLevelComplete()
 {
 	return mLevelComplete;
+}
+
+UI* LastLevel::getUI()
+{
+	return NULL;
+	//TODO - add ui stuff here
 }

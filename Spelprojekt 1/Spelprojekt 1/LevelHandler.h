@@ -31,6 +31,8 @@ public:
 
 	Player* getPlayer();
 
+	UI* getUI();
+
 private:
 	//Items
 	ItemVector mItems;

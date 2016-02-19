@@ -1,7 +1,6 @@
 #ifndef INCLUDED_GAME
 #define INCLUDED_GAME
 
-#include "Menu.h"
 #include "LevelHandler.h"
 #include "DialogueSystem.h"
 #include "ResourceHandler.h"
@@ -20,9 +19,6 @@ private:
 	//Handlers
 	ResourceHandler mRHandler;
 	LevelHandler mLHandler;
-
-	//Menu
-	Menu mMenu;
 
 	//Deltatime
 	sf::Clock deltaClock;

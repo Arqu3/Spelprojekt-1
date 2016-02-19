@@ -7,7 +7,6 @@
 #include "Player.h"
 #include "Cursor.h"
 #include "UI.h"
-#include "Menu.h"
 
 class Level
 {
@@ -20,6 +19,9 @@ public:
 
 	//Player
 	virtual Player* getPlayer() = 0;
+
+	//UI
+	virtual UI* getUI() = 0;
 
 	//Rectangle for levels
 	typedef std::vector<sf::FloatRect*> rectVector;
@@ -52,7 +54,7 @@ public:
 	virtual bool isActive() = 0;
 
 	//Eventstuff
-	virtual void eventListen(sf::RenderWindow &window, Menu &menu) = 0;
+	virtual void eventListen(sf::RenderWindow &window) = 0;
 	virtual void mouseClick(sf::Event &event) = 0;
 	virtual void update(sf::RenderWindow &window, float deltaTime) = 0;
 

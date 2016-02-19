@@ -7,18 +7,18 @@ mMainButtons(),
 mExitButtons(),
 mState(Main)
 {
-	mBackground.setSize(sf::Vector2f(1024, 576));
-	mBackground.setTexture(handler.getTexture("MainMenuBackground.png"));
+	//mBackground.setSize(sf::Vector2f(1024, 576));
+	//mBackground.setTexture(handler.getTexture("MainMenuBackground.png"));
 
-	//Adds main menu buttons
-	mMainButtons.push_back(new Button(200, 100, sf::Color::Red));
-	mMainButtons.push_back(new Button(200, 100, sf::Color::Blue));
-	mMainButtons.push_back(new Button(200, 100, sf::Color::Green));
+	////Adds main menu buttons
+	//mMainButtons.push_back(new Button(200, 100, sf::Color::Red));
+	//mMainButtons.push_back(new Button(200, 100, sf::Color::Blue));
+	//mMainButtons.push_back(new Button(200, 100, sf::Color::Green));
 
-	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
-	{
-		mMainButtons[i]->setPosition(512.0f - mMainButtons[0]->getRect().width / 2, 100.0f + (160.0f * i));
-	}
+	//for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	//{
+	//	mMainButtons[i]->setPosition(512.0f - mMainButtons[0]->getRect().width / 2, 100.0f + (160.0f * i));
+	//}
 
 	//mExitButtons.push_back(new Button(200, 100, sf::Color::Red));
 	//mExitButtons.push_back(new Button(200, 100, sf::Color::Green));
