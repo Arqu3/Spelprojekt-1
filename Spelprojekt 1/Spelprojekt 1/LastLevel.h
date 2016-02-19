@@ -114,6 +114,9 @@ private:
 	Item* mFoodBowl;
 	Item* mKids;
 	Item* mHole;
+	Item* mPearl;
+	Item* mScrewDevice;
+	Item* mSaturn;
 
 	bool mLevelComplete;
 
@@ -147,6 +150,7 @@ private:
 	bool mInventoryMode;
 	bool mDisableClick;
 	bool mFishFalling;
+	bool mCatWalking;
 
 	ResourceHandler &handler;
 

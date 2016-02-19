@@ -119,15 +119,13 @@ void ResourceHandler::loadLastLevel()
 
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
 
-    //Thomas
+
+    //Karaktärer
 	addTexture("ThomasWalk.png");
-
-	//Hilma
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
-
-	//Karaktärer
 	addTexture("Katten.png");
 	addTexture("Lisa.png");
 	addTexture("PutteSad.png");
@@ -146,7 +144,14 @@ void ResourceHandler::loadLastLevel()
 	addTexture("speechbubble.png");
 	addTexture("eyecursor.png");
 
-	//Sound
+	//Props
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+
+
+	
 
 
 }

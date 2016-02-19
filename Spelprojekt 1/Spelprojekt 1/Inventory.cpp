@@ -125,7 +125,7 @@ void Inventory::draw(sf::RenderWindow &window)
 	}
 
 	//Draw result
-	if (mHasCraft1 && mHasCraft2 && (mItem1->getCraftIndex() != -1 || mItem2->getCraftIndex() != -1))
+	if (mHasCraft1 && mHasCraft2 && (mItem1->getCraftIndex() != -1 || mItem2->getCraftIndex() != -1) && mItem1->getCraftIndex() == mItem2->getCraftIndex())
 	{
 		int temp = mItems[mCraftSelect1]->getCraftIndex();
 		mResultItem = mCraftableItems[temp];
@@ -217,11 +217,15 @@ void Inventory::removeItem(int index)
 				}
 			}
 		}
-		//If index is last
 		else
 		{
 			mItems.pop_back();
 		}
+	}
+	//If index is last
+	else
+	{
+		mItems.pop_back();
 	}
 
 	mCol--;
@@ -230,6 +234,8 @@ void Inventory::removeItem(int index)
 		mRow--;
 		mCol = 2;
 	}
+
+	mSelectedItem1 = -1;
 }
 
 //Checks collision between any element in a vector and a sf::vector point
@@ -409,14 +415,20 @@ bool Inventory::craftCheck()
 //Loads craftable items depending on level
 void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 {
+	if (mCraftableItems.size() > 0)
+	{
+		mCraftableItems.clear();
+	}
+
 	if (index == 0)
 	{
-		if (mCraftableItems.size() > 0)
-		{
-			mCraftableItems.clear();
-		}
+		
 		//MAKE SURE CRAFTING INDEX IN ITEM CLASS IS IN CORRECT ORDER!
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "FishingRodMagnet"));
+	}
+	else if (index == 1)
+	{
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Saturn"));
 	}
 }
 

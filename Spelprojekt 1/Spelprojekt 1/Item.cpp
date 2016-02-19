@@ -10,13 +10,13 @@ mIsPickupable(false),
 mIsLookedAt(false),
 mInteracted(false),
 isOnPosition(true),
-mSpeed(100.0f)
+mSpeed(100.0f),
+mCraftIndex(-1)
 {
 	//Create items here
 	if (id == "Screwdevice")
 	{
 		mIndex = 0;
-		mCraftIndex = -1;
 		mName = "Skruvmakapär";
 		mDescription = "Testar Description!";
 		mSprite.setPosition(mPosition);
@@ -68,7 +68,6 @@ mSpeed(100.0f)
 	if (id == "Astronaut")
 	{
 		mIndex = 5;
-		mCraftIndex = -1;
 		mName = "Astronaut";
 		mDescription = "Skruvar på saker";
 		mSprite.setPosition(mPosition);
@@ -126,7 +125,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.22f, 0.22f));
-		mSprite.setTexture(*handler.getTexture("Jordglob.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Jordglob.png")); 
 	}
 
 	if (id == "Fish")
@@ -152,6 +151,7 @@ mSpeed(100.0f)
 	if (id == "Hoola Hoop")
 	{
 		mIndex = 13;
+		mCraftIndex = 0;
 		mName = "Rockring";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -162,6 +162,7 @@ mSpeed(100.0f)
 	if (id == "Beige Ball")
 	{
 		mIndex = 14;
+		mCraftIndex = 0;
 		mName = "Beige Boll";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -242,7 +243,6 @@ mSpeed(100.0f)
 	if (id == "FishingRodMagnet")
 	{
 		mIndex = 22;
-		mCraftIndex = -1;
 		mName = "Fiskespö med magnet";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -252,13 +252,32 @@ mSpeed(100.0f)
 
 	if (id == "Hole")
 	{
-		mIndex = 22;
-		mCraftIndex = -1;
+		mIndex = 23;
 		mName = "Hål";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.5f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+	}
+
+	if (id == "Pearl")
+	{
+		mIndex = 24;
+		mName = "Pärla";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("Pluto.png")); //Add correct texture
+	}
+
+	if (id == "Saturn")
+	{
+		mIndex = 25;
+		mName = "Saturnus";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
 	}
 }
 
