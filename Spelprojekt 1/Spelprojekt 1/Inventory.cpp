@@ -222,11 +222,11 @@ void Inventory::removeItem(int index)
 				}
 			}
 		}
-		//If index is last
-		else
-		{
-			mItems.pop_back();
-		}
+	}
+	//If index is last
+	else
+	{
+		mItems.pop_back();
 	}
 
 	mCol--;

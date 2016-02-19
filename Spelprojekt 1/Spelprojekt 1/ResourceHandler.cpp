@@ -13,6 +13,7 @@ soundCounter(0),
 musicCounter(0)
 {
 	addTexture("loadscreen.jpg");
+	addTexture("MainMenuBackground.png");
 }
 
 ResourceHandler::~ResourceHandler()
@@ -81,15 +82,33 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
-
-	//Textbubbla
+	//Textbubble
 	addTexture("textbubble.png");
-
-	
+	addTexture("textbox.png");
+	//Character Expressions
+	addTexture("expressionHilmaAngry.png");
+	addTexture("expressionHilmaConfident.png");
+	addTexture("expressionHilmaDetermined.png");
+	addTexture("expressionHilmaGrumpy.png");
+	addTexture("expressionHilmaHappy.png");
+	addTexture("expressionHilmaNeutral.png");
+	addTexture("expressionHilmaSad.png");
+	addTexture("expressionHilmaSigh.png");
+	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasCry.png");
+	addTexture("expressionThomasGrumpy.png");
+	addTexture("expressionThomasHappy.png");
+	addTexture("expressionThomasNeutral.png");
+	addTexture("expressionThomasSad.png");
+	addTexture("expressionThomasSigh.png");
+	addTexture("expressionThomasSmile.png");
+	addTexture("expressionThomasSurprised.png");
+	//Sepia
+	addTexture("sepia.png");
 
 	//Music
 	addMusic("Level1Music.ogg");
-
 
 	//Sound
 	addSound("FootSteps.ogg");
@@ -102,26 +121,6 @@ void ResourceHandler::loadLevel1()
 void ResourceHandler::loadLastLevel()
 {
 	//internalClear();
-
-	////Thomas
-	//addTexture("ThomasWalk.png");
-	////Hilma
-	//addTexture("HilmaWalk.png");
-	//addTexture("HilmaPush.png");
-
-	////In-game UI
-	//addTexture("haticon.png");
-	//addTexture("menuicon.png");
-	//addTexture("hatmenu.png");
-	//addTexture("menu.png");
-	//addTexture("inventory.png");
-
-	////Cursors
-	//addTexture("mousecursor.png");
-	//addTexture("openhand.png");
-	//addTexture("closedhand.png");
-	//addTexture("speechbubble.png");
-	//addTexture("eyecursor.png");
 
     //LastLevel
 	addTexture("ARBETSRUMbakgrund.png");
@@ -145,6 +144,28 @@ void ResourceHandler::loadLastLevel()
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
 
+	//addTexture("ThomasWalk.png");
+
+	////Hilma
+	//addTexture("HilmaWalk.png");
+	//addTexture("HilmaPush.png");
+
+	////In-game UI
+	//addTexture("haticon.png");
+	//addTexture("menuicon.png");
+	//addTexture("hatmenu.png");
+	//addTexture("settingsmenu.png");
+	//addTexture("inventory.png");
+
+	////Cursors
+	//addTexture("mousecursor.png");
+	//addTexture("openhand.png");
+	//addTexture("closedhand.png");
+	//addTexture("speechbubble.png");
+	//addTexture("eyecursor.png");
+
+	//Sounds
+	addSound("FootSteps.ogg");
 }
 
 //Adds a texture to the texture vector

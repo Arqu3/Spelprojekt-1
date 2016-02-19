@@ -1,53 +1,71 @@
-#ifndef INCLUDED_MENU
-#define INCLUDED_MENU
+#ifndef INCLUDED_UI
+#define INCLUDED_UI
 
-#include "ResourceHandler.h"
 #include "SFML\System.hpp"
+#include "Button.h"
+#include "Cursor.h"
 
 class UI{
 public:
 	UI(ResourceHandler &handler);
 	~UI();
 
-	enum ActiveUI
+	enum State
 	{
 		HAT,
-		MAIN,
+		MAINUI,
+		MAINMENU,
 		INVENTORY,
 		CLUES,
 		MEMORIES,
 		SETTINGS,
 		EXIT,
-		NONE
+		INGAME
 	};
 
 	void update();
 	void draw(sf::RenderWindow &window);
+	void drawMainMenu(sf::RenderWindow &window);
+	void drawExit(sf::RenderWindow &window);
 
 	void checkCollision(sf::Vector2f point);
 
-	void setActiveUI(ActiveUI newUI);
+	void setState(State newState);
+	void eventListen(sf::RenderWindow &window);
 
-	ActiveUI getActiveUI();
+	State getState();
 	sf::FloatRect getHatIconRect();
 	sf::FloatRect getMenuIconRect();
 
 private:
-	ActiveUI menu;
+	State mState;
 
-	//Menu Sprites
+	//Buttons
+	typedef std::vector<Button*> ButtonVector;
+	ButtonVector mMainButtons;
+	ButtonVector mExitButtons;
+	ButtonVector mUIButtons;
+	sf::RectangleShape mBackground;
+
+	//UI Sprites
 	sf::Sprite mHatIcon;
 	sf::Sprite mMenuIcon;
 	sf::Sprite mHatMenu;
 	sf::Sprite mMainMenu;
 	sf::Sprite mInventoryMenu;
 
-	//Menu Rects
+	//UI Rects
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
 	sf::FloatRect mMemoriesRect;
 	sf::FloatRect mSettingsRect;
 	sf::FloatRect mExitRect;
+
+	//Mouse position
+	sf::Vector2i mPixelPos;
+	sf::Vector2f mWorldPos;
+	//Custom cursos
+	Cursor* mCursor;
 
 	//Help Rectangle
 	sf::RectangleShape mHelpRectangle;

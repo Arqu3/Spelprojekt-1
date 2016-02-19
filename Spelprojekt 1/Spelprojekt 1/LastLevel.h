@@ -18,6 +18,9 @@ public:
 	//Player
 	Player* getPlayer();
 
+	//UI
+	UI* getUI();
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();

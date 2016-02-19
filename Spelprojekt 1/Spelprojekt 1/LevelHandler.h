@@ -26,6 +26,7 @@ public:
 	Level* getActiveLevel();
 	Level* getLevel(int index);
 
+	UI* getUI();
 private:
 
 	//Levels

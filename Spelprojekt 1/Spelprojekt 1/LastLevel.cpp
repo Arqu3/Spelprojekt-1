@@ -232,7 +232,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		//Inventory
 		mInventory = new Inventory();
 
-
 		//Rectangles
 
 		//Dollhouse
@@ -1204,4 +1203,10 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 bool LastLevel::isLevelComplete()
 {
 	return mLevelComplete;
+}
+
+UI* LastLevel::getUI()
+{
+	return NULL;
+	//TODO - add ui stuff here
 }
