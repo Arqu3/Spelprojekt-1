@@ -264,23 +264,23 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 
 	if (ui.getHatIconRect().contains(point))
 	{
-		ui.setActiveUI(UI::HAT);
+		ui.setState(UI::HAT);
 	}
 	else if (ui.getMenuIconRect().contains(point))
 	{
-		ui.setActiveUI(UI::MAIN);
+		ui.setState(UI::MAINUI);
 	}
 	else if (mInventoryRect.contains(point))
 	{
-		ui.setActiveUI(UI::HAT);
+		ui.setState(UI::HAT);
 	}
 	else if (mCluesRect.contains(point))
 	{
-		ui.setActiveUI(UI::CLUES);
+		ui.setState(UI::CLUES);
 	}
 	else if (mMemoriesRect.contains(point))
 	{
-		ui.setActiveUI(UI::MEMORIES);
+		ui.setState(UI::MEMORIES);
 	}
 	else
 	{
