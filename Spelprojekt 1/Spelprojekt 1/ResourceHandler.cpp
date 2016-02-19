@@ -12,6 +12,7 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
+	addTexture("MainMenuBackground.png");
 }
 
 ResourceHandler::~ResourceHandler()
@@ -101,11 +102,8 @@ void ResourceHandler::loadLevel1()
 	//Sepia
 	addTexture("sepia.png");
 
-	
-
 	//Music
 	addMusic("Level1Music.ogg");
-
 
 	//Sound
 	addSound("FootSteps.ogg");
@@ -119,7 +117,7 @@ void ResourceHandler::loadLastLevel()
 {
 	//internalClear();
 
-        //LastLevel
+    //LastLevel
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");
@@ -141,7 +139,6 @@ void ResourceHandler::loadLastLevel()
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
 
- //       //Thomas
 	//addTexture("ThomasWalk.png");
 
 	////Hilma
@@ -162,6 +159,8 @@ void ResourceHandler::loadLastLevel()
 	//addTexture("speechbubble.png");
 	//addTexture("eyecursor.png");
 
+	//Sounds
+	addSound("FootSteps.ogg");
 }
 
 //Adds a texture to the texture vector

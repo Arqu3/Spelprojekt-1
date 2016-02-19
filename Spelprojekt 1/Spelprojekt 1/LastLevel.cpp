@@ -5,11 +5,7 @@ mRects(),
 mPlayRects(),
 mIsActive(false),
 handler(handler)
-{
-
-
-
-	
+{	
 }
 
 LastLevel::~LastLevel()
@@ -161,6 +157,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 	if (!mIsActive)
 	{
 		handler.loadLastLevel();
+
 		//Background Texture scene 1
 		background.setSize(sf::Vector2f(1024, 576));
 		background.setTexture(handler.getTexture("ARBETSRUMbakgrund.png"));
@@ -1206,4 +1203,10 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 bool LastLevel::isLevelComplete()
 {
 	return mLevelComplete;
+}
+
+UI* LastLevel::getUI()
+{
+	return NULL;
+	//TODO - add ui stuff here
 }

@@ -117,7 +117,7 @@ void Level1::drawUI(sf::RenderWindow &window)
 {
 	mUI->draw(window);
 
-	if (mUI->getActiveUI() == UI::INVENTORY)
+	if (mUI->getState() == UI::INVENTORY)
 	{
 		mInventory->draw(window);
 	}
@@ -188,6 +188,10 @@ void Level1::toggleActive(ResourceHandler &handler)
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
 		music.setLoop(true);
 		music.play();
+
+		mAmbientSound.setBuffer(*handler.getSound("Level1Ambience.ogg"));
+		mAmbientSound.setLoop(true);
+		mAmbientSound.play();
 
 		//View
 		mView.setCenter(512, 288);
@@ -505,7 +509,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
-			if (mUI->getActiveUI() == UI::INVENTORY)
+			if (mUI->getState() == UI::INVENTORY)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
 
@@ -520,7 +524,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mDialogueSystem->setState();
 			}
-			else if (mUI->getActiveUI() != UI::NONE)
+			else if (mUI->getState() != UI::INGAME)
 			{
 				mUI->checkCollision(mWorldPos);
 			}
@@ -531,20 +535,16 @@ void Level1::eventListen(sf::RenderWindow &window)
 			break;
 
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Escape)
-			{
-				window.close();
-			}
 			if (event.key.code == sf::Keyboard::I)
 			{
-				if (mUI->getActiveUI() == UI::INVENTORY)
+				if (mUI->getState() == UI::INVENTORY)
 				{
-					mUI->setActiveUI(UI::NONE);
+					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else
 				{
-					mUI->setActiveUI(UI::INVENTORY);
+					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 				}
 			}
@@ -576,18 +576,18 @@ void Level1::mouseClick(sf::Event &event)
 	if (checkCollision(mUI->getHatIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setActiveUI(UI::HAT);
+		mUI->setState(UI::HAT);
 	}
 
 	//Check if Menu Icon is clicked
-	if (checkCollision(mUI->getMenuIconRect(), point))
+	else if (checkCollision(mUI->getMenuIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setActiveUI(UI::MAIN);
+		mUI->setState(UI::MAINUI);
 	}
 
 	//Check if playrect collision
-	if (checkCollision(getPlayRects(), point))
+	else if (checkCollision(getPlayRects(), point))
 	{
 		mPlayer->setActiveAnimation("Walk");
 		mPlayer->moveToPosition(point.x, point.y);
@@ -912,6 +912,7 @@ void Level1::mouseHover()
 
 void Level1::update(sf::RenderWindow &window, float deltaTime)
 {
+	mUI->update();
 	//Check if Player is in position to change Scene
 	if (mPlayer->getRect().intersects(mSceneChangeRect))
 	{
@@ -1083,8 +1084,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
-	mCursor->setPosition(sf::Vector2f(mWorldPos));
-	mCursor->update();
+	mCursor->update(window);
 
 	//Change mouse cursor on hover
 	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU && mUpdateTime > 0)
@@ -1106,4 +1106,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 bool Level1::isLevelComplete()
 {
 	return mLevelComplete;
+}
+
+UI* Level1::getUI()
+{
+	return mUI;
 }

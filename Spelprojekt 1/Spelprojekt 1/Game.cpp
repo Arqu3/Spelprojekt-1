@@ -26,7 +26,6 @@ void Game::update()
 
 	mLHandler.setActiveLevel(0, mRHandler, true);
 
-
 	while (window.isOpen())
 	{
 		window.clear(sf::Color::Black);
@@ -34,9 +33,24 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		mLHandler.update(deltaTime, window, mRHandler);
-		mLHandler.draw(window);
-		mLHandler.getActiveLevel()->eventListen(window);
+		if (mLHandler.getActiveLevel()->getUI()->getState() == UI::MAINMENU)
+		{
+			mLHandler.getActiveLevel()->getUI()->eventListen(window);
+			mLHandler.getActiveLevel()->getUI()->drawMainMenu(window);
+		}
+		else if (mLHandler.getActiveLevel()->getUI()->getState() != UI::MAINMENU)
+		{
+			mLHandler.update(deltaTime, window, mRHandler);
+			if (mLHandler.getActiveLevel()->getUI()->getState() != UI::EXIT)
+			{
+				mLHandler.getActiveLevel()->eventListen(window);
+			}
+			else
+			{
+				mLHandler.getActiveLevel()->getUI()->eventListen(window);
+			}
+			mLHandler.draw(window);
+		}
 
 		deltaClock.restart();
 		window.display();
