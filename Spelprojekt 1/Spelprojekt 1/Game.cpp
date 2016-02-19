@@ -6,8 +6,7 @@ Game::Game():
 mRHandler(),
 mLHandler(mRHandler)
 {
-	loadScreenTexture.loadFromFile("Resources/Textures/loadscreen.jpg");
-	loadScreen.setTexture(loadScreenTexture);
+	loadScreen.setTexture(*mRHandler.getTexture("loadscreen.jpg"));
 }
 
 Game::~Game()
@@ -24,7 +23,7 @@ void Game::update()
 
 	window.setMouseCursorVisible(false);
 
-	mLHandler.setActiveLevel(0, mRHandler, true);
+	mLHandler.setActiveLevel(0, mRHandler);
 
 	while (window.isOpen())
 	{

@@ -64,6 +64,16 @@ public:
 	//Level Complete
 	bool isLevelComplete();
 
+	//Update functions
+	void updateTargetItem(float deltaTime);
+	void lookAtTargetItem();
+	void pickupTargetItem();
+	void interactTargetItem();
+
+	//Mouseclick collision functions
+	void mouseClickCheckItemCollision(sf::Vector2f point);
+	void mouseClickCheckRectCollision(sf::Vector2f point);
+
 private:
 	
 	//Rectangles
@@ -128,13 +138,12 @@ private:
 
 	bool mPlayerToggle;
 	bool mLookedAtAquarium;
-	bool mLookedAtRug;
+	bool mPushingBlock;
+	bool mFishing;
 	bool mReadyForScrewdevice;
 	bool mPickedUpScrewdevice;
 	bool mMovedStar;
 	bool mReadyToLeave;
 	bool mLevelComplete;
-
-	int mUpdateTime;
 };
 #endif
