@@ -11,11 +11,18 @@ ui(INGAME)
 	mHatIcon.setTexture(*handler.getTexture("haticon.png"));
 	mHatIcon.setPosition(sf::Vector2f(10, 470));
 	mHatIcon.setScale(sf::Vector2f(0.3f, 0.3f));
+
+	//mUIButtons.push_back(new Button(handler, 10.0f, 470.0f, "haticon.png"));
+	//mUIButtons[0]->getSprite().setScale(sf::Vector2f(0.3f, 0.3f));
+
 	//MenuIcon
 	handler.getTexture("menuicon.png")->setSmooth(true);
 	mMenuIcon.setTexture(*handler.getTexture("menuicon.png"));
 	mMenuIcon.setPosition(sf::Vector2f(90, 510));
 	mMenuIcon.setScale(sf::Vector2f(0.3f, 0.3f));
+
+	//mUIButtons.push_back(new Button(handler, 90.0f, 510.0f, "menuicon.png"));
+	//mUIButtons[0]->getSprite().setScale(sf::Vector2f(0.3f, 0.3f));
 
 	//UI Menus
 	//HatMenu
@@ -44,6 +51,15 @@ ui(INGAME)
 	//Help Rectangle
 	mHelpRectangle.setPosition(sf::Vector2f(180, 430));
 	mHelpRectangle.setSize(sf::Vector2f(85, 80));
+
+	//Exit buttons
+	mExitButtons.push_back(new Button(200, 100, sf::Color::Red));
+	mExitButtons.push_back(new Button(200, 100, sf::Color::Green));
+
+	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
+	{
+		mExitButtons[i]->setPosition(512.0f - mExitButtons[0]->getRect().width + (260.0f * i), 288);
+	}
 }
 
 UI::~UI()
@@ -55,22 +71,31 @@ void UI::update()
 	switch (ui){
 	case HAT:
 		break;
+
 	case MAINUI:
 		break;
+
 	case MAINMENU:
 		break;
+
 	case INVENTORY:
 		break;
+
 	case CLUES:
 		break;
+
 	case MEMORIES:
 		break;
+
 	case SETTINGS:
 		break;
+
 	case EXIT:
 		break;
+
 	case INGAME:
 		break;
+
 	default:
 		break;
 	}
@@ -78,37 +103,41 @@ void UI::update()
 
 void UI::draw(sf::RenderWindow &window)
 {
-	//window.draw(mHelpRectangle);
-
-	if (ui == HAT)
+	switch (ui)
 	{
+	case UI::HAT:
 		window.draw(mHatMenu);
-	}
-	if (ui == MAINUI)
-	{
+		break;
+
+	case UI::MAINUI:
 		window.draw(mMainMenu);
-	}
-	if (ui == INVENTORY)
-	{
+		break;
+
+	case UI::MAINMENU:
+		break;
+
+	case UI::INVENTORY:
 		window.draw(mHatMenu);
 		window.draw(mInventoryMenu);
-	}
-	if (ui == CLUES)
-	{
-		//TODO - Draw clues menu
-	}
-	if (ui == MEMORIES)
-	{
-		//TODO - Draw memories menu
-	}
-	if (ui == SETTINGS)
-	{
-		//TODO - Draw settings menu
-	}
-	if (ui == EXIT)
-	{
-		//TODO - Draw confirmation menu
-		//window.close();
+		break;
+
+	case UI::CLUES:
+		break;
+
+	case UI::MEMORIES:
+		break;
+
+	case UI::SETTINGS:
+		break;
+
+	case UI::EXIT:
+		break;
+
+	case UI::INGAME:
+		break;
+
+	default:
+		break;
 	}
 
 	window.draw(mHatIcon);

@@ -493,7 +493,7 @@ int Level1::checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Flo
 void Level1::eventListen(sf::RenderWindow &window, Menu &menu)
 {
 	sf::Event event;
-	mUI->update(menu);
+	mUI->update();
 	while (window.pollEvent(event))
 	{
 		// get the current mouse position in the window
@@ -525,7 +525,7 @@ void Level1::eventListen(sf::RenderWindow &window, Menu &menu)
 			{
 				mDialogueSystem->setState();
 			}
-			else if (mUI->getActiveUI() != UI::NONE)
+			else if (mUI->getActiveUI() != UI::INGAME)
 			{
 				mUI->checkCollision(mWorldPos);
 			}
@@ -547,7 +547,7 @@ void Level1::eventListen(sf::RenderWindow &window, Menu &menu)
 			{
 				if (mUI->getActiveUI() == UI::INVENTORY)
 				{
-					mUI->setActiveUI(UI::NONE);
+					mUI->setActiveUI(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else

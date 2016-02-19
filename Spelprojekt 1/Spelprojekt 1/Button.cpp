@@ -68,7 +68,7 @@ mMoveToPosition(x, y),
 mDirection(0, 0),
 mIsOnPosition(true),
 mSpeed(100),
-mMode(RectangleShape)
+mMode(Texture)
 {
 	mSprite.setTexture(*handler.getTexture(textureName));
 	mSprite.setPosition(x, y);
@@ -362,4 +362,19 @@ std::string Button::getTexureName()
 void Button::setSpeed(float value)
 {
 	mSpeed = value;
+}
+
+sf::Sprite Button::getSprite()
+{
+	switch (mMode)
+	{
+	case RectangleShape:
+		return sf::Sprite();
+		break;
+
+	case Texture:
+		return mSprite;
+		break;
+	}
+	return sf::Sprite();
 }

@@ -20,13 +20,13 @@ mState(Main)
 		mMainButtons[i]->setPosition(512.0f - mMainButtons[0]->getRect().width / 2, 100.0f + (160.0f * i));
 	}
 
-	mExitButtons.push_back(new Button(200, 100, sf::Color::Red));
-	mExitButtons.push_back(new Button(200, 100, sf::Color::Green));
+	//mExitButtons.push_back(new Button(200, 100, sf::Color::Red));
+	//mExitButtons.push_back(new Button(200, 100, sf::Color::Green));
 
-	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
-	{
-		mExitButtons[i]->setPosition(512.0f - mExitButtons[0]->getRect().width + (260.0f * i), 288);
-	}
+	//for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
+	//{
+	//	mExitButtons[i]->setPosition(512.0f - mExitButtons[0]->getRect().width + (260.0f * i), 288);
+	//}
 }
 
 Menu::~Menu()

@@ -28,6 +28,7 @@ public:
 
 	sf::FloatRect getRect();
 	std::string getTexureName();
+	sf::Sprite getSprite();
 	void setSpeed(float value);
 
 private:
