@@ -3,7 +3,8 @@
 using namespace std;
 
 UI::UI(ResourceHandler &handler) :
-mState(MAINMENU)
+mState(MAINMENU),
+mLoad(false)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -207,7 +208,12 @@ void UI::eventListen(sf::RenderWindow &window)
 				case MAINMENU:
 					if (mMainButtons[0]->isPressed(window))
 					{
+						mLoad = true;
 						setState(INGAME);
+					}
+					else
+					{
+						mLoad = false;
 					}
 
 					if (mMainButtons[2]->isPressed(window))
@@ -312,4 +318,9 @@ sf::FloatRect UI::getHatIconRect()
 sf::FloatRect UI::getMenuIconRect()
 {
 	return mMenuIcon.getGlobalBounds();
+}
+
+bool UI::load()
+{
+	return mLoad;
 }

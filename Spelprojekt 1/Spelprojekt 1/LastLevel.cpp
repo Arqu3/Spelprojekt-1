@@ -248,6 +248,9 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mRects.push_back(createRect(742, 55, 28, 28));
 		mRects.push_back(createRect(797, 56, 13, 13));
 
+		//UI
+		mUI = new UI(handler);
+
 		//Door
 		mRects.push_back(createRect(445, 186, 80, 50));
 
