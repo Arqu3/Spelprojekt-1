@@ -121,7 +121,7 @@ void LastLevel::drawUI(sf::RenderWindow &window)
 {
 	mUI->draw(window);
 
-	if (mUI->getActiveUI() == UI::INVENTORY)
+	if (mUI->getState() == UI::INVENTORY)
 	{
 		mInventory->draw(window);
 	}
@@ -216,7 +216,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 
 		//Add items
-<<<<<<< HEAD
 		mScrewDevice = new Item(handler, sf::Vector2f(0, 0), "Screwdevice");
 		mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
 		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
@@ -652,7 +651,7 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
-			if (mUI->getActiveUI() == UI::INVENTORY)
+			if (mUI->getState() == UI::INVENTORY)
 			{
 
 				mInventory->setCraftPos(mInventory->getSelectedItem());
@@ -669,7 +668,7 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			{
 				mDialogueSystem->setState();
 			}
-			else if (mUI->getActiveUI() != UI::NONE)
+			else if (mUI->getState() != UI::INGAME)
 			{
 				mUI->checkCollision(mWorldPos);
 			}
@@ -686,14 +685,14 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::I)
 			{
-				if (mUI->getActiveUI() == UI::INVENTORY)
+				if (mUI->getState() == UI::INVENTORY)
 				{
-					mUI->setActiveUI(UI::NONE);
+					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else
 				{
-					mUI->setActiveUI(UI::INVENTORY);
+					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 				}
 			}
@@ -727,14 +726,14 @@ void LastLevel::mouseClick(sf::Event &event)
 	if (checkCollision(mUI->getHatIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setActiveUI(UI::HAT);
+		mUI->setState(UI::HAT);
 	}
 
 	//Check if Menu Icon is clicked
 	if (checkCollision(mUI->getMenuIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setActiveUI(UI::MAIN);
+		mUI->setState(UI::MAINUI);
 	}
 
 
@@ -1377,7 +1376,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	}
 
 	mCursor->setPosition(sf::Vector2f(mWorldPos));
-	mCursor->update();
+	mCursor->update(window);
 
 	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU && mUpdateTime > 0)
 	{
