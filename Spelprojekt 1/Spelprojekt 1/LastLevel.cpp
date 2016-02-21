@@ -4,7 +4,8 @@ LastLevel::LastLevel(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
 mIsActive(false),
-handler(handler)
+handler(handler),
+mLevelComplete(false)
 {
 }
 
@@ -215,6 +216,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 
 		//Add items
+<<<<<<< HEAD
 		mScrewDevice = new Item(handler, sf::Vector2f(0, 0), "Screwdevice");
 		mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
 		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
@@ -239,12 +241,12 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		mSaturn = new Item(handler, sf::Vector2f(606, 44), "Saturn");
 
-
 		//View
 		mView.setSize(1024, 576);
 
 		//Player
 		mPlayer = new Player(handler, sf::Vector2f(400, 400));
+
 
 		//Inventory
 		mInventory = new Inventory();
@@ -340,7 +342,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mScrewDevice->setScale(0.3f, 0.3f);
 		mInventory->addItem(mScrewDevice);
 		
-
 	}
 
 	mIsActive = !mIsActive;
@@ -650,7 +651,6 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mUI->getActiveUI() == UI::INVENTORY)
 			{
-				mInventory->checkCollision(mInventory->getItems(), mWorldPos);
 
 				mInventory->setCraftPos(mInventory->getSelectedItem());
 
@@ -658,6 +658,9 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
 				}
+
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
+
 			}
 			else if (mCursor->getMode() == Cursor::DIALOGUE)
 			{
@@ -1495,4 +1498,10 @@ void LastLevel::mouseHover()
 bool LastLevel::isLevelComplete()
 {
 	return mLevelComplete;
+}
+
+UI* LastLevel::getUI()
+{
+	return NULL;
+	//TODO - add ui stuff here
 }

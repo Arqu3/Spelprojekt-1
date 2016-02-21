@@ -56,6 +56,11 @@ mHasCraft2(false)
 	//Select rectangle
 	mSelectRect.setSize(sf::Vector2f(70, 70));
 	mSelectRect.setFillColor(sf::Color::Yellow);
+
+	//UI Rects
+	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
+	mCluesRect = sf::FloatRect(sf::Vector2f(155, 365), sf::Vector2f(75, 80));
+	mMemoriesRect = sf::FloatRect(sf::Vector2f(195, 475), sf::Vector2f(75, 80));
 }
 
 Inventory::~Inventory()
@@ -217,11 +222,14 @@ void Inventory::removeItem(int index)
 				}
 			}
 		}
+
 		else
 		{
 			mItems.pop_back();
 		}
+
 	}
+	
 	//If index is last
 	else
 	{
@@ -240,7 +248,7 @@ void Inventory::removeItem(int index)
 
 //Checks collision between any element in a vector and a sf::vector point
 //If the collision check is true, it returns the specified element it collided with
-void Inventory::checkCollision(ItemVector items, sf::Vector2f point)
+void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
@@ -262,7 +270,31 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point)
 			return;
 		}
 	}
-	deSelect();
+
+	if (ui.getHatIconRect().contains(point))
+	{
+		ui.setState(UI::HAT);
+	}
+	else if (ui.getMenuIconRect().contains(point))
+	{
+		ui.setState(UI::MAINUI);
+	}
+	else if (mInventoryRect.contains(point))
+	{
+		ui.setState(UI::HAT);
+	}
+	else if (mCluesRect.contains(point))
+	{
+		ui.setState(UI::CLUES);
+	}
+	else if (mMemoriesRect.contains(point))
+	{
+		ui.setState(UI::MEMORIES);
+	}
+	else
+	{
+		deSelect();
+	}
 }
 
 void Inventory::setCraftPos(int index)
