@@ -36,7 +36,7 @@ mState(MAINMENU)
 	handler.getTexture("inventory.png")->setSmooth(true);
 	mInventoryMenu.setTexture(*handler.getTexture("inventory.png"));
 	mInventoryMenu.setPosition(sf::Vector2f(250, 50));
-	mInventoryMenu.setScale(sf::Vector2f(0.3f, 0.3f));
+	mInventoryMenu.setScale(sf::Vector2f(0.6f, 0.6f));
 
 	//UI Rects
 	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
