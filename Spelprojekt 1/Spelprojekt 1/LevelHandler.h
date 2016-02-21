@@ -21,7 +21,7 @@ public:
 	//Draw
 	void draw(sf::RenderWindow &window);
 
-	void setActiveLevel(int num, ResourceHandler &handler);
+	void setActiveLevel(int num, ResourceHandler &handler, bool isFirstLevel);
 
 	Level* getActiveLevel();
 	Level* getLevel(int index);
