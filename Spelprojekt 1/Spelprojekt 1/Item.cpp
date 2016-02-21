@@ -21,6 +21,7 @@ mCraftIndex(-1)
 		mDescription = "Testar Description!";
 		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("ScrewDeviceINV.png"));
 	}
 
 	if (id == "Star")
@@ -50,8 +51,8 @@ mCraftIndex(-1)
 		mName = "Fiskespö";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("FishingRod.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("FishingRodINV.png"));
 	}
 
 	if (id == "Magnet")
@@ -63,6 +64,7 @@ mCraftIndex(-1)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomasmagnet.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("MagnetINV.png"));
 	}
 
 	if (id == "Astronaut")
@@ -73,6 +75,7 @@ mCraftIndex(-1)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("thomasastronaut.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("AstronautINV.png"));
 	}
 
 	if (id == "Bowl")
@@ -245,9 +248,8 @@ mCraftIndex(-1)
 		mIndex = 22;
 		mName = "Fiskespö med magnet";
 		mDescription = "";
-		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
+		mINVSprite.setPosition(mPosition);
+		mINVSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
 	}
 
 	if (id == "Hole")
@@ -330,7 +332,6 @@ void Item::toggleInteracted()
 	mInteracted = !mInteracted;
 }
 
-
 std::string Item::getId()
 {
 	return mId;
@@ -354,6 +355,10 @@ void Item::draw(sf::RenderWindow &window)
 	window.draw(mSprite);
 }
 
+void Item::drawINV(sf::RenderWindow &window)
+{
+	window.draw(mINVSprite);
+}
 
 //Get functions of flags (bools)
 bool Item::getActive()
@@ -391,7 +396,6 @@ bool Item::isInteracted()
 	return mInteracted;
 }
 
-
 //Get name
 std::string Item::getName()
 {
@@ -412,12 +416,20 @@ sf::FloatRect Item::getRectangle()
 	return mSprite.getGlobalBounds();
 }
 
+sf::FloatRect Item::getINVRectangle()
+{
+	return mINVSprite.getGlobalBounds();
+}
 
 sf::Vector2f Item::getPosition()
 {
 	return mSprite.getPosition();
 }
 
+sf::Vector2f Item::getINVPosition()
+{
+	return mINVSprite.getPosition();
+}
 
 void Item::setPosition(float x, float y)
 {
@@ -425,6 +437,11 @@ void Item::setPosition(float x, float y)
 	mDirection = sf::Vector2f(0, 0);
 }
 
+void Item::setINVPosition(float x, float y)
+{
+	mINVSprite.setPosition(sf::Vector2f(x, y));
+	mDirection = sf::Vector2f(0, 0);
+}
 
 void Item::moveToPosition(float x, float y)
 {
@@ -486,6 +503,10 @@ sf::Sprite Item::getSprite()
 	return mSprite;
 }
 
+sf::Sprite Item::getINVSprite()
+{
+	return mINVSprite;
+}
 
 void Item::update(float deltaTime)
 {

@@ -12,7 +12,10 @@ mAdvancedIsActive(false),
 mFinishedDialogue(false),
 mHandler(handler),
 mFirstCharacter(),
-mSecondCharacter()
+mSecondCharacter(),
+mState(0),
+mLevel1Start(true),
+mLevel1End(false)
 {
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
@@ -184,12 +187,12 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 	mPlayer = player;
 
 	//Advanced Dialogue
-	if (indexName == "level1Start" && mHasClicked == false)
-	{
-		mLevel1Start = true;
-		mHasClicked = true;
-	}
-	if (indexName == "level1End" && mHasClicked == false)
+	//if (indexName == "level1Start" && mHasClicked == false)
+	//{
+	//	mLevel1Start = true;
+	//	mHasClicked = true;
+	//}
+	if (indexName == "ScrewDevice" && mHasClicked == false)
 	{
 		mLevel1End = true;
 		mHasClicked = true;
@@ -480,6 +483,27 @@ void DialogueSystem::reset()
 	mState = 0;
 
 	mText.setString("");
+}
+
+void DialogueSystem::setLevel1End()
+{
+	mLevel1End = true;
+}
+
+bool DialogueSystem::getLevel1End()
+{
+	return mLevel1End;
+}
+
+void DialogueSystem::setLevel1Start()
+{
+	mLevel1Start = true;
+	mAdvancedIsActive = true;
+}
+
+bool DialogueSystem::getLevel1Start()
+{
+	return mLevel1Start;
 }
 
 //Update function
