@@ -772,8 +772,19 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	if (mReadyToLeave)
 	{
-		mLevelComplete = true; //TODO - Do more stuff probably, play final dialogue etc.
+		mDialogueSystem->reset();
+		mDialogueSystem->hasClicked("level1End", mPlayer);
+		mCursor->setMode(Cursor::DIALOGUE);
+		if (mDialogueSystem->isDialogueFinished()) //TODO - Check advancedIsActive in mDialogueSystem
+		{
+			mLevelComplete = true; //TODO - Do more stuff probably, play final dialogue etc.
+		}
 	}
+
+	// TODO - Do this only if level just started
+	//mDialogueSystem->reset();
+	//mDialogueSystem->hasClicked("level1Start", mPlayer);
+	//mCursor->setMode(Cursor::DIALOGUE);
 
 	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push")
 	{

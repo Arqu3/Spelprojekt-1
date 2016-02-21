@@ -278,7 +278,7 @@ void UI::checkCollision(sf::Vector2f point)
 		}
 	}
 
-	//Check appropriate Rect collisions when "Main" Menu is open
+	//Check appropriate Rect collisions when "MainUI" Menu is open
 	if (mState == MAINUI)
 	{
 		if (mSettingsRect.contains(point))
