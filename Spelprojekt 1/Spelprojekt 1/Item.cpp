@@ -266,7 +266,7 @@ mCraftIndex(-1)
 		mName = "Pärla";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("Pluto.png")); //Add correct texture
 	}
 

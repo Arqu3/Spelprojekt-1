@@ -151,6 +151,10 @@ private:
 	bool mDisableClick;
 	bool mFishFalling;
 	bool mCatWalking;
+	bool mEarthPickedUp;
+	bool mDollhouseInteracted;
+	bool mKidsFound;
+	bool mCatMoved;
 
 	ResourceHandler &handler;
 

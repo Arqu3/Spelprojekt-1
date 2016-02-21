@@ -224,6 +224,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		
 
 		mPutte = new Item(handler, sf::Vector2f(308, 316), "Putte");
+		mKids = new Item(handler, sf::Vector2f(271, 335), "Kids");
 		mDollhouse = new Item(handler, sf::Vector2f(194, 226), "Dollhouse");
 
 		mNeedle = new Item(handler, sf::Vector2f(271, 255), "Needle");
@@ -234,7 +235,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
 		mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
 		mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
-		mKids = new Item(handler, sf::Vector2f(200,360), "Kids");
 		mHole = new Item(handler, sf::Vector2f(180, 335), "Hole");
 
 		mSaturn = new Item(handler, sf::Vector2f(606, 44), "Saturn");
@@ -298,6 +298,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mFoodBowl->toggleActive();
 		mHole->toggleActive();
 		mPutte->toggleActive();
+		mKids->toggleActive();
 		
 
 		//Items Lookable scene 1
@@ -403,10 +404,42 @@ void LastLevel::internalSwap(int num)
 		{
 			addItem(mDollhouse);
 		}
-			
+
+		if (mRedApple->getActive())
+		{
+			addItem(mRedApple);
+		}
+
+		if (mSaturn->getActive())
+		{
+			addItem(mSaturn);
+		}
+
+		if (mPearl->getActive())
+		{
+			addItem(mPearl);
+		}
+
+		if (mEarthPickedUp == true && mEarth->getActive())
+		{
+			addItem(mEarth);
+		}
+		
+		if (mPutte->getActive() && mDollhouseInteracted == true)
+		{
+			addItem(mPutte);
+		}
+
+		if (mKids->getActive() && mKidsFound == true)
+		{
+			addItem(mKids);
+		}
+
 		addItem(mMagicClam);
-		addItem(mPutte);
 		addItem(mSaturn);
+
+		
+
 		
 		
 		
@@ -454,7 +487,7 @@ void LastLevel::internalSwap(int num)
 		{
 			addItem(mNeedle);
 		}
-		if (mEarth->getActive())
+		if (mEarth->getActive() && mEarthPickedUp == false)
 		{
 			addItem(mEarth);
 		}
@@ -509,7 +542,6 @@ void LastLevel::internalSwap(int num)
 		}
 		
 		addItem(mRedApple);
-		addItem(mKids);
 		addItem(mHoolaHoop);
 		addItem(mBeigeBall);
 
@@ -950,12 +982,10 @@ void LastLevel::mouseClick(sf::Event &event)
 						mInventory->removeItem(mInventory->getSelectedItem());
 						addItem(mRedApple);
 						mRedApple->toggleActive();
-						
+						mRedApple->setPosition(455, 52);
+						mRedApple->setScale(0.3f, 0.3f);
 					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
+
 					std::cout << "Planet 4!";
 					mPlayer->moveToPosition(535, 437);
 				}
@@ -1038,6 +1068,15 @@ void LastLevel::mouseClick(sf::Event &event)
 			// i == 8 is Planet 9 if ActiveScene is 0
 			else if (i == 8)
 			{
+				if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Pearl")
+				{
+					mInventory->removeItem(mInventory->getSelectedItem());
+					addItem(mPearl);
+					mPearl->toggleActive();
+					mPearl->setPosition(770, 40);
+					mPearl->setScale(0.6f, 0.6f);
+				}
+
 				std::cout << "Planet 9!";
 				mPlayer->moveToPosition(535, 437);
 			}
@@ -1126,6 +1165,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Screwdevice")
 					{
 						mInventory->addItem(mTargetItem);
+						mEarthPickedUp = true;
 						std::cout << "Plockade upp Jordglob";
 
 					}
@@ -1146,6 +1186,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Fish")
 				{
 					mInventory->addItem(mTargetItem);
+					mFish->changeTexture(handler, "Fisk1.png");
 					std::cout << "Plockade upp fisk!";
 				}
 			}
@@ -1212,6 +1253,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Fish")
 						{
 							mInventory->removeItem(mInventory->getSelectedItem());
+							mCatMoved = true;
 
 							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)  
 							{
@@ -1222,14 +1264,6 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 									mTargetItem->moveToPosition(700, 396);
 									mCursor->setMode(Cursor::DISABLED);
 									mCatWalking = true;
-
-								}
-								
-								if (getItems()[i]->getId() == "Kids")
-								{
-									getItems()[i]->toggleActive();
-									getItems()[i]->toggleLookable();
-									getItems()[i]->toggleInteractable();
 								}								
 							}
 						}
@@ -1238,66 +1272,70 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 							mTargetItem->toggleInteractable();
 						}
 
-						std::cout << "Katten äter mat! Barnen kommer fram!";
+						std::cout << "Katten flyttar på sig!" << std::endl;
 					}
 
 					//Putte
 					if (mTargetItem->getId() == "Putte")
 					{
 
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						if (mKidsFound == true)
 						{
-							if (getItems()[i]->getId() == "Magic Clam")
+							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
 							{
-								mTargetItem = getItems()[i];
-								mInventory->addItem(mTargetItem);
+								if (getItems()[i]->getId() == "Magic Clam")
+								{
+									mTargetItem = getItems()[i];
+									mInventory->addItem(mTargetItem);
+									std::cout << "Putte ger dig en mussla!";
+								}
+								
 							}
 						}
+						else
+						{
+							mTargetItem->toggleInteractable();
+						}
 
-						std::cout << "Putte ger dig en mussla!";
+						
 					}
 
 					//Dollhouse
 					if (mTargetItem->getId() == "Dollhouse")
 					{
 						addItem(mPutte);
+						mDollhouseInteracted = true;
 			
 					}
 
 					//Hole
 					if (mTargetItem->getId() == "Hole")
 					{
-						if (!mKids->getActive())
+						if (mCatMoved == true)
 						{
-							std::cout << "Move the cat!";
+							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+							{
+								if (getItems()[i]->getId() == "Hoola Hoop")
+								{
+									mTargetItem = getItems()[i];
+									mInventory->addItem(mTargetItem);
+								}
+
+								if (getItems()[i]->getId() == "Beige Ball")
+								{
+									mTargetItem = getItems()[i];
+									mInventory->addItem(mTargetItem);
+								}
+							}
+							std::cout << "Pratar med barnen, får saturnus!" << std::endl;
+							mKidsFound = true;
 						}
 						else
 						{
-							std::cout << "Hole";
+							mTargetItem->toggleInteractable();
+							std::cout << "Flytta katten!" << std::endl;
 						}
 					}
-
-					//Kids
-					if (mTargetItem->getId() == "Kids")
-					{
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-						{
-							if (getItems()[i]->getId() == "Hoola Hoop")
-							{
-								mTargetItem = getItems()[i];
-								mInventory->addItem(mTargetItem);
-							}
-
-							if (getItems()[i]->getId() == "Beige Ball")
-							{
-								mTargetItem = getItems()[i];
-								mInventory->addItem(mTargetItem);
-							}
-						}
-						std::cout << "HoolaHoop and Beige Ball added!";
-						
-					}
-
 				}
 			}
 			//Disable Item interaction when done

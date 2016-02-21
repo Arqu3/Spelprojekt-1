@@ -106,7 +106,6 @@ void ResourceHandler::loadLastLevel()
 	addTexture("VARDAGSRUMbakgrund.png");
 	addTexture("VARDAGSRUMmellangrund.png");
 	addTexture("VARDAGSRUMförgrund.png");
-	addTexture("Fisk1.png");
 	addTexture("Fisk2.png");
 	addTexture("Jordglob.png");
 
@@ -149,6 +148,7 @@ void ResourceHandler::loadLastLevel()
 	addTexture("Saturnus.png");
 	addTexture("Venus.png");
 	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
 
 
 	
