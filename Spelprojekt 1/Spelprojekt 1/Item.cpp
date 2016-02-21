@@ -10,13 +10,13 @@ mIsPickupable(false),
 mIsLookedAt(false),
 mInteracted(false),
 isOnPosition(true),
-mSpeed(100.0f)
+mSpeed(100.0f),
+mCraftIndex(-1)
 {
 	//Create items here
 	if (id == "Screwdevice")
 	{
 		mIndex = 0;
-		mCraftIndex = -1;
 		mName = "Skruvmakapär";
 		mDescription = "Testar Description!";
 		mSprite.setPosition(mPosition);
@@ -68,7 +68,6 @@ mSpeed(100.0f)
 	if (id == "Astronaut")
 	{
 		mIndex = 5;
-		mCraftIndex = -1;
 		mName = "Astronaut";
 		mDescription = "Skruvar på saker";
 		mSprite.setPosition(mPosition);
@@ -116,7 +115,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
 	}
 
 	if (id == "Earth")
@@ -126,7 +125,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.22f, 0.22f));
-		mSprite.setTexture(*handler.getTexture("Jordglob.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Jordglob.png")); 
 	}
 
 	if (id == "Fish")
@@ -136,7 +135,7 @@ mSpeed(100.0f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.28f, 0.28f));
-		mSprite.setTexture(*handler.getTexture("Fisk1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Fisk2.png")); //Add correct texture
 	}
 
 	if (id == "Gramophone")
@@ -152,21 +151,23 @@ mSpeed(100.0f)
 	if (id == "Hoola Hoop")
 	{
 		mIndex = 13;
+		mCraftIndex = 0;
 		mName = "Rockring";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Beige Ball")
 	{
 		mIndex = 14;
+		mCraftIndex = 0;
 		mName = "Beige Boll";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		//mSprite.setTexture(*handler.getTexture("asd")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 
 	if (id == "Red Apple")
@@ -195,8 +196,8 @@ mSpeed(100.0f)
 		mName = "Katt";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.7f, 0.7f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.01f, 0.01f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("Katten.png")); //Add correct texture
 	}
 
 	if (id == "Foodbowl")
@@ -215,8 +216,8 @@ mSpeed(100.0f)
 		mName = "Putte";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.01f, 0.01f)); //Fixa
+		mSprite.setTexture(*handler.getTexture("PutteSad.png")); //Add correct texture
 	}
 
 	if (id == "Dollhouse")
@@ -235,19 +236,48 @@ mSpeed(100.0f)
 		mName = "Barn";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(1.2f, 1.25f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mSprite.setScale(sf::Vector2f(0.03f, 0.03f));
+		mSprite.setTexture(*handler.getTexture("Lisa.png"));
 	}
 
 	if (id == "FishingRodMagnet")
 	{
 		mIndex = 22;
-		mCraftIndex = -1;
 		mName = "Fiskespö med magnet";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
+	}
+
+	if (id == "Hole")
+	{
+		mIndex = 23;
+		mName = "Hål";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.5f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+	}
+
+	if (id == "Pearl")
+	{
+		mIndex = 24;
+		mName = "Pärla";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("Pluto.png")); //Add correct texture
+	}
+
+	if (id == "Saturn")
+	{
+		mIndex = 25;
+		mName = "Saturnus";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
 	}
 }
 
