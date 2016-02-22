@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Inventory::Inventory():
+Inventory::Inventory(ResourceHandler &handler):
 mRow(0),
 mCol(-1),
 mColNum(3),
@@ -61,6 +61,19 @@ mHasCraft2(false)
 	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
 	mCluesRect = sf::FloatRect(sf::Vector2f(155, 365), sf::Vector2f(75, 80));
 	mMemoriesRect = sf::FloatRect(sf::Vector2f(195, 475), sf::Vector2f(75, 80));
+
+	//Sounds
+	mCraftingSound.setBuffer(*handler.getSound("Crafting.ogg"));
+	mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
+	mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
+
+	//Font / Text
+	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
+	mText.setFont(mFont);
+	mText.setCharacterSize(18);
+	mText.setStyle(sf::Text::Bold);
+	mText.setColor(sf::Color::Black);
+	mText.setPosition(400, 420); //TODO - Make dynamic based on String length?
 }
 
 Inventory::~Inventory()
@@ -100,7 +113,7 @@ void Inventory::draw(sf::RenderWindow &window)
 	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		//THIS DOESN'T WORK, NEEDS FIX
+		//TODO - THIS DOESN'T WORK, NEEDS FIX
 		//Set opacity to 50% if item is selected
 		//if (mCraftSelect1 != -1)
 		//{
@@ -137,6 +150,9 @@ void Inventory::draw(sf::RenderWindow &window)
 		mResultItem->setINVPosition(mResultRect.getPosition().x, mResultRect.getPosition().y);
 		window.draw(mResultItem->getINVSprite());
 	}
+
+	//Draw Item Description
+	window.draw(mText);
 }
 
 void Inventory::addItem(Item* item)
@@ -257,6 +273,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			{
 				mSelectedItem1 = i;
 				cout << "First selected item is: " << mSelectedItem1 << endl;
+				mText.setString(mItems[mSelectedItem1]->getDescription());
 			}
 
 			//Select second item if has selected first item and no second is selected, also avoid selecting same item twice
@@ -264,6 +281,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			{
 				mSelectedItem2 = i;
 				cout << "Second selected item is: " << mSelectedItem2 << endl;
+				mText.setString(mItems[mSelectedItem2]->getDescription());
 			}
 			return;
 		}
@@ -272,10 +290,12 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 	if (ui.getHatIconRect().contains(point))
 	{
 		ui.setState(UI::HAT);
+		mMenuHatSound.play();
 	}
 	else if (ui.getMenuIconRect().contains(point))
 	{
 		ui.setState(UI::MAINUI);
+		mMenuMainUISound.play();
 	}
 	else if (mInventoryRect.contains(point))
 	{
@@ -414,6 +434,8 @@ void Inventory::deSelect()
 			mCraftSelect2 = -1;
 		}
 	}
+
+	mText.setString("");
 }
 
 bool Inventory::craftCheck()

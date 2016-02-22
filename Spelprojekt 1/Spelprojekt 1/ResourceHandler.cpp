@@ -79,6 +79,7 @@ void ResourceHandler::loadLevel1()
 	addTexture("FishingRod.png");
 	addTexture("FishingRodMagnet.png");
 	addTexture("thomaswallstar.png");
+	addTexture("RogerSwim.png");
 
 	//Thomas room background, playground, foreground
 	addTexture("thomasbg.png");
@@ -118,8 +119,19 @@ void ResourceHandler::loadLevel1()
 	addMusic("Level1Music.ogg");
 
 	//Sound
-	addSound("FootSteps.ogg");
-	addSound("Level1Ambience.ogg");
+	addSound("Footsteps_Thomas.ogg");
+	addSound("Level1_Ambience.ogg");
+	addSound("Aquarium.ogg");
+	addSound("Magnet_Catch.ogg");
+	addSound("Magnet_Drop.ogg");
+	addSound("Pushing_Object.ogg");
+	addSound("Radio_Noise.ogg");
+	addSound("Regular_Item_Pickup.ogg");
+	addSound("Crafting.ogg");
+	addSound("Menu_Hat.ogg");
+	addSound("Menu_Inventory.ogg");
+	addSound("Menu_MainUI.ogg");
+	addSound("Critical_Item.ogg");
 }
 
 void ResourceHandler::loadLastLevel()

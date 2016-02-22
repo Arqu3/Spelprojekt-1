@@ -72,6 +72,11 @@ mLoad(false)
 	{
 		mMainButtons[i]->setPosition(512.0f - (mMainButtons[0]->getRect().width / 2), 100.0f + (160.0f * i));
 	}
+
+	//Sounds
+	mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
+	mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
+	mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
 }
 
 UI::~UI()
@@ -247,6 +252,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != HAT)
 		{
 			mState = HAT;
+			mMenuHatSound.play();
 		}
 		else
 		{
@@ -258,6 +264,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != MAINUI)
 		{
 			mState = MAINUI;
+			mMenuMainUISound.play();
 		}
 		else
 		{
@@ -271,6 +278,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mInventoryRect.contains(point))
 		{
 			setState(INVENTORY);
+			mMenuInventorySound.play();
 		}
 		if (mCluesRect.contains(point))
 		{

@@ -58,6 +58,7 @@ private:
 
 	//Sounds
 	sf::Sound mWalkingSound;
+	int mStepCooldown;
 	
 	//Animation Textures
 	sf::Texture mThomasTexture;

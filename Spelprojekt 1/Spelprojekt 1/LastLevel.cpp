@@ -248,7 +248,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 
 		//Inventory
-		mInventory = new Inventory();
+		mInventory = new Inventory(handler);
 		mInventory->setCraftableItems(handler, 1);
 
 		//Cursor

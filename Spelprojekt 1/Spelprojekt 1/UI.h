@@ -72,6 +72,11 @@ private:
 
 	//Help Rectangle
 	sf::RectangleShape mHelpRectangle;
+
+	//Sounds
+	sf::Sound mMenuInventorySound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
 };
 
 #endif
