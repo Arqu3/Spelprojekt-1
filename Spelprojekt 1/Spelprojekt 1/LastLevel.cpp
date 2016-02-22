@@ -274,6 +274,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		//UI
 		mUI = new UI(handler);
+		mUI->setState(UI::INGAME);
 
 		//Door
 		mRects.push_back(createRect(445, 186, 80, 50));
@@ -1504,6 +1505,5 @@ bool LastLevel::isLevelComplete()
 
 UI* LastLevel::getUI()
 {
-	return NULL;
-	//TODO - add ui stuff here
+	return mUI;
 }
