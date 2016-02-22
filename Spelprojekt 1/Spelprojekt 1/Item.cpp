@@ -12,7 +12,8 @@ mInteracted(false),
 isOnPosition(true),
 mSpeed(100.0f),
 mCraftIndex(-1),
-mFrameTime(0.02f)
+mFrameTime(0.02f),
+mCurrentTime(0.0f)
 {
 	//Create items here
 	if (id == "Screwdevice")
