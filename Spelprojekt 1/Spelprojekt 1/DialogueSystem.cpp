@@ -14,7 +14,7 @@ mHandler(handler),
 mFirstCharacter(),
 mSecondCharacter()
 {
-	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
+	mFont.loadFromFile("Resources/Fonts/GloriaHallelujah.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
 	mTextBox.setTexture(*handler.getTexture("textbox.png"));
 	mSepia.setSize(sf::Vector2f(1024, 576));
@@ -35,42 +35,47 @@ void DialogueSystem::text(std::string text, sf::Vector2f &position, float x, flo
 	mText.setColor(sf::Color::Black);
 	mText.setPosition(position);
 
-	if (text.length() > 25)
+	std::string::size_type tempChar = 0;
+
+	if (text.length() > 20)
 	{
-		std::string::size_type spacePos = text.rfind(' ', 25);
+		std::string::size_type spacePos = text.find(' ', 25);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = text.find(' ', 25);
+			spacePos = text.rfind(' ', 25);
 		}
 		if (spacePos != std::string::npos)
 		{
 			text[spacePos] = '\n';
+			tempChar = spacePos;
 		}
 	}
-	if (text.length() > 55)
+	if (text.length() > tempChar + 25)
 	{
-		std::string::size_type spacePos = text.rfind(' ', 50);
+		std::string::size_type spacePos = text.find(' ', tempChar + 25);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = text.find(' ', 50);
+			spacePos = text.rfind(' ', tempChar + 25);
 		}
 		if (spacePos != std::string::npos)
 		{
 			text[spacePos] = '\n';
 			y = y - 15;
+			tempChar = spacePos;
 		}
 	}
-	if (text.length() > 75)
+	if (text.length() > tempChar + 25)
 	{
-		std::string::size_type spacePos = text.rfind(' ', 75);
+		std::string::size_type spacePos = text.find(' ', tempChar + 25);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = text.find(' ', 75);
+			spacePos = text.rfind(' ', tempChar + 25);
 		}
 		if (spacePos != std::string::npos)
 		{
 			text[spacePos] = '\n';
 			y = y - 15;
+			tempChar = 0;
 		}
 	}
 
