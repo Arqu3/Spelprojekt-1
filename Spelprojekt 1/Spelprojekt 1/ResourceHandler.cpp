@@ -123,6 +123,7 @@ void ResourceHandler::loadLastLevel()
 	//internalClear();
 
     //LastLevel
+
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");
@@ -130,7 +131,6 @@ void ResourceHandler::loadLastLevel()
 	addTexture("VARDAGSRUMbakgrund.png");
 	addTexture("VARDAGSRUMmellangrund.png");
 	addTexture("VARDAGSRUMförgrund.png");
-	addTexture("Fisk1.png");
 	addTexture("Fisk2.png");
 	addTexture("Jordglob.png");
 
@@ -143,6 +143,24 @@ void ResourceHandler::loadLastLevel()
 
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
+
+
+
+    //Karaktärer
+	addTexture("ThomasWalk.png");
+	addTexture("HilmaWalk.png");
+	addTexture("HilmaPush.png");
+	addTexture("Katten.png");
+	addTexture("Lisa.png");
+	addTexture("PutteSad.png");
+
+	//In-game UI
+	addTexture("haticon.png");
+	addTexture("menuicon.png");
+	addTexture("hatmenu.png");
+	addTexture("menu.png");
+	addTexture("inventory.png");
 
 	//addTexture("ThomasWalk.png");
 
@@ -157,6 +175,7 @@ void ResourceHandler::loadLastLevel()
 	//addTexture("settingsmenu.png");
 	//addTexture("inventory.png");
 
+
 	////Cursors
 	//addTexture("mousecursor.png");
 	//addTexture("openhand.png");
@@ -164,8 +183,17 @@ void ResourceHandler::loadLastLevel()
 	//addTexture("speechbubble.png");
 	//addTexture("eyecursor.png");
 
-	//Sounds
+
+	//Props
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
+
+        //Sounds
 	addSound("FootSteps.ogg");
+
 }
 
 //Adds a texture to the texture vector

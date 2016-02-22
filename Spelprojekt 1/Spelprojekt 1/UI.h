@@ -37,8 +37,11 @@ public:
 	sf::FloatRect getHatIconRect();
 	sf::FloatRect getMenuIconRect();
 
+	bool load();
+
 private:
 	State mState;
+	bool mLoad;
 
 	//Buttons
 	typedef std::vector<Button*> ButtonVector;

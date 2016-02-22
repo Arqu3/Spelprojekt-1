@@ -3,7 +3,8 @@
 using namespace std;
 
 UI::UI(ResourceHandler &handler) :
-mState(MAINMENU)
+mState(MAINMENU),
+mLoad(false)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -36,7 +37,7 @@ mState(MAINMENU)
 	handler.getTexture("inventory.png")->setSmooth(true);
 	mInventoryMenu.setTexture(*handler.getTexture("inventory.png"));
 	mInventoryMenu.setPosition(sf::Vector2f(250, 50));
-	mInventoryMenu.setScale(sf::Vector2f(0.3f, 0.3f));
+	mInventoryMenu.setScale(sf::Vector2f(0.6f, 0.6f));
 
 	//UI Rects
 	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
@@ -207,7 +208,12 @@ void UI::eventListen(sf::RenderWindow &window)
 				case MAINMENU:
 					if (mMainButtons[0]->isPressed(window))
 					{
+						mLoad = true;
 						setState(INGAME);
+					}
+					else
+					{
+						mLoad = false;
 					}
 
 					if (mMainButtons[2]->isPressed(window))
@@ -312,4 +318,9 @@ sf::FloatRect UI::getHatIconRect()
 sf::FloatRect UI::getMenuIconRect()
 {
 	return mMenuIcon.getGlobalBounds();
+}
+
+bool UI::load()
+{
+	return mLoad;
 }
