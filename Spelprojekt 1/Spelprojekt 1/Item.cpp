@@ -281,6 +281,16 @@ mCraftIndex(-1)
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
 	}
+
+	if (id == "WallStar")
+	{
+		mIndex = 25;
+		mName = "Väggstjärna";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("thomaswallstar.png")); //Add correct texture
+	}
 }
 
 

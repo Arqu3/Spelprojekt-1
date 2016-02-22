@@ -109,6 +109,7 @@ private:
 	Item* mAstronaut;
 	Item* mBowl;
 	Item* mCube;
+	Item* mWallStar;
 
 	//Inventory
 	Inventory *mInventory;

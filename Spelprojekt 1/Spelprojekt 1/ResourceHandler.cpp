@@ -78,6 +78,7 @@ void ResourceHandler::loadLevel1()
 	addTexture("thomascube.png");
 	addTexture("FishingRod.png");
 	addTexture("FishingRodMagnet.png");
+	addTexture("thomaswallstar.png");
 
 	//Thomas room background, playground, foreground
 	addTexture("thomasbg.png");

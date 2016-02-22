@@ -224,6 +224,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mString = new Item(handler, sf::Vector2f(250, 370), "String");
 		mBowl = new Item(handler, sf::Vector2f(320, 158), "Bowl");
 		mCube = new Item(handler, sf::Vector2f(352, 222), "Cube");
+		mWallStar = new Item(handler, sf::Vector2f(900, 190), "WallStar");
 
 		//Playground rectangles
 		mPlayRects.push_back(createRect(110, 360, 610, 200));
@@ -385,6 +386,10 @@ void Level1::internalSwap(int num)
 		if (mScrewdevice->getActive())
 		{
 			addItem(mScrewdevice);
+		}
+		if (mWallStar->getActive())
+		{
+			addItem(mWallStar);
 		}
 	}
 	// Fishtank Zoom
@@ -599,6 +604,12 @@ void Level1::mouseClick(sf::Event &event)
 		mPlayer->moveToPosition(point.x, point.y);
 		mItemInteraction = false;
 	}
+
+	//Use this to try fishing animation, TODO - Remove when fixed
+	/*else if (checkCollision(getPlayRects(), point))
+	{
+		mPlayer->setActiveAnimation("Fishing");
+	}*/
 
 	//Check Item collision
 	mouseClickCheckItemCollision(point);
@@ -951,7 +962,9 @@ void Level1::interactTargetItem()
 		}
 		if (mTargetItem->getId() == "Star")
 		{
-			mTargetItem->setPosition(900, 190);
+			mTargetItem->toggleActive();
+			mWallStar->toggleActive();
+			addItem(mWallStar);
 			mMovedStar = true;
 			std::cout << "Satte stjärnan på väggen";
 		}
