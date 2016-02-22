@@ -279,6 +279,16 @@ mCraftIndex(-1)
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
 	}
+
+	if (id == "Tant")
+	{
+		mIndex = 26;
+		mName = "Tant";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLEvel_ItemTest1.png")); //Add correct texture
+	}
 }
 
 

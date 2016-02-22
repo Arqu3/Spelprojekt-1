@@ -25,7 +25,7 @@ public:
 	std::string getMusic(std::string name);
 
 	void loadLevel1();
-
+	void loadLevel3();
 	void loadLastLevel();
 
 private:

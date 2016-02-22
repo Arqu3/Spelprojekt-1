@@ -43,6 +43,9 @@
     <ClCompile Include="UI.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Level3.cpp">
+      <Filter>.cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h">
@@ -85,6 +88,9 @@
       <Filter>.h</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
+      <Filter>.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Level3.h">
       <Filter>.h</Filter>
     </ClInclude>
   </ItemGroup>

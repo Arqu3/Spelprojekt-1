@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Level1.h"
+#include "Level3.h"
 #include "LastLevel.h"
 #include "Item.h"
 #include <vector>
@@ -36,6 +37,9 @@ private:
 	Level1* mLevel1;
 
 	//2
+	Level3* mLevel3;
+	
+	//3
 	LastLevel* mLastLevel;
 };
 

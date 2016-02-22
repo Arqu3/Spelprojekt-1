@@ -118,6 +118,43 @@ void ResourceHandler::loadLevel1()
 
 }
 
+void ResourceHandler::loadLevel3()
+{
+	//Level 3
+	addTexture("Garden.png");
+
+	//Karaktärer
+	addTexture("ThomasWalk.png");
+	addTexture("HilmaWalk.png");
+	addTexture("HilmaPush.png");
+	addTexture("HilmaFishing.png");
+
+
+	//In-game UI
+	addTexture("haticon.png");
+	addTexture("menuicon.png");
+	addTexture("hatmenu.png");
+	addTexture("menu.png");
+	addTexture("inventory.png");
+
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
+
+	//Props
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
+	
+
+
+}
+
 void ResourceHandler::loadLastLevel()
 {
 	//internalClear();
@@ -154,6 +191,8 @@ void ResourceHandler::loadLastLevel()
 	addTexture("Katten.png");
 	addTexture("Lisa.png");
 	addTexture("PutteSad.png");
+	addTexture("HilmaFishing.png");
+
 
 	//In-game UI
 	addTexture("haticon.png");
@@ -162,28 +201,13 @@ void ResourceHandler::loadLastLevel()
 	addTexture("menu.png");
 	addTexture("inventory.png");
 
-	//addTexture("ThomasWalk.png");
-
-	////Hilma
-	//addTexture("HilmaWalk.png");
-	//addTexture("HilmaPush.png");
-
-	////In-game UI
-	//addTexture("haticon.png");
-	//addTexture("menuicon.png");
-	//addTexture("hatmenu.png");
-	//addTexture("settingsmenu.png");
-	//addTexture("inventory.png");
-
-
-	////Cursors
-	//addTexture("mousecursor.png");
-	//addTexture("openhand.png");
-	//addTexture("closedhand.png");
-	//addTexture("speechbubble.png");
-	//addTexture("eyecursor.png");
-
-
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
+	
 	//Props
 	addTexture("thomasbowl.png");
 	addTexture("Saturnus.png");
