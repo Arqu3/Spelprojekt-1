@@ -206,9 +206,11 @@ void Level1::toggleActive(ResourceHandler &handler)
 
 		//DialogueSystem
 		mDialogueSystem = new DialogueSystem(handler);
+		mDialogueSystem->setLevel1Start();
 
 		//Mouse Cursor
 		mCursor = new Cursor(handler);
+		mCursor->setMode(Cursor::DIALOGUE);
 
 		//Menu
 		mUI = new UI(handler);
@@ -222,8 +224,6 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mString = new Item(handler, sf::Vector2f(250, 370), "String");
 		mBowl = new Item(handler, sf::Vector2f(320, 158), "Bowl");
 		mCube = new Item(handler, sf::Vector2f(352, 222), "Cube");
-
-
 
 		//Playground rectangles
 		mPlayRects.push_back(createRect(110, 360, 610, 200));
@@ -876,7 +876,6 @@ void Level1::pickupTargetItem()
 	}
 	if (mTargetItem->getId() == "String")
 	{
-		mTargetItem->setScale(0.2f, 0.4f);
 		mInventory->addItem(mTargetItem);
 		std::cout << "Plockade upp fiskespo";
 	}
@@ -1119,6 +1118,8 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 								mInventory->addItem(getItems()[i]);
 								getItems()[i]->toggleActive();
 								mPickedUpScrewdevice = true;
+								//mDialogueSystem->hasClicked("ScrewDevice", mPlayer);
+								//mCursor->setMode(Cursor::DIALOGUE);
 							}
 						}
 					}

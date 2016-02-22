@@ -53,6 +53,12 @@ void ResourceHandler::loadLevel1()
 	addTexture("menu.png");
 	addTexture("inventory.png");
 
+	//Inventory icons
+	addTexture("AstronautINV.png");
+	addTexture("FishingRodINV.png");
+	addTexture("MagnetINV.png");
+	addTexture("ScrewDeviceINV.png");
+
 	//Cursors
 	addTexture("mousecursor.png");
 	addTexture("openhand.png");
@@ -113,9 +119,6 @@ void ResourceHandler::loadLevel1()
 	//Sound
 	addSound("FootSteps.ogg");
 	addSound("Level1Ambience.ogg");
-
-	
-
 }
 
 void ResourceHandler::loadLastLevel()
@@ -123,7 +126,6 @@ void ResourceHandler::loadLastLevel()
 	//internalClear();
 
     //LastLevel
-
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");
@@ -140,48 +142,14 @@ void ResourceHandler::loadLastLevel()
 	addTexture("Apelsin.png");
 	addTexture("Tavlan.png");
 
-
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
 	addTexture("LastLevel_ItemTest2.png");
 
-
-
     //Karaktärer
-	addTexture("ThomasWalk.png");
-	addTexture("HilmaWalk.png");
-	addTexture("HilmaPush.png");
 	addTexture("Katten.png");
 	addTexture("Lisa.png");
 	addTexture("PutteSad.png");
-
-	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
-	addTexture("hatmenu.png");
-	addTexture("menu.png");
-	addTexture("inventory.png");
-
-	//addTexture("ThomasWalk.png");
-
-	////Hilma
-	//addTexture("HilmaWalk.png");
-	//addTexture("HilmaPush.png");
-
-	////In-game UI
-	//addTexture("haticon.png");
-	//addTexture("menuicon.png");
-	//addTexture("hatmenu.png");
-	//addTexture("settingsmenu.png");
-	//addTexture("inventory.png");
-
-
-	////Cursors
-	//addTexture("mousecursor.png");
-	//addTexture("openhand.png");
-	//addTexture("closedhand.png");
-	//addTexture("speechbubble.png");
-	//addTexture("eyecursor.png");
 
 
 	//Props
@@ -190,10 +158,6 @@ void ResourceHandler::loadLastLevel()
 	addTexture("Venus.png");
 	addTexture("Pluto.png");
 	addTexture("Fisk1.png");
-
-        //Sounds
-	addSound("FootSteps.ogg");
-
 }
 
 //Adds a texture to the texture vector
