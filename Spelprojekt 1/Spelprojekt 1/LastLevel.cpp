@@ -6,6 +6,7 @@ mPlayRects(),
 mIsActive(false),
 handler(handler),
 mLevelComplete(false)
+
 {
 }
 
@@ -218,7 +219,6 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		//Add items
 		mScrewDevice = new Item(handler, sf::Vector2f(0, 0), "Screwdevice");
 		mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
-		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
 		mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 		mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 		mPearl = new Item(handler, sf::Vector2f(0, 0), "Pearl");
@@ -234,11 +234,14 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 		mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
 
 		mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
-		mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
+		mCat = new Item(handler, sf::Vector2f(236, 276), "Cat");
 		mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
 		mHole = new Item(handler, sf::Vector2f(180, 335), "Hole");
 
 		mSaturn = new Item(handler, sf::Vector2f(606, 44), "Saturn");
+		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
+		mVenus = new Item(handler, sf::Vector2f(0, 0), "Venus");
+
 
 		//View
 		mView.setSize(1024, 576);
@@ -340,9 +343,10 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		mLastScene = 0;
 
-		//Add Screwdevice to inventory
+		//Add Screwdevice and Venus to inventory
 		mScrewDevice->setScale(0.3f, 0.3f);
 		mInventory->addItem(mScrewDevice);
+		mInventory->addItem(mVenus);
 		
 	}
 
@@ -440,6 +444,7 @@ void LastLevel::internalSwap(int num)
 
 		addItem(mMagicClam);
 		addItem(mSaturn);
+		addItem(mVenus);
 
 		
 
@@ -918,6 +923,12 @@ void LastLevel::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
+					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Venus")
+					{
+						mInventory->removeItem(mInventory->getSelectedItem());
+						mVenus->toggleActive();
+					}
+
 					std::cout << "Planet 2!";
 					mPlayer->moveToPosition(535, 437);
 				}
@@ -1265,8 +1276,10 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 								if (getItems()[i]->getId() == "Cat")
 								{
 									mTargetItem = getItems()[i];
-									mTargetItem->setSpeed(300.0f);
-									mTargetItem->moveToPosition(700, 396);
+									mTargetItem->setActiveAnimation("CatWalking");
+									mTargetItem->setScale(-0.17, 0.17);
+									mTargetItem->setSpeed(100.0f);
+									mTargetItem->moveToPosition(700, 276);
 									mCursor->setMode(Cursor::DISABLED);
 									mCatWalking = true;
 								}								
@@ -1504,6 +1517,6 @@ bool LastLevel::isLevelComplete()
 
 UI* LastLevel::getUI()
 {
-	return NULL;
+	return mUI;
 	//TODO - add ui stuff here
 }

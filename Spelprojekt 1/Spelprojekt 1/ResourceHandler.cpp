@@ -151,9 +151,17 @@ void ResourceHandler::loadLastLevel()
 	addTexture("ThomasWalk.png");
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
+	addTexture("HilmaFishing.png");
 	addTexture("Katten.png");
 	addTexture("Lisa.png");
 	addTexture("PutteSad.png");
+
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
 
 	//In-game UI
 	addTexture("haticon.png");
@@ -161,27 +169,6 @@ void ResourceHandler::loadLastLevel()
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");
-
-	//addTexture("ThomasWalk.png");
-
-	////Hilma
-	//addTexture("HilmaWalk.png");
-	//addTexture("HilmaPush.png");
-
-	////In-game UI
-	//addTexture("haticon.png");
-	//addTexture("menuicon.png");
-	//addTexture("hatmenu.png");
-	//addTexture("settingsmenu.png");
-	//addTexture("inventory.png");
-
-
-	////Cursors
-	//addTexture("mousecursor.png");
-	//addTexture("openhand.png");
-	//addTexture("closedhand.png");
-	//addTexture("speechbubble.png");
-	//addTexture("eyecursor.png");
 
 
 	//Props
@@ -193,6 +180,10 @@ void ResourceHandler::loadLastLevel()
 
         //Sounds
 	addSound("FootSteps.ogg");
+
+	//Animations
+	addTexture("CatWalking.png");
+	addTexture("CatEating.png");
 
 }
 

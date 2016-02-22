@@ -120,6 +120,7 @@ private:
 	Item* mPearl;
 	Item* mScrewDevice;
 	Item* mSaturn;
+	Item* mVenus;
 
 	bool mLevelComplete;
 

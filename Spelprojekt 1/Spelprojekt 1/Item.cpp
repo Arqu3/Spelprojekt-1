@@ -11,7 +11,8 @@ mIsLookedAt(false),
 mInteracted(false),
 isOnPosition(true),
 mSpeed(100.0f),
-mCraftIndex(-1)
+mCraftIndex(-1),
+mFrameTime(0.02f)
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -196,8 +197,11 @@ mCraftIndex(-1)
 		mName = "Katt";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.01f, 0.01f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("Katten.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.17f, 0.17f)); //Fixa
+		
+		mCatWalking = *handler.getTexture("CatWalking.png");
+		mSprite.setTexture(mCatWalking); 
+		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
 	}
 
 	if (id == "Foodbowl")
@@ -247,7 +251,7 @@ mCraftIndex(-1)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); 
 	}
 
 	if (id == "Hole")
@@ -257,7 +261,7 @@ mCraftIndex(-1)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.5f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); 
 	}
 
 	if (id == "Pearl")
@@ -267,7 +271,7 @@ mCraftIndex(-1)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-		mSprite.setTexture(*handler.getTexture("Pluto.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Pluto.png")); 
 	}
 
 	if (id == "Saturn")
@@ -277,7 +281,17 @@ mCraftIndex(-1)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Saturnus.png")); 
+	}
+
+	if (id == "Venus")
+	{
+		mIndex = 26;
+		mName = "Venus";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 }
 
@@ -489,6 +503,38 @@ sf::Sprite Item::getSprite()
 
 void Item::update(float deltaTime)
 {
+	mCurrentTime += deltaTime;
+
+	//Cat Walk
+	if (mActiveAnimation == "CatWalking")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 1000, mFrameYOffset * 1000, 1000, 1000));
+			if (mCurrentFrame < 27)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 8 == 7)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 7)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+
 	move(deltaTime);
 }
 
@@ -512,4 +558,27 @@ void Item::changeTexture(ResourceHandler &handler, std::string filename)
 int Item::getCraftIndex()
 {
 	return mCraftIndex;
+}
+
+void Item :: setActiveAnimation(std::string name)
+{
+	if (name == "CatWalking")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+
+		mSprite.setTexture(mCatWalking);
+	}
+
+	if (name == "CatEating")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+
+		mSprite.setTexture(mCatEating);
+	}
+
+	mActiveAnimation = name;
 }
