@@ -198,7 +198,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mView.setSize(1024, 576);
 
 		//Player
-		mPlayer = new Player(handler, sf::Vector2f(400, 400));
+		mPlayer = new Player(handler, sf::Vector2f(705, 500));
 
 		//Inventory
 		mInventory = new Inventory();
@@ -276,7 +276,10 @@ void Level1::toggleActive(ResourceHandler &handler)
 		addItem(mBowl);
 		addItem(mCube);
 	}
-
+	else
+	{
+		delete mPlayer;
+	}
 	mIsActive = !mIsActive;
 }
 
@@ -564,6 +567,11 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mPlayer->togglePlayer();
 			}
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				mUI->setState(UI::MAINUI);
+				mCursor->setMode(Cursor::MENU);
+			}
 			break;
 
 		default:
@@ -783,12 +791,12 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	if (mReadyToLeave)
 	{
-		mDialogueSystem->reset();
-		mDialogueSystem->hasClicked("level1End", mPlayer);
+		//mDialogueSystem->reset();
+		mDialogueSystem->setLevel1End();
 		mCursor->setMode(Cursor::DIALOGUE);
 		if (mDialogueSystem->isDialogueFinished()) //TODO - Check advancedIsActive in mDialogueSystem
 		{
-			mLevelComplete = true; //TODO - Do more stuff probably, play final dialogue etc.
+			//mLevelComplete = true; //TODO - Do more stuff probably, play final dialogue etc.
 		}
 	}
 

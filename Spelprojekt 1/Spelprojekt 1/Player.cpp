@@ -24,9 +24,9 @@ mFacingLeft(true)
 	mSprite.setOrigin(400, 700);
 
 	mThomasTexture = *handler.getTexture("ThomasWalk.png");
-	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
-	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
-	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
+	//mHilmaTexture = *handler.getTexture("HilmaWalk.png");
+	//mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
+	//mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
