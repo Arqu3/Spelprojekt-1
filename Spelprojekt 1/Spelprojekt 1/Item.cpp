@@ -280,14 +280,25 @@ mCraftIndex(-1)
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
 	}
 
-	if (id == "Tant")
+
+	if (id == "Trimmer")
 	{
 		mIndex = 26;
-		mName = "Tant";
+		mName = "Häcksax";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("LastLEvel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Stick")
+	{
+		mIndex = 27;
+		mName = "Pinne";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
 }
 

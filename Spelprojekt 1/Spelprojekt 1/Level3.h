@@ -102,7 +102,8 @@ private:
 
 	//Items
 	ItemVector mItems;
-	Item* mTant;
+	Item* mTrimmer;
+	Item* mStick;
 
 
 	bool mLevelComplete;

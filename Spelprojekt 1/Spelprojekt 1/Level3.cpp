@@ -90,7 +90,7 @@ void Level3::drawBackground(sf::RenderWindow &window)
 		window.draw(background3);
 		window.draw(playground3);
 	}
-	//window.draw(rectangle);
+	window.draw(rectangle);
 	drawItems(mItems, window);
 
 }
@@ -212,13 +212,15 @@ void Level3::toggleActive(ResourceHandler &handler)
 		music.openFromFile("Level1Music.ogg");
 
 		//Add HelpRect
-		rectangle.setPosition(sf::Vector2f(1158, 2));
-		rectangle.setSize(sf::Vector2f(70, 168));
+		rectangle.setPosition(sf::Vector2f(1973, 123));
+		rectangle.setSize(sf::Vector2f(73, 278));
 		rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 
 		//Add items
-		mTant = new Item(handler, sf::Vector2f(0, 0), "Tant");
-		
+		mTrimmer = new Item(handler, sf::Vector2f(341, 367), "Trimmer");
+		mStick = new Item(handler, sf::Vector2f(381, 220), "Stick");
+
+
 		//View
 		mView.setSize(1024, 576);
 		mView.setCenter(512, 288);
@@ -239,11 +241,26 @@ void Level3::toggleActive(ResourceHandler &handler)
 
 
 		//Rectangles
-		mRects.push_back(createRect(0, 0, 0, 0));
+		mRects.push_back(createRect(630, 126, 66, 134));
+		mRects.push_back(createRect(1806, 96, 62, 74));
+		mRects.push_back(createRect(1973, 123, 73, 278));
 
 		
 		//Playground
 		mPlayRects.push_back(createRect(0, 0, 2048, 576));
+
+		//Item Active
+		mTrimmer->toggleActive();
+		mTrimmer->toggleLookable();
+		mTrimmer->togglePickupable();
+
+		mStick->toggleActive();
+		mStick->toggleLookable();
+		mStick->togglePickupable();
+
+		//Add to Itemvector
+		addItem(mTrimmer);
+		addItem(mStick);
 		
 
 	}
@@ -547,8 +564,8 @@ void Level3::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Planet 1!";
-					mPlayer->moveToPosition(535, 437);
+					std::cout << "Tantbak!";
+					
 				}
 				else if (getActiveScene() == 1)
 				{
@@ -571,6 +588,22 @@ void Level3::mouseClick(sf::Event &event)
 					mPlayer->moveToPosition(870, 349);
 				}
 			}
+
+			if (i == 1)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Bikupa! Bzzz";
+				}
+			}
+
+			if (i == 2)
+			{
+				if (getActiveScene() == 0)
+				{
+					std::cout << "Dörr!";
+				}
+			}
 		}
 	}
 }
@@ -588,7 +621,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 		//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
 		//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary
 		//In this case the camera scrolls while the Player is between 520 and 1000.
-		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1500)
+		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1530)
 		{
 			//Make camera follow Player position
 			moveViewWithPlayer(mPlayer->getPosition().x);
