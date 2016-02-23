@@ -23,7 +23,7 @@ mFrameTime(0.03f)
 	{
 		mIndex = 0;
 		mName = "Skruvmakapär";
-		mDescription = "En fantastisk skruvmackapär!";
+		mDescription = "En fantastisk Skruvmackapär!";
 		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
 		mINVSprite.setTexture(*handler.getTexture("ScrewDeviceINV.png"));

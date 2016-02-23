@@ -586,7 +586,6 @@ void Level1::eventListen(sf::RenderWindow &window)
 
 				if (mInventory->craftCheck())
 				{
-					mCraftingSound.play();
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
 				}
 			}
@@ -737,12 +736,12 @@ void Level1::mouseHover()
 					}
 					else
 					{
-						mCursor->setMode(Cursor::NORMAL); // TODO - Add scenechange cursor maybe?
+						mCursor->setMode(Cursor::SCENECHANGE);
 					}
 				}
 				else
 				{
-					mCursor->setMode(Cursor::NORMAL); // TODO - Add scenechange cursor maybe?
+					mCursor->setMode(Cursor::SCENECHANGE);
 				}
 			}
 			// i == 6 is bump in the rug
@@ -871,7 +870,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		mPlayer->setActiveAnimation("Walk");
 	}
 
-	//Make Roger Swim
+	//Make Roger Swim, Forever
 	mRoger->update(deltaTime);
 	if (mActiveScene == 0)
 	{
@@ -1047,7 +1046,7 @@ void Level1::pickupTargetItem()
 	{
 		if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
 		{
-			//TODO - Add Rubics Cube Drop
+			//TODO - Add Rubics Cube Drop, Hilma Jump
 			mPlayer->setPosition(600, 305);
 			mPlayer->moveToPosition(600, 305);
 			if (!mPlayer->isFacingLeft())
@@ -1110,7 +1109,7 @@ void Level1::interactTargetItem()
 		{
 			mTargetItem->toggleActive();
 			mWallStar->toggleActive();
-			mCriticalItemSound.play(); //TODO - Add proper Star sound
+			mCriticalItemSound.play();
 			addItem(mWallStar);
 			mMovedStar = true;
 			std::cout << "Satte stjärnan på väggen";

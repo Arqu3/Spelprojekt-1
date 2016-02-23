@@ -65,13 +65,13 @@ void ResourceHandler::loadLevel1()
 	addTexture("closedhand.png");
 	addTexture("speechbubble.png");
 	addTexture("eyecursor.png");
+	addTexture("scenechangecursor.png");
 
 	// Level1
 	//Textures
 	//Thomas rum items
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");
-	addTexture("thomasstring.png");
 	addTexture("thomasmagnet.png");
 	addTexture("thomasastronaut.png");
 	addTexture("thomasbowl.png");
@@ -132,6 +132,7 @@ void ResourceHandler::loadLevel1()
 	addSound("Menu_Inventory.ogg");
 	addSound("Menu_MainUI.ogg");
 	addSound("Critical_Item.ogg");
+	addSound("Inventory_Move.ogg");
 }
 
 void ResourceHandler::loadLastLevel()

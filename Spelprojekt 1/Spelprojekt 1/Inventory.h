@@ -108,10 +108,12 @@ private:
 	sf::Sound mCraftingSound;
 	sf::Sound mMenuMainUISound;
 	sf::Sound mMenuHatSound;
+	sf::Sound mInventoryMoveSound;
 
 	//Font / Text
 	sf::Font mFont;
-	sf::Text mText;
+	sf::Text mDescription;
+	sf::Text mCraftable;
 };
 
 #endif
