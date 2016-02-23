@@ -754,23 +754,23 @@ bool DialogueSystem::isDialogueFinished()
 void DialogueSystem::displayLevel1StartAdvancedDialogue()
 {
 	std::string level1StartHilma = "För bövelingen! Nu är min flygfarkost alldeles förstörd! Förbaskade flygfän som alltid ska vara så livliga... Nähej, nu måste jag laga detta!";
-	std::string level1StartTeller = "Den vresiga lilla hittaren tog av sin mössa och började leta i den. Hon ietade och letade längre ned i mössan. Det enda man kunde se av henne var hennes små, små fötter. Det var som om det inte någon botten i mössan! Tillslut hoppade hittaren ut ur mössan. Men nu var hon helt röd i hela ansiktet.";
+	std::string level1StartTeller = "Den vresiga lilla hittaren tog av sin mössa och började leta i den. Hon letade och letade längre ned i mössan. Det enda man kunde se av henne var hennes små, små fötter. Det var som om det inte fanns någon botten i mössan! Till slut hoppade hittaren ut ur mössan.\nMen nu var hon helt röd i hela ansiktet.";
 	std::string level1StartHilma2 = "MEN VAD SJUTTON ÄR DET HÄR??? ÄR DEN BORTA? ALLT ÄR BORTA?!! DET HÄR KAN INTE VARA SANT!";
 	std::string level1StartHilma3 = "Det var det bästa utbytet jag hittills har fått! Jag som hade hittat så bra...";
 	std::string level1StartThomas = "V-v- vad har du tappat?";
 	std::string level1StartHilma4 = "För det första, jag har inte tappat bort något. För det andra, är det en mycket ovärderlig sak som tog väldigt lång tid att få. Det var en fantastisk skruvmackapär. Med den skulle jag bygga en mycket finare flygfarkost än denna... skrothög. Men nu har jag INGENTING att laga skrothögen med.";
-	std::string level1StartTeller2 = "Pojken tyckte synd om den lilla varelsen. Han tänkte och tänkte. Tillslut kom han på en idé.";
+	std::string level1StartTeller2 = "Pojken tyckte synd om den lilla varelsen. Han tänkte och tänkte. Till slut kom han på en idé.";
 	std::string level1StartThomas2 = "J-jag kanske... har en skruvmackapär-";
 	std::string level1StartHilma5 = "Jamen då så! Var har du den?";
 	std::string level1StartThomas3 = "Eumh... jag vet inte...";
 	std::string level1StartHilma6 = "Men oj då, det var verkligen till stor hjälp! Kan det vara så att du har tappat bort den?";
 	std::string level1StartHilma7 = "Du får väl tacka vinden för att den var så bångstyrig idag. För du fick turen att träffa på mig! Det råkar vara så att jag är en hittare!";
 	std::string level1StartTeller3 = "En hittare? Vad kunde det vara? Pojken hade aldrig hört talas om det innan.";
-	std::string level1StartHilma8 = "Jajamän! Vi Hittare har funnits länge och hållit reda på er slarviga människor. Tappar ni bort något så hittar vi det åt er. Det råkar vara så att  jag har en egen hittarbyrå! Jag kan hitta vad och var som helst!";
+	std::string level1StartHilma8 = "Jajamän! Vi Hittare har funnits länge och hållit reda på er slarviga människor. Tappar ni bort något så hittar vi det åt er. Det råkar vara så att jag har en egen hittarbyrå! Jag kan hitta vad och var som helst!";
 	std::string level1StartThomas4 = "O-o-m du verkligen är en h-hittare. Kan du... Kan du hitta tre saker åt mig-";
 	std::string level1StartHilma9 = "För att bevisa för dig att jag är en hittare? Utmaning godtagen! Vad är det du vill att jag ska hitta? Kom igen nu, vela inte så mycket!";
 	std::string level1StartThomas5 = "Hitta en självlysande stjärna... den föll från väggen, min favorit Astronaut och... Skruvmackapären...";
-	std::string level1StartHilma10 = "Vad får jag i utbyte? Jag måste få min hittarebyrå att gå runt på något sätt!";
+	std::string level1StartHilma10 = "Vad får jag i utbyte? Jag måste få min hittarbyrå att gå runt på något sätt!";
 	std::string level1StartThomas6 = "Hur mycket kostar det?";
 	std::string level1StartHilma11 = "Inte pengar! Ge mig något användbart som jag kan bygga med!";
 	std::string level1StartHilma12 = "Ge mig skruvmackapären sen när jag har hittat den, det blir ett bra utbyte!";
@@ -793,7 +793,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		mAdvancedIsActive = true;
 		advancedText(level1StartHilma, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
-		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		createTextBox(-250.f, 300.f, 1.f, 1.f, 0.4f, 0.40f);  //(-1.0f, 280.0f, 1.0f, 1.0f, 0.267f, 0.45f)
 	}
 	if (mState == 1)
 	{
@@ -915,7 +915,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 void DialogueSystem::displayLevel1EndAdvancedDialogue()
 {
 	std::string level1EndHilma = "Här är alla! Precis vad du bad om. Har jag övertygat dig tillräckligt?";
-	std::string level1EndTeller = "När Thomas fick syn på alla föremål kunde han inte tro sina ögon. Han som hade letat så mycket själv! Hans mamma hade sagt att när något försvann i hans stökiga rum, var det försvunnen för alltid. Tydligen inte för en hittare.";
+	std::string level1EndTeller = "När Thomas fick syn på alla föremål kunde han inte tro sina ögon. Han som hade letat så mycket själv! Hans mamma hade sagt att när något försvann i hans stökiga rum, var det försvunnet för alltid. Tydligen inte för en hittare.";
 	std::string level1EndHilma2 = "Jag sa ju det! Jag hittar vad som helst, var som helst!";
 	std::string level1EndTeller2 = "Då fick han ett litet, litet leende på läpparna. Han tackade så mycket för Hilmas hjälp. Men hans leende försvann snabbt när han såg skruvmackapären.";
 	std::string level1EndTeller3 = "Han blev alldeles tyst och stirrade på den. Plötsligt kunde han inte bara ge den till den hjälpsamma hittaren. Han höll hårdare i skruvmackapären. Nu började Hilma bli otålig med Thomas tvekanden.";
@@ -924,7 +924,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	std::string level1EndHilma4 = "Jaha ja, vems är det då om man får fråga? Har du stulit den?";
 	std::string level1EndThomas2 = "Ne-Nej! Absolut inte! Det... *djupt andetag* Jag lånade den av min... mormor.";
 	std::string level1EndHilma5 = "Din mormors? Vem är denne mormor då som låter en slarvgosse som du ta hand om en skruvmackapär?";
-	std::string level1EndThomas3 = "Min mormor är den bästa mekanikern och rymdpiloten som har någonsin funnits!";
+	std::string level1EndThomas3 = "Min mormor är den bästa mekanikern och rymdpiloten som någonsin har funnits!";
 	std::string level1EndHilma6 = "Jaha jaså ja... Vad kan den här mormor bygga då?";
 	std::string level1EndThomas4 = "Hon kan bygga allt... och laga allt. Hon lagar bilar, cykelpunkor och bygger de bästa lådbilarna, flygplanen... och! Och just nu bygger vi en rymdraket som ska ta oss till månen! Där ska vi bo och jobba som rymdcowboys-";
 	std::string level1EndThomas5 = "Det var det hon sa vi skulle göra i alla fall...";
@@ -939,7 +939,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	std::string level1EndThomas9 = "Verkligen? Kan du hitta henne?";
 	std::string level1EndHilma10 = "Ja! Men! På ett villkor!";
 	std::string level1EndThomas10 = "Vad vill du ha i utbyte?";
-	std::string level1EndHilma11 = "Rymdskeppet som du och mormor byggde på. Om hon kan verkligen bygga fantastiska saker borde den vara bättre än min flygfarkost, vilket jag tvivlar. Men, men! Vad väntar vi på? Nu ska vi hitta din mormor!";
+	std::string level1EndHilma11 = "Rymdskeppet som du och mormor byggde på. Om hon verkligen kan bygga fantastiska saker borde den vara bättre än min flygfarkost, vilket jag tvivlar på. Men, men! Vad väntar vi på? Nu ska vi hitta din mormor!";
 	std::string level1EndTeller6 = "Thomas nickade och leendet kom sakta tillbaka. Ett hopp hade grott inom honom. Det var en början på ett äventyr han aldrig skulle glömma.";
 
 	if (mState == 27)
@@ -957,7 +957,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 		advancedText(level1EndHilma, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
-		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		createTextBox(-250.f, 300.f, 1.f, 1.f, 0.4f, 0.40f);  //(-1.0f, 280.0f, 1.0f, 1.0f, 0.267f, 0.45f)
 	}
 	if (mState == 1)
 	{
@@ -1540,7 +1540,7 @@ void DialogueSystem::displayStarDialogue()
 
 void DialogueSystem::displayAquariumDialogue()
 {
-	std::string aquariumHilma = "Varför har du en fisk inne på rummet? Dem ska ja vara i sjöar!";
+	std::string aquariumHilma = "Varför har du en fisk inne på rummet? Dem ska ju vara i sjöar!";
 	std::string aquariumThomas = "Men det är mitt husdjur, han heter Roger.";
 	std::string aquariumHilma2 = "Kan Roger ha ätit upp astronauten?";
 	std::string aquariumThomas2 = "Nä, inte Roger, han är snäll.";

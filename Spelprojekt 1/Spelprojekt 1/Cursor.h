@@ -19,7 +19,8 @@ public:
 		INVENTORY,
 		DIALOGUE,
 		DISABLED,
-		MENU
+		MENU,
+		SCENECHANGE
 	};
 
 	void update(sf::RenderWindow &window);
@@ -40,6 +41,7 @@ private:
 	sf::Texture mClosedHandMouse;
 	sf::Texture mSpeechMouse;
 	sf::Texture mEyeMouse;
+	sf::Texture mSceneChangeMouse;
 	sf::Sprite mMouseCursor;
 
 	sf::Vector2i mPixelPos;

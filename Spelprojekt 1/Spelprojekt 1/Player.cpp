@@ -14,10 +14,12 @@ mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
 mSpeed(100.0f),
-mFacingLeft(true)
+mFacingLeft(true),
+mStepCooldown(0)
 {
 	//Sounds
-	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
+	mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
+	mWalkingSound.setVolume(25);
 
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
@@ -96,10 +98,6 @@ void Player::update(float deltaTime)
 	// Walk Animations
 	if (mActiveAnimation == "Walk" && mWalk)
 	{
-		if (mWalkingSound.getStatus() != 2)
-		{
-			mWalkingSound.play();
-		}
 		if (mThomasActive)
 		{
 			if (mCurrentTime >= mFrameTime)
@@ -107,6 +105,11 @@ void Player::update(float deltaTime)
 				mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
 				if (mCurrentFrame < 27)
 				{
+					if ((mCurrentFrame == 13 || mCurrentFrame == 26) && mWalkingSound.getStatus() != 2)
+					{
+						mWalkingSound.play();
+					}
+
 					mFrameXOffset += 1;
 					if (mFrameXOffset % 11 == 10)
 					{
@@ -134,6 +137,11 @@ void Player::update(float deltaTime)
 				mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 600, mFrameYOffset * 600, 600, 600));
 				if (mCurrentFrame < 27)
 				{
+					if ((mCurrentFrame == 3 || mCurrentFrame == 15) && mWalkingSound.getStatus() != 2)
+					{
+						mWalkingSound.play();
+					}
+
 					mFrameXOffset += 1;
 					if (mFrameXOffset % 8 == 7)
 					{

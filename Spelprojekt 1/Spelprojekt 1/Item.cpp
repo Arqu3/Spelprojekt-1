@@ -11,14 +11,19 @@ mIsLookedAt(false),
 mInteracted(false),
 isOnPosition(true),
 mSpeed(100.0f),
-mCraftIndex(-1)
+mCraftIndex(-1),
+mCurrentFrame(0),
+mFrameYOffset(0),
+mFrameXOffset(0),
+mCurrentTime(0),
+mFrameTime(0.03f)
 {
 	//Create items here
 	if (id == "Screwdevice")
 	{
 		mIndex = 0;
 		mName = "Skruvmakapär";
-		mDescription = "Testar Description!";
+		mDescription = "En fantastisk Skruvmackapär!";
 		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
 		mINVSprite.setTexture(*handler.getTexture("ScrewDeviceINV.png"));
@@ -49,7 +54,7 @@ mCraftIndex(-1)
 		mIndex = 3;
 		mCraftIndex = 0;
 		mName = "Fiskespö";
-		mDescription = "";
+		mDescription = "Ett Leksaksfiskespö";
 		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("FishingRod.png")); //Add correct texture
 		mINVSprite.setTexture(*handler.getTexture("FishingRodINV.png"));
@@ -60,7 +65,7 @@ mCraftIndex(-1)
 		mIndex = 4;
 		mCraftIndex = 0;
 		mName = "Magnet";
-		mDescription = "";
+		mDescription = "En Magnet";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomasmagnet.png")); //Add correct texture
@@ -71,7 +76,7 @@ mCraftIndex(-1)
 	{
 		mIndex = 5;
 		mName = "Astronaut";
-		mDescription = "Skruvar på saker";
+		mDescription = "En Astronaut";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("thomasastronaut.png")); //Add correct texture
@@ -247,7 +252,7 @@ mCraftIndex(-1)
 	{
 		mIndex = 22;
 		mName = "Fiskespö med magnet";
-		mDescription = "";
+		mDescription = "Fiskespö med Magnet";
 		mINVSprite.setPosition(mPosition);
 		mINVSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
 	}
@@ -280,6 +285,29 @@ mCraftIndex(-1)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
+	}
+
+	if (id == "WallStar")
+	{
+		mIndex = 25;
+		mName = "Väggstjärna";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("thomaswallstar.png")); //Add correct texture
+	}
+
+	if (id == "Roger")
+	{
+		mIndex = 25;
+		mName = "Fisken Roger";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.07f, 0.07f));
+		mRogerSwim = *handler.getTexture("RogerSwim.png");
+		mSprite.setTexture(mRogerSwim);
+		mSprite.setOrigin(350, 0);
+		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));
 	}
 }
 
@@ -510,6 +538,36 @@ sf::Sprite Item::getINVSprite()
 
 void Item::update(float deltaTime)
 {
+	mCurrentTime += deltaTime;
+
+	if (mActiveAnimation == "RogerSwim")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
+			if (mCurrentFrame < 32)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 7 == 6)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 6)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
 	move(deltaTime);
 }
 
@@ -533,4 +591,13 @@ void Item::changeTexture(ResourceHandler &handler, std::string filename)
 int Item::getCraftIndex()
 {
 	return mCraftIndex;
+}
+
+void Item::setActiveAnimation(std::string name)
+{
+	if (name == "RogerSwim")
+	{
+		mSprite.setTexture(mRogerSwim);
+	}
+	mActiveAnimation = name;
 }

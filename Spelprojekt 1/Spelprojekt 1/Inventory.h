@@ -18,7 +18,7 @@
 class Inventory
 {
 public:
-	Inventory();
+	Inventory(ResourceHandler &handler);
 	~Inventory();
 
 	//Vectors
@@ -103,6 +103,17 @@ private:
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
 	sf::FloatRect mMemoriesRect;
+
+	//Sounds
+	sf::Sound mCraftingSound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
+	sf::Sound mInventoryMoveSound;
+
+	//Font / Text
+	sf::Font mFont;
+	sf::Text mDescription;
+	sf::Text mCraftable;
 };
 
 #endif
