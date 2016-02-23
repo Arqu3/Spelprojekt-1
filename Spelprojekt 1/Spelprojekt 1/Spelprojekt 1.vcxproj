@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DialogueSystem.cpp" />
@@ -99,6 +100,7 @@
     <ClCompile Include="ResourceHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Crafting.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="DialogueSystem.h" />

@@ -18,6 +18,9 @@ public:
 	//Player
 	Player* getPlayer();
 
+	//UI
+	UI* getUI();
+
 	//Sound
 	void playBackgroundMusic();
 	void playAmbience();
@@ -50,9 +53,14 @@ public:
 	int checkCollision(const sf::FloatRect &boundingBox, sf::Vector2f &point);
 	int checkCollision(sf::FloatRect* &boundingBox, sf::Vector2f &point);
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::Vector2f &point);
+	int checkCollision(sf::FloatRect* boundingBox, sf::FloatRect &rect);
+	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect);
+
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
+	void mouseHover();
+
 
 	//Level Complete
 	bool isLevelComplete();
@@ -108,6 +116,10 @@ private:
 	Item* mCat;
 	Item* mFoodBowl;
 	Item* mKids;
+	Item* mHole;
+	Item* mPearl;
+	Item* mScrewDevice;
+	Item* mSaturn;
 
 	bool mLevelComplete;
 
@@ -117,6 +129,12 @@ private:
 	//DialogueSystem
 	DialogueSystem *mDialogueSystem;
 
+	//Mouse Cursor
+	Cursor *mCursor;
+
+	//Menu
+	UI *mUI;
+
 
 	//Eventstuff
 	sf::Vector2f mWorldPos;
@@ -124,6 +142,7 @@ private:
 	sf::Vector2f mViewMoveTo;
 	Item* mTargetItem;
 	bool mItemInteraction;
+
 	//Scene change
 	sf::FloatRect mSceneChangeRect;
 	sf::Vector2f mSceneChangePlayerPos;
@@ -133,8 +152,16 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
+	bool mFishFalling;
+	bool mCatWalking;
+	bool mEarthPickedUp;
+	bool mDollhouseInteracted;
+	bool mKidsFound;
+	bool mCatMoved;
 
 	ResourceHandler &handler;
+
+	int mUpdateTime;
 };
 
 #endif

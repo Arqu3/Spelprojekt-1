@@ -12,6 +12,8 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
+	addTexture("loadscreen.jpg");
+	addTexture("MainMenuBackground.png");
 }
 
 ResourceHandler::~ResourceHandler()
@@ -21,6 +23,9 @@ ResourceHandler::~ResourceHandler()
 
 void ResourceHandler::internalClear()
 {
+	textureCounter = 0;
+	soundCounter = 0;
+	musicCounter = 0;
 	mTextures.clear();
 	mTextureNames.clear();
 
@@ -39,6 +44,7 @@ void ResourceHandler::loadLevel1()
 	//Hilma
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
+	addTexture("HilmaFishing.png");
 
 	//In-game UI
 	addTexture("haticon.png");
@@ -46,6 +52,12 @@ void ResourceHandler::loadLevel1()
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");
+
+	//Inventory icons
+	addTexture("AstronautINV.png");
+	addTexture("FishingRodINV.png");
+	addTexture("MagnetINV.png");
+	addTexture("ScrewDeviceINV.png");
 
 	//Cursors
 	addTexture("mousecursor.png");
@@ -101,25 +113,19 @@ void ResourceHandler::loadLevel1()
 	//Sepia
 	addTexture("sepia.png");
 
-	
-
 	//Music
 	addMusic("Level1Music.ogg");
-
 
 	//Sound
 	addSound("FootSteps.ogg");
 	addSound("Level1Ambience.ogg");
-
-	
-
 }
 
 void ResourceHandler::loadLastLevel()
 {
 	//internalClear();
 
-        //LastLevel
+    //LastLevel
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");
@@ -127,7 +133,6 @@ void ResourceHandler::loadLastLevel()
 	addTexture("VARDAGSRUMbakgrund.png");
 	addTexture("VARDAGSRUMmellangrund.png");
 	addTexture("VARDAGSRUMförgrund.png");
-	addTexture("Fisk1.png");
 	addTexture("Fisk2.png");
 	addTexture("Jordglob.png");
 
@@ -137,31 +142,22 @@ void ResourceHandler::loadLastLevel()
 	addTexture("Apelsin.png");
 	addTexture("Tavlan.png");
 
-
 	addTexture("transparent.png");
 	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
 
- //       //Thomas
-	//addTexture("ThomasWalk.png");
+    //Karaktärer
+	addTexture("Katten.png");
+	addTexture("Lisa.png");
+	addTexture("PutteSad.png");
 
-	////Hilma
-	//addTexture("HilmaWalk.png");
-	//addTexture("HilmaPush.png");
 
-	////In-game UI
-	//addTexture("haticon.png");
-	//addTexture("menuicon.png");
-	//addTexture("hatmenu.png");
-	//addTexture("settingsmenu.png");
-	//addTexture("inventory.png");
-
-	////Cursors
-	//addTexture("mousecursor.png");
-	//addTexture("openhand.png");
-	//addTexture("closedhand.png");
-	//addTexture("speechbubble.png");
-	//addTexture("eyecursor.png");
-
+	//Props
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
 }
 
 //Adds a texture to the texture vector

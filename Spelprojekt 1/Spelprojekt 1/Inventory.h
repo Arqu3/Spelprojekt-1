@@ -13,6 +13,7 @@
 #include "SFML\System.hpp"
 
 #include "Item.h"
+#include "UI.h"
 
 class Inventory
 {
@@ -37,7 +38,7 @@ public:
 
 	//Grid
 	void setDynamicGrid();
-	void checkCollision(ItemVector items, sf::Vector2f point);
+	void checkCollision(ItemVector items, sf::Vector2f point, UI &ui);
 	void setCraftPos(int index);
 	bool craftCheck();
 
@@ -97,6 +98,11 @@ private:
 
 	//Event
 	sf::Event mEvent;
+
+	//Menu Rects
+	sf::FloatRect mInventoryRect;
+	sf::FloatRect mCluesRect;
+	sf::FloatRect mMemoriesRect;
 };
 
 #endif

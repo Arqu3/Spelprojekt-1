@@ -56,6 +56,11 @@ mHasCraft2(false)
 	//Select rectangle
 	mSelectRect.setSize(sf::Vector2f(70, 70));
 	mSelectRect.setFillColor(sf::Color::Yellow);
+
+	//UI Rects
+	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
+	mCluesRect = sf::FloatRect(sf::Vector2f(155, 365), sf::Vector2f(75, 80));
+	mMemoriesRect = sf::FloatRect(sf::Vector2f(195, 475), sf::Vector2f(75, 80));
 }
 
 Inventory::~Inventory()
@@ -76,7 +81,7 @@ void Inventory::update(sf::RenderWindow &window)
 	//Set select rectangle position
 	if (mSelectedItem1 != -1)
 	{
-		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getPosition().x - 3, mItems[mSelectedItem1]->getPosition().y - 3));
+		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getINVPosition().x - 3, mItems[mSelectedItem1]->getINVPosition().y - 3));
 	}
 
 	//Swap selected items
@@ -106,7 +111,7 @@ void Inventory::draw(sf::RenderWindow &window)
 		//	mItems[mCraftSelect2]->getSprite().setColor(sf::Color(255, 0, 255, 177));
 		//}
 
-		window.draw(mItems[i]->getSprite());
+		window.draw(mItems[i]->getINVSprite());
 	}
 
 	//window.draw(mItem1Rect);
@@ -117,23 +122,21 @@ void Inventory::draw(sf::RenderWindow &window)
 	//Draw selected items
 	if (mHasCraft1)
 	{
-		window.draw(mItem1->getSprite());
+		window.draw(mItem1->getINVSprite());
 	}
 	if (mHasCraft2)
 	{
-		window.draw(mItem2->getSprite());
+		window.draw(mItem2->getINVSprite());
 	}
 
 	//Draw result
-	if (mHasCraft1 && mHasCraft2 && (mItem1->getCraftIndex() != -1 || mItem2->getCraftIndex() != -1))
+	if (mHasCraft1 && mHasCraft2 && (mItem1->getCraftIndex() != -1 || mItem2->getCraftIndex() != -1) && mItem1->getCraftIndex() == mItem2->getCraftIndex())
 	{
 		int temp = mItems[mCraftSelect1]->getCraftIndex();
 		mResultItem = mCraftableItems[temp];
-		mResultItem->setPosition(mResultRect.getPosition().x, mResultRect.getPosition().y);
-		window.draw(mResultItem->getSprite());
+		mResultItem->setINVPosition(mResultRect.getPosition().x, mResultRect.getPosition().y);
+		window.draw(mResultItem->getINVSprite());
 	}
-
-	//window.draw(mRectShape);
 }
 
 void Inventory::addItem(Item* item)
@@ -173,7 +176,7 @@ void Inventory::setInitialGrid()
 		mPosX = mInitialXOffset + (mCol * mXIncrease);
 		mPosY = mInitialYOffset + (mRow * mYIncrease);
 
-		mItems[i]->setPosition(mPosX, mPosY);
+		mItems[i]->setINVPosition(mPosX, mPosY);
 	}
 }
 
@@ -190,7 +193,7 @@ void Inventory::setDynamicGrid()
 	mPosX = mInitialXOffset + (mCol * mXIncrease);
 	mPosY = mInitialYOffset + (mRow * mYIncrease);
 
-	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
+	mItems[mItems.size() - 1]->setINVPosition(mPosX, mPosY);
 }
 
 
@@ -217,11 +220,18 @@ void Inventory::removeItem(int index)
 				}
 			}
 		}
-		//If index is last
+
 		else
 		{
 			mItems.pop_back();
 		}
+
+	}
+	
+	//If index is last
+	else
+	{
+		mItems.pop_back();
 	}
 
 	mCol--;
@@ -230,15 +240,17 @@ void Inventory::removeItem(int index)
 		mRow--;
 		mCol = 2;
 	}
+
+	mSelectedItem1 = -1;
 }
 
 //Checks collision between any element in a vector and a sf::vector point
 //If the collision check is true, it returns the specified element it collided with
-void Inventory::checkCollision(ItemVector items, sf::Vector2f point)
+void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		if (mItems[i]->getRectangle().contains(point))
+		if (mItems[i]->getINVRectangle().contains(point))
 		{
 			//Select first item if no first item is selected
 			if (mSelectedItem1 == -1)
@@ -256,7 +268,31 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point)
 			return;
 		}
 	}
-	deSelect();
+
+	if (ui.getHatIconRect().contains(point))
+	{
+		ui.setState(UI::HAT);
+	}
+	else if (ui.getMenuIconRect().contains(point))
+	{
+		ui.setState(UI::MAINUI);
+	}
+	else if (mInventoryRect.contains(point))
+	{
+		ui.setState(UI::HAT);
+	}
+	else if (mCluesRect.contains(point))
+	{
+		ui.setState(UI::CLUES);
+	}
+	else if (mMemoriesRect.contains(point))
+	{
+		ui.setState(UI::MEMORIES);
+	}
+	else
+	{
+		deSelect();
+	}
 }
 
 void Inventory::setCraftPos(int index)
@@ -278,7 +314,7 @@ void Inventory::setCraftPos(int index)
 				{
 					mHasCraft1 = true;
 					mItem1 = new Item(*mItems[index]);
-					mItem1->setPosition(pos1.x, pos1.y);
+					mItem1->setINVPosition(pos1.x, pos1.y);
 				}
 			}
 			mSelectedItem1 = -1;
@@ -295,7 +331,7 @@ void Inventory::setCraftPos(int index)
 				{
 					mHasCraft2 = true;
 					mItem2 = new Item(*mItems[index]);
-					mItem2->setPosition(pos2.x, pos2.y);
+					mItem2->setINVPosition(pos2.x, pos2.y);
 				}
 			}
 			mSelectedItem1 = -1;
@@ -358,9 +394,9 @@ void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex
 
 void Inventory::swapPos(Item &item1, Item &item2)
 {
-	sf::Vector2f tempPos(item1.getPosition());
-	item1.setPosition(item2.getPosition().x, item2.getPosition().y);
-	item2.setPosition(tempPos.x, tempPos.y);
+	sf::Vector2f tempPos(item1.getINVPosition());
+	item1.setINVPosition(item2.getINVPosition().x, item2.getINVPosition().y);
+	item2.setINVPosition(tempPos.x, tempPos.y);
 }
 
 void Inventory::deSelect()
@@ -368,7 +404,7 @@ void Inventory::deSelect()
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//Deselect if you click on nothing interactable
-		if (!mItems[i]->getRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
+		if (!mItems[i]->getINVRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
 		{
 			mSelectedItem1 = -1;
 			mSelectedItem2 = -1;
@@ -384,7 +420,6 @@ bool Inventory::craftCheck()
 {
 	if (mCraftButton.getGlobalBounds().contains(mWorldPos))
 	{
-		//TODO - Add real craftcheck
 		if (mCraftSelect1 != -1 && mCraftSelect2 != -1 && mCraftSelect1 != mCraftSelect2)
 		{
 			if (mItems[mCraftSelect1]->getCraftIndex() != -1 && mItems[mCraftSelect2]->getCraftIndex() != -1)
@@ -409,14 +444,20 @@ bool Inventory::craftCheck()
 //Loads craftable items depending on level
 void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 {
+	if (mCraftableItems.size() > 0)
+	{
+		mCraftableItems.clear();
+	}
+
 	if (index == 0)
 	{
-		if (mCraftableItems.size() > 0)
-		{
-			mCraftableItems.clear();
-		}
+		
 		//MAKE SURE CRAFTING INDEX IN ITEM CLASS IS IN CORRECT ORDER!
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "FishingRodMagnet"));
+	}
+	else if (index == 1)
+	{
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Saturn"));
 	}
 }
 

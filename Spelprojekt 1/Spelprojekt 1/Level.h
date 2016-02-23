@@ -20,6 +20,9 @@ public:
 	//Player
 	virtual Player* getPlayer() = 0;
 
+	//UI
+	virtual UI* getUI() = 0;
+
 	//Rectangle for levels
 	typedef std::vector<sf::FloatRect*> rectVector;
 

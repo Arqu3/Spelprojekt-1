@@ -22,7 +22,7 @@ public:
 		MENU
 	};
 
-	void update();
+	void update(sf::RenderWindow &window);
 	void draw(sf::RenderWindow &window);
 
 	void setMode(Mode newMode);
@@ -41,6 +41,9 @@ private:
 	sf::Texture mSpeechMouse;
 	sf::Texture mEyeMouse;
 	sf::Sprite mMouseCursor;
+
+	sf::Vector2i mPixelPos;
+	sf::Vector2f mWorldPos;
 };
 
 #endif

@@ -20,8 +20,15 @@ Cursor::~Cursor()
 }
 
 //Update mouse cursor texture and origin depending on current active mode
-void Cursor::update()
+void Cursor::update(sf::RenderWindow &window)
 {
+	// get the current mouse position in the window
+	mPixelPos = sf::Mouse::getPosition(window);
+	// convert it to world coordinates
+	mWorldPos = window.mapPixelToCoords(mPixelPos);
+
+	setPosition(mWorldPos);
+
 	switch (mode){
 	case NORMAL:
 		mMouseCursor.setTexture(mNormalMouse);
