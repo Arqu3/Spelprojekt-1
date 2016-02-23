@@ -91,6 +91,17 @@ private:
 	//Sound
 	sf::Music music;
 	sf::Sound mAmbientSound;
+	sf::Sound mAquariumSound;
+	sf::Sound mRadioSound;
+	sf::Sound mMagnetCatchSound;
+	sf::Sound mMagnetDropSound;
+	sf::Sound mPushingObjectSound;
+	sf::Sound mRegularItemSound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
+	sf::Sound mMenuInventorySound;
+	sf::Sound mCraftingSound;
+	sf::Sound mCriticalItemSound;
 
 	//Scene
 	bool mIsActive;
@@ -109,6 +120,8 @@ private:
 	Item* mAstronaut;
 	Item* mBowl;
 	Item* mCube;
+	Item* mWallStar;
+	Item* mRoger;
 
 	//Inventory
 	Inventory *mInventory;
@@ -136,6 +149,8 @@ private:
 	sf::Vector2f mSceneChangePlayerPos;
 	int mNewScene;
 
+	bool mRogerOnPoint;
+
 	bool mPlayerToggle;
 	bool mLookedAtAquarium;
 	bool mPushingBlock;
@@ -145,5 +160,7 @@ private:
 	bool mMovedStar;
 	bool mReadyToLeave;
 	bool mLevelComplete;
+
+	int mUpdateTime;
 };
 #endif

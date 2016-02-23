@@ -65,19 +65,21 @@ void ResourceHandler::loadLevel1()
 	addTexture("closedhand.png");
 	addTexture("speechbubble.png");
 	addTexture("eyecursor.png");
+	addTexture("scenechangecursor.png");
 
 	// Level1
 	//Textures
 	//Thomas rum items
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");
-	addTexture("thomasstring.png");
 	addTexture("thomasmagnet.png");
 	addTexture("thomasastronaut.png");
 	addTexture("thomasbowl.png");
 	addTexture("thomascube.png");
 	addTexture("FishingRod.png");
 	addTexture("FishingRodMagnet.png");
+	addTexture("thomaswallstar.png");
+	addTexture("RogerSwim.png");
 
 	//Thomas room background, playground, foreground
 	addTexture("thomasbg.png");
@@ -117,8 +119,20 @@ void ResourceHandler::loadLevel1()
 	addMusic("Level1Music.ogg");
 
 	//Sound
-	addSound("FootSteps.ogg");
-	addSound("Level1Ambience.ogg");
+	addSound("Footsteps_Thomas.ogg");
+	addSound("Level1_Ambience.ogg");
+	addSound("Aquarium.ogg");
+	addSound("Magnet_Catch.ogg");
+	addSound("Magnet_Drop.ogg");
+	addSound("Pushing_Object.ogg");
+	addSound("Radio_Noise.ogg");
+	addSound("Regular_Item_Pickup.ogg");
+	addSound("Crafting.ogg");
+	addSound("Menu_Hat.ogg");
+	addSound("Menu_Inventory.ogg");
+	addSound("Menu_MainUI.ogg");
+	addSound("Critical_Item.ogg");
+	addSound("Inventory_Move.ogg");
 }
 
 void ResourceHandler::loadLastLevel()
