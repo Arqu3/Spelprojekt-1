@@ -17,7 +17,7 @@ mState(0),
 mLevel1Start(true),
 mLevel1End(false)
 {
-	mFont.loadFromFile("Resources/Fonts/GloriaHallelujah.ttf");
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
 	mTextBox.setTexture(*handler.getTexture("textbox.png"));
 	mSepia.setSize(sf::Vector2f(1024, 576));
@@ -34,7 +34,7 @@ void DialogueSystem::text(std::string text, sf::Vector2f &position, float x, flo
 {
 	mText.setFont(mFont);
 	mText.setCharacterSize(18);
-	mText.setStyle(sf::Text::Bold);
+	//mText.setStyle(sf::Text::Bold);
 	mText.setColor(sf::Color::Black);
 	mText.setPosition(position);
 
@@ -42,10 +42,10 @@ void DialogueSystem::text(std::string text, sf::Vector2f &position, float x, flo
 
 	if (text.length() > 20)
 	{
-		std::string::size_type spacePos = text.find(' ', 25);
+		std::string::size_type spacePos = text.rfind(' ', 20);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = text.rfind(' ', 25);
+			spacePos = text.find(' ', 20);
 		}
 		if (spacePos != std::string::npos)
 		{
@@ -53,12 +53,12 @@ void DialogueSystem::text(std::string text, sf::Vector2f &position, float x, flo
 			tempChar = spacePos;
 		}
 	}
-	if (text.length() > tempChar + 25)
+	if (text.length() > tempChar + 20)
 	{
-		std::string::size_type spacePos = text.find(' ', tempChar + 25);
+		std::string::size_type spacePos = text.rfind(' ', tempChar + 20);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = text.rfind(' ', tempChar + 25);
+			spacePos = text.find(' ', tempChar + 20);
 		}
 		if (spacePos != std::string::npos)
 		{
@@ -67,20 +67,36 @@ void DialogueSystem::text(std::string text, sf::Vector2f &position, float x, flo
 			tempChar = spacePos;
 		}
 	}
-	if (text.length() > tempChar + 25)
+	if (text.length() > tempChar + 20)
 	{
-		std::string::size_type spacePos = text.find(' ', tempChar + 25);
+		std::string::size_type spacePos = text.rfind(' ', tempChar + 20);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = text.rfind(' ', tempChar + 25);
+			spacePos = text.find(' ', tempChar + 20);
 		}
 		if (spacePos != std::string::npos)
 		{
 			text[spacePos] = '\n';
 			y = y - 15;
-			tempChar = 0;
+			tempChar = spacePos;
 		}
 	}
+	if (text.length() > tempChar + 20)
+	{
+		std::string::size_type spacePos = text.rfind(' ', tempChar + 20);
+		if (spacePos == std::string::npos)
+		{
+			spacePos = text.find(' ', tempChar + 20);
+		}
+		if (spacePos != std::string::npos)
+		{
+			text[spacePos] = '\n';
+			y = y - 15;
+			tempChar = spacePos;
+		}
+	}
+	else
+		tempChar = 0;
 
 	mText.move(x, y);
 	mText.setString(text);
@@ -94,6 +110,8 @@ void DialogueSystem::advancedText(std::string advancedText, float posX, float po
 	mText.setColor(sf::Color::White);
 	mText.move(offsetX, offsetY);
 
+	std::string::size_type tempChar = 0;
+
 	if (advancedText.length() > 70)
 	{
 		std::string::size_type spacePos = advancedText.rfind(' ', 70);
@@ -104,36 +122,56 @@ void DialogueSystem::advancedText(std::string advancedText, float posX, float po
 		if (spacePos != std::string::npos)
 		{
 			advancedText[spacePos] = '\n';
+			tempChar = spacePos;
 		}
 	}
 
-	if (advancedText.length() > 140)
+	if (advancedText.length() > tempChar + 70)
 	{
-		std::string::size_type spacePos = advancedText.rfind(' ', 140);
+		std::string::size_type spacePos = advancedText.rfind(' ', tempChar + 70);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = advancedText.find(' ', 140);
+			spacePos = advancedText.find(' ', tempChar + 70);
 		}
 		if (spacePos != std::string::npos)
 		{
 			advancedText[spacePos] = '\n';
-			posY = posY -25;
+			posY = posY - 15;
+			tempChar = spacePos;
 		}
 	}
 
-	if (advancedText.length() > 210)
+	if (advancedText.length() > tempChar + 70)
 	{
-		std::string::size_type spacePos = advancedText.rfind(' ', 210);
+		std::string::size_type spacePos = advancedText.rfind(' ', tempChar + 70);
 		if (spacePos == std::string::npos)
 		{
-			spacePos = advancedText.find(' ', 210);
+			spacePos = advancedText.find(' ', tempChar + 70);
 		}
 		if (spacePos != std::string::npos)
 		{
 			advancedText[spacePos] = '\n';
-			posY = posY - 25;
+			posY = posY - 15;
+			tempChar = spacePos;
 		}
 	}
+
+	if (advancedText.length() > tempChar + 70)
+	{
+		std::string::size_type spacePos = advancedText.rfind(' ', tempChar + 70);
+		if (spacePos == std::string::npos)
+		{
+			spacePos = advancedText.find(' ', tempChar + 70);
+		}
+		if (spacePos != std::string::npos)
+		{
+			advancedText[spacePos] = '\n';
+			posY = posY - 15;
+			tempChar = spacePos;
+		}
+	}
+	else
+		tempChar = 0;
 
 	mText.setPosition(posX, posY);
 	mText.setString(advancedText);
@@ -1095,7 +1133,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 void DialogueSystem::displayBooksDialogue()
 {
 	std::string booksHilma = "Hur många böcker har du egentligen?";
-	std::string booksThomas = "Senast jag räknade var det tjugofyra, men... det var ju ett tag sen…";
+	std::string booksThomas = "Senast jag räknade var det tjugofyra, men... det var ju ett tag sen...";
 
 	if (mState == 2)
 	{
@@ -1110,13 +1148,13 @@ void DialogueSystem::displayBooksDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(booksHilma, mPlayer->getPosition(), -280, -220);
-			createTalkBubble(mPlayer->getPosition(), -305, -235, 0.3f, 0.2f);
+			text(booksHilma, mPlayer->getPosition(), -275, -200);
+			createTalkBubble(mPlayer->getPosition(), -290, -210, 0.28f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(booksHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.3f, 0.2f);
+			text(booksHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.28f, 0.15f);
 		}
 	}
 	if (mState == 1)
@@ -1124,19 +1162,19 @@ void DialogueSystem::displayBooksDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(booksThomas, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -280, 0.25f, 0.25f);
+			createTalkBubble(mPlayer->getPosition(), 45, -290, 0.23f, 0.25f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(booksThomas, mPlayer->getPosition(), -260, -250);
-			createTalkBubble(mPlayer->getPosition(), -285, -280, 0.25f, 0.25f);
+			text(booksThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -290, 0.23f, 0.25f);
 		}
 	}
 }
 
 void DialogueSystem::displayLampDialogue()
 {
-	std::string lampHilma = "Vad för oansvarig människa placerar en lampa vid sitt fönster? Jag flög nästan in i den innan!";
+	std::string lampHilma = "Vad för oansvarig människa placerar en lampa vid sitt fönster? Jag flög nästan in i den!";
 	std::string lampThomas = "Jag visste inte att det var farligt med lampor...";
 	std::string lampHilma2 = "Ni människor är så vårdslösa.";
 	std::string lampThomas2 = "Det var ju faktiskt du som krashade i mitt rum. Det tycker jag låter vårdslöst.";
@@ -1156,13 +1194,13 @@ void DialogueSystem::displayLampDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(lampHilma, mPlayer->getPosition(), -300, -220);
-			createTalkBubble(mPlayer->getPosition(), -325, -265, 0.32f, 0.3f);
+			text(lampHilma, mPlayer->getPosition(), -240, -220);
+			createTalkBubble(mPlayer->getPosition(), -255, -275, 0.23f, 0.3f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(lampHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -265, 0.32f, 0.3f);
+			createTalkBubble(mPlayer->getPosition(), 45, -275, 0.23f, 0.3f);
 		}
 	}
 
@@ -1171,12 +1209,12 @@ void DialogueSystem::displayLampDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(lampThomas, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -265, 0.25f, 0.2f);
+			createTalkBubble(mPlayer->getPosition(), 45, -275, 0.23f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(lampThomas, mPlayer->getPosition(), -260, -250);
-			createTalkBubble(mPlayer->getPosition(), -285, -265, 0.25f, 0.2f);
+			text(lampThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -275, 0.23f, 0.2f);
 		}
 	}
 
@@ -1184,13 +1222,13 @@ void DialogueSystem::displayLampDialogue()
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(lampHilma2, mPlayer->getPosition(), -230, -220);
-			createTalkBubble(mPlayer->getPosition(), -250, -235, 0.22f, 0.2f);
+			text(lampHilma2, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -210, 0.23f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(lampHilma2, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.22f, 0.2f);
+			text(lampHilma2, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.23f, 0.15f);
 		}
 	}
 
@@ -1199,25 +1237,25 @@ void DialogueSystem::displayLampDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(lampThomas2, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -295, 0.25f, 0.3f);
+			createTalkBubble(mPlayer->getPosition(), 45, -305, 0.23f, 0.3f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(lampThomas2, mPlayer->getPosition(), -260, -250);
-			createTalkBubble(mPlayer->getPosition(), -285, -295, 0.25f, 0.3f);
+			text(lampThomas2, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -305, 0.23f, 0.3f);
 		}
 	}
 	if (mState == 4)
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(lampHilma3, mPlayer->getPosition(), -100, -180);
-			createTalkBubble(mPlayer->getPosition(), -115, -190, 0.09f, 0.1f);
+			text(lampHilma3, mPlayer->getPosition(), -110, -180);
+			createTalkBubble(mPlayer->getPosition(), -120, -190, 0.085f, 0.1f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(lampHilma3, mPlayer->getPosition(), 60, -180);
-			createTalkBubble(mPlayer->getPosition(), 40, -190, 0.09f, 0.1f);
+			createTalkBubble(mPlayer->getPosition(), 50, -190, 0.085f, 0.1f);
 		}
 	}
 }
@@ -1225,7 +1263,7 @@ void DialogueSystem::displayLampDialogue()
 void DialogueSystem::displayRubicCubeDialogue()
 {
 	std::string rubicHilma = "Vad är det här?";
-	std::string rubicThomas = "En Rubiks kub, man ska få alla färgerna på varsin sida.";
+	std::string rubicThomas = "En Rubiks kub, man ska få alla färger på varsin sida.";
 	std::string rubicHilma2 = "Men vad är det för utmaning? Låter ju jättelätt!";
 
 	if (mState == 3)
@@ -1242,13 +1280,13 @@ void DialogueSystem::displayRubicCubeDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(rubicHilma, mPlayer->getPosition(), -180, -180);
-			createTalkBubble(mPlayer->getPosition(), -195, -190, 0.18f, 0.1f);
+			text(rubicHilma, mPlayer->getPosition(), -200, -180);
+			createTalkBubble(mPlayer->getPosition(), -210, -190, 0.185f, 0.1f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(rubicHilma, mPlayer->getPosition(), 60, -180);
-			createTalkBubble(mPlayer->getPosition(), 40, -190, 0.18f, 0.1f);
+			createTalkBubble(mPlayer->getPosition(), 50, -190, 0.185f, 0.1f);
 		}
 	}
 	if (mState == 1)
@@ -1256,25 +1294,25 @@ void DialogueSystem::displayRubicCubeDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(rubicThomas, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -265, 0.3f, 0.2f);
+			createTalkBubble(mPlayer->getPosition(), 45, -275, 0.24f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(rubicThomas, mPlayer->getPosition(), -280, -250);
-			createTalkBubble(mPlayer->getPosition(), -305, -265, 0.3f, 0.2f);
+			text(rubicThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -275, 0.24f, 0.2f);
 		}
 	}
 	if (mState == 2)
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(rubicHilma2, mPlayer->getPosition(), -280, -220);
-			createTalkBubble(mPlayer->getPosition(), -305, -235, 0.3f, 0.2f);
+			text(rubicHilma2, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -225, 0.23f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(rubicHilma2, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.3f, 0.2f);
+			text(rubicHilma2, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -225, 0.23f, 0.2f);
 		}
 	}
 }
@@ -1298,13 +1336,13 @@ void DialogueSystem::displayPosterDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(posterHilma, mPlayer->getPosition(), -200, -220);
-			createTalkBubble(mPlayer->getPosition(), -220, -235, 0.2f, 0.2f);
+			text(posterHilma, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -210, 0.23f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(posterHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.2f, 0.2f);
+			text(posterHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.23f, 0.15f);
 		}
 	}
 
@@ -1312,13 +1350,13 @@ void DialogueSystem::displayPosterDialogue()
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(posterThomas, mPlayer->getPosition(), 70, -250);
-			createTalkBubble(mPlayer->getPosition(), 45, -295, 0.3f, 0.3f);
+			text(posterThomas, mPlayer->getPosition(), 60, -250);
+			createTalkBubble(mPlayer->getPosition(), 45, -305, 0.23f, 0.3f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(posterThomas, mPlayer->getPosition(), -295, -250);
-			createTalkBubble(mPlayer->getPosition(), -315, -295, 0.3f, 0.3f);
+			text(posterThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -305, 0.23f, 0.3f);
 		}
 	}
 }
@@ -1342,13 +1380,13 @@ void DialogueSystem::displayBackpackDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(backpackHilma, mPlayer->getPosition(), -250, -220);
-			createTalkBubble(mPlayer->getPosition(), -270, -235, 0.25f, 0.2f);
+			text(backpackHilma, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -225, 0.22f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(backpackHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.25f, 0.2f);
+			text(backpackHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -225, 0.22f, 0.2f);
 		}
 	}
 
@@ -1356,13 +1394,13 @@ void DialogueSystem::displayBackpackDialogue()
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(backpackThomas, mPlayer->getPosition(), 70, -250);
-			createTalkBubble(mPlayer->getPosition(), 50, -280, 0.25f, 0.25f);
+			text(backpackThomas, mPlayer->getPosition(), 60, -250);
+			createTalkBubble(mPlayer->getPosition(), 45, -290, 0.23f, 0.25f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(backpackThomas, mPlayer->getPosition(), -260, -250);
-			createTalkBubble(mPlayer->getPosition(), -280, -280, 0.25f, 0.25f);
+			text(backpackThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -290, 0.23f, 0.25f);
 		}
 	}
 }
@@ -1387,13 +1425,13 @@ void DialogueSystem::displayBowlDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(bowlHilma, mPlayer->getPosition(), -270, -220);
-			createTalkBubble(mPlayer->getPosition(), -290, -235, 0.28f, 0.2f);
+			text(bowlHilma, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -225, 0.24f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(bowlHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.28f, 0.2f);
+			text(bowlHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -225, 0.24f, 0.2f);
 		}
 	}
 
@@ -1402,12 +1440,12 @@ void DialogueSystem::displayBowlDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(bowlThomas, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -230, 0.17f, 0.1f);
+			createTalkBubble(mPlayer->getPosition(), 50, -230, 0.18f, 0.1f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(bowlThomas, mPlayer->getPosition(), -200, -220);
-			createTalkBubble(mPlayer->getPosition(), -215, -230, 0.17f, 0.1f);
+			createTalkBubble(mPlayer->getPosition(), -210, -230, 0.18f, 0.1f);
 		}
 	}
 
@@ -1415,13 +1453,13 @@ void DialogueSystem::displayBowlDialogue()
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(bowlHilma2, mPlayer->getPosition(), -160, -180);
-			createTalkBubble(mPlayer->getPosition(), -175, -190, 0.15f, 0.1f);
+			text(bowlHilma2, mPlayer->getPosition(), -190, -180);
+			createTalkBubble(mPlayer->getPosition(), -200, -190, 0.17f, 0.1f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(bowlHilma2, mPlayer->getPosition(), 60, -180);
-			createTalkBubble(mPlayer->getPosition(), 40, -190, 0.15f, 0.1f);
+			createTalkBubble(mPlayer->getPosition(), 50, -190, 0.17f, 0.1f);
 		}
 	}
 }
@@ -1446,13 +1484,13 @@ void DialogueSystem::displayRadioDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(radioHilma, mPlayer->getPosition(), -280, -220);
-			createTalkBubble(mPlayer->getPosition(), -305, -235, 0.3f, 0.2f);
+			text(radioHilma, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -225, 0.24f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(radioHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.3f, 0.2f);
+			text(radioHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -225, 0.24f, 0.2f);
 		}
 	}
 
@@ -1461,12 +1499,12 @@ void DialogueSystem::displayRadioDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(radioThomas, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -265, 0.25f, 0.2f);
+			createTalkBubble(mPlayer->getPosition(), 45, -260, 0.23f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(radioThomas, mPlayer->getPosition(), -260, -250);
-			createTalkBubble(mPlayer->getPosition(), -285, -265, 0.25f, 0.2f);
+			text(radioThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -260, 0.23f, 0.15f);
 		}
 	}
 
@@ -1474,20 +1512,20 @@ void DialogueSystem::displayRadioDialogue()
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(radioHilma2, mPlayer->getPosition(), -115, -170);
-			createTalkBubble(mPlayer->getPosition(), -130, -180, 0.1f, 0.1f);
+			text(radioHilma2, mPlayer->getPosition(), -140, -180);
+			createTalkBubble(mPlayer->getPosition(), -150, -190, 0.12f, 0.1f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(radioHilma2, mPlayer->getPosition(), 60, -180);
-			createTalkBubble(mPlayer->getPosition(), 40, -190, 0.1f, 0.1f);
+			createTalkBubble(mPlayer->getPosition(), 50, -190, 0.12f, 0.1f);
 		}
 	}
 }
 
 void DialogueSystem::displayMatDialogue()
 {
-	std::string matHilma = "Magneten dras mot mattan.";
+	std::string matHilma = "Magneten dras mot knölen i mattan.";
 
 	if (mState == 1)
 	{
@@ -1503,13 +1541,13 @@ void DialogueSystem::displayMatDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(matHilma, mPlayer->getPosition(), -260, -180);
-			createTalkBubble(mPlayer->getPosition(), -275, -190, 0.27f, 0.1f);
+			text(matHilma, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -210, 0.24f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(matHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.27f, 0.1f);
+			text(matHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.24f, 0.15f);
 		}
 	}
 }
@@ -1532,20 +1570,20 @@ void DialogueSystem::displayStarDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(starHilma, mPlayer->getPosition(), -260, -220);
-			createTalkBubble(mPlayer->getPosition(), -275, -250, 0.27f, 0.25f);
+			text(starHilma, mPlayer->getPosition(), -250, -220);
+			createTalkBubble(mPlayer->getPosition(), -265, -260, 0.25f, 0.25f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(starHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -250, 0.27f, 0.25f);
+			createTalkBubble(mPlayer->getPosition(), 45, -260, 0.25f, 0.25f);
 		}
 	}
 }
 
 void DialogueSystem::displayAquariumDialogue()
 {
-	std::string aquariumHilma = "Varför har du en fisk inne på rummet? Dem ska ja vara i sjöar!";
+	std::string aquariumHilma = "Varför har du en fisk inne på rummet? Dem ska ju vara i sjöar!";
 	std::string aquariumThomas = "Men det är mitt husdjur, han heter Roger.";
 	std::string aquariumHilma2 = "Kan Roger ha ätit upp astronauten?";
 	std::string aquariumThomas2 = "Nä, inte Roger, han är snäll.";
@@ -1564,13 +1602,13 @@ void DialogueSystem::displayAquariumDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(aquariumHilma, mPlayer->getPosition(), -280, -220);
-			createTalkBubble(mPlayer->getPosition(), -305, -250, 0.3f, 0.25f);
+			text(aquariumHilma, mPlayer->getPosition(), -250, -220);
+			createTalkBubble(mPlayer->getPosition(), -265, -260, 0.25f, 0.25f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(aquariumHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -250, 0.3f, 0.25f);
+			createTalkBubble(mPlayer->getPosition(), 45, -260, 0.25f, 0.25f);
 		}
 	}
 
@@ -1579,12 +1617,12 @@ void DialogueSystem::displayAquariumDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(aquariumThomas, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -265, 0.26f, 0.2f);
+			createTalkBubble(mPlayer->getPosition(), 45, -275, 0.23f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(aquariumThomas, mPlayer->getPosition(), -260, -250);
-			createTalkBubble(mPlayer->getPosition(), -285, -265, 0.26f, 0.2f);
+			text(aquariumThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -275, 0.23f, 0.2f);
 		}
 	}
 
@@ -1592,13 +1630,13 @@ void DialogueSystem::displayAquariumDialogue()
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(aquariumHilma2, mPlayer->getPosition(), -230, -220);
-			createTalkBubble(mPlayer->getPosition(), -250, -235, 0.25f, 0.2f);
+			text(aquariumHilma2, mPlayer->getPosition(), -230, -200);
+			createTalkBubble(mPlayer->getPosition(), -245, -210, 0.23f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(aquariumHilma2, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.25f, 0.2f);
+			text(aquariumHilma2, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.23f, 0.15f);
 		}
 	}
 
@@ -1607,12 +1645,12 @@ void DialogueSystem::displayAquariumDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(aquariumThomas2, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -265, 0.25f, 0.2f);
+			createTalkBubble(mPlayer->getPosition(), 45, -260, 0.24f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(aquariumThomas2, mPlayer->getPosition(), -260, -250);
-			createTalkBubble(mPlayer->getPosition(), -285, -265, 0.25f, 0.2f);
+			text(aquariumThomas2, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -260, 0.24f, 0.15f);
 		}
 	}
 }
@@ -1635,13 +1673,13 @@ void DialogueSystem::displayBlockDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(blockHilma, mPlayer->getPosition(), -230, -220);
-			createTalkBubble(mPlayer->getPosition(), -250, -235, 0.22f, 0.2f);
+			text(blockHilma, mPlayer->getPosition(), -250, -200);
+			createTalkBubble(mPlayer->getPosition(), -265, -210, 0.25f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(blockHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.22f, 0.2f);
+			text(blockHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.25f, 0.15f);
 		}
 	}
 }
@@ -1666,13 +1704,13 @@ void DialogueSystem::displayAstronautDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(astronautHilma, mPlayer->getPosition(), -280, -220);
-			createTalkBubble(mPlayer->getPosition(), -305, -250, 0.26f, 0.25f);
+			text(astronautHilma, mPlayer->getPosition(), -250, -200);
+			createTalkBubble(mPlayer->getPosition(), -265, -225, 0.25f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(astronautHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -250, 0.26f, 0.25f);
+			text(astronautHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -225, 0.25f, 0.2f);
 		}
 	}
 
@@ -1681,12 +1719,12 @@ void DialogueSystem::displayAstronautDialogue()
 		if (mPlayer->isFacingLeft() == true)
 		{
 			text(astronautThomas, mPlayer->getPosition(), 60, -250);
-			createTalkBubble(mPlayer->getPosition(), 40, -280, 0.27f, 0.25f);
+			createTalkBubble(mPlayer->getPosition(), 45, -290, 0.23f, 0.25f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(astronautThomas, mPlayer->getPosition(), -285, -250);
-			createTalkBubble(mPlayer->getPosition(), -300, -280, 0.27f, 0.25f);
+			text(astronautThomas, mPlayer->getPosition(), -250, -250);
+			createTalkBubble(mPlayer->getPosition(), -265, -290, 0.23f, 0.25f);
 		}
 	}
 
@@ -1694,13 +1732,13 @@ void DialogueSystem::displayAstronautDialogue()
 	{
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(astronautHilma2, mPlayer->getPosition(), -280, -220);
-			createTalkBubble(mPlayer->getPosition(), -305, -250, 0.32f, 0.25f);
+			text(astronautHilma2, mPlayer->getPosition(), -250, -200);
+			createTalkBubble(mPlayer->getPosition(), -265, -225, 0.24f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(astronautHilma2, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -250, 0.32f, 0.25f);
+			text(astronautHilma2, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -225, 0.24f, 0.2f);
 		}
 	}
 }
@@ -1723,13 +1761,13 @@ void DialogueSystem::displayMagnetDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(magnetHilma, mPlayer->getPosition(), -270, -220);
-			createTalkBubble(mPlayer->getPosition(), -290, -235, 0.27f, 0.2f);
+			text(magnetHilma, mPlayer->getPosition(), -250, -200);
+			createTalkBubble(mPlayer->getPosition(), -265, -210, 0.27f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(magnetHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 40, -235, 0.27f, 0.2f);
+			text(magnetHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.27f, 0.15f);
 		}
 	}
 }
@@ -1752,13 +1790,13 @@ void DialogueSystem::displayStringDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(stringHilma, mPlayer->getPosition(), -160, -180);
-			createTalkBubble(mPlayer->getPosition(), -175, -190, 0.14f, 0.1f);
+			text(stringHilma, mPlayer->getPosition(), -170, -180);
+			createTalkBubble(mPlayer->getPosition(), -180, -190, 0.16f, 0.1f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(stringHilma, mPlayer->getPosition(), 60, -180);
-			createTalkBubble(mPlayer->getPosition(), 40, -190, 0.14f, 0.1f);
+			createTalkBubble(mPlayer->getPosition(), 50, -190, 0.16f, 0.1f);
 		}
 	}
 }
