@@ -15,7 +15,8 @@ mFrameXOffset(0),
 mFrameYOffset(0),
 mSpeed(100.0f),
 mFacingLeft(true),
-mStepCooldown(0)
+mStepCooldown(0),
+mThomasActive(true)
 {
 	//Sounds
 	mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
@@ -29,6 +30,7 @@ mStepCooldown(0)
 	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
 	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
 	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
+	
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
@@ -202,15 +204,15 @@ void Player::update(float deltaTime)
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
-			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
-			if (mCurrentFrame < 34)
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 500, mFrameYOffset * 500, 500, 500));
+			if (mCurrentFrame < 35)
 			{
 				mFrameXOffset += 1;
-				if (mFrameXOffset % 8 == 7)
+				if (mFrameXOffset % 7 == 6)
 				{
 					mFrameYOffset++;
 				}
-				if (mFrameXOffset >= 7)
+				if (mFrameXOffset >= 6)
 				{
 					mFrameXOffset = 0;
 				}
@@ -218,9 +220,9 @@ void Player::update(float deltaTime)
 			}
 			else
 			{
-				mCurrentFrame = 34;
-				mFrameXOffset = 6;
-				mFrameYOffset = 4;
+				mCurrentFrame = 35;
+				mFrameXOffset = 5;
+				mFrameYOffset = 5;
 			}
 			mCurrentTime = 0;
 		}

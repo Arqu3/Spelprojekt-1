@@ -624,8 +624,16 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				mUI->setState(UI::MAINUI);
-				mCursor->setMode(Cursor::MENU);
+				if (mUI->getState() == UI::MAINUI)
+				{
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::NORMAL);
+				}
+				else if (mCursor->getMode() != Cursor::DIALOGUE)
+				{
+					mUI->setState(UI::MAINUI);
+					mCursor->setMode(Cursor::MENU);
+				}
 			}
 			break;
 
@@ -1047,14 +1055,16 @@ void Level1::pickupTargetItem()
 		if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
 		{
 			//TODO - Add Rubics Cube Drop, Hilma Jump
-			mPlayer->setPosition(600, 305);
-			mPlayer->moveToPosition(600, 305);
+			//mPlayer->setPosition(600, 305); //Normal Fishing Animation
+			//mPlayer->moveToPosition(600, 305); //Normal Fishing Animation
+			mPlayer->setPosition(700, 450); //Scaled Fishing Animation
+			mPlayer->moveToPosition(700, 450); //Scaled Fishing Animation
 			if (!mPlayer->isFacingLeft())
 			{
 				mPlayer->flipPlayer();
 			}
 			mPlayer->setActiveAnimation("Fishing");
-			mPlayer->setScale(sf::Vector2f(0.45f, 0.45f));
+			mPlayer->setScale(sf::Vector2f(0.9f, 0.9f)); //Normal Animation = sf::Vector2f(0.45f, 0.45f)
 			mFishing = true;
 			mCursor->setMode(Cursor::DISABLED);
 			mMagnetDropSound.play();
