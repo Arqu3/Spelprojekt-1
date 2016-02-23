@@ -754,7 +754,7 @@ bool DialogueSystem::isDialogueFinished()
 void DialogueSystem::displayLevel1StartAdvancedDialogue()
 {
 	std::string level1StartHilma = "För bövelingen! Nu är min flygfarkost alldeles förstörd! Förbaskade flygfän som alltid ska vara så livliga... Nähej, nu måste jag laga detta!";
-	std::string level1StartTeller = "Den vresiga lilla hittaren tog av sin mössa och började leta i den. Hon letade och letade längre ned i mössan. Det enda man kunde se av henne var hennes små, små fötter. Det var som om det inte fanns någon botten i mössan! Till slut hoppade hittaren ut ur mössan. Men nu var hon helt röd i hela ansiktet.";
+	std::string level1StartTeller = "Den vresiga lilla hittaren tog av sin mössa och började leta i den. Hon letade och letade längre ned i mössan. Det enda man kunde se av henne var hennes små, små fötter. Det var som om det inte fanns någon botten i mössan! Till slut hoppade hittaren ut ur mössan.\nMen nu var hon helt röd i hela ansiktet.";
 	std::string level1StartHilma2 = "MEN VAD SJUTTON ÄR DET HÄR??? ÄR DEN BORTA? ALLT ÄR BORTA?!! DET HÄR KAN INTE VARA SANT!";
 	std::string level1StartHilma3 = "Det var det bästa utbytet jag hittills har fått! Jag som hade hittat så bra...";
 	std::string level1StartThomas = "V-v- vad har du tappat?";
