@@ -13,7 +13,8 @@ isOnPosition(true),
 mSpeed(100.0f),
 mCraftIndex(-1),
 mFrameTime(0.02f),
-mCurrentTime(0.0f)
+mCurrentTime(0.0f),
+mCurrentFrame(0)
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -201,8 +202,12 @@ mCurrentTime(0.0f)
 		mSprite.setScale(sf::Vector2f(0.17f, 0.17f)); //Fixa
 		
 		mCatWalking = *handler.getTexture("CatWalking.png");
+		mCatEating = *handler.getTexture("CatEating.png");
+
 		mSprite.setTexture(mCatWalking); 
 		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
+
+	
 	}
 
 	if (id == "Foodbowl")
@@ -535,6 +540,35 @@ void Item::update(float deltaTime)
 		}
 	}
 
+	//Cat Eating
+	if (mActiveAnimation == "CatEating")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 1000, mFrameYOffset * 1000, 1000, 1000));
+			if (mCurrentFrame < 27)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 8 == 7)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 7)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
 
 	move(deltaTime);
 }
@@ -572,7 +606,7 @@ void Item :: setActiveAnimation(std::string name)
 		mSprite.setTexture(mCatWalking);
 	}
 
-	if (name == "CatEating")
+	else if (name == "CatEating")
 	{
 		mCurrentFrame = 0;
 		mFrameXOffset = 0;

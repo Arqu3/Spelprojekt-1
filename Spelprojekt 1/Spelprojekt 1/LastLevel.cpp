@@ -240,7 +240,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		mSaturn = new Item(handler, sf::Vector2f(606, 44), "Saturn");
 		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
-		mVenus = new Item(handler, sf::Vector2f(0, 0), "Venus");
+		mVenus = new Item(handler, sf::Vector2f(330, 56), "Venus");
 
 
 		//View
@@ -291,7 +291,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		//Add items to itemVector
 		addItem(mMagicClam);
-		//addItem(mPutte);
+		addItem(mVenus);
 		addItem(mDollhouse);
 
 		//Items Active
@@ -927,6 +927,7 @@ void LastLevel::mouseClick(sf::Event &event)
 					{
 						mInventory->removeItem(mInventory->getSelectedItem());
 						mVenus->toggleActive();
+						mVenus->setPosition(330, 56);
 					}
 
 					std::cout << "Planet 2!";
@@ -1277,11 +1278,14 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 								{
 									mTargetItem = getItems()[i];
 									mTargetItem->setActiveAnimation("CatWalking");
+									mTargetItem->setPosition(367, 276);
 									mTargetItem->setScale(-0.17, 0.17);
 									mTargetItem->setSpeed(100.0f);
-									mTargetItem->moveToPosition(700, 276);
+									mTargetItem->moveToPosition(715, 285);
 									mCursor->setMode(Cursor::DISABLED);
 									mCatWalking = true;
+
+									
 								}								
 							}
 						}
@@ -1384,6 +1388,12 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 				mCatWalking = false;
 				mCursor->setMode(Cursor::NORMAL);
 				mTargetItem->setSpeed(100.0f);
+			}
+
+			if (mCatMoved)
+			{
+				mTargetItem->setActiveAnimation("CatEating");
+
 			}
 		}
 	}
