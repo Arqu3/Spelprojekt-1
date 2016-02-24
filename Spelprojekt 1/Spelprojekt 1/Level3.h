@@ -104,6 +104,10 @@ private:
 	ItemVector mItems;
 	Item* mTrimmer;
 	Item* mStick;
+	Item* mFlowers;
+	Item *mLeash;
+	Item* mDog;
+	Item* mFlagpole;
 
 
 	bool mLevelComplete;
@@ -137,6 +141,7 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
+	bool mUnleashed;
 
 	ResourceHandler &handler;
 

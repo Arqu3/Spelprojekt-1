@@ -151,6 +151,7 @@ void ResourceHandler::loadLevel3()
 	addTexture("Pluto.png");
 	addTexture("Fisk1.png");
 	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
 	
 
 

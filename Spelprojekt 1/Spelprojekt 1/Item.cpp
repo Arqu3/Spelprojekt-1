@@ -300,6 +300,46 @@ mCraftIndex(-1)
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 	}
+
+	if (id == "Flowers")
+	{
+		mIndex = 28;
+		mName = "Blommor";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(5.8f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Leash")
+	{
+		mIndex = 29;
+		mName = "Koppel";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Dog")
+	{
+		mIndex = 30;
+		mName = "Hund";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.0f, 0.7f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Flagpole")
+	{
+		mIndex = 31;
+		mName = "Flagstång";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.2f, 1.5f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
 }
 
 

@@ -219,7 +219,10 @@ void Level3::toggleActive(ResourceHandler &handler)
 		//Add items
 		mTrimmer = new Item(handler, sf::Vector2f(341, 367), "Trimmer");
 		mStick = new Item(handler, sf::Vector2f(381, 220), "Stick");
-
+		mFlowers = new Item(handler, sf::Vector2f(156, 525), "Flowers");
+		mLeash = new Item(handler, sf::Vector2f(615, 303), "Leash");
+		mDog = new Item(handler, sf::Vector2f(700, 270), "Dog");
+		mFlagpole = new Item(handler, sf::Vector2f(1386, 195), "Flagpole");
 
 		//View
 		mView.setSize(1024, 576);
@@ -258,9 +261,29 @@ void Level3::toggleActive(ResourceHandler &handler)
 		mStick->toggleLookable();
 		mStick->togglePickupable();
 
+		mFlowers->toggleActive();
+		mFlowers->toggleLookable();
+		mFlowers->togglePickupable();
+
+		mLeash->toggleActive();
+		mLeash->toggleLookable();
+		mLeash->toggleInteractable();
+
+		mDog->toggleActive();
+		mDog->toggleLookable();
+		mDog->toggleInteractable();
+
+		mFlagpole->toggleActive();
+		mFlagpole->toggleLookable();
+		mFlagpole->toggleInteractable();
+
 		//Add to Itemvector
 		addItem(mTrimmer);
 		addItem(mStick);
+		addItem(mFlowers);
+		addItem(mLeash);
+		addItem(mDog);
+		addItem(mFlagpole);
 		
 
 	}
@@ -546,7 +569,54 @@ void Level3::mouseClick(sf::Event &event)
 
 				}
 
-				
+				if (getItems()[i]->getId() == "Trimmer")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(310, 375);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på häcksax!";
+
+				}
+
+				if (getItems()[i]->getId() == "Stick")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(429, 386);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på häcksax!";
+
+				}
+
+				if (getItems()[i]->getId() == "Leash")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(588, 380);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på koppel!";
+
+				}
+
+				if (getItems()[i]->getId() == "Dog")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(666, 416);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på hunden!";
+
+				}
+
 			}
 		}
 	}
@@ -668,13 +738,34 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Screwdevice")
 					{
 						mInventory->addItem(mTargetItem);
-						//mEarthPickedUp = true;
 						std::cout << "Plockade upp Jordglob";
 
 					}
 					else
 					{
 						mTargetItem->toggleActive();
+					}
+
+				}
+
+				if (mTargetItem->getId() == "Trimmer")
+				{
+					mInventory->addItem(mTargetItem);
+					std::cout << "Plockade upp häcksax!";
+
+				}
+
+				if (mTargetItem->getId() == "Stick")
+				{
+					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
+					{
+						mInventory->addItem(mTargetItem);
+						std::cout << "Plockade upp Pinne!";
+
+					}
+					else
+					{
+						mTargetItem->toggleInteractable();
 					}
 
 				}
@@ -718,6 +809,42 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 						}
 
 						std::cout << "Spelar ljud, fisk ramlar ner";
+					}
+
+					if (mTargetItem->getId() == "Leash")
+					{
+
+
+						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
+						{
+							mTargetItem->changeTexture(handler, "LastLevel_ItemTest2.png"); //Add correct texture!
+							mUnleashed = true;
+							std::cout << "Klipper kopplet!";
+						}
+						else
+						{
+							mTargetItem->toggleInteractable();
+						}
+
+						
+					}
+
+					if (mTargetItem->getId() == "Dog")
+					{
+
+
+						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Stick" && mUnleashed == true)
+						{
+							
+							mTargetItem->moveToPosition(2000, 416);
+							std::cout << "Kastade pinnen!";
+						}
+						else
+						{
+							mTargetItem->toggleInteractable();
+						}
+
+
 					}
 				}
 			}
