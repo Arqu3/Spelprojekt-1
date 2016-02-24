@@ -14,6 +14,7 @@ musicCounter(0)
 {
 	addTexture("loadscreen.jpg");
 	addTexture("MainMenuBackground.png");
+	addTexture("Test1.png");
 }
 
 ResourceHandler::~ResourceHandler()
@@ -52,6 +53,7 @@ void ResourceHandler::loadLevel1()
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");
+	addTexture("ClueBackground1.png");
 
 	//Inventory icons
 	addTexture("AstronautINV.png");

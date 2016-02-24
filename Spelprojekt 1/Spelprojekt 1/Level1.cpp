@@ -122,6 +122,17 @@ void Level1::drawUI(sf::RenderWindow &window)
 	{
 		mInventory->draw(window);
 	}
+	if (mUI->getState() == UI::CLUES)
+	{
+		mClues->draw(window);
+		for (unsigned int i = 0; i < mClues->getClues().size(); i++)
+		{
+			if (mClues->getClue(i)->isHover(mWorldPos))
+			{
+				mClues->getClue(i)->drawText(window);
+			}
+		}
+	}
 	if (mCursor->getMode() == Cursor::DIALOGUE)
 	{
 		mDialogueSystem->drawDialogue(window);
@@ -237,6 +248,28 @@ void Level1::toggleActive(ResourceHandler &handler)
 
 		//Menu
 		mUI = new UI(handler);
+
+		//Clues
+		mClues = new Clue(handler, "ClueBackground1.png");
+		mClues->add(handler, "Test1.png", sf::Vector2f(75, 60));
+		mClues->getClue(0)->setStrings("Jag måste hitta en stjärna, en \nastronaut, och en skruvmakapär.", "");
+		mClues->getClue(0)->setState1();
+
+		mClues->add(handler, "Test1.png", sf::Vector2f(220, 200));
+		mClues->getClue(1)->setStrings("Först måste jag hitta stjärnan.", "Jag hittade stjärnan på golvet!");
+		mClues->getClue(1)->setState1();
+
+		mClues->add(handler, "Test1.png", sf::Vector2f(425, 115));
+		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet men jag måste fiska upp den!");
+
+		mClues->add(handler, "Test1.png", sf::Vector2f(630, 60));
+		mClues->getClue(3)->setStrings("Jag måste hitta något att fiska upp astronauten med.", "Med magnetfiskaren kan jag få tag i astronauten!");
+
+		mClues->add(handler, "Test1.png", sf::Vector2f(685, 240));
+		mClues->getClue(4)->setStrings("Nu måste jag bara fiska upp astronauten också.", "Astronauten har blivit hittad!");
+
+		mClues->add(handler, "Test1.png", sf::Vector2f(800, 400));
+		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären vara?", "Äntligen! Skruvmakapären är hittad!");
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -587,6 +620,9 @@ void Level1::eventListen(sf::RenderWindow &window)
 				if (mInventory->craftCheck())
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
+					//Clues
+					mClues->getClue(3)->setState2();
+					mClues->getClue(4)->setState1();
 				}
 			}
 			else if (mCursor->getMode() == Cursor::DIALOGUE)
@@ -1062,6 +1098,10 @@ void Level1::pickupTargetItem()
 			mTargetItem->toggleActive();
 			mTargetItem->setSpeed(20.0f);
 			mTargetItem->moveToPosition(500, 250);
+
+			//Clues
+			mClues->getClue(4)->setState2();
+			mClues->getClue(5)->setState1();
 		}
 		else
 		{
@@ -1112,6 +1152,8 @@ void Level1::interactTargetItem()
 			mCriticalItemSound.play();
 			addItem(mWallStar);
 			mMovedStar = true;
+			mClues->getClue(1)->setState2();
+			mClues->getClue(2)->setState1();
 			std::cout << "Satte stjärnan på väggen";
 		}
 	}
@@ -1175,6 +1217,9 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 					}
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
+					//Clues
+					mClues->getClue(2)->setState2();
+					mClues->getClue(3)->setState1();
 				}
 				if (getItems()[i]->getId() == "String")
 				{
@@ -1295,6 +1340,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 								mInventory->addItem(getItems()[i]);
 								getItems()[i]->toggleActive();
 								mPickedUpScrewdevice = true;
+								mClues->getClue(5)->setState2();
 								//mDialogueSystem->hasClicked("ScrewDevice", mPlayer);
 								//mCursor->setMode(Cursor::DIALOGUE);
 							}
