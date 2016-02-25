@@ -49,7 +49,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 {
 	//internalClear();
 
-	drawLoadScreen(window, "Laddar Karaktärer");
+	drawLoadScreen(window, "Teklar Karaktärer");
 	//Thomas
 	addTexture("ThomasWalk.png");
 	//Hilma
@@ -57,7 +57,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("HilmaPush.png");
 	addTexture("HilmaFishing.png");
 
-	drawLoadScreen(window, "Laddar UI");
+	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
 	addTexture("haticon.png");
 	addTexture("menuicon.png");
@@ -65,14 +65,14 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("menu.png");
 	addTexture("inventory.png");
 
-	drawLoadScreen(window, "Laddar Inventoryikoner");
+	drawLoadScreen(window, "Davidar Inventoryikoner");
 	//Inventory icons
 	addTexture("AstronautINV.png");
 	addTexture("FishingRodINV.png");
 	addTexture("MagnetINV.png");
 	addTexture("ScrewDeviceINV.png");
 
-	drawLoadScreen(window, "Laddar Muspekare");
+	drawLoadScreen(window, "Davidar Muspekare");
 	//Cursors
 	addTexture("mousecursor.png");
 	addTexture("openhand.png");
@@ -82,7 +82,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("scenechangecursor.png");
 
 	// Level1
-	drawLoadScreen(window, "Laddar Objekt");
+	drawLoadScreen(window, "Maxar Objekt");
 	//Thomas rum items
 	addTexture("thomasstar.png");
 	addTexture("thomasblock.png");
@@ -95,7 +95,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("thomaswallstar.png");
 	addTexture("RogerSwim.png");
 
-	drawLoadScreen(window, "Laddar Bakgrunder");
+	drawLoadScreen(window, "Maxar Bakgrunder");
 	//Thomas room background, playground, foreground
 	addTexture("thomasbg.png");
 	addTexture("thomaspg.png");
@@ -105,12 +105,12 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
 
-	drawLoadScreen(window, "Laddar Pratbubblor");
+	drawLoadScreen(window, "Davidar Pratbubblor");
 	//Textbubble
 	addTexture("textbubble.png");
 	addTexture("textbox.png");
 
-	drawLoadScreen(window, "Laddar Ansiktsuttryck");
+	drawLoadScreen(window, "Lailar Ansiktsuttryck");
 	//Character Expressions
 	addTexture("expressionHilmaAngry.png");
 	addTexture("expressionHilmaConfident.png");
@@ -135,11 +135,11 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	//Sepia
 	addTexture("sepia.png");
 
-	drawLoadScreen(window, "Laddar Musik");
+	drawLoadScreen(window, "PerHeimerar Musik");
 	//Music
 	addMusic("Level1Music.ogg");
 
-	drawLoadScreen(window, "Laddar Ljud");
+	drawLoadScreen(window, "Matatasar Ljud");
 	//Sound
 	addSound("Footsteps_Thomas.ogg");
 	addSound("Level1_Ambience.ogg");

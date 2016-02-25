@@ -891,6 +891,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	//Make sure UI is in correct position at all times
 	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
 
 	//Make Roger Swim, Forever, and further once the Astronaut is gone
 	mRoger->update(deltaTime);
@@ -1086,6 +1087,7 @@ void Level1::pickupTargetItem()
 			addItem(mCube);
 			mCube->setScale(-1.0f, 1.0f);
 			mCube->setPosition(645.0f, 450.0f);
+			mCube->toggleIsLookedAt(); //TODO - Fix moveToPosition when Cube is clicked on instead of this
 			mCubePlaced = true;
 			//TODO - Add Hilma Jump
 			mPlayer->setPosition(700, 450);

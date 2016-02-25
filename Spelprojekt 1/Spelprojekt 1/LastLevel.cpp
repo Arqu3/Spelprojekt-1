@@ -1391,6 +1391,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 
 	//Make sure UI is in correct place at all times
 	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
 }
 
 void LastLevel::mouseHover()

@@ -51,6 +51,8 @@ public:
 
 	void deSelect();
 
+	void setGridPosition(sf::Vector2f viewCenter);
+
 private:
 	void setInitialGrid();
 	void swapPos(Item &item1, Item &item2);
