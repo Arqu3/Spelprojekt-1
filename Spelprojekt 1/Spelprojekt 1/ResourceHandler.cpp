@@ -152,6 +152,7 @@ void ResourceHandler::loadLevel3()
 	addTexture("Fisk1.png");
 	addTexture("LastLevel_ItemTest1.png");
 	addTexture("LastLevel_ItemTest2.png");
+	addTexture("transparent.png");
 	
 
 

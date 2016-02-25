@@ -223,6 +223,7 @@ void Level3::toggleActive(ResourceHandler &handler)
 		mLeash = new Item(handler, sf::Vector2f(615, 303), "Leash");
 		mDog = new Item(handler, sf::Vector2f(700, 270), "Dog");
 		mFlagpole = new Item(handler, sf::Vector2f(1386, 195), "Flagpole");
+		mSingleFlower = new Item(handler, sf::Vector2f(1390, 265), "Singleflower");
 
 		//View
 		mView.setSize(1024, 576);
@@ -262,8 +263,10 @@ void Level3::toggleActive(ResourceHandler &handler)
 		mStick->togglePickupable();
 
 		mFlowers->toggleActive();
-		mFlowers->toggleLookable();
 		mFlowers->togglePickupable();
+		
+		mSingleFlower->toggleInteractable();
+		
 
 		mLeash->toggleActive();
 		mLeash->toggleLookable();
@@ -284,6 +287,7 @@ void Level3::toggleActive(ResourceHandler &handler)
 		addItem(mLeash);
 		addItem(mDog);
 		addItem(mFlagpole);
+		addItem(mSingleFlower);
 		
 
 	}
@@ -617,6 +621,48 @@ void Level3::mouseClick(sf::Event &event)
 
 				}
 
+				if (getItems()[i]->getId() == "Flowers")
+				{
+					if (mFlowerPickedUp == false)
+					{
+						//Move Player to the closest point that is still inside the playrect
+						mPlayer->moveToPosition(466, 522);
+						//Set the Item as "Target Item"
+						mTargetItem = getItems()[i];
+						//Enable Item interaction
+						mItemInteraction = true;
+						std::cout << "Klickade på blommor!";
+					}
+					
+					
+					
+
+				}
+
+				if (getItems()[i]->getId() == "Flagpole")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(1354, 374);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på flaggstång!";
+
+				}
+
+				if (getItems()[i]->getId() == "Singleflower")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					//mPlayer->moveToPosition(1354, 374);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på blomma!";
+
+				}
+
 			}
 		}
 	}
@@ -755,6 +801,14 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 				}
 
+				if (mTargetItem->getId() == "Flowers")
+				{
+					mInventory->addItem(mTargetItem);
+					mTargetItem->setScale(0.3f, 0.3f);
+					std::cout << "Plockade upp häcksax!";
+
+				}
+
 				if (mTargetItem->getId() == "Stick")
 				{
 					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
@@ -765,6 +819,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 					}
 					else
 					{
+						mTargetItem->toggleActive();
 						mTargetItem->toggleInteractable();
 					}
 
@@ -831,8 +886,6 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 					if (mTargetItem->getId() == "Dog")
 					{
-
-
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Stick" && mUnleashed == true)
 						{
 							
@@ -845,6 +898,37 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 						}
 
 
+					}
+
+
+					if (mTargetItem->getId() == "Flagpole")
+					{
+						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Flowers")
+						{
+							mInventory->removeItem(mInventory->getSelectedItem());
+
+
+							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+							{
+								if (getItems()[i]->getId() == "Singleflower")
+								{
+									getItems()[i]->toggleActive();
+								}
+							}
+
+						}
+
+						else
+						{
+					
+							mTargetItem->toggleInteractable();
+						}
+
+					}
+
+					if (mTargetItem->getId() == "Singleflower")
+					{
+						mTargetItem->moveToPosition(1390, 121);
 					}
 				}
 			}

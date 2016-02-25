@@ -105,6 +105,7 @@ private:
 	Item* mTrimmer;
 	Item* mStick;
 	Item* mFlowers;
+	Item *mSingleFlower;
 	Item *mLeash;
 	Item* mDog;
 	Item* mFlagpole;
@@ -142,6 +143,8 @@ private:
 	bool mInventoryMode;
 	bool mDisableClick;
 	bool mUnleashed;
+	bool mFlowerPickedUp;
+	bool mFlowersPlaced;
 
 	ResourceHandler &handler;
 

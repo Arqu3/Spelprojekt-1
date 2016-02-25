@@ -338,7 +338,17 @@ mCraftIndex(-1)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.2f, 1.5f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+	}
+
+	if (id == "Singleflower")
+	{
+		mIndex = 32;
+		mName = "Blomma";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
 	}
 }
 
