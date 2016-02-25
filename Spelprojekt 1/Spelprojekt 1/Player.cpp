@@ -422,3 +422,8 @@ void Player::setScale(sf::Vector2f scale)
 {
 	mSprite.setScale(scale);
 }
+
+int Player::getCurrentFrame()
+{
+	return mCurrentFrame;
+}

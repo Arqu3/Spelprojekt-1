@@ -7,6 +7,7 @@ mIsActive(false),
 mItemInteraction(false),
 mLookedAtAquarium(false),
 mPushingBlock(false),
+mCubePlaced(false),
 mReadyForScrewdevice(false),
 mPickedUpScrewdevice(false),
 mMovedStar(false),
@@ -149,11 +150,11 @@ const Level::rectVector Level1::getPlayRects()
 }
 
 
-void Level1::toggleActive(ResourceHandler &handler)
+void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 {
 	if (!mIsActive)
 	{
-		handler.loadLevel1();
+		handler.loadLevel1(window);
 
 		//Room Textures
 		//Background texture
@@ -193,6 +194,7 @@ void Level1::toggleActive(ResourceHandler &handler)
 
 		mAmbientSound.setBuffer(*handler.getSound("Level1_Ambience.ogg"));
 		mAmbientSound.setLoop(true);
+		mAmbientSound.setVolume(50);
 		mAmbientSound.play();
 
 		mAquariumSound.setBuffer(*handler.getSound("Aquarium.ogg"));
@@ -200,13 +202,10 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mAquariumSound.setVolume(5);
 		mAquariumSound.play();
 
-		mRadioSound.setBuffer(*handler.getSound("Radio_Noise.ogg"));
-		//mRadioSound.setLoop(true);
-		//mRadioSound.play();
-
 		mCriticalItemSound.setBuffer(*handler.getSound("Critical_Item.ogg"));
 		mCriticalItemSound.setVolume(70);
 
+		mRadioSound.setBuffer(*handler.getSound("Radio_Noise.ogg"));
 		mMagnetCatchSound.setBuffer(*handler.getSound("Magnet_Catch.ogg"));
 		mMagnetDropSound.setBuffer(*handler.getSound("Magnet_Drop.ogg"));
 		mPushingObjectSound.setBuffer(*handler.getSound("Pushing_Object.ogg"));
@@ -421,6 +420,16 @@ void Level1::internalSwap(int num)
 		if (mCube->getActive())
 		{
 			addItem(mCube);
+			if (mCubePlaced)
+			{
+				mCube->setScale(-0.3f, 0.3f);
+				mCube->setPosition(618, 200);
+			}
+			else
+			{
+				mCube->setScale(0.3f, 0.3f);
+				mCube->setPosition(352, 222);
+			}
 		}
 		if (mScrewdevice->getActive())
 		{
@@ -463,7 +472,7 @@ void Level1::internalSwap(int num)
 			}
 			else
 			{
-				mBlock->setPosition(630, 315);
+				mBlock->setPosition(633, 315);
 			}
 			mBlock->setScale(1.0f, 1.0f);
 			addItem(mBlock);
@@ -475,6 +484,12 @@ void Level1::internalSwap(int num)
 			mRoger->setScale(0.2f, 0.2f);
 			mRoger->setSpeed(15.0f);
 			addItem(mRoger);
+		}
+		if (mCube->getActive() && mCubePlaced)
+		{
+			mCube->setScale(-1.0f, 1.0f);
+			mCube->setPosition(645.0f, 450.0f);
+			addItem(mCube);
 		}
 	}
 }
@@ -678,12 +693,6 @@ void Level1::mouseClick(sf::Event &event)
 		mItemInteraction = false;
 	}
 
-	//Use this to try fishing animation, TODO - Remove when fixed
-	/*else if (checkCollision(getPlayRects(), point))
-	{
-		mPlayer->setActiveAnimation("Fishing");
-	}*/
-
 	//Check Item collision
 	mouseClickCheckItemCollision(point);
 
@@ -847,6 +856,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
 	updateTargetItem(deltaTime);
 
+	//Mouse Cursor update
 	mCursor->update(window);
 
 	//Change mouse cursor on hover
@@ -873,12 +883,16 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
+	//Engage walk animation when player is moving, if not pushing
 	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push")
 	{
 		mPlayer->setActiveAnimation("Walk");
 	}
 
-	//Make Roger Swim, Forever
+	//Make sure UI is in correct position at all times
+	mUI->setUIPosition(mView.getCenter());
+
+	//Make Roger Swim, Forever, and further once the Astronaut is gone
 	mRoger->update(deltaTime);
 	if (mActiveScene == 0)
 	{
@@ -950,6 +964,18 @@ void Level1::updateTargetItem(float deltaTime)
 	if (mTargetItem != NULL)
 	{
 		mTargetItem->update(deltaTime);
+		//Make splash sound when throwing fishing line in the water
+		if (mFishing && mPlayer->getCurrentFrame() == 25)
+		{
+			mMagnetDropSound.play();
+		}
+		//Make Astronaut move after casting fishing line
+		if (mFishing && mPlayer->getCurrentFrame() == 35)
+		{
+			mMagnetCatchSound.play();
+			mTargetItem->setSpeed(40.0f);
+			mTargetItem->moveToPosition(500, 250);
+		}
 		if (mTargetItem->getIsOnPosition())
 		{
 			//Put everything back to normal after the "Pushing cutscene"
@@ -969,12 +995,13 @@ void Level1::updateTargetItem(float deltaTime)
 				mFishing = false;
 				mTargetItem->toggleActive();
 				mInventory->addItem(mTargetItem);
-				mReadyForScrewdevice = true;
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
 				mPlayer->setPosition(490, 500);
 				mPlayer->moveToPosition(490, 500);
 				mCursor->setMode(Cursor::NORMAL);
+				mReadyForScrewdevice = true;
+				mInventory->deSelect();
 			}
 		}
 	}
@@ -1054,24 +1081,24 @@ void Level1::pickupTargetItem()
 	{
 		if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
 		{
-			//TODO - Add Rubics Cube Drop, Hilma Jump
-			//mPlayer->setPosition(600, 305); //Normal Fishing Animation
-			//mPlayer->moveToPosition(600, 305); //Normal Fishing Animation
-			mPlayer->setPosition(700, 450); //Scaled Fishing Animation
-			mPlayer->moveToPosition(700, 450); //Scaled Fishing Animation
+			//Place Rubics Cube in front of Block
+			//TODO - Add Dialogue for the placing of the Cube
+			addItem(mCube);
+			mCube->setScale(-1.0f, 1.0f);
+			mCube->setPosition(645.0f, 450.0f);
+			mCubePlaced = true;
+			//TODO - Add Hilma Jump
+			mPlayer->setPosition(700, 450);
+			mPlayer->moveToPosition(700, 450);
 			if (!mPlayer->isFacingLeft())
 			{
 				mPlayer->flipPlayer();
 			}
 			mPlayer->setActiveAnimation("Fishing");
-			mPlayer->setScale(sf::Vector2f(0.9f, 0.9f)); //Normal Animation = sf::Vector2f(0.45f, 0.45f)
+			mPlayer->setScale(sf::Vector2f(0.9f, 0.9f));
 			mFishing = true;
 			mCursor->setMode(Cursor::DISABLED);
-			mMagnetDropSound.play();
-			//TODO - Check if fishing animation is done before doing this
 			mTargetItem->toggleActive();
-			mTargetItem->setSpeed(20.0f);
-			mTargetItem->moveToPosition(500, 250);
 		}
 		else
 		{
@@ -1095,9 +1122,9 @@ void Level1::interactTargetItem()
 			mTargetItem->setSpeed(50.0f);
 
 			mPlayer->setActiveAnimation("Push");
-			mPlayer->moveToPosition(615, 500);
+			mPlayer->moveToPosition(625, 500);
 
-			mTargetItem->moveToPosition(860, 315);
+			mTargetItem->moveToPosition(870, 315);
 			mTargetItem->toggleInteracted();
 
 			mPushingObjectSound.setLoop(true);

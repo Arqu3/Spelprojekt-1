@@ -30,9 +30,9 @@ mLoad(false)
 	mHatMenu.setScale(sf::Vector2f(0.3f, 0.3f));
 	//Menu
 	handler.getTexture("menu.png")->setSmooth(true);
-	mMainMenu.setTexture(*handler.getTexture("menu.png"));
-	mMainMenu.setPosition(sf::Vector2f(0, 300));
-	mMainMenu.setScale(sf::Vector2f(0.3f, 0.3f));
+	mMainUI.setTexture(*handler.getTexture("menu.png"));
+	mMainUI.setPosition(sf::Vector2f(0, 300));
+	mMainUI.setScale(sf::Vector2f(0.3f, 0.3f));
 	//Inventory Menu
 	handler.getTexture("inventory.png")->setSmooth(true);
 	mInventoryMenu.setTexture(*handler.getTexture("inventory.png"));
@@ -127,7 +127,7 @@ void UI::draw(sf::RenderWindow &window)
 		break;
 
 	case MAINUI:
-		window.draw(mMainMenu);
+		window.draw(mMainUI);
 		break;
 
 	case MAINMENU:
@@ -331,4 +331,27 @@ sf::FloatRect UI::getMenuIconRect()
 bool UI::load()
 {
 	return mLoad;
+}
+
+void UI::setUIPosition(sf::Vector2f viewCenter)
+{
+	//viewCenter.x - (512 - distance from left edge of screen)
+	mHatIcon.setPosition(sf::Vector2f(viewCenter.x - 502, 470));
+	mMenuIcon.setPosition(sf::Vector2f(viewCenter.x - 422, 510));
+	mHatMenu.setPosition(sf::Vector2f(viewCenter.x - 512, 285));
+	mMainUI.setPosition(sf::Vector2f(viewCenter.x - 512, 300));
+	mInventoryMenu.setPosition(sf::Vector2f(viewCenter.x - 262, 50));
+
+	mInventoryRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 482, 305), sf::Vector2f(80, 85));
+	mCluesRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 357, 365), sf::Vector2f(75, 80));
+	mMemoriesRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 317, 475), sf::Vector2f(75, 80));
+	mSettingsRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 432, 320), sf::Vector2f(90, 90));
+	mExitRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 332, 430), sf::Vector2f(85, 80));
+
+	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
+	{
+		mExitButtons[i]->setPosition(viewCenter.x - mExitButtons[0]->getRect().width + (260.0f * i) - 45, 288 - mExitButtons[0]->getRect().height);
+	}
+
+	//TODO - Fix weird placement of Main Menu when View is not default
 }

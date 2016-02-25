@@ -49,10 +49,11 @@ public:
 
 	Item* selectedItem();
 
+	void deSelect();
+
 private:
 	void setInitialGrid();
 	void swapPos(Item &item1, Item &item2);
-	void deSelect();
 
 	//Grid specific
 	float mRow;

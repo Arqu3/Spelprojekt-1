@@ -37,7 +37,7 @@ public:
 	const rectVector getPlayRects();
 
 	//Active Level
-	void toggleActive(ResourceHandler &handler);
+	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window);
 	bool isActive();
 
 	//View
@@ -154,6 +154,7 @@ private:
 	bool mPlayerToggle;
 	bool mLookedAtAquarium;
 	bool mPushingBlock;
+	bool mCubePlaced;
 	bool mFishing;
 	bool mReadyForScrewdevice;
 	bool mPickedUpScrewdevice;
