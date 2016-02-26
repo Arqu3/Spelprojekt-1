@@ -38,8 +38,12 @@ public:
 
 		void setState1()
 		{
-			mState1 = true;
-			mText.setString(mText1);
+			//Safety check
+			if (!mState2)
+			{
+				mState1 = true;
+				mText.setString(mText1);
+			}
 		}
 		void setState2()
 		{
