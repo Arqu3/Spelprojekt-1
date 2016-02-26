@@ -1087,7 +1087,6 @@ void Level1::pickupTargetItem()
 			addItem(mCube);
 			mCube->setScale(-1.0f, 1.0f);
 			mCube->setPosition(645.0f, 450.0f);
-			mCube->toggleIsLookedAt(); //TODO - Fix moveToPosition when Cube is clicked on instead of this
 			mCubePlaced = true;
 			//TODO - Add Hilma Jump
 			mPlayer->setPosition(700, 450);
@@ -1171,7 +1170,18 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 				if (getItems()[i]->getId() == "Cube")
 				{
 					//Move Player to the closest point that is still inside the playrect
-					mPlayer->moveToPosition(340, 370);
+					if (mCubePlaced && mActiveScene == 0)
+					{
+						mPlayer->moveToPosition(560, 365);
+					}
+					else if (mCubePlaced && mActiveScene == 1)
+					{
+						mPlayer->moveToPosition(570, 500);
+					}
+					else
+					{
+						mPlayer->moveToPosition(340, 370);
+					}
 					//Set the Item as "Target Item"
 					mTargetItem = getItems()[i];
 					//Enable Item interaction

@@ -353,5 +353,10 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 		mExitButtons[i]->setPosition(viewCenter.x - mExitButtons[0]->getRect().width + (260.0f * i) - 45, 288 - mExitButtons[0]->getRect().height);
 	}
 
-	//TODO - Fix weird placement of Main Menu when View is not default
+	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	{
+		mMainButtons[i]->setPosition(viewCenter.x - (mMainButtons[0]->getRect().width / 2), 100.0f + (160.0f * i));
+	}
+
+	mBackground.setPosition(viewCenter.x - 512, 0);
 }
