@@ -778,11 +778,11 @@ void Level1::mouseHover()
 			{
 				if (mPickedUpScrewdevice && mMovedStar)
 				{
-					mCursor->setMode(Cursor::NORMAL);
+					mCursor->setMode(Cursor::SCENECHANGE);
 				}
 				else
 				{
-					mCursor->setMode(Cursor::EYE);
+					mCursor->setMode(Cursor::NORMAL);
 				}
 			}
 			else
@@ -870,14 +870,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	if (mMovedStar && mPickedUpScrewdevice)
 	{
-		if (!mReadyToLeave)
-		{
-			mDialogueSystem->setLevel1End();
-			mCursor->setMode(Cursor::DIALOGUE);
-			mUI->setState(UI::INGAME);
-			mReadyToLeave = true;
-		}
-		if (!mDialogueSystem->getLevel1End())
+		if (mReadyToLeave && !mDialogueSystem->getLevel1End())
 		{
 			mLevelComplete = true;
 		}
@@ -893,7 +886,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	mUI->setUIPosition(mView.getCenter());
 	mInventory->setGridPosition(mView.getCenter());
 
-	//Make Roger Swim, Forever, and further once the Astronaut is gone
+	//Make Roger Swim, forever, and further once the Astronaut is gone
 	mRoger->update(deltaTime);
 	if (mActiveScene == 0)
 	{
@@ -1354,14 +1347,13 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 			// i == 7 is the door
 			else if (i == 7)
 			{
-				/*mDialogueSystem->reset();
-				mDialogueSystem->hasClicked("thomasdoor", mPlayer);
-				mDialogueMode = true;*/
 				if (mMovedStar && mPickedUpScrewdevice)
 				{
-					// Change Level
-					std::cout << "LEVEL COMPLETE GOOD JOB BUT IT'S NOT OVER YET, NEXT TIME ON HITTAREN HILMA STUFF HAPPENS" << std::endl;
-					//mReadyToLeave = true;
+					std::cout << "LEVEL COMPLETE GOOD JOB BUT IT'S STILL NOT OVER YET, NEXT TIME ON HITTAREN HILMA STUFF HAPPENS" << std::endl;
+					mDialogueSystem->setLevel1End();
+					mCursor->setMode(Cursor::DIALOGUE);
+					mUI->setState(UI::INGAME);
+					mReadyToLeave = true;
 				}
 				else
 				{
