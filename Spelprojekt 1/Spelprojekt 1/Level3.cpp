@@ -99,7 +99,7 @@ void Level3::drawForeground(sf::RenderWindow &window)
 {
 	if (mActiveScene == 0)
 	{
-		//window.draw(foreground);
+		window.draw(foreground);
 
 	}
 
@@ -180,8 +180,8 @@ void Level3::toggleActive(ResourceHandler &handler)
 		playground.setTexture(handler.getTexture("ARBETSRUMmellangrund.png")); //Add correct texture!
 
 		//Foreground Texture scene 1
-		foreground.setSize(sf::Vector2f(1024, 576));
-		foreground.setTexture(handler.getTexture("ARBETSRUMförgrund.png")); //Add correct texture!
+		foreground.setSize(sf::Vector2f(2048, 576));
+		foreground.setTexture(handler.getTexture("GardenForeground.png")); 
 
 		//Background Texture scene 2
 		background2.setSize(sf::Vector2f(1536, 576));
@@ -221,7 +221,7 @@ void Level3::toggleActive(ResourceHandler &handler)
 		mStick = new Item(handler, sf::Vector2f(381, 220), "Stick");
 		mFlowers = new Item(handler, sf::Vector2f(156, 525), "Flowers");
 		mLeash = new Item(handler, sf::Vector2f(615, 303), "Leash");
-		mDog = new Item(handler, sf::Vector2f(700, 270), "Dog");
+		mDog = new Item(handler, sf::Vector2f(730, 350), "Dog");
 		mFlagpole = new Item(handler, sf::Vector2f(1386, 195), "Flagpole");
 		mSingleFlower = new Item(handler, sf::Vector2f(1390, 265), "Singleflower");
 
@@ -588,7 +588,7 @@ void Level3::mouseClick(sf::Event &event)
 				if (getItems()[i]->getId() == "Stick")
 				{
 					//Move Player to the closest point that is still inside the playrect
-					mPlayer->moveToPosition(429, 386);
+					mPlayer->moveToPosition(349, 346);
 					//Set the Item as "Target Item"
 					mTargetItem = getItems()[i];
 					//Enable Item interaction
@@ -797,6 +797,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Trimmer")
 				{
 					mInventory->addItem(mTargetItem);
+					mTargetItem->changeTexture(handler, "TrimmerIcon.png");
 					std::cout << "Plockade upp häcksax!";
 
 				}
@@ -804,8 +805,9 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Flowers")
 				{
 					mInventory->addItem(mTargetItem);
+					mTargetItem->changeTexture(handler, "LastLevel_ItemTest1.png");
 					mTargetItem->setScale(0.3f, 0.3f);
-					std::cout << "Plockade upp häcksax!";
+					std::cout << "Plockade upp blomma!";
 
 				}
 
@@ -814,6 +816,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
 					{
 						mInventory->addItem(mTargetItem);
+						mTargetItem->changeTexture(handler, "StickIcon.png");
 						std::cout << "Plockade upp Pinne!";
 
 					}
@@ -891,6 +894,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 							
 							mTargetItem->moveToPosition(2000, 416);
 							std::cout << "Kastade pinnen!";
+							mTargetItem->setActiveAnimation("Dog");
 						}
 						else
 						{
@@ -937,6 +941,8 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
+	//Animation updates
+	mDog->update(deltaTime);
 
 	//Inventory
 	mInventory->update(window);

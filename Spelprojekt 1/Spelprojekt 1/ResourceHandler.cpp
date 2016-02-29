@@ -122,12 +122,15 @@ void ResourceHandler::loadLevel3()
 {
 	//Level 3
 	addTexture("Garden.png");
+	addTexture("GardenForeground.png");
 
 	//Karaktärer
 	addTexture("ThomasWalk.png");
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 	addTexture("HilmaFishing.png");
+	addTexture("DogRunning.png");
+	addTexture("GardenLady.png");
 
 
 	//In-game UI
@@ -153,6 +156,10 @@ void ResourceHandler::loadLevel3()
 	addTexture("LastLevel_ItemTest1.png");
 	addTexture("LastLevel_ItemTest2.png");
 	addTexture("transparent.png");
+	addTexture("Stick.png");
+	addTexture("StickIcon.png");
+	addTexture("Trimmer.png");
+	addTexture("TrimmerIcon.png");
 	
 
 
