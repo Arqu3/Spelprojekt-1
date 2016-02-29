@@ -798,14 +798,20 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		createTextBox(-250.f, 300.f, 1.f, 1.f, 0.4f, 0.40f);  //(-1.0f, 280.0f, 1.0f, 1.0f, 0.267f, 0.45f)
 
-		voiceActingTest.play();
+		if (voiceActingTest.getStatus() != 2)
+		{
+			voiceActingTest.play();
+		}
 	}
 	if (mState == 1)
 	{
 		advancedText(level1StartTeller, 100.f, 420.f, 1.f, 1.f);
 
 		voiceActingTest.stop();
-		voiceActingTest2.play();
+		if (voiceActingTest2.getStatus() != 2)
+		{
+			voiceActingTest2.play();
+		}
 	}
 	if (mState == 2)
 	{
@@ -813,7 +819,10 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 
 		voiceActingTest2.stop();
-		voiceActingTest.play();
+		if (voiceActingTest.getStatus() != 2)
+		{
+			voiceActingTest.play();
+		}
 	}
 	if (mState == 3)
 	{

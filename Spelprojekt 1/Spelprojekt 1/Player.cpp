@@ -199,7 +199,6 @@ void Player::update(float deltaTime)
 		}
 	}
 
-	//Fishing Animation
 	if (mActiveAnimation == "Fishing")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -221,6 +220,35 @@ void Player::update(float deltaTime)
 			else
 			{
 				mCurrentFrame = 27;
+				mFrameXOffset = 3;
+				mFrameYOffset = 4;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+	//Fishing Pull Animation
+	if (mActiveAnimation == "FishingPull")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 11)
+			{
+				mFrameXOffset -= 1;
+				if (mFrameXOffset % 7 == 0)
+				{
+					mFrameYOffset--;
+				}
+				if (mFrameXOffset <= 0)
+				{
+					mFrameXOffset = 5;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 11;
 				mFrameXOffset = 3;
 				mFrameYOffset = 4;
 			}
@@ -348,6 +376,14 @@ void Player::setActiveAnimation(std::string animation)
 		mSprite.setTexture(mHilmaFishingTexture);
 		mWalk = false;
 	}
+	else if (animation == "FishingPull")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 3;
+		mFrameYOffset = 4;
+		mSprite.setTexture(mHilmaFishingTexture);
+		mWalk = false;
+	}
 	else if (animation == "Idle")
 	{
 		if (mThomasActive)
@@ -426,4 +462,9 @@ void Player::setScale(sf::Vector2f scale)
 int Player::getCurrentFrame()
 {
 	return mCurrentFrame;
+}
+
+void Player::setFrameTime(float frametime)
+{
+	mFrameTime = frametime;
 }

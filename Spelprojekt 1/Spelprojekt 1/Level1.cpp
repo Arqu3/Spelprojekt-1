@@ -1004,12 +1004,17 @@ void Level1::updateTargetItem(float deltaTime)
 		{
 			mMagnetDropSound.play();
 		}
-		//Make Astronaut move after casting fishing line
-		if (mFishing && mPlayer->getCurrentFrame() == 35)
+		//Make Hilma pull up Astronaut after casting fishing line
+		if (mFishing && mPlayer->getCurrentFrame() == 27)
 		{
 			mMagnetCatchSound.play();
-			mTargetItem->setSpeed(40.0f);
-			mTargetItem->moveToPosition(500, 250);
+			mPlayer->setFrameTime(0.05f);
+			mPlayer->setActiveAnimation("FishingPull");
+		}
+		if (mPlayer->getActiveAnimation() == "FishingPull" && mPlayer->getCurrentFrame() == 4)
+		{
+			mTargetItem->setSpeed(200.0f);
+			mTargetItem->moveToPosition(500, 230);
 		}
 		if (mTargetItem->getIsOnPosition())
 		{
@@ -1030,6 +1035,7 @@ void Level1::updateTargetItem(float deltaTime)
 				mFishing = false;
 				mTargetItem->toggleActive();
 				mInventory->addItem(mTargetItem);
+				mPlayer->setFrameTime(0.03f);
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
 				mPlayer->setPosition(490, 500);
@@ -1123,19 +1129,17 @@ void Level1::pickupTargetItem()
 			mCube->setPosition(645.0f, 450.0f);
 			mCubePlaced = true;
 			//TODO - Add Hilma Jump
-			mPlayer->setPosition(570, 260);
-			mPlayer->moveToPosition(570, 260);
+			mPlayer->setPosition(570, 268);
+			mPlayer->moveToPosition(570, 268);
 			if (!mPlayer->isFacingLeft())
 			{
 				mPlayer->flipPlayer();
 			}
 			mPlayer->setActiveAnimation("Fishing");
-			mPlayer->setScale(sf::Vector2f(0.6f, 0.6f));
+			mPlayer->setScale(sf::Vector2f(0.54f, 0.54f));
 			mFishing = true;
 			mCursor->setMode(Cursor::DISABLED);
 			mTargetItem->toggleActive();
-			mTargetItem->setSpeed(20.0f);
-			mTargetItem->moveToPosition(500, 250);
 
 			//Clues
 			mClues->getClue(4)->setState2();
