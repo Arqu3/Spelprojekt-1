@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Cursor.h"
 #include "UI.h"
+#include "Clue.h"
 
 class Level
 {

@@ -14,6 +14,7 @@ musicCounter(0)
 {
 	addTexture("loadscreen.jpg");
 	addTexture("MainMenuBackground.png");
+	addTexture("Test1.png");
 
 	loadScreen.setTexture(*getTexture("loadscreen.jpg"));
 
@@ -64,6 +65,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");
+	addTexture("ClueBackground1.png");
 
 	drawLoadScreen(window, "Davidar Inventoryikoner");
 	//Inventory icons
