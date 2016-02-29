@@ -163,6 +163,7 @@ private:
 	bool mMovedStar;
 	bool mReadyToLeave;
 	bool mLevelComplete;
+	bool mHasCraftedFishingRod;
 
 	int mUpdateTime;
 };

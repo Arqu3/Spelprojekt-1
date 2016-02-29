@@ -12,6 +12,7 @@ mPickedUpScrewdevice(false),
 mMovedStar(false),
 mReadyToLeave(false),
 mLevelComplete(false),
+mHasCraftedFishingRod(false),
 mUpdateTime(0)
 {
 }
@@ -260,16 +261,16 @@ void Level1::toggleActive(ResourceHandler &handler)
 		mClues->getClue(1)->setState1();
 
 		mClues->add(handler, "Test1.png", sf::Vector2f(425, 115));
-		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet men jag måste fiska upp den!");
+		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet men \njag måste fiska upp den!");
 
 		mClues->add(handler, "Test1.png", sf::Vector2f(630, 60));
-		mClues->getClue(3)->setStrings("Jag måste hitta något att fiska upp astronauten med.", "Med magnetfiskaren kan jag få tag i astronauten!");
+		mClues->getClue(3)->setStrings("Jag måste hitta något att fiska \nupp astronauten med.", "Med magnetfiskaren kan jag få \ntag i astronauten!");
 
 		mClues->add(handler, "Test1.png", sf::Vector2f(685, 240));
-		mClues->getClue(4)->setStrings("Nu måste jag bara fiska upp astronauten också.", "Astronauten har blivit hittad!");
+		mClues->getClue(4)->setStrings("Nu måste jag bara fiska upp \nastronauten också.", "Astronauten har blivit hittad!");
 
 		mClues->add(handler, "Test1.png", sf::Vector2f(800, 400));
-		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären vara?", "Äntligen! Skruvmakapären är hittad!");
+		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -621,8 +622,12 @@ void Level1::eventListen(sf::RenderWindow &window)
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
 					//Clues
-					mClues->getClue(3)->setState2();
-					mClues->getClue(4)->setState1();
+					mHasCraftedFishingRod = true;
+					if (mClues->getClue(2)->getState2())
+					{
+						mClues->getClue(3)->setState2();
+						mClues->getClue(4)->setState1();
+					}
 				}
 			}
 			else if (mCursor->getMode() == Cursor::DIALOGUE)
@@ -1220,6 +1225,13 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 					//Clues
 					mClues->getClue(2)->setState2();
 					mClues->getClue(3)->setState1();
+
+					//Set correct clue depending on crafted item
+					if (mHasCraftedFishingRod)
+					{
+						mClues->getClue(3)->setState2();
+						mClues->getClue(4)->setState1();
+					}
 				}
 				if (getItems()[i]->getId() == "String")
 				{

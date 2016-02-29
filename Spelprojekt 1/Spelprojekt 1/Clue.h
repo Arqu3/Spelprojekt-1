@@ -51,6 +51,16 @@ public:
 			mText.setString(mText2);
 		}
 
+		bool getState1()
+		{
+			return mState1;
+		}
+
+		bool getState2()
+		{
+			return mState2;
+		}
+
 		void setStrings(std::string string1, std::string string2)
 		{
 			mText1 = string1;
