@@ -164,11 +164,11 @@ void LastLevel::addRect(sf::FloatRect *rect)
 }
 
 
-void LastLevel::toggleActive(ResourceHandler &handler)
+void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 {
 	if (!mIsActive)
 	{
-		handler.loadLastLevel();
+		handler.loadLastLevel(window);
 
 		//Background Texture scene 1
 		background.setSize(sf::Vector2f(1024, 576));
@@ -1388,17 +1388,15 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	{
 		mUpdateTime++;
 	}
+
+	//Make sure UI is in correct place at all times
+	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
 }
 
 void LastLevel::mouseHover()
 {
 	mCursor->setMode(Cursor::NORMAL);
-
-	//Check if playrect collision
-	if (checkCollision(getPlayRects(), mCursor->getRect()))
-	{
-		mCursor->setMode(Cursor::NORMAL); // TODO - Add walk cursor maybe?
-	}
 
 	//Check Item collision
 	//Loop through all Items in active level
