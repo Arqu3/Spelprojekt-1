@@ -140,6 +140,8 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	drawLoadScreen(window, "PerHeimerar Musik");
 	//Music
 	addMusic("Level1Music.ogg");
+	addMusic("VoiceActingTest.ogg");
+	addMusic("VoiceActingTest2.ogg");
 
 	drawLoadScreen(window, "Matatasar Ljud");
 	//Sound

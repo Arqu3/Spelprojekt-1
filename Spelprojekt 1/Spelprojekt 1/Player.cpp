@@ -204,8 +204,8 @@ void Player::update(float deltaTime)
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
-			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 500, mFrameYOffset * 500, 500, 500));
-			if (mCurrentFrame < 35)
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 27)
 			{
 				mFrameXOffset += 1;
 				if (mFrameXOffset % 7 == 6)
@@ -220,9 +220,9 @@ void Player::update(float deltaTime)
 			}
 			else
 			{
-				mCurrentFrame = 35;
-				mFrameXOffset = 5;
-				mFrameYOffset = 5;
+				mCurrentFrame = 27;
+				mFrameXOffset = 3;
+				mFrameYOffset = 4;
 			}
 			mCurrentTime = 0;
 		}

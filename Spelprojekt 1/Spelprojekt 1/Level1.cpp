@@ -901,7 +901,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	mCursor->update(window);
 
 	//Change mouse cursor on hover
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME && mUpdateTime > 60)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME && mUpdateTime > 0)
 	{
 		mouseHover();
 		mUpdateTime = 0;
@@ -1123,14 +1123,14 @@ void Level1::pickupTargetItem()
 			mCube->setPosition(645.0f, 450.0f);
 			mCubePlaced = true;
 			//TODO - Add Hilma Jump
-			mPlayer->setPosition(700, 450);
-			mPlayer->moveToPosition(700, 450);
+			mPlayer->setPosition(570, 260);
+			mPlayer->moveToPosition(570, 260);
 			if (!mPlayer->isFacingLeft())
 			{
 				mPlayer->flipPlayer();
 			}
 			mPlayer->setActiveAnimation("Fishing");
-			mPlayer->setScale(sf::Vector2f(0.9f, 0.9f));
+			mPlayer->setScale(sf::Vector2f(0.6f, 0.6f));
 			mFishing = true;
 			mCursor->setMode(Cursor::DISABLED);
 			mTargetItem->toggleActive();

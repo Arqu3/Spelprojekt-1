@@ -198,6 +198,9 @@ private:
 	bool mDollHouse;
 	bool mPutte;
 	bool mPutteFamily;
+
+	sf::Music voiceActingTest;
+	sf::Music voiceActingTest2;
 };
 
 #endif
