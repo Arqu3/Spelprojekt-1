@@ -138,6 +138,9 @@ private:
 	//Menu
 	UI *mUI;
 
+	//Clues
+	Clue *mClues;
+
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
@@ -161,6 +164,7 @@ private:
 	bool mMovedStar;
 	bool mReadyToLeave;
 	bool mLevelComplete;
+	bool mHasCraftedFishingRod;
 
 	int mUpdateTime;
 };
