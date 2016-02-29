@@ -283,7 +283,6 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			{
 				mSelectedItem1 = i;
 				cout << "First selected item is: " << mSelectedItem1 << endl;
-				mDescription.setPosition(400 - (float) mItems[mSelectedItem1]->getDescription().length(), 420); // TODO - Make more dynamic, centered etc.
 				mDescription.setString(mItems[mSelectedItem1]->getDescription());
 				if (mItems[mSelectedItem1]->getCraftIndex() != -1)
 				{
@@ -530,5 +529,39 @@ Item* Inventory::selectedItem()
 	else
 	{
 		return NULL;
+	}
+}
+
+void Inventory::setGridPosition(sf::Vector2f viewCenter)
+{
+	//Item Icons
+	mInitialXOffset = viewCenter.x - 162;
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		mPosX = mInitialXOffset + (i % 3) * (mXIncrease);
+
+		mItems[i]->setINVPosition(mPosX, mItems[i]->getINVPosition().y);
+	}
+
+	if (mItem1 != NULL)
+	{
+		mItem1->setINVPosition(viewCenter.x + 131, 103);
+	}
+	if (mItem2 != NULL)
+	{
+		mItem2->setINVPosition(viewCenter.x + 236, 103);
+	}
+
+	//Craft Rects
+	mItem1Rect.setPosition(sf::Vector2f(viewCenter.x + 128, 100));
+	mItem2Rect.setPosition(sf::Vector2f(viewCenter.x + 233, 100));
+	mResultRect.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+	mCraftButton.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+
+	//Item Descriptions
+	if (mSelectedItem1 != -1)
+	{
+		mDescription.setPosition((viewCenter.x - 112) - (float)mItems[mSelectedItem1]->getDescription().length(), 420); // TODO - Make more dynamic, centered etc.
+		mCraftable.setPosition((viewCenter.x - 80), 450);
 	}
 }
