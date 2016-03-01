@@ -10,8 +10,9 @@ mode(NORMAL)
 	mOpenHandMouse = *handler.getTexture("openhand.png");
 	mClosedHandMouse = *handler.getTexture("closedhand.png");
 	mSpeechMouse = *handler.getTexture("speechbubble.png");
+	mSceneChangeMouse = *handler.getTexture("scenechangecursor.png");
 
-	mMouseCursor.setTexture(mEyeMouse);
+	mMouseCursor.setTexture(mNormalMouse);
 	mMouseCursor.setScale(sf::Vector2f(0.2f, 0.2f));
 }
 
@@ -36,15 +37,15 @@ void Cursor::update(sf::RenderWindow &window)
 		break;
 	case EYE:
 		mMouseCursor.setTexture(mEyeMouse);
-		mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+		mMouseCursor.setOrigin(sf::Vector2f(30.0f, 15.0f));
 		break;
 	case OPENHAND:
 		mMouseCursor.setTexture(mOpenHandMouse);
-		mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+		mMouseCursor.setOrigin(sf::Vector2f(40.0f, 40.0f));
 		break;
 	case CLOSEDHAND:
 		mMouseCursor.setTexture(mClosedHandMouse);
-		mMouseCursor.setOrigin(sf::Vector2f(80.0f, 70.0f));
+		mMouseCursor.setOrigin(sf::Vector2f(40.0f, 40.0f));
 		break;
 	case INVENTORY:
 		mMouseCursor.setTexture(mNormalMouse);
@@ -52,7 +53,7 @@ void Cursor::update(sf::RenderWindow &window)
 		break;
 	case DIALOGUE:
 		mMouseCursor.setTexture(mSpeechMouse);
-		mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+		mMouseCursor.setOrigin(sf::Vector2f(50.0f, 30.0f));
 		break;
 	case DISABLED:
 		mMouseCursor.setTexture(mNormalMouse);
@@ -60,6 +61,10 @@ void Cursor::update(sf::RenderWindow &window)
 		break;
 	case MENU:
 		mMouseCursor.setTexture(mNormalMouse);
+		mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
+		break;
+	case SCENECHANGE:
+		mMouseCursor.setTexture(mSceneChangeMouse);
 		mMouseCursor.setOrigin(sf::Vector2f(0.0f, 0.0f));
 		break;
 	default:

@@ -12,18 +12,22 @@ mInteracted(false),
 isOnPosition(true),
 mSpeed(100.0f),
 mCraftIndex(-1),
-mFrameTime(0.02f),
-mCurrentTime(0.0f),
-mCurrentFrame(0)
+mCurrentFrame(0),
+mFrameYOffset(0),
+mFrameXOffset(0),
+mCurrentTime(0),
+mFrameTime(0.03f)
+
 {
 	//Create items here
 	if (id == "Screwdevice")
 	{
 		mIndex = 0;
 		mName = "Skruvmakapär";
-		mDescription = "Testar Description!";
+		mDescription = "En fantastisk Skruvmackapär!";
 		mSprite.setPosition(mPosition);
 		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("ScrewDeviceINV.png"));
 	}
 
 	if (id == "Star")
@@ -51,10 +55,10 @@ mCurrentFrame(0)
 		mIndex = 3;
 		mCraftIndex = 0;
 		mName = "Fiskespö";
-		mDescription = "";
+		mDescription = "Ett Leksaksfiskespö";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("FishingRod.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("FishingRodINV.png"));
 	}
 
 	if (id == "Magnet")
@@ -62,20 +66,22 @@ mCurrentFrame(0)
 		mIndex = 4;
 		mCraftIndex = 0;
 		mName = "Magnet";
-		mDescription = "";
+		mDescription = "En Magnet";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("thomasmagnet.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("MagnetINV.png"));
 	}
 
 	if (id == "Astronaut")
 	{
 		mIndex = 5;
 		mName = "Astronaut";
-		mDescription = "Skruvar på saker";
+		mDescription = "En Astronaut";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("thomasastronaut.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("AstronautINV.png"));
 	}
 
 	if (id == "Bowl")
@@ -254,10 +260,13 @@ mCurrentFrame(0)
 	{
 		mIndex = 22;
 		mName = "Fiskespö med magnet";
-		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); 
+		mDescription = "Fiskespö med Magnet";
+		mINVSprite.setPosition(mPosition);
+		mINVSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
+
 	}
 
 	if (id == "Hole")
@@ -298,6 +307,29 @@ mCurrentFrame(0)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "WallStar")
+	{
+		mIndex = 25;
+		mName = "Väggstjärna";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("thomaswallstar.png")); //Add correct texture
+	}
+
+	if (id == "Roger")
+	{
+		mIndex = 25;
+		mName = "Fisken Roger";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.07f, 0.07f));
+		mRogerSwim = *handler.getTexture("RogerSwim.png");
+		mSprite.setTexture(mRogerSwim);
+		mSprite.setOrigin(350, 0);
+		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));
 	}
 }
 
@@ -350,7 +382,6 @@ void Item::toggleInteracted()
 	mInteracted = !mInteracted;
 }
 
-
 std::string Item::getId()
 {
 	return mId;
@@ -374,6 +405,10 @@ void Item::draw(sf::RenderWindow &window)
 	window.draw(mSprite);
 }
 
+void Item::drawINV(sf::RenderWindow &window)
+{
+	window.draw(mINVSprite);
+}
 
 //Get functions of flags (bools)
 bool Item::getActive()
@@ -411,7 +446,6 @@ bool Item::isInteracted()
 	return mInteracted;
 }
 
-
 //Get name
 std::string Item::getName()
 {
@@ -432,12 +466,20 @@ sf::FloatRect Item::getRectangle()
 	return mSprite.getGlobalBounds();
 }
 
+sf::FloatRect Item::getINVRectangle()
+{
+	return mINVSprite.getGlobalBounds();
+}
 
 sf::Vector2f Item::getPosition()
 {
 	return mSprite.getPosition();
 }
 
+sf::Vector2f Item::getINVPosition()
+{
+	return mINVSprite.getPosition();
+}
 
 void Item::setPosition(float x, float y)
 {
@@ -445,6 +487,11 @@ void Item::setPosition(float x, float y)
 	mDirection = sf::Vector2f(0, 0);
 }
 
+void Item::setINVPosition(float x, float y)
+{
+	mINVSprite.setPosition(sf::Vector2f(x, y));
+	mDirection = sf::Vector2f(0, 0);
+}
 
 void Item::moveToPosition(float x, float y)
 {
@@ -506,11 +553,16 @@ sf::Sprite Item::getSprite()
 	return mSprite;
 }
 
+sf::Sprite Item::getINVSprite()
+{
+	return mINVSprite;
+}
 
 void Item::update(float deltaTime)
 {
 	mCurrentTime += deltaTime;
 
+<<<<<<< HEAD
 	//Cat Walk
 	if (mActiveAnimation == "CatWalking")
 	{
@@ -525,6 +577,21 @@ void Item::update(float deltaTime)
 					mFrameYOffset++;
 				}
 				if (mFrameXOffset >= 7)
+=======
+	if (mActiveAnimation == "RogerSwim")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
+			if (mCurrentFrame < 32)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 7 == 6)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 6)
+>>>>>>> refs/remotes/origin/master
 				{
 					mFrameXOffset = 0;
 				}
@@ -540,6 +607,7 @@ void Item::update(float deltaTime)
 		}
 	}
 
+<<<<<<< HEAD
 	//Cat Eating
 	if (mActiveAnimation == "CatEating")
 	{
@@ -570,6 +638,8 @@ void Item::update(float deltaTime)
 	}
 
 
+=======
+>>>>>>> refs/remotes/origin/master
 	move(deltaTime);
 }
 
@@ -595,6 +665,7 @@ int Item::getCraftIndex()
 	return mCraftIndex;
 }
 
+<<<<<<< HEAD
 void Item :: setActiveAnimation(std::string name)
 {
 	if (name == "CatWalking")
@@ -615,5 +686,13 @@ void Item :: setActiveAnimation(std::string name)
 		mSprite.setTexture(mCatEating);
 	}
 
+=======
+void Item::setActiveAnimation(std::string name)
+{
+	if (name == "RogerSwim")
+	{
+		mSprite.setTexture(mRogerSwim);
+	}
+>>>>>>> refs/remotes/origin/master
 	mActiveAnimation = name;
 }

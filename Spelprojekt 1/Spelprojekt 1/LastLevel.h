@@ -46,7 +46,7 @@ public:
 	void internalSwap(int num);
 	void changeScene(int num);
 	int getActiveScene();
-	void toggleActive(ResourceHandler &handler);
+	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window);
 	bool isActive();
 
 	//Eventstuff

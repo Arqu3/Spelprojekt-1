@@ -25,6 +25,7 @@ public:
 
 	//Draw
 	void draw(sf::RenderWindow &window);
+	void drawINV(sf::RenderWindow &window);
 	
 	//Get functions to check flags
 	bool getActive();
@@ -42,15 +43,18 @@ public:
 
 	//Get bounding boxes
 	sf::FloatRect getRectangle();
+	sf::FloatRect getINVRectangle();
 
 	//Get position of item
 	sf::Vector2f getPosition();
+	sf::Vector2f getINVPosition();
 
 	//Get crafting index of item
 	int getCraftIndex();
 
 	//Set position of item
 	void setPosition(float x, float y);
+	void setINVPosition(float x, float y);
 
 	void moveToPosition(float x, float y);
 
@@ -62,6 +66,7 @@ public:
 	void setScale(float x, float y);
 
 	sf::Sprite getSprite();
+	sf::Sprite getINVSprite();
 
 	void update(float deltaTime);
 
@@ -93,6 +98,7 @@ private:
 	sf::Vector2f mDirection;
 	sf::Vector2f moveTo;
 	sf::Sprite mSprite;
+	sf::Sprite mINVSprite;
 
 	sf::FloatRect mMoveToRect;
 	bool isOnPosition;
@@ -110,6 +116,8 @@ private:
 	//Animation Textures
 	sf::Texture mCatWalking;
 	sf::Texture mCatEating;
+	sf::Texture mRogerSwim;
+
 };
 
 #endif

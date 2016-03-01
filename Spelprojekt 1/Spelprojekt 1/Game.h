@@ -25,9 +25,6 @@ private:
 
 	//Sound
 	sf::Music music;
-
-	//Loading screen
-	sf::Sprite loadScreen;
 };
 
 #endif

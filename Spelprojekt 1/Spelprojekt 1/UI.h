@@ -39,6 +39,8 @@ public:
 
 	bool load();
 
+	void setUIPosition(sf::Vector2f viewCenter);
+
 private:
 	State mState;
 	bool mLoad;
@@ -54,7 +56,7 @@ private:
 	sf::Sprite mHatIcon;
 	sf::Sprite mMenuIcon;
 	sf::Sprite mHatMenu;
-	sf::Sprite mMainMenu;
+	sf::Sprite mMainUI;
 	sf::Sprite mInventoryMenu;
 
 	//UI Rects
@@ -72,6 +74,11 @@ private:
 
 	//Help Rectangle
 	sf::RectangleShape mHelpRectangle;
+
+	//Sounds
+	sf::Sound mMenuInventorySound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
 };
 
 #endif

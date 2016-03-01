@@ -37,7 +37,7 @@ public:
 	const rectVector getPlayRects();
 
 	//Active Level
-	void toggleActive(ResourceHandler &handler);
+	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window);
 	bool isActive();
 
 	//View
@@ -91,6 +91,17 @@ private:
 	//Sound
 	sf::Music music;
 	sf::Sound mAmbientSound;
+	sf::Sound mAquariumSound;
+	sf::Sound mRadioSound;
+	sf::Sound mMagnetCatchSound;
+	sf::Sound mMagnetDropSound;
+	sf::Sound mPushingObjectSound;
+	sf::Sound mRegularItemSound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
+	sf::Sound mMenuInventorySound;
+	sf::Sound mCraftingSound;
+	sf::Sound mCriticalItemSound;
 
 	//Scene
 	bool mIsActive;
@@ -109,6 +120,8 @@ private:
 	Item* mAstronaut;
 	Item* mBowl;
 	Item* mCube;
+	Item* mWallStar;
+	Item* mRoger;
 
 	//Inventory
 	Inventory *mInventory;
@@ -125,6 +138,9 @@ private:
 	//Menu
 	UI *mUI;
 
+	//Clues
+	Clue *mClues;
+
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
@@ -136,14 +152,20 @@ private:
 	sf::Vector2f mSceneChangePlayerPos;
 	int mNewScene;
 
+	bool mRogerOnPoint;
+
 	bool mPlayerToggle;
 	bool mLookedAtAquarium;
 	bool mPushingBlock;
+	bool mCubePlaced;
 	bool mFishing;
 	bool mReadyForScrewdevice;
 	bool mPickedUpScrewdevice;
 	bool mMovedStar;
 	bool mReadyToLeave;
 	bool mLevelComplete;
+	bool mHasCraftedFishingRod;
+
+	int mUpdateTime;
 };
 #endif
