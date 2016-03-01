@@ -181,9 +181,14 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "Laddar Inventoryikoner");
 	//Inventory icons
-	addTexture("AstronautINV.png");
-	addTexture("FishingRodINV.png");
-	addTexture("MagnetINV.png");
+	addTexture("beigeballINV.png");
+	addTexture("needleINV.png");
+	addTexture("marsINV.png");
+	addTexture("pocketwatchINV.png");
+	addTexture("saturnusringINV.png");
+	addTexture("earthINV.png");
+	addTexture("fishINV.png");
+	addTexture("saturnusINV.png");
 	addTexture("ScrewDeviceINV.png");
 
 	drawLoadScreen(window, "Laddar Muspekare");
@@ -213,7 +218,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addSound("Inventory_Move.ogg");
 
     //LastLevel
-	drawLoadScreen(window, "Laddar Sista Banan");
+	drawLoadScreen(window, "Laddar Sista Bananen");
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");

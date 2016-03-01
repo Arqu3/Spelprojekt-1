@@ -125,6 +125,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("needleINV.png"));
 	}
 
 	if (id == "Earth")
@@ -135,6 +136,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.22f, 0.22f));
 		mSprite.setTexture(*handler.getTexture("Jordglob.png")); 
+		mINVSprite.setTexture(*handler.getTexture("earthINV.png"));
 	}
 
 	if (id == "Fish")
@@ -145,6 +147,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.28f, 0.28f));
 		mSprite.setTexture(*handler.getTexture("Fisk2.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("fishINV.png"));
 	}
 
 	if (id == "Gramophone")
@@ -166,6 +169,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("saturnusringINV.png"));
 	}
 
 	if (id == "Beige Ball")
@@ -177,6 +181,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("beigeballINV.png"));
 	}
 
 	if (id == "Red Apple")
@@ -187,6 +192,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Apelsin.png")); 
+		mINVSprite.setTexture(*handler.getTexture("marsINV.png"));
 	}
 
 	if (id == "Fruitbowl")
@@ -297,6 +303,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); 
+		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct saturnus INV texture
 	}
 
 	if (id == "Venus")
@@ -307,6 +314,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("pocketwatchINV.png"));
 	}
 
 	if (id == "WallStar")

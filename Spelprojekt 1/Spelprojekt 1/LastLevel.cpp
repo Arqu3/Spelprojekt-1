@@ -659,6 +659,7 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mUI->getState() == UI::INVENTORY)
 			{
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 
 				mInventory->setCraftPos(mInventory->getSelectedItem());
 
@@ -666,9 +667,6 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
 				}
-
-				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
-
 			}
 			else if (mCursor->getMode() == Cursor::DIALOGUE)
 			{
@@ -1185,7 +1183,6 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 						mInventory->addItem(mTargetItem);
 						mEarthPickedUp = true;
 						std::cout << "Plockade upp Jordglob";
-
 					}
 					else
 					{
@@ -1413,8 +1410,8 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	}
 
 	//Make sure UI is in correct place at all times
-	/*mUI->setUIPosition(mView.getCenter());
-	mInventory->setGridPosition(mView.getCenter());*/
+	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
 }
 
 void LastLevel::mouseHover()
