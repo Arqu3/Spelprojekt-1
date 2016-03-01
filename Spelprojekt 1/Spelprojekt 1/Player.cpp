@@ -17,6 +17,7 @@ mSpeed(100.0f),
 mFacingLeft(true),
 mStepCooldown(0),
 mThomasActive(true)
+
 {
 	//Sounds
 	mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
