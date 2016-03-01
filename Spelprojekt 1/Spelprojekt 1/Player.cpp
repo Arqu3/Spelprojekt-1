@@ -20,8 +20,8 @@ mThomasActive(true)
 
 {
 	//Sounds
-	mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
-	mWalkingSound.setVolume(25);
+	/*mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
+	mWalkingSound.setVolume(25);*/
 
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));

@@ -159,18 +159,79 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addSound("Inventory_Move.ogg");
 }
 
+
+void ResourceHandler::loadLevel3(sf::RenderWindow &window)
+{
+	drawLoadScreen(window, "Gör Saker Med Blommor");
+	//Level 3
+	addTexture("Garden.png");
+	addTexture("GardenForeground.png");
+
+	//Karaktärer
+	addTexture("ThomasWalk.png");
+	addTexture("HilmaWalk.png");
+	addTexture("HilmaPush.png");
+	addTexture("HilmaFishing.png");
+	addTexture("DogRunning.png");
+	addTexture("GardenLady.png");
+
+
+	//In-game UI
+	addTexture("haticon.png");
+	addTexture("menuicon.png");
+	addTexture("hatmenu.png");
+	addTexture("menu.png");
+	addTexture("inventory.png");
+
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
+	addTexture("scenechangecursor.png");
+
+	//Props
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
+	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
+	addTexture("transparent.png");
+	addTexture("Stick.png");
+	addTexture("StickIcon.png");
+	addTexture("Trimmer.png");
+	addTexture("TrimmerIcon.png");
+
+	//Sound
+	addSound("Footsteps_Thomas.ogg");
+	addSound("Level1_Ambience.ogg");
+	addSound("Aquarium.ogg");
+	addSound("Magnet_Catch.ogg");
+	addSound("Magnet_Drop.ogg");
+	addSound("Pushing_Object.ogg");
+	addSound("Radio_Noise.ogg");
+	addSound("Regular_Item_Pickup.ogg");
+	addSound("Crafting.ogg");
+	addSound("Menu_Hat.ogg");
+	addSound("Menu_Inventory.ogg");
+	addSound("Menu_MainUI.ogg");
+	addSound("Critical_Item.ogg");
+	addSound("Inventory_Move.ogg");
+	
+
+
+}
+
+
 void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 {
 	//internalClear();
 
 	drawLoadScreen(window, "Laddar Karaktärer");
-	//Thomas
-	addTexture("ThomasWalk.png");
-	//Hilma
-	addTexture("HilmaWalk.png");
-	addTexture("HilmaPush.png");
-	addTexture("HilmaFishing.png");
-
+	
 	drawLoadScreen(window, "Laddar UI");
 	//In-game UI
 	addTexture("haticon.png");
@@ -239,7 +300,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("LastLevel_ItemTest1.png");
 	addTexture("LastLevel_ItemTest2.png");
 
-    //Karaktärer
+    	//Karaktärer
 	addTexture("ThomasWalk.png");
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
@@ -247,7 +308,6 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("Katten.png");
 	addTexture("Lisa.png");
 	addTexture("PutteSad.png");
-
 
 	//Cursors
 	addTexture("mousecursor.png");
@@ -262,7 +322,6 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");
-
 
 	//Props
 	addTexture("thomasbowl.png");

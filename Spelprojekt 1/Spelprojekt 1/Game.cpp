@@ -19,7 +19,6 @@ void Game::update()
 	window.setMouseCursorVisible(false);
 	mLHandler.setActiveLevel(1, mRHandler, true, window);
 
-
 	while (window.isOpen())
 	{
 		window.clear(sf::Color::Black);

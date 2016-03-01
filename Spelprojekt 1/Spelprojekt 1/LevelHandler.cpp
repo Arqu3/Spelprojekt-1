@@ -7,10 +7,12 @@ mLevels()
 {
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
+	mLevel3 = new Level3(handler);
 	mLastLevel = new LastLevel(handler);
 
 	//Add levels to member list
 	mLevels.push_back(mLevel1);
+	mLevels.push_back(mLevel3);
 	mLevels.push_back(mLastLevel);
 }
 
