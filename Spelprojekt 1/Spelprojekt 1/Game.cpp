@@ -17,8 +17,7 @@ void Game::update()
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
 	window.setMouseCursorVisible(false);
-	mLHandler.setActiveLevel(1, mRHandler, true, window);
-
+	mLHandler.setActiveLevel(0, mRHandler, true, window);
 
 	while (window.isOpen())
 	{

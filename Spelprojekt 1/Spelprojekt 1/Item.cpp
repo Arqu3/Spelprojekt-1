@@ -334,7 +334,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.07f, 0.07f));
-		//mRogerSwim = *handler.getTexture("RogerSwim.png");
+		mRogerSwim = *handler.getTexture("RogerSwim.png");
 		mSprite.setTexture(mRogerSwim);
 		mSprite.setOrigin(350, 0);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));
@@ -604,28 +604,23 @@ void Item::update(float deltaTime)
 
 
 	if (mActiveAnimation == "RogerSwim")
+	{
+		if (mCurrentTime >= mFrameTime)
 		{
-     	    if (mCurrentTime >= mFrameTime)
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
+
+			if (mCurrentFrame < 32)
 			{
-		     	mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
-					
-				if (mCurrentFrame < 32)
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 7 == 6)
 				{
-					mFrameXOffset += 1;
-				
-					
-					if (mFrameXOffset % 7 == 6)
-					{
-						mFrameYOffset++;
-					}
-					if (mFrameXOffset >= 6)
-
-					{
-						mFrameXOffset = 0;
-					}
-
-					mCurrentFrame += 1;
+					mFrameYOffset++;
 				}
+				if (mFrameXOffset >= 6)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
 			}
 			else
 			{
@@ -633,10 +628,11 @@ void Item::update(float deltaTime)
 				mFrameXOffset = 0;
 				mFrameYOffset = 0;
 			}
-		mCurrentTime = 0;
+			mCurrentTime = 0;
+		}
 	}
 	
-		//Cat Eating
+	//Cat Eating
 	if (mActiveAnimation == "CatEating")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -716,6 +712,10 @@ void Item :: setActiveAnimation(std::string name)
 	}
 	else if (name == "RogerSwim")
 	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+
 		mSprite.setTexture(mRogerSwim);
 	}
 
