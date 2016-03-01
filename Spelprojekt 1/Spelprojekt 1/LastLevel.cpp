@@ -6,6 +6,7 @@ mPlayRects(),
 mIsActive(false),
 handler(handler),
 mLevelComplete(false)
+
 {
 }
 
@@ -218,7 +219,6 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		//Add items
 		mScrewDevice = new Item(handler, sf::Vector2f(0, 0), "Screwdevice");
 		mMagicClam = new Item(handler, sf::Vector2f(0, 0), "Magic Clam");
-		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
 		mHoolaHoop = new Item(handler, sf::Vector2f(0, 0), "Hoola Hoop");
 		mBeigeBall = new Item(handler, sf::Vector2f(0, 0), "Beige Ball");
 		mPearl = new Item(handler, sf::Vector2f(0, 0), "Pearl");
@@ -234,11 +234,14 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
 
 		mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
-		mCat = new Item(handler, sf::Vector2f(250, 380), "Cat");
+		mCat = new Item(handler, sf::Vector2f(236, 276), "Cat");
 		mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
 		mHole = new Item(handler, sf::Vector2f(180, 335), "Hole");
 
 		mSaturn = new Item(handler, sf::Vector2f(606, 44), "Saturn");
+		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
+		mVenus = new Item(handler, sf::Vector2f(330, 56), "Venus");
+
 
 		//View
 		mView.setSize(1024, 576);
@@ -289,7 +292,7 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		//Add items to itemVector
 		addItem(mMagicClam);
-		//addItem(mPutte);
+		addItem(mVenus);
 		addItem(mDollhouse);
 
 		//Items Active
@@ -341,9 +344,10 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		mLastScene = 0;
 
-		//Add Screwdevice to inventory
+		//Add Screwdevice and Venus to inventory
 		mScrewDevice->setScale(0.3f, 0.3f);
 		mInventory->addItem(mScrewDevice);
+		mInventory->addItem(mVenus);
 		
 	}
 
@@ -441,6 +445,7 @@ void LastLevel::internalSwap(int num)
 
 		addItem(mMagicClam);
 		addItem(mSaturn);
+		addItem(mVenus);
 
 		
 
@@ -654,6 +659,7 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mUI->getState() == UI::INVENTORY)
 			{
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 
 				mInventory->setCraftPos(mInventory->getSelectedItem());
 
@@ -661,9 +667,6 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
 				}
-
-				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
-
 			}
 			else if (mCursor->getMode() == Cursor::DIALOGUE)
 			{
@@ -919,6 +922,13 @@ void LastLevel::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
+					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Venus")
+					{
+						mInventory->removeItem(mInventory->getSelectedItem());
+						mVenus->toggleActive();
+						mVenus->setPosition(330, 56);
+					}
+
 					std::cout << "Planet 2!";
 					mPlayer->moveToPosition(535, 437);
 				}
@@ -1173,7 +1183,6 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 						mInventory->addItem(mTargetItem);
 						mEarthPickedUp = true;
 						std::cout << "Plockade upp Jordglob";
-
 					}
 					else
 					{
@@ -1266,10 +1275,15 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 								if (getItems()[i]->getId() == "Cat")
 								{
 									mTargetItem = getItems()[i];
-									mTargetItem->setSpeed(300.0f);
-									mTargetItem->moveToPosition(700, 396);
+									mTargetItem->setActiveAnimation("CatWalking");
+									mTargetItem->setPosition(367, 276);
+									mTargetItem->setScale(-0.17f, 0.17f);
+									mTargetItem->setSpeed(100.0f);
+									mTargetItem->moveToPosition(715, 285);
 									mCursor->setMode(Cursor::DISABLED);
 									mCatWalking = true;
+
+									
 								}								
 							}
 						}
@@ -1372,6 +1386,12 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 				mCatWalking = false;
 				mCursor->setMode(Cursor::NORMAL);
 				mTargetItem->setSpeed(100.0f);
+			}
+
+			if (mCatMoved)
+			{
+				mTargetItem->setActiveAnimation("CatEating");
+
 			}
 		}
 	}
@@ -1504,4 +1524,6 @@ bool LastLevel::isLevelComplete()
 UI* LastLevel::getUI()
 {
 	return mUI;
+	//TODO - add ui stuff here
+
 }
