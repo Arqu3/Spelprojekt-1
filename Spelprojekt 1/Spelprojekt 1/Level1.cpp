@@ -275,7 +275,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
 
 		//Spooky scary spider
-		mSpider = new RiddleSpider(handler, sf::Vector2f(600, -400));
+		mSpider = new RiddleSpider(handler, sf::Vector2f(750, -500));
 		mSpider->setState(RiddleSpider::ENTERING);
 
 		//Create Items
@@ -697,6 +697,19 @@ void Level1::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::MAINUI);
 					mCursor->setMode(Cursor::MENU);
 				}
+			}
+
+			if (event.key.code == sf::Keyboard::A)
+			{
+				mSpider->setState(RiddleSpider::ENTERING);
+			}
+			if (event.key.code == sf::Keyboard::S)
+			{
+				mSpider->setState(RiddleSpider::LEAVING);
+			}
+			if (event.key.code == sf::Keyboard::D)
+			{
+				mSpider->setState(RiddleSpider::IDLE);
 			}
 			break;
 

@@ -11,7 +11,7 @@ mTexts()
 {
 	mSprite.setTexture(*handler.getTexture("RiddleSpider.png"));
 	mSprite.setPosition(position);
-	mSprite.setScale(0.15f, 0.15f);
+	mSprite.setScale(0.1f, 0.1f);
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 }
 
@@ -22,12 +22,6 @@ RiddleSpider::~RiddleSpider()
 
 void RiddleSpider::update(float deltaTime)
 {
-	mTimer++;
-	if (mTimer >= 500)
-	{
-		mTimer = 0;
-	}
-
 	switch (mState)
 	{
 	case ENTERING:
@@ -61,7 +55,7 @@ void RiddleSpider::moveUp(float deltaTime)
 
 void RiddleSpider::moveDown(float deltaTime)
 {
-	if (mPosition.y + mSprite.getGlobalBounds().height < 100)
+	if (mPosition.y + mSprite.getGlobalBounds().height < 200)
 	{
 		mPosition.y += 100.0f * deltaTime;
 	}
@@ -69,18 +63,25 @@ void RiddleSpider::moveDown(float deltaTime)
 
 void RiddleSpider::idleMove(float deltaTime)
 {
+	mTimer++;
+	if (mTimer >= 500)
+	{
+		mTimer = 0;
+	}
+
 	if (mTimer <= 250)
 	{
-		mPosition.y += 100.0f * deltaTime;
+		mPosition.y += 50.0f * deltaTime;
 	}
 	else if (mTimer >= 251)
 	{
-		mPosition.y -= 100.0f * deltaTime;
+		mPosition.y -= 50.0f * deltaTime;
 	}
 }
 
 void RiddleSpider::setState(State newState)
 {
+	mTimer = 0;
 	mState = newState;
 }
 
