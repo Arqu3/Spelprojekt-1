@@ -92,24 +92,30 @@ void ResourceHandler::loadLevel1()
 	addTexture("textbubble.png");
 	addTexture("textbox.png");
 	//Character Expressions
+	addTexture("expressionHilmaAbject.png");
 	addTexture("expressionHilmaAngry.png");
 	addTexture("expressionHilmaConfident.png");
 	addTexture("expressionHilmaDetermined.png");
 	addTexture("expressionHilmaGrumpy.png");
 	addTexture("expressionHilmaHappy.png");
+	addTexture("expressionHilmaNervous.png");
 	addTexture("expressionHilmaNeutral.png");
 	addTexture("expressionHilmaSad.png");
 	addTexture("expressionHilmaSigh.png");
 	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionThomasAngry.png");
 	addTexture("expressionThomasBlush.png");
 	addTexture("expressionThomasCry.png");
-	addTexture("expressionThomasGrumpy.png");
+	addTexture("expressionThomasDetermined.png");
 	addTexture("expressionThomasHappy.png");
 	addTexture("expressionThomasNeutral.png");
 	addTexture("expressionThomasSad.png");
+	addTexture("expressionThomasSceptic.png");
 	addTexture("expressionThomasSigh.png");
 	addTexture("expressionThomasSmile.png");
 	addTexture("expressionThomasSurprised.png");
+	addTexture("expressionThomasThoughtful.png");
+	addTexture("expressionThomasWorried.png");
 	//Sepia
 	addTexture("sepia.png");
 

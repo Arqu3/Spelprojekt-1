@@ -14,7 +14,7 @@ public:
 	//Talk functions
 	void text(std::string text, sf::Vector2f &position, float x, float y);
 	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
-	void actorText(std::string actorText, float posX, float posY, float offSetX, float offsetY);
+	void actorText(std::string actorText, float posX, float posY, float offsetX, float offsetY);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
@@ -46,6 +46,8 @@ public:
 	//Advanced Dialogues
 	void displayLevel1StartAdvancedDialogue();
 	void displayLevel1EndAdvancedDialogue();
+	void displayLevel2StartAdvancedDialogue();
+	void displayLevel2EndAdvancedDialogue();
 
 	//Dialogues (functions with strings)
 	//Thomas' room
@@ -115,6 +117,12 @@ public:
 	bool getLevel1Start();
 	bool getLevel1End();
 
+	//Level2
+	void setLevel2Start();
+	void setLevel2End();
+	bool getLevel2Start();
+	bool getLevel2End();
+
 private:
 	std::string mDialogue;
 	float mTime;
@@ -125,6 +133,7 @@ private:
 	int mState;
 	std::string mTexture;
 	sf::Text mText;
+	sf::Text mActorText;
 	sf::Clock mClock;
 	sf::Font mFont;
 	sf::Sprite mBubble;
@@ -138,6 +147,8 @@ private:
 	//Advanced Dialogue
 	bool mLevel1Start;
 	bool mLevel1End;
+	bool mLevel2Start;
+	bool mLevel2End;
 
 	//Item bools (Thomas' Room)
 	bool mBooks;
