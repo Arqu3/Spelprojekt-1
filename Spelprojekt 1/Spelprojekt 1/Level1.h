@@ -141,6 +141,9 @@ private:
 	//Clues
 	Clue *mClues;
 
+	//Riddlespider
+	RiddleSpider *mSpider;
+
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;

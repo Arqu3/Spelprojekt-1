@@ -11,6 +11,7 @@ mTexts()
 {
 	mSprite.setTexture(*handler.getTexture("RiddleSpider.png"));
 	mSprite.setPosition(position);
+	mSprite.setScale(0.15f, 0.15f);
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 }
 
@@ -62,7 +63,7 @@ void RiddleSpider::moveDown(float deltaTime)
 {
 	if (mPosition.y + mSprite.getGlobalBounds().height < 100)
 	{
-		mPosition.y -= 100.0f * deltaTime;
+		mPosition.y += 100.0f * deltaTime;
 	}
 }
 

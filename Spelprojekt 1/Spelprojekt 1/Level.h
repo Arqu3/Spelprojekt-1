@@ -8,6 +8,7 @@
 #include "Cursor.h"
 #include "UI.h"
 #include "Clue.h"
+#include "RiddleSpider.h"
 
 class Level
 {

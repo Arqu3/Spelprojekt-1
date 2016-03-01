@@ -107,6 +107,9 @@ void Level1::drawForeground(sf::RenderWindow &window)
 
 void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 {
+	//Spooky scary spider draw
+	mSpider->draw(window);
+
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		if (mItems[i]->getActive() && mItems[i]->getId() != "Screwdevice")
@@ -270,6 +273,10 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		mClues->add(handler, "Test1.png", sf::Vector2f(800, 400));
 		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
+
+		//Spooky scary spider
+		mSpider = new RiddleSpider(handler, sf::Vector2f(600, -400));
+		mSpider->setState(RiddleSpider::ENTERING);
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -884,6 +891,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	//Inventory update
 	mInventory->update(window);
+
+	//Spooky scary spider update
+	mSpider->update(deltaTime);
 
 	//DialogueSystem update and reset when finished
 	mDialogueSystem->update(deltaTime);

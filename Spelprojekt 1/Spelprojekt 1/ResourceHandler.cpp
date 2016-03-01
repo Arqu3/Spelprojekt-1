@@ -67,6 +67,10 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("inventory.png");
 	addTexture("ClueBackground1.png");
 
+	drawLoadScreen(window, "Hämtar hemsk spindel");
+	//Spooky scary spider
+	addTexture("RiddleSpider.png");
+
 	drawLoadScreen(window, "Davidar Inventoryikoner");
 	//Inventory icons
 	addTexture("AstronautINV.png");
