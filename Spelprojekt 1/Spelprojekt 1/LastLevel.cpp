@@ -164,11 +164,11 @@ void LastLevel::addRect(sf::FloatRect *rect)
 }
 
 
-void LastLevel::toggleActive(ResourceHandler &handler)
+void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 {
 	if (!mIsActive)
 	{
-		handler.loadLastLevel();
+		handler.loadLastLevel(window);
 
 		//Background Texture scene 1
 		background.setSize(sf::Vector2f(1024, 576));
@@ -248,7 +248,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 
 		//Inventory
-		mInventory = new Inventory();
+		mInventory = new Inventory(handler);
 		mInventory->setCraftableItems(handler, 1);
 
 		//Cursor
@@ -274,6 +274,7 @@ void LastLevel::toggleActive(ResourceHandler &handler)
 
 		//UI
 		mUI = new UI(handler);
+		mUI->setState(UI::INGAME);
 
 		//Door
 		mRects.push_back(createRect(445, 186, 80, 50));
@@ -1387,17 +1388,15 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	{
 		mUpdateTime++;
 	}
+
+	//Make sure UI is in correct place at all times
+	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
 }
 
 void LastLevel::mouseHover()
 {
 	mCursor->setMode(Cursor::NORMAL);
-
-	//Check if playrect collision
-	if (checkCollision(getPlayRects(), mCursor->getRect()))
-	{
-		mCursor->setMode(Cursor::NORMAL); // TODO - Add walk cursor maybe?
-	}
 
 	//Check Item collision
 	//Loop through all Items in active level
@@ -1504,6 +1503,5 @@ bool LastLevel::isLevelComplete()
 
 UI* LastLevel::getUI()
 {
-	return NULL;
-	//TODO - add ui stuff here
+	return mUI;
 }

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Inventory::Inventory():
+Inventory::Inventory(ResourceHandler &handler):
 mRow(0),
 mCol(-1),
 mColNum(3),
@@ -61,6 +61,28 @@ mHasCraft2(false)
 	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
 	mCluesRect = sf::FloatRect(sf::Vector2f(155, 365), sf::Vector2f(75, 80));
 	mMemoriesRect = sf::FloatRect(sf::Vector2f(195, 475), sf::Vector2f(75, 80));
+
+	//Sounds
+	mCraftingSound.setBuffer(*handler.getSound("Crafting.ogg"));
+	mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
+	mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
+	mInventoryMoveSound.setBuffer(*handler.getSound("Inventory_Move.ogg"));
+
+	mCraftingSound.setVolume(50);
+
+	//Font / Text
+	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
+	mDescription.setFont(mFont);
+	mDescription.setCharacterSize(18);
+	mDescription.setStyle(sf::Text::Bold);
+	mDescription.setColor(sf::Color::Black);
+	mDescription.setPosition(400, 420);
+	mCraftable.setFont(mFont);
+	mCraftable.setCharacterSize(14);
+	mCraftable.setStyle(sf::Text::Bold);
+	mCraftable.setStyle(sf::Text::Italic);
+	mCraftable.setColor(sf::Color::Black);
+	mCraftable.setPosition(430, 450);
 }
 
 Inventory::~Inventory()
@@ -81,7 +103,7 @@ void Inventory::update(sf::RenderWindow &window)
 	//Set select rectangle position
 	if (mSelectedItem1 != -1)
 	{
-		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getPosition().x - 3, mItems[mSelectedItem1]->getPosition().y - 3));
+		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getINVPosition().x - 3, mItems[mSelectedItem1]->getINVPosition().y - 3));
 	}
 
 	//Swap selected items
@@ -100,7 +122,7 @@ void Inventory::draw(sf::RenderWindow &window)
 	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		//THIS DOESN'T WORK, NEEDS FIX
+		//TODO - THIS DOESN'T WORK, NEEDS FIX
 		//Set opacity to 50% if item is selected
 		//if (mCraftSelect1 != -1)
 		//{
@@ -111,7 +133,7 @@ void Inventory::draw(sf::RenderWindow &window)
 		//	mItems[mCraftSelect2]->getSprite().setColor(sf::Color(255, 0, 255, 177));
 		//}
 
-		window.draw(mItems[i]->getSprite());
+		window.draw(mItems[i]->getINVSprite());
 	}
 
 	//window.draw(mItem1Rect);
@@ -122,11 +144,11 @@ void Inventory::draw(sf::RenderWindow &window)
 	//Draw selected items
 	if (mHasCraft1)
 	{
-		window.draw(mItem1->getSprite());
+		window.draw(mItem1->getINVSprite());
 	}
 	if (mHasCraft2)
 	{
-		window.draw(mItem2->getSprite());
+		window.draw(mItem2->getINVSprite());
 	}
 
 	//Draw result
@@ -134,11 +156,13 @@ void Inventory::draw(sf::RenderWindow &window)
 	{
 		int temp = mItems[mCraftSelect1]->getCraftIndex();
 		mResultItem = mCraftableItems[temp];
-		mResultItem->setPosition(mResultRect.getPosition().x, mResultRect.getPosition().y);
-		window.draw(mResultItem->getSprite());
+		mResultItem->setINVPosition(mResultRect.getPosition().x, mResultRect.getPosition().y);
+		window.draw(mResultItem->getINVSprite());
 	}
 
-	//window.draw(mRectShape);
+	//Draw Item Description
+	window.draw(mDescription);
+	window.draw(mCraftable);
 }
 
 void Inventory::addItem(Item* item)
@@ -178,7 +202,7 @@ void Inventory::setInitialGrid()
 		mPosX = mInitialXOffset + (mCol * mXIncrease);
 		mPosY = mInitialYOffset + (mRow * mYIncrease);
 
-		mItems[i]->setPosition(mPosX, mPosY);
+		mItems[i]->setINVPosition(mPosX, mPosY);
 	}
 }
 
@@ -195,7 +219,7 @@ void Inventory::setDynamicGrid()
 	mPosX = mInitialXOffset + (mCol * mXIncrease);
 	mPosY = mInitialYOffset + (mRow * mYIncrease);
 
-	mItems[mItems.size() - 1]->setPosition(mPosX, mPosY);
+	mItems[mItems.size() - 1]->setINVPosition(mPosX, mPosY);
 }
 
 
@@ -252,13 +276,22 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		if (mItems[i]->getRectangle().contains(point))
+		if (mItems[i]->getINVRectangle().contains(point))
 		{
 			//Select first item if no first item is selected
 			if (mSelectedItem1 == -1)
 			{
 				mSelectedItem1 = i;
 				cout << "First selected item is: " << mSelectedItem1 << endl;
+				mDescription.setString(mItems[mSelectedItem1]->getDescription());
+				if (mItems[mSelectedItem1]->getCraftIndex() != -1)
+				{
+					mCraftable.setString("Kan Kombineras");
+				}
+				else
+				{
+					mCraftable.setString("Kan Ej Kombineras");
+				}
 			}
 
 			//Select second item if has selected first item and no second is selected, also avoid selecting same item twice
@@ -274,10 +307,12 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 	if (ui.getHatIconRect().contains(point))
 	{
 		ui.setState(UI::HAT);
+		mMenuHatSound.play();
 	}
 	else if (ui.getMenuIconRect().contains(point))
 	{
 		ui.setState(UI::MAINUI);
+		mMenuMainUISound.play();
 	}
 	else if (mInventoryRect.contains(point))
 	{
@@ -316,7 +351,8 @@ void Inventory::setCraftPos(int index)
 				{
 					mHasCraft1 = true;
 					mItem1 = new Item(*mItems[index]);
-					mItem1->setPosition(pos1.x, pos1.y);
+					mItem1->setINVPosition(pos1.x, pos1.y);
+					mInventoryMoveSound.play();
 				}
 			}
 			mSelectedItem1 = -1;
@@ -333,7 +369,8 @@ void Inventory::setCraftPos(int index)
 				{
 					mHasCraft2 = true;
 					mItem2 = new Item(*mItems[index]);
-					mItem2->setPosition(pos2.x, pos2.y);
+					mItem2->setINVPosition(pos2.x, pos2.y);
+					mInventoryMoveSound.play();
 				}
 			}
 			mSelectedItem1 = -1;
@@ -376,6 +413,7 @@ void Inventory::craftItem(int index1, int index2)
 		removeItem(index1);
 	}
 	mIsCraftable = false;
+	mCraftingSound.play();
 }
 
 //Swaps elements in given vector, passed by referens to avoid copy
@@ -391,14 +429,15 @@ void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex
 		swapPos(*inputVector[inputIndex], *inputVector[swapIndex]);
 
 		cout << "Swapped" << endl;
+		mInventoryMoveSound.play();
 	}
 }
 
 void Inventory::swapPos(Item &item1, Item &item2)
 {
-	sf::Vector2f tempPos(item1.getPosition());
-	item1.setPosition(item2.getPosition().x, item2.getPosition().y);
-	item2.setPosition(tempPos.x, tempPos.y);
+	sf::Vector2f tempPos(item1.getINVPosition());
+	item1.setINVPosition(item2.getINVPosition().x, item2.getINVPosition().y);
+	item2.setINVPosition(tempPos.x, tempPos.y);
 }
 
 void Inventory::deSelect()
@@ -406,7 +445,7 @@ void Inventory::deSelect()
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//Deselect if you click on nothing interactable
-		if (!mItems[i]->getRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
+		if (!mItems[i]->getINVRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
 		{
 			mSelectedItem1 = -1;
 			mSelectedItem2 = -1;
@@ -416,13 +455,15 @@ void Inventory::deSelect()
 			mCraftSelect2 = -1;
 		}
 	}
+
+	mDescription.setString("");
+	mCraftable.setString("");
 }
 
 bool Inventory::craftCheck()
 {
 	if (mCraftButton.getGlobalBounds().contains(mWorldPos))
 	{
-		//TODO - Add real craftcheck
 		if (mCraftSelect1 != -1 && mCraftSelect2 != -1 && mCraftSelect1 != mCraftSelect2)
 		{
 			if (mItems[mCraftSelect1]->getCraftIndex() != -1 && mItems[mCraftSelect2]->getCraftIndex() != -1)
@@ -488,5 +529,39 @@ Item* Inventory::selectedItem()
 	else
 	{
 		return NULL;
+	}
+}
+
+void Inventory::setGridPosition(sf::Vector2f viewCenter)
+{
+	//Item Icons
+	mInitialXOffset = viewCenter.x - 162;
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		mPosX = mInitialXOffset + (i % 3) * (mXIncrease);
+
+		mItems[i]->setINVPosition(mPosX, mItems[i]->getINVPosition().y);
+	}
+
+	if (mItem1 != NULL)
+	{
+		mItem1->setINVPosition(viewCenter.x + 131, 103);
+	}
+	if (mItem2 != NULL)
+	{
+		mItem2->setINVPosition(viewCenter.x + 236, 103);
+	}
+
+	//Craft Rects
+	mItem1Rect.setPosition(sf::Vector2f(viewCenter.x + 128, 100));
+	mItem2Rect.setPosition(sf::Vector2f(viewCenter.x + 233, 100));
+	mResultRect.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+	mCraftButton.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+
+	//Item Descriptions
+	if (mSelectedItem1 != -1)
+	{
+		mDescription.setPosition((viewCenter.x - 112) - (float)mItems[mSelectedItem1]->getDescription().length(), 420); // TODO - Make more dynamic, centered etc.
+		mCraftable.setPosition((viewCenter.x - 80), 450);
 	}
 }

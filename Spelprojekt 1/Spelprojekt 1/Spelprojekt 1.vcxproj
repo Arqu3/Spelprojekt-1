@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Clue.cpp" />
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DialogueSystem.cpp" />
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Clue.h" />
     <ClInclude Include="Crafting.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="DialogueSystem.h" />

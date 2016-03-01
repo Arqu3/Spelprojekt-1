@@ -108,6 +108,12 @@ public:
 	void displayPutteDialogue();
 	void displayPutteFamilyDialogue();
 
+	//Level1 start and end
+	void setLevel1Start();
+	void setLevel1End();
+	bool getLevel1Start();
+	bool getLevel1End();
+
 private:
 	std::string mDialogue;
 	float mTime;

@@ -44,6 +44,7 @@
       <Filter>.cpp</Filter>
     </ClCompile>
     <ClCompile Include="Level3.cpp">
+    <ClCompile Include="Clue.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,6 +92,7 @@
       <Filter>.h</Filter>
     </ClInclude>
     <ClInclude Include="Level3.h">
+    <ClInclude Include="Clue.h">
       <Filter>.h</Filter>
     </ClInclude>
   </ItemGroup>
