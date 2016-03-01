@@ -76,7 +76,10 @@ public:
 	//Change texture
 	void changeTexture(ResourceHandler &handler, std::string filename);
 
+	//Set Active Animation
 	void setActiveAnimation(std::string name);
+
+	
 
 private:
 	bool mIsActive;
@@ -113,7 +116,10 @@ private:
 	std::string mActiveAnimation;
 
 	//Animation Textures
+	sf::Texture mCatWalking;
+	sf::Texture mCatEating;
 	sf::Texture mRogerSwim;
+
 };
 
 #endif
