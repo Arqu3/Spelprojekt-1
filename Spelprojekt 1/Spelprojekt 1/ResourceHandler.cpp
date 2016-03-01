@@ -162,6 +162,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 
 void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 {
+	drawLoadScreen(window, "Gör Saker Med Blommor");
 	//Level 3
 	addTexture("Garden.png");
 	addTexture("GardenForeground.png");
@@ -188,6 +189,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("closedhand.png");
 	addTexture("speechbubble.png");
 	addTexture("eyecursor.png");
+	addTexture("scenechangecursor.png");
 
 	//Props
 	addTexture("thomasbowl.png");
@@ -202,6 +204,22 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("StickIcon.png");
 	addTexture("Trimmer.png");
 	addTexture("TrimmerIcon.png");
+
+	//Sound
+	addSound("Footsteps_Thomas.ogg");
+	addSound("Level1_Ambience.ogg");
+	addSound("Aquarium.ogg");
+	addSound("Magnet_Catch.ogg");
+	addSound("Magnet_Drop.ogg");
+	addSound("Pushing_Object.ogg");
+	addSound("Radio_Noise.ogg");
+	addSound("Regular_Item_Pickup.ogg");
+	addSound("Crafting.ogg");
+	addSound("Menu_Hat.ogg");
+	addSound("Menu_Inventory.ogg");
+	addSound("Menu_MainUI.ogg");
+	addSound("Critical_Item.ogg");
+	addSound("Inventory_Move.ogg");
 	
 
 

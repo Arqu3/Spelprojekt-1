@@ -321,7 +321,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
 		mSprite.setTexture(*handler.getTexture("Trimmer.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("TrimmerIcon.png"));
 	}
 
 	if (id == "Stick")
@@ -332,7 +332,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.9f, 0.9f));
 		mSprite.setTexture(*handler.getTexture("Stick.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("StickIcon.png"));
 	}
 
 	if (id == "Flowers")
@@ -343,6 +343,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(5.8f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png"));
 	}
 
 	if (id == "Leash")
@@ -363,8 +364,11 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(-0.15f, 0.15f));
 		mSprite.setOrigin(sf::Vector2f(500, 900));
-		mSprite.setTexture(*handler.getTexture("DogRunning.png")); 
+		mDog = *handler.getTexture("DogRunning.png");
+		mSprite.setTexture(mDog); 
 		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
+
+		
 	}
 
 	if (id == "Flagpole")
@@ -385,12 +389,12 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		
 	}
 
 	//Animations
-	mDog = *handler.getTexture("DogRunning.png");
-	mGardenLady = *handler.getTexture("GardenLady.png");
+
+	/*mGardenLady = *handler.getTexture("GardenLady.png");*/
 
 	
 
@@ -735,7 +739,7 @@ void Item::setActiveAnimation(std::string animation)
 		}
 	}
 
-	else if animation == "RogerSwim")
+	else if (animation == "RogerSwim")
 	{
 		mSprite.setTexture(mRogerSwim);
 	}

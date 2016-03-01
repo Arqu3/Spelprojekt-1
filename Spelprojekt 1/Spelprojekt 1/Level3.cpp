@@ -165,11 +165,11 @@ void Level3::addRect(sf::FloatRect *rect)
 }
 
 
-void Level3::toggleActive(ResourceHandler &handler)
+void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 {
 	if (!mIsActive)
 	{
-		handler.loadLevel3();
+		handler.loadLevel3(window);
 
 		//Background Texture scene 1
 		background.setSize(sf::Vector2f(2048, 576));
@@ -233,7 +233,7 @@ void Level3::toggleActive(ResourceHandler &handler)
 
 
 		//Inventory
-		mInventory = new Inventory();
+		mInventory = new Inventory(handler);
 		mInventory->setCraftableItems(handler, 1);
 
 		//Cursor
@@ -623,8 +623,7 @@ void Level3::mouseClick(sf::Event &event)
 
 				if (getItems()[i]->getId() == "Flowers")
 				{
-					if (mFlowerPickedUp == false)
-					{
+					
 						//Move Player to the closest point that is still inside the playrect
 						mPlayer->moveToPosition(466, 522);
 						//Set the Item as "Target Item"
@@ -632,11 +631,7 @@ void Level3::mouseClick(sf::Event &event)
 						//Enable Item interaction
 						mItemInteraction = true;
 						std::cout << "Klickade på blommor!";
-					}
 					
-					
-					
-
 				}
 
 				if (getItems()[i]->getId() == "Flagpole")
@@ -805,8 +800,6 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 				if (mTargetItem->getId() == "Flowers")
 				{
 					mInventory->addItem(mTargetItem);
-					mTargetItem->changeTexture(handler, "LastLevel_ItemTest1.png");
-					mTargetItem->setScale(0.3f, 0.3f);
 					std::cout << "Plockade upp blomma!";
 
 				}
