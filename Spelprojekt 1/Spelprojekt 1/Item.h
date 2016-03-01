@@ -79,6 +79,8 @@ public:
 	//Set Active Animation
 	void setActiveAnimation(std::string name);
 
+	
+
 private:
 	bool mIsActive;
 	bool mIsLookable;

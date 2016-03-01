@@ -272,7 +272,8 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 
 	//Animations
 	addTexture("CatWalking.png");
-	addTexture("CatEating.png")
+	addTexture("CatEating.png");
+
 }
 
 //Adds a texture to the texture vector

@@ -311,7 +311,7 @@ mFrameTime(0.03f)
 
 	if (id == "WallStar")
 	{
-		mIndex = 25;
+		mIndex = 27;
 		mName = "Väggstjärna";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -321,7 +321,7 @@ mFrameTime(0.03f)
 
 	if (id == "Roger")
 	{
-		mIndex = 25;
+		mIndex = 28;
 		mName = "Fisken Roger";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -562,13 +562,14 @@ void Item::update(float deltaTime)
 {
 	mCurrentTime += deltaTime;
 
-<<<<<<< HEAD
+
 	//Cat Walk
 	if (mActiveAnimation == "CatWalking")
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
 			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 1000, mFrameYOffset * 1000, 1000, 1000));
+
 			if (mCurrentFrame < 27)
 			{
 				mFrameXOffset += 1;
@@ -577,21 +578,6 @@ void Item::update(float deltaTime)
 					mFrameYOffset++;
 				}
 				if (mFrameXOffset >= 7)
-=======
-	if (mActiveAnimation == "RogerSwim")
-	{
-		if (mCurrentTime >= mFrameTime)
-		{
-			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
-			if (mCurrentFrame < 32)
-			{
-				mFrameXOffset += 1;
-				if (mFrameXOffset % 7 == 6)
-				{
-					mFrameYOffset++;
-				}
-				if (mFrameXOffset >= 6)
->>>>>>> refs/remotes/origin/master
 				{
 					mFrameXOffset = 0;
 				}
@@ -604,11 +590,45 @@ void Item::update(float deltaTime)
 				mFrameYOffset = 0;
 			}
 			mCurrentTime = 0;
+
 		}
 	}
 
-<<<<<<< HEAD
-	//Cat Eating
+
+	if (mActiveAnimation == "RogerSwim")
+		{
+     	    if (mCurrentTime >= mFrameTime)
+			{
+		     	mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
+					
+				if (mCurrentFrame < 32)
+				{
+					mFrameXOffset += 1;
+				
+					
+					if (mFrameXOffset % 7 == 6)
+					{
+						mFrameYOffset++;
+					}
+					if (mFrameXOffset >= 6)
+
+					{
+						mFrameXOffset = 0;
+					}
+
+					mCurrentFrame += 1;
+				}
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+		mCurrentTime = 0;
+	}
+	
+		//Cat Eating
 	if (mActiveAnimation == "CatEating")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -638,10 +658,11 @@ void Item::update(float deltaTime)
 	}
 
 
-=======
->>>>>>> refs/remotes/origin/master
 	move(deltaTime);
 }
+		
+	
+		
 
 
 float Item::getSpeed()
@@ -665,7 +686,7 @@ int Item::getCraftIndex()
 	return mCraftIndex;
 }
 
-<<<<<<< HEAD
+
 void Item :: setActiveAnimation(std::string name)
 {
 	if (name == "CatWalking")
@@ -685,14 +706,12 @@ void Item :: setActiveAnimation(std::string name)
 
 		mSprite.setTexture(mCatEating);
 	}
-
-=======
-void Item::setActiveAnimation(std::string name)
-{
-	if (name == "RogerSwim")
+	else if (name == "RogerSwim")
 	{
 		mSprite.setTexture(mRogerSwim);
 	}
->>>>>>> refs/remotes/origin/master
+
 	mActiveAnimation = name;
-}
+
+	
+} 

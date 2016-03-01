@@ -1280,7 +1280,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 									mTargetItem = getItems()[i];
 									mTargetItem->setActiveAnimation("CatWalking");
 									mTargetItem->setPosition(367, 276);
-									mTargetItem->setScale(-0.17, 0.17);
+									mTargetItem->setScale(-0.17f, 0.17f);
 									mTargetItem->setSpeed(100.0f);
 									mTargetItem->moveToPosition(715, 285);
 									mCursor->setMode(Cursor::DISABLED);
@@ -1413,8 +1413,8 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	}
 
 	//Make sure UI is in correct place at all times
-	mUI->setUIPosition(mView.getCenter());
-	mInventory->setGridPosition(mView.getCenter());
+	/*mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());*/
 }
 
 void LastLevel::mouseHover()
