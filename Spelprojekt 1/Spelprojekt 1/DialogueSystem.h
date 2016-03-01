@@ -201,6 +201,7 @@ private:
 
 	sf::Music voiceActingTest;
 	sf::Music voiceActingTest2;
+	bool mLineStarted;
 };
 
 #endif

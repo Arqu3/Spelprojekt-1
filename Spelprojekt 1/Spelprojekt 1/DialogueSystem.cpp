@@ -15,7 +15,8 @@ mFirstCharacter(),
 mSecondCharacter(),
 mState(0),
 mLevel1Start(true),
-mLevel1End(false)
+mLevel1End(false),
+mLineStarted(false)
 {
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
@@ -798,9 +799,15 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		createTextBox(-250.f, 300.f, 1.f, 1.f, 0.4f, 0.40f);  //(-1.0f, 280.0f, 1.0f, 1.0f, 0.267f, 0.45f)
 
+		if (mLineStarted && voiceActingTest.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 		if (voiceActingTest.getStatus() != 2)
 		{
 			voiceActingTest.play();
+			mLineStarted = true;
 		}
 	}
 	if (mState == 1)
@@ -808,9 +815,15 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		advancedText(level1StartTeller, 100.f, 420.f, 1.f, 1.f);
 
 		voiceActingTest.stop();
+		if (mLineStarted && voiceActingTest2.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 		if (voiceActingTest2.getStatus() != 2)
 		{
 			voiceActingTest2.play();
+			mLineStarted = true;
 		}
 	}
 	if (mState == 2)
@@ -819,15 +832,23 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 
 		voiceActingTest2.stop();
+		if (mLineStarted && voiceActingTest.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 		if (voiceActingTest.getStatus() != 2)
 		{
 			voiceActingTest.play();
+			mLineStarted = true;
 		}
 	}
 	if (mState == 3)
 	{
 		advancedText(level1StartHilma3, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSad.png");
+
+		voiceActingTest.stop();
 	}
 	if (mState == 4)
 	{

@@ -792,9 +792,13 @@ void Level1::mouseHover()
 					{
 						mCursor->setMode(Cursor::EYE);
 					}
-					else
+					else if (mMovedStar)
 					{
 						mCursor->setMode(Cursor::SCENECHANGE);
+					}
+					else
+					{
+						mCursor->setMode(Cursor::NORMAL);
 					}
 				}
 				else
@@ -817,14 +821,7 @@ void Level1::mouseHover()
 			// i == 7 is door
 			else if (i == 7)
 			{
-				if (mPickedUpScrewdevice && mMovedStar)
-				{
-					mCursor->setMode(Cursor::SCENECHANGE);
-				}
-				else
-				{
-					mCursor->setMode(Cursor::NORMAL);
-				}
+				mCursor->setMode(Cursor::NORMAL);
 			}
 			else
 			{
@@ -911,6 +908,13 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	if (mMovedStar && mPickedUpScrewdevice)
 	{
+		if (!mReadyToLeave)
+		{
+			mDialogueSystem->setLevel1End();
+			mCursor->setMode(Cursor::DIALOGUE);
+			mUI->setState(UI::INGAME);
+			mReadyToLeave = true;
+		}
 		if (mReadyToLeave && !mDialogueSystem->getLevel1End())
 		{
 			mLevelComplete = true;
@@ -1317,7 +1321,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 						mCursor->setMode(Cursor::DIALOGUE);
 						mLookedAtAquarium = true;
 					}
-					else
+					else if (mMovedStar)
 					{
 						//Make Player get into position for Scene change
 						mPlayer->moveToPosition(400, 370);
@@ -1401,8 +1405,6 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 								getItems()[i]->toggleActive();
 								mPickedUpScrewdevice = true;
 								mClues->getClue(5)->setState2();
-								//mDialogueSystem->hasClicked("ScrewDevice", mPlayer);
-								//mCursor->setMode(Cursor::DIALOGUE);
 							}
 						}
 					}
@@ -1411,18 +1413,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 			// i == 7 is the door
 			else if (i == 7)
 			{
-				if (mMovedStar && mPickedUpScrewdevice)
-				{
-					std::cout << "LEVEL COMPLETE GOOD JOB BUT IT'S STILL NOT OVER YET, NEXT TIME ON HITTAREN HILMA STUFF HAPPENS" << std::endl;
-					mDialogueSystem->setLevel1End();
-					mCursor->setMode(Cursor::DIALOGUE);
-					mUI->setState(UI::INGAME);
-					mReadyToLeave = true;
-				}
-				else
-				{
-					std::cout << "IT'S NOT OVER YET" << std::endl;
-				}
+				std::cout << "IT'S NOT OVER YET" << std::endl;
 			}
 		}
 	}
