@@ -87,6 +87,17 @@ private:
 	sf::RectangleShape foreground3;
 
 	sf::RectangleShape rectangle; //HelpRect
+	sf::RectangleShape rectangle2; //HelpRect
+	sf::RectangleShape rectangle3; //HelpRect
+	sf::RectangleShape rectangle4; //HelpRect
+	sf::RectangleShape rectangle5; //HelpRect
+	sf::RectangleShape rectangle6; //HelpRect
+	sf::RectangleShape rectangle7; //HelpRect
+	sf::RectangleShape rectangle8; //HelpRect
+	sf::RectangleShape rectangle9; //HelpRect
+	sf::RectangleShape rectangle10; //HelpRect
+	sf::RectangleShape rectangle11; //HelpRect
+	sf::RectangleShape rectangle12; //HelpRect
 	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
 
 	//Sound
