@@ -728,9 +728,14 @@ void Level1::mouseClick(sf::Event &event)
 	}
 
 	//Check if playrect collision
-	else if (checkCollision(getPlayRects(), point))
+	/*else if (checkCollision(getPlayRects(), point))
 	{
 		mPlayer->moveToPosition(point.x, point.y);
+		mItemInteraction = false;
+	}*/
+	else if (checkCollision(getPlayRects(), point))
+	{
+		mPlayer->setActiveAnimation("Fishing");
 		mItemInteraction = false;
 	}
 

@@ -260,7 +260,8 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		//UI
 		mUI = new UI(handler);
 
-
+		//Dialogue System
+		mDialogueSystem = new DialogueSystem(handler);
 
 		//Rectangles
 
@@ -1168,6 +1169,98 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 			if (!mTargetItem->isLookedAt())
 			{
 				mTargetItem->toggleIsLookedAt(); //Fixa dialoger i funktion
+
+				if (mTargetItem->getId() == "Putte")
+				{
+					if (mKidsFound) //TODO - Reset putte isLookedAt() when kids are found
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("putteFamily", mPlayer);
+						mUI->setState(UI::INGAME);
+						mCursor->setMode(Cursor::DIALOGUE);
+					}
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("putte", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Kids")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("kids", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Dollhouse")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("dollHouse", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Needle")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("needle", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Earth")
+				{
+					if (mEarthPickedUp) //TODO - Reset earth isLookedAt() when picked up
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("emptyEarth", mPlayer);
+						mUI->setState(UI::INGAME);
+						mCursor->setMode(Cursor::DIALOGUE);
+					}
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("earthGlobe", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Fish")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("fishTrophy", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Gramophone")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("gramophne", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Fruitbowl")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("fruitBowl", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Cat")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("cat", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Foodbowl")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("catFoodBowl", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
+				if (mTargetItem->getId() == "Hole")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("hole", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
 				mItemInteraction = false;
 			}
 			//Check if Item can be picked up
