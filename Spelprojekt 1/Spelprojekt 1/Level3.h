@@ -1,14 +1,14 @@
-#ifndef INCLUDED_LASTLEVEL
-#define INCLUDED_LASTLEVEL
+#ifndef INCLUDED_LEVEL3
+#define INCLUDED_LEVEL3
 
 #include "Level.h"
 #include "SFML\System.hpp"
 
-class LastLevel: public Level{
+class Level3 :public Level{
 public:
 
-	LastLevel(ResourceHandler &handler);
-	~LastLevel();
+	Level3(ResourceHandler &handler);
+	~Level3();
 
 	//Item
 	ItemVector getItems();
@@ -102,25 +102,14 @@ private:
 
 	//Items
 	ItemVector mItems;
-	Item* mPutte;
-	Item* mDollhouse;
-	Item* mMagicClam;
-	Item* mNeedle;
-	Item* mEarth;
-	Item* mFish;
-	Item* mGramophone;
-	Item* mHoolaHoop;
-	Item* mBeigeBall;
-	Item* mFruitbowl;
-	Item* mRedApple;
-	Item* mCat;
-	Item* mFoodBowl;
-	Item* mKids;
-	Item* mHole;
-	Item* mPearl;
-	Item* mScrewDevice;
-	Item* mSaturn;
-	Item* mVenus;
+	Item* mTrimmer;
+	Item* mStick;
+	Item* mFlowers;
+	Item *mSingleFlower;
+	Item *mLeash;
+	Item* mDog;
+	Item* mFlagpole;
+
 
 	bool mLevelComplete;
 
@@ -153,16 +142,14 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
-	bool mFishFalling;
-	bool mCatWalking;
-	bool mEarthPickedUp;
-	bool mDollhouseInteracted;
-	bool mKidsFound;
-	bool mCatMoved;
+	bool mUnleashed;
+	bool mFlowerPickedUp;
+	bool mFlowersPlaced;
 
 	ResourceHandler &handler;
 
 	int mUpdateTime;
-};
+
+	};
 
 #endif

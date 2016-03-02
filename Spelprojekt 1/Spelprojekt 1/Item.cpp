@@ -17,6 +17,7 @@ mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
 mFrameTime(0.03f)
+
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -124,6 +125,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("needleINV.png"));
 	}
 
 	if (id == "Earth")
@@ -134,6 +136,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.22f, 0.22f));
 		mSprite.setTexture(*handler.getTexture("Jordglob.png")); 
+		mINVSprite.setTexture(*handler.getTexture("earthINV.png"));
 	}
 
 	if (id == "Fish")
@@ -144,6 +147,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.28f, 0.28f));
 		mSprite.setTexture(*handler.getTexture("Fisk2.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("fishINV.png"));
 	}
 
 	if (id == "Gramophone")
@@ -165,6 +169,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("saturnusringINV.png"));
 	}
 
 	if (id == "Beige Ball")
@@ -176,6 +181,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("beigeballINV.png"));
 	}
 
 	if (id == "Red Apple")
@@ -186,6 +192,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Apelsin.png")); 
+		mINVSprite.setTexture(*handler.getTexture("marsINV.png"));
 	}
 
 	if (id == "Fruitbowl")
@@ -204,8 +211,15 @@ mFrameTime(0.03f)
 		mName = "Katt";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.01f, 0.01f)); //Fixa
-		mSprite.setTexture(*handler.getTexture("Katten.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.17f, 0.17f)); //Fixa
+		
+		mCatWalking = *handler.getTexture("CatWalking.png");
+		mCatEating = *handler.getTexture("CatEating.png");
+
+		mSprite.setTexture(mCatWalking); 
+		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
+
+	
 	}
 
 	if (id == "Foodbowl")
@@ -252,9 +266,13 @@ mFrameTime(0.03f)
 	{
 		mIndex = 22;
 		mName = "Fiskespö med magnet";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); 
 		mDescription = "Fiskespö med Magnet";
 		mINVSprite.setPosition(mPosition);
 		mINVSprite.setTexture(*handler.getTexture("FishingRodMagnet.png")); //Add correct texture
+
 	}
 
 	if (id == "Hole")
@@ -264,7 +282,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.5f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png")); 
 	}
 
 	if (id == "Pearl")
@@ -274,7 +292,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
-		mSprite.setTexture(*handler.getTexture("Pluto.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Pluto.png")); 
 	}
 
 	if (id == "Saturn")
@@ -284,12 +302,25 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("Saturnus.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Saturnus.png")); 
+		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct saturnus INV texture
+	}
+
+	if (id == "Venus")
+	{
+		mIndex = 26;
+		mName = "Venus";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("pocketwatchINV.png"));
 	}
 
 	if (id == "WallStar")
 	{
-		mIndex = 25;
+
+		mIndex = 27;
 		mName = "Väggstjärna";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -299,7 +330,7 @@ mFrameTime(0.03f)
 
 	if (id == "Roger")
 	{
-		mIndex = 25;
+		mIndex = 28;
 		mName = "Fisken Roger";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
@@ -309,6 +340,95 @@ mFrameTime(0.03f)
 		mSprite.setOrigin(350, 0);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));
 	}
+
+
+	//Level 3
+
+	if (id == "Trimmer")
+	{
+		mIndex = 28;
+		mName = "Häcksax";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("Trimmer.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("TrimmerIcon.png"));
+	}
+
+	if (id == "Stick")
+	{
+		mIndex = 29;
+		mName = "Pinne";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.9f, 0.9f));
+		mSprite.setTexture(*handler.getTexture("Stick.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("StickIcon.png"));
+	}
+
+	if (id == "Flowers")
+	{
+		mIndex = 30;
+		mName = "Blommor";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(5.8f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png"));
+	}
+
+	if (id == "Leash")
+	{
+		mIndex = 31;
+		mName = "Koppel";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+	}
+
+	if (id == "Dog")
+	{
+		mIndex = 32;
+		mName = "Hund";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(-0.15f, 0.15f));
+		mSprite.setOrigin(sf::Vector2f(500, 900));
+		mDog = *handler.getTexture("DogRunning.png");
+		mSprite.setTexture(mDog); 
+		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
+
+		
+	}
+
+	if (id == "Flagpole")
+	{
+		mIndex = 33;
+		mName = "Flagstång";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.2f, 1.5f));
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+	}
+
+	if (id == "Singleflower")
+	{
+		mIndex = 34;
+		mName = "Blomma";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+		
+	}
+
+	//Animations
+
+	/*mGardenLady = *handler.getTexture("GardenLady.png");*/
+
+	
+
 }
 
 
@@ -540,19 +660,86 @@ void Item::update(float deltaTime)
 {
 	mCurrentTime += deltaTime;
 
-	if (mActiveAnimation == "RogerSwim")
+
+	//Cat Walk
+	if (mActiveAnimation == "CatWalking")
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
-			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
-			if (mCurrentFrame < 32)
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 1000, mFrameYOffset * 1000, 1000, 1000));
+
+			if (mCurrentFrame < 27)
 			{
 				mFrameXOffset += 1;
-				if (mFrameXOffset % 7 == 6)
+				if (mFrameXOffset % 8 == 7)
 				{
 					mFrameYOffset++;
 				}
-				if (mFrameXOffset >= 6)
+				if (mFrameXOffset >= 7)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+			mCurrentTime = 0;
+
+		}
+	}
+
+
+	if (mActiveAnimation == "RogerSwim")
+		{
+     	    if (mCurrentTime >= mFrameTime)
+			{
+		     	mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
+					
+				if (mCurrentFrame < 32)
+				{
+					mFrameXOffset += 1;
+				
+					
+					if (mFrameXOffset % 7 == 6)
+					{
+						mFrameYOffset++;
+					}
+					if (mFrameXOffset >= 6)
+
+					{
+						mFrameXOffset = 0;
+					}
+
+					mCurrentFrame += 1;
+				}
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+		mCurrentTime = 0;
+	}
+	
+		//Cat Eating
+	if (mActiveAnimation == "CatEating")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 1000, mFrameYOffset * 1000, 1000, 1000));
+			if (mCurrentFrame < 27)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 8 == 7)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 7)
 				{
 					mFrameXOffset = 0;
 				}
@@ -568,8 +755,43 @@ void Item::update(float deltaTime)
 		}
 	}
 
+
 	move(deltaTime);
+	mCurrentTime += deltaTime;
+
+	//Push Animation
+	if (mActiveAnimation == "Dog")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 1000, mFrameYOffset * 1000, 1000, 1000));
+			if (mCurrentFrame < 25)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 8 == 7)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 7)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
 }
+		
+	
+		
 
 
 float Item::getSpeed()
@@ -593,11 +815,66 @@ int Item::getCraftIndex()
 	return mCraftIndex;
 }
 
-void Item::setActiveAnimation(std::string name)
+
+
+void Item::setActiveAnimation(std::string animation)
 {
-	if (name == "RogerSwim")
+	if (animation == "Dog")
+	{
+		//Avoid starting animation over if already walking
+		if (mActiveAnimation != "Dog")
+		{
+			mCurrentFrame = 0;
+			mFrameXOffset = 0;
+			mFrameYOffset = 0;
+			mSprite.setTexture(mDog);
+		}
+		
+	}
+
+	else if (animation == "GardenLady")
+	{
+		if (mActiveAnimation != "GardenLady")
+		{
+			mCurrentFrame = 0;
+			mFrameXOffset = 0;
+			mFrameYOffset = 0;
+			mSprite.setTexture(mGardenLady);
+		}
+	}
+
+	else if (animation == "RogerSwim")
 	{
 		mSprite.setTexture(mRogerSwim);
 	}
-	mActiveAnimation = name;
+
+
+	else if (animation== "CatWalking")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+
+		mSprite.setTexture(mCatWalking);
+	}
+
+	else if (animation == "CatEating")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+
+		mSprite.setTexture(mCatEating);
+	}
+	
+	mActiveAnimation = animation;
 }
+
+std::string Item::getActiveAnimation()
+{
+	return mActiveAnimation;
+}
+
+
+	
+
