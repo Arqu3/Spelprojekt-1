@@ -638,8 +638,6 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 
-				mInventory->setCraftPos(mInventory->getSelectedItem());
-
 				if (mInventory->craftCheck())
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
@@ -663,6 +661,16 @@ void Level1::eventListen(sf::RenderWindow &window)
 			else if (mCursor->getMode() != Cursor::DISABLED && !mPushingBlock)
 			{
 				mouseClick(event);
+			}
+			break;
+
+			//Mouse button released
+		case sf::Event::MouseButtonReleased:
+			if (mUI->getState() == UI::INVENTORY)
+			{
+				mInventory->swapCheck();
+				mInventory->deSelect();
+				mInventory->setCraftPos(mInventory->getSelectedItem());
 			}
 			break;
 

@@ -19,7 +19,9 @@ mCraftSelect1(-1),
 mCraftSelect2(-1),
 mIsCraftable(false),
 mHasCraft1(false),
-mHasCraft2(false)
+mHasCraft2(false),
+mCircle1Mid(0, 0),
+mCircle2Mid(0, 0)
 {
 	//Size check
 	cout << mItems.size() << endl;
@@ -103,14 +105,8 @@ void Inventory::update(sf::RenderWindow &window)
 	//Set select rectangle position
 	if (mSelectedItem1 != -1)
 	{
+		mCursorSprite.setPosition(sf::Vector2f(mWorldPos.x - mCursorSprite.getGlobalBounds().width / 2, mWorldPos.y - mCursorSprite.getGlobalBounds().height / 2));
 		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getINVPosition().x - 3, mItems[mSelectedItem1]->getINVPosition().y - 3));
-	}
-
-	//Swap selected items
-	if (mSelectedItem1 != -1 && mSelectedItem2 != -1)
-	{
-		swapItems(mItems, mSelectedItem1, mSelectedItem2);
-		deSelect();
 	}
 }
 
@@ -118,7 +114,7 @@ void Inventory::draw(sf::RenderWindow &window)
 {
 	if (mSelectedItem1 != -1)
 	{
-		window.draw(mSelectRect);
+		window.draw(mCursorSprite);
 	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
@@ -282,6 +278,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			if (mSelectedItem1 == -1)
 			{
 				mSelectedItem1 = i;
+				mCursorSprite = mItems[mSelectedItem1]->getINVSprite();
 				cout << "First selected item is: " << mSelectedItem1 << endl;
 				mDescription.setString(mItems[mSelectedItem1]->getDescription());
 				if (mItems[mSelectedItem1]->getCraftIndex() != -1)
@@ -298,6 +295,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			if (mSelectedItem1 != -1 && mSelectedItem2 == -1 && mSelectedItem1 != i)
 			{
 				mSelectedItem2 = i;
+				mCursorSprite = mItems[mSelectedItem2]->getINVSprite();
 				cout << "Second selected item is: " << mSelectedItem2 << endl;
 			}
 			return;
@@ -445,7 +443,10 @@ void Inventory::deSelect()
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//Deselect if you click on nothing interactable
-		if (!mItems[i]->getINVRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
+		if (!mItems[i]->getINVRectangle().contains(mWorldPos) 
+			&& !mItem1Rect.getGlobalBounds().contains(mWorldPos) 
+			&& !mItem2Rect.getGlobalBounds().contains(mWorldPos) 
+			&& !mCraftButton.getGlobalBounds().contains(mWorldPos))
 		{
 			mSelectedItem1 = -1;
 			mSelectedItem2 = -1;
@@ -458,6 +459,23 @@ void Inventory::deSelect()
 
 	mDescription.setString("");
 	mCraftable.setString("");
+}
+
+void Inventory::swapCheck()
+{
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		if (mSelectedItem1 != -1)
+		{
+			if (mSelectedItem1 != i)
+			{
+				if (mCursorSprite.getGlobalBounds().intersects(mItems[i]->getINVSprite().getGlobalBounds()))
+				{
+					swapItems(mItems, mSelectedItem1, i);
+				}
+			}
+		}
+	}
 }
 
 bool Inventory::craftCheck()

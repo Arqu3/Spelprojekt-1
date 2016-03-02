@@ -50,6 +50,7 @@ public:
 	Item* selectedItem();
 
 	void deSelect();
+	void swapCheck();
 
 	void setGridPosition(sf::Vector2f viewCenter);
 
@@ -93,11 +94,16 @@ private:
 	bool mIsCraftable;
 	bool mHasCraft1;
 	bool mHasCraft2;
+	sf::Sprite mCursorSprite;
 
 	//Mouse
 	sf::RectangleShape mRectShape;
 	sf::Vector2i mPixelPos;
 	sf::Vector2f mWorldPos;
+
+	//Centerpoints
+	sf::Vector2f mCircle1Mid;
+	sf::Vector2f mCircle2Mid;
 
 	//Event
 	sf::Event mEvent;

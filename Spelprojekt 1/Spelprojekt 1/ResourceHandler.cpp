@@ -224,9 +224,9 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addSound("Menu_MainUI.ogg");
 	addSound("Critical_Item.ogg");
 	addSound("Inventory_Move.ogg");
-	
 
-
+	//Remove this later
+	addTexture("saturnusINV.png");
 }
 
 
