@@ -221,9 +221,10 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mStick = new Item(handler, sf::Vector2f(381, 220), "Stick");
 		mFlowers = new Item(handler, sf::Vector2f(156, 525), "Flowers");
 		mLeash = new Item(handler, sf::Vector2f(615, 303), "Leash");
-		mDog = new Item(handler, sf::Vector2f(730, 350), "Dog");
+		mDog = new Item(handler, sf::Vector2f(730, 370), "Dog");
 		mFlagpole = new Item(handler, sf::Vector2f(1386, 195), "Flagpole");
 		mSingleFlower = new Item(handler, sf::Vector2f(1390, 265), "Singleflower");
+		mLady = new Item(handler, sf::Vector2f(565, 87), "Lady");
 
 		//View
 		mView.setSize(1024, 576);
@@ -245,13 +246,12 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 
 		//Rectangles
-		mRects.push_back(createRect(630, 126, 66, 134));
 		mRects.push_back(createRect(1806, 96, 62, 74));
 		mRects.push_back(createRect(1973, 123, 73, 278));
 
 		
 		//Playground
-		mPlayRects.push_back(createRect(0, 0, 2048, 576));
+		mPlayRects.push_back(createRect(0, 360, 683, 160));
 
 		//Item Active
 		mTrimmer->toggleActive();
@@ -280,6 +280,9 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mFlagpole->toggleLookable();
 		mFlagpole->toggleInteractable();
 
+		mLady->toggleActive();
+		mLady->setActiveAnimation("GardenLady");
+
 		//Add to Itemvector
 		addItem(mTrimmer);
 		addItem(mStick);
@@ -288,6 +291,9 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		addItem(mDog);
 		addItem(mFlagpole);
 		addItem(mSingleFlower);
+		addItem(mLady);
+
+		
 		
 
 	}
@@ -675,7 +681,7 @@ void Level3::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Tantbak!";
+					std::cout << "Bikupa! Bzzz";
 					
 				}
 				else if (getActiveScene() == 1)
@@ -704,7 +710,7 @@ void Level3::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Bikupa! Bzzz";
+					std::cout << "Dörr!";
 				}
 			}
 
@@ -712,7 +718,7 @@ void Level3::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Dörr!";
+					
 				}
 			}
 		}
@@ -832,35 +838,6 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 				{
 					mTargetItem->toggleInteractable();
 
-					//Grammophone
-					if (mTargetItem->getId() == "Gramophone")
-					{
-
-
-						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Needle")
-						{
-							mInventory->removeItem(mInventory->getSelectedItem());
-
-							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-							{
-								if (getItems()[i]->getId() == "Fish")
-								{
-									getItems()[i]->togglePickupable();
-									getItems()[i]->setSpeed(300.0f);
-									getItems()[i]->moveToPosition(861, 349);
-									mTargetItem = getItems()[i];
-									mCursor->setMode(Cursor::DISABLED);
-									//mFishFalling = true;
-								}
-							}
-						}
-						else
-						{
-							mTargetItem->toggleInteractable();
-						}
-
-						std::cout << "Spelar ljud, fisk ramlar ner";
-					}
 
 					if (mTargetItem->getId() == "Leash")
 					{
@@ -868,7 +845,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
 						{
-							mTargetItem->changeTexture(handler, "LastLevel_ItemTest2.png"); //Add correct texture!
+							mTargetItem->changeTexture(handler, "transparent.png"); //Add correct texture!
 							mUnleashed = true;
 							std::cout << "Klipper kopplet!";
 						}
@@ -885,9 +862,13 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Stick" && mUnleashed == true)
 						{
 							
-							mTargetItem->moveToPosition(2000, 416);
+							mTargetItem->moveToPosition(1272, 500);
 							std::cout << "Kastade pinnen!";
+							mCursor->setMode(Cursor::DISABLED);
 							mTargetItem->setActiveAnimation("Dog");
+							mDogRunning = true;
+
+							mPlayRects.push_back(createRect(683, 360, 673, 160));
 						}
 						else
 						{
@@ -903,7 +884,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Flowers")
 						{
 							mInventory->removeItem(mInventory->getSelectedItem());
-
+							mPlayRects.push_back(createRect(1356, 360, 500, 160));
 
 							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
 							{
@@ -936,6 +917,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 	//Animation updates
 	mDog->update(deltaTime);
+	mLady->update(deltaTime);
 
 	//Inventory
 	mInventory->update(window);
@@ -947,19 +929,14 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 		//Put everything back to normal after the "Pushing cutscene"
 		if (mTargetItem->getIsOnPosition())
 		{
-			/*if (mFishFalling)
+
+			if (mDogRunning)
 			{
-				mFishFalling = false;
+				mDogRunning = false;
 				mCursor->setMode(Cursor::NORMAL);
-				mTargetItem->setSpeed(100.0f);
+				mTargetItem->toggleActive();
 			}
 
-			if (mCatWalking)
-			{
-				mCatWalking = false;
-				mCursor->setMode(Cursor::NORMAL);
-				mTargetItem->setSpeed(100.0f);
-			}*/
 		}
 	}
 

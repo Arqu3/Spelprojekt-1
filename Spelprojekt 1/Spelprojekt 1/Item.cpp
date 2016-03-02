@@ -16,7 +16,7 @@ mCurrentFrame(0),
 mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
-mFrameTime(0.03f)
+mFrameTime(0.02f)
 
 {
 	//Create items here
@@ -303,7 +303,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); 
-		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct saturnus INV texture
+		mINVSprite.setTexture(*handler.getTexture("Saturnus.png")); //TODO - Use correct saturnus INV texture
 	}
 
 	if (id == "Venus")
@@ -351,8 +351,8 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
-		mSprite.setTexture(*handler.getTexture("Trimmer.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("TrimmerIcon.png"));
+		mSprite.setTexture(*handler.getTexture("Trimmer.png")); 
+		mINVSprite.setTexture(*handler.getTexture("TrimmerIcon.png")); //Add correct texture smaller icon
 	}
 
 	if (id == "Stick")
@@ -362,8 +362,8 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.9f, 0.9f));
-		mSprite.setTexture(*handler.getTexture("Stick.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("StickIcon.png"));
+		mSprite.setTexture(*handler.getTexture("Stick.png")); 
+		mINVSprite.setTexture(*handler.getTexture("StickIcon.png")); //Add correct texture smaller icon
 	}
 
 	if (id == "Flowers")
@@ -373,8 +373,8 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(5.8f, 1.0f));
-		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png"));
+		mSprite.setTexture(*handler.getTexture("transparent.png")); 
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture FlowerIcon
 	}
 
 	if (id == "Leash")
@@ -383,8 +383,8 @@ mFrameTime(0.03f)
 		mName = "Koppel";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 1.0f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.3f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture ?
 	}
 
 	if (id == "Dog")
@@ -423,11 +423,18 @@ mFrameTime(0.03f)
 		
 	}
 
-	//Animations
+	if (id == "Lady")
+	{
+		mIndex = 35;
+		mName = "Tant";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mGardenLady = *handler.getTexture("GardenLady.png");
+		mSprite.setTexture(mGardenLady); 
+		mSprite.setTextureRect(sf::IntRect(0, 0, 500, 500));
 
-	/*mGardenLady = *handler.getTexture("GardenLady.png");*/
-
-	
+	}
 
 }
 
@@ -756,10 +763,7 @@ void Item::update(float deltaTime)
 	}
 
 
-	move(deltaTime);
-	mCurrentTime += deltaTime;
-
-	//Push Animation
+	//Dog Running
 	if (mActiveAnimation == "Dog")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -788,6 +792,37 @@ void Item::update(float deltaTime)
 		}
 	}
 
+
+	if (mActiveAnimation == "GardenLady")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 500, mFrameYOffset * 500, 500, 500));
+			if (mCurrentFrame < 16)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 5 == 4)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 4)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+	move(deltaTime);
+	mCurrentTime += deltaTime;
 }
 		
 	
@@ -832,17 +867,6 @@ void Item::setActiveAnimation(std::string animation)
 		
 	}
 
-	else if (animation == "GardenLady")
-	{
-		if (mActiveAnimation != "GardenLady")
-		{
-			mCurrentFrame = 0;
-			mFrameXOffset = 0;
-			mFrameYOffset = 0;
-			mSprite.setTexture(mGardenLady);
-		}
-	}
-
 	else if (animation == "RogerSwim")
 	{
 		mSprite.setTexture(mRogerSwim);
@@ -867,6 +891,17 @@ void Item::setActiveAnimation(std::string animation)
 		mSprite.setTexture(mCatEating);
 	}
 	
+	else if (animation == "GardenLady")
+	{
+		if (mActiveAnimation != "GardenLady")
+		{
+			mCurrentFrame = 0;
+			mFrameXOffset = 0;
+			mFrameYOffset = 0;
+			mSprite.setTexture(mGardenLady);
+		}
+	}
+
 	mActiveAnimation = animation;
 }
 

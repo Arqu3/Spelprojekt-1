@@ -109,6 +109,7 @@ private:
 	Item *mLeash;
 	Item* mDog;
 	Item* mFlagpole;
+	Item *mLady;
 
 
 	bool mLevelComplete;
@@ -145,6 +146,8 @@ private:
 	bool mUnleashed;
 	bool mFlowerPickedUp;
 	bool mFlowersPlaced;
+	bool mDogRunning;
+	
 
 	ResourceHandler &handler;
 
