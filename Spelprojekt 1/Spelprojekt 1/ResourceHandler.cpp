@@ -190,6 +190,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("fishINV.png");
 	addTexture("saturnusINV.png");
 	addTexture("ScrewDeviceINV.png");
+	addTexture("plutoINV.png");
 
 	drawLoadScreen(window, "Laddar Muspekare");
 	//Cursors

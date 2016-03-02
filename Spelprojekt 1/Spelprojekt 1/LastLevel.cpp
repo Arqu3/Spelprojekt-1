@@ -897,18 +897,22 @@ void LastLevel::mouseClick(sf::Event &event)
 				}
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Door to scene 3!";
-					//Make Player get into position for Scene change
-					mPlayer->moveToPosition(70, 370);
-					//Set Collision Rect to Scene change position
-					mSceneChangeRect = sf::FloatRect(sf::Vector2f(70, 370), sf::Vector2f(10, 10));
-					//Set if Player should toggle on Scene Change
-					mPlayerToggle = false;
-					//Set starting position of Player in new Scene
-					mSceneChangePlayerPos = sf::Vector2f(950, 480);
-					//Set which Scene will be the new Scene
-					mNewScene = 2;
-					mLastScene = 1;
+					if (mPutteTalked == true)
+					{
+						std::cout << "Door to scene 3!";
+						//Make Player get into position for Scene change
+						mPlayer->moveToPosition(70, 370);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(70, 370), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = false;
+						//Set starting position of Player in new Scene
+						mSceneChangePlayerPos = sf::Vector2f(950, 440);
+						//Set which Scene will be the new Scene
+						mNewScene = 2;
+						mLastScene = 1;
+					}
+					
 				}
 				else
 				{
@@ -1315,6 +1319,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 						else
 						{
 							mTargetItem->toggleInteractable();
+							mPutteTalked = true;
 						}
 
 						

@@ -114,6 +114,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.8f, 0.8f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("ScrewDeviceINV.png")); //Add correct texture
 
 	}
 
@@ -293,6 +294,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("Pluto.png")); 
+		mINVSprite.setTexture(*handler.getTexture("plutoINV.png")); 
 	}
 
 	if (id == "Saturn")
@@ -303,7 +305,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); 
-		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct saturnus INV texture
+		mINVSprite.setTexture(*handler.getTexture("Saturnus.png")); //TODO - Use correct saturnus INV texture
 	}
 
 	if (id == "Venus")

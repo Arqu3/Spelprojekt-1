@@ -159,6 +159,7 @@ private:
 	bool mDollhouseInteracted;
 	bool mKidsFound;
 	bool mCatMoved;
+	bool mPutteTalked;
 
 	ResourceHandler &handler;
 
