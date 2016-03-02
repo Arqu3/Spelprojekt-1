@@ -20,8 +20,8 @@ mCraftSelect2(-1),
 mIsCraftable(false),
 mHasCraft1(false),
 mHasCraft2(false),
-mCircle1Mid(0, 0),
-mCircle2Mid(0, 0)
+mCircle1Mid(487, 276),
+mCircle2Mid(725, 175)
 {
 	//Size check
 	cout << mItems.size() << endl;
@@ -476,6 +476,49 @@ void Inventory::swapCheck()
 			}
 		}
 	}
+}
+
+bool Inventory::checkDistance(sf::Vector2f point)
+{
+	//Distance 1
+	sf::Vector2f delta(mCircle1Mid - point);
+
+	float deltaX = delta.x;
+	float deltaY = delta.y;
+
+	float squareX = (deltaX * deltaX);
+	float squareY = (deltaY * deltaY);
+
+	float added = (squareX + squareY);
+
+	float distance = sqrt(added);
+
+	//Distance 2
+	sf::Vector2f delta2(mCircle2Mid - point);
+
+	float deltaX2 = delta2.x;
+	float deltaY2 = delta2.y;
+
+	float squareX2 = (deltaX2 * deltaX2);
+	float squareY2 = (deltaY2 * deltaY2);
+
+	float added2 = (squareX2 + squareY2);
+
+	float distance2 = sqrt(added2);
+
+	cout << distance << endl;
+	cout << distance2 << endl;
+	
+	if (distance <= 220)
+	{
+		return true;
+	}
+	else if (distance2 <= 97)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool Inventory::craftCheck()

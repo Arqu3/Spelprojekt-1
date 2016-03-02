@@ -51,6 +51,7 @@ public:
 
 	void deSelect();
 	void swapCheck();
+	bool checkDistance(sf::Vector2f point);
 
 	void setGridPosition(sf::Vector2f viewCenter);
 
