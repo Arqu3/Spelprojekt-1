@@ -56,6 +56,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	//Hilma
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
+	addTexture("HatIconGlow.png");
 	addTexture("HilmaFishing.png");
 
 	drawLoadScreen(window, "Davidar UI");
