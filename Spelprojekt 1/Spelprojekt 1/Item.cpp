@@ -255,7 +255,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.03f, 0.03f));
-		mSprite.setTexture(*handler.getTexture("Lisa.png"));
+		mSprite.setTexture(*handler.getTexture("LisaTotte.png"));
 	}
 
 	if (id == "FishingRodMagnet")
@@ -295,12 +295,13 @@ mFrameTime(0.03f)
 	if (id == "Saturn")
 	{
 		mIndex = 25;
+		mCraftIndex = 1;
 		mName = "Saturnus";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("Saturnus.png")); 
-		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct saturnus INV texture
+		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct (unpumped) saturnus INV texture
 	}
 
 	if (id == "Venus")
@@ -335,6 +336,28 @@ mFrameTime(0.03f)
 		mSprite.setTexture(mRogerSwim);
 		mSprite.setOrigin(350, 0);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));
+	}
+
+	if (id == "Pump")
+	{
+		mIndex = 26;
+		mName = "Cykelpump";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("Venus.png")); //TODO - Replace with Pump Texture
+		mINVSprite.setTexture(*handler.getTexture("MagnetINV.png")); //TODO - Replace with Pump INV Texture
+	}
+
+	if (id == "PumpedSaturn")
+	{
+		mIndex = 25;
+		mName = "Pumpad Saturnus";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("Saturnus.png"));
+		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct (pumped) saturnus INV texture
 	}
 }
 
@@ -719,4 +742,9 @@ void Item :: setActiveAnimation(std::string name)
 	mActiveAnimation = name;
 
 	
-} 
+}
+
+void Item::setCraftIndex(int craftIndex)
+{
+	mCraftIndex = craftIndex;
+}

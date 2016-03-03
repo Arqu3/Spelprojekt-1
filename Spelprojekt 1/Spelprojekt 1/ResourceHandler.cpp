@@ -12,18 +12,19 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
-	addTexture("loadscreen.jpg");
+	addTexture("loadscreen.png");
 	addTexture("MainMenuBackground.png");
 	addTexture("Test1.png");
 
-	loadScreen.setTexture(*getTexture("loadscreen.jpg"));
+	loadScreen.setSize(sf::Vector2f(1024, 576));
+	loadScreen.setTexture(getTexture("loadscreen.png"));
 
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 	mLoadMessage.setFont(mFont);
 	mLoadMessage.setCharacterSize(18);
 	mLoadMessage.setStyle(sf::Text::Bold);
-	mLoadMessage.setColor(sf::Color::Black);
-	mLoadMessage.setPosition(420, 420);
+	mLoadMessage.setColor(sf::Color::White);
+	mLoadMessage.setPosition(430, 490);
 	mLoadMessage.setString("Laddar...");
 }
 
@@ -189,8 +190,9 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "Lailar Karaktärer");
 	//Static Characters
-	addTexture("Lisa.png");
+	addTexture("LisaTotte.png");
 	addTexture("PutteSad.png");
+	addTexture("PutteLillemor.png");
 
 	drawLoadScreen(window, "Davidar Inventoryikoner");
 	//Inventory icons
@@ -205,6 +207,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("ScrewDeviceINV.png");
 	addTexture("plutoINV.png");
 	addTexture("clamINV.png");
+	addTexture("MagnetINV.png"); //TODO - Replace with Pump INV Texture
 
 	drawLoadScreen(window, "PerHeimerar Musik");
 	//Music

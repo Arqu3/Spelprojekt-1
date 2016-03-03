@@ -262,12 +262,15 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
 		mVenus = new Item(handler, sf::Vector2f(330, 56), "Venus");
 
+		mPump = new Item(handler, sf::Vector2f(200, 200), "Pump");
+		mPumpedSaturn = new Item(handler, sf::Vector2f(606, 44), "PumpedSaturn");
+
 		//View
 		mView.setSize(1024, 576);
 		mView.setCenter(524, 288);
 
 		//Player
-		mPlayer = new Player(handler, sf::Vector2f(400, 400));
+		mPlayer = new Player(handler, sf::Vector2f(400, 580));
 
 		//Inventory
 		mInventory = new Inventory(handler);
@@ -361,12 +364,15 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mFoodBowl->toggleInteractable();
 		mHole->toggleInteractable();
 
+		mPump->setCraftIndex(1);
+
 		mLastScene = 0;
 
 		//Add Screwdevice and Venus to inventory
 		mScrewDevice->setScale(0.3f, 0.3f);
 		mInventory->addItem(mScrewDevice);
 		mInventory->addItem(mVenus);
+		mInventory->addItem(mPump);
 	}
 
 	mIsActive = !mIsActive;
@@ -461,8 +467,12 @@ void LastLevel::internalSwap(int num)
 			addItem(mKids);
 		}
 
+		if (mPumpedSaturn->getActive() && mSaturnHanged == true)
+		{
+			addItem(mPumpedSaturn);
+		}
+
 		addItem(mMagicClam);
-		addItem(mSaturn);
 		addItem(mVenus);
 	}
 
@@ -917,7 +927,7 @@ void LastLevel::mouseHover()
 			{
 				if (mActiveScene == 0)
 				{
-					mCursor->setMode(Cursor::NORMAL);
+					mCursor->setMode(Cursor::SCENECHANGE);
 				}
 				else
 				{
@@ -930,7 +940,7 @@ void LastLevel::mouseHover()
 			{
 				if (mActiveScene == 1)
 				{
-					mCursor->setMode(Cursor::NORMAL);
+					mCursor->setMode(Cursor::SCENECHANGE);
 				}
 				else
 				{
@@ -943,7 +953,7 @@ void LastLevel::mouseHover()
 			{
 				if (mActiveScene == 1)
 				{
-					mCursor->setMode(Cursor::NORMAL);
+					mCursor->setMode(Cursor::SCENECHANGE);
 				}
 			}
 
@@ -952,7 +962,7 @@ void LastLevel::mouseHover()
 			{
 				if (mActiveScene == 2)
 				{
-					mCursor->setMode(Cursor::NORMAL);
+					mCursor->setMode(Cursor::SCENECHANGE);
 				}
 				else
 				{
@@ -1236,7 +1246,6 @@ void LastLevel::interactTargetItem()
 		//Putte
 		if (mTargetItem->getId() == "Putte")
 		{
-
 			if (mKidsFound == true)
 			{
 				for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
@@ -1433,6 +1442,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (getActiveScene() == 0)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("mercury", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Planet 1!";
 					mPlayer->moveToPosition(535, 437);
 				}
@@ -1453,6 +1466,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 				}
 				else
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("refridgerator", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Refrigerator!";
 					mPlayer->moveToPosition(870, 349);
 				}
@@ -1478,22 +1495,43 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 							mCriticalItemSound.play();
 						}
 					}
-
+					if (mVenusHanged)
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("venus", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
+					}
+					else
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("emptyVenus", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
+					}
 					std::cout << "Planet 2!";
 					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("books2", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Books!";
 					mPlayer->moveToPosition(356, 377);
 				}
 				else
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("waterTap", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Tap!";
 					mPlayer->moveToPosition(419, 388);
-					mRunningWaterSound.play();
 					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Magic Clam")
 					{
+						mRunningWaterSound.play();
 						mInventory->removeItem(mInventory->getSelectedItem());
 						mInventory->addItem(mPearl);
 						mRegularItemSound.play();
@@ -1524,14 +1562,33 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 							mCriticalItemSound.play();
 						}
 					}
+					if (mEarthHanged)
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("earth", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
+					}
+					else
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("emptyEarth", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
+					}
 					std::cout << "Planet 3!";
 					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("jewelryCase", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
+					//TODO - Play mJewelryBoxSound in the middle of dialogue here
 					std::cout << "Jewelry Box!";
 					mPlayer->moveToPosition(591, 391);
-					//TODO - Play mJewelryBoxSound in the middle of dialogue here
+					
 				}
 				else
 				{
@@ -1569,12 +1626,30 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 							mCriticalItemSound.play();
 						}
 					}
+					if (mMarsHanged)
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("mars", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
+					}
+					else
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("emptyMars", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
+					}
 
 					std::cout << "Planet 4!";
 					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("crotchRocket", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Crotch Rocket!";
 					mPlayer->moveToPosition(452, 379);
 				}
@@ -1586,11 +1661,19 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (getActiveScene() == 0)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("jupiter", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Planet 5!";
 					mPlayer->moveToPosition(535, 437);
 				}
 				else if (getActiveScene() == 1)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("mask", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Mask!";
 					mPlayer->moveToPosition(1263, 458);
 				}
@@ -1602,9 +1685,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (getActiveScene() == 0)
 				{
-					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Saturn")
+					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "PumpedSaturn")
 					{
-						mSaturn->toggleActive();
+						mPumpedSaturn->toggleActive();
+						addItem(mPumpedSaturn);
 						mInventory->removeItem(mInventory->getSelectedItem());
 						mSaturnHanged = true;
 						if (mMarsHanged && mPlutoHanged && mEarthHanged && mVenusHanged)
@@ -1615,6 +1699,20 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 						{
 							mCriticalItemSound.play();
 						}
+					}
+					if (mSaturnHanged)
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("emptySaturn", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
+					}
+					else
+					{
+						mDialogueSystem->reset();
+						mDialogueSystem->hasClicked("saturn", mPlayer);
+						mUI->setState(UI::INGAME);
+						//mCursor->setMode(Cursor::DIALOGUE);
 					}
 					std::cout << "Planet 6!";
 					mPlayer->moveToPosition(535, 437);
@@ -1643,6 +1741,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (getActiveScene() == 0)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("uranus", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Planet 7!";
 					mPlayer->moveToPosition(535, 437);
 				}
@@ -1653,6 +1755,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (getActiveScene() == 0)
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("neptune", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Planet 8!";
 					mPlayer->moveToPosition(535, 437);
 				}
@@ -1678,6 +1784,20 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 						mCriticalItemSound.play();
 					}
 				}
+				if (mPlutoHanged)
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("pluto", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
+				}
+				else
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("emptyPluto", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
+				}
 				std::cout << "Planet 9!";
 				mPlayer->moveToPosition(535, 437);
 			}
@@ -1691,6 +1811,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 				}
 				else
 				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("balconyDoor", mPlayer);
+					mUI->setState(UI::INGAME);
+					//mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "BalconyDoor!";
 				}
 				mPlayer->moveToPosition(496, 334);

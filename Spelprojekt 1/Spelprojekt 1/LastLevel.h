@@ -143,6 +143,8 @@ private:
 	Item* mScrewDevice;
 	Item* mSaturn;
 	Item* mVenus;
+	Item* mPump;
+	Item* mPumpedSaturn;
 
 	bool mLevelComplete;
 

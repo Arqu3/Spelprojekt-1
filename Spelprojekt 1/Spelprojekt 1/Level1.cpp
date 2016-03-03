@@ -347,6 +347,9 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		delete mUI;
 		delete mInventory;
 		delete mDialogueSystem;
+		music.stop();
+		mAmbientSound.stop();
+		mAquariumSound.stop();
 	}
 	mIsActive = !mIsActive;
 }
@@ -922,9 +925,6 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 		if (mReadyToLeave && !mDialogueSystem->getLevel1End())
 		{
-			music.stop();
-			mAmbientSound.stop();
-			mAquariumSound.stop();
 			mLevelComplete = true;
 		}
 	}

@@ -79,7 +79,7 @@ public:
 	//Set Active Animation
 	void setActiveAnimation(std::string name);
 
-	
+	void setCraftIndex(int craftIndex);
 
 private:
 	bool mIsActive;

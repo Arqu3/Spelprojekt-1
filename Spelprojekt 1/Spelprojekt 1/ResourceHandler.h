@@ -68,7 +68,7 @@ private:
 	sf::Text mLoadMessage;
 
 	//Loading screen
-	sf::Sprite loadScreen;
+	sf::RectangleShape loadScreen;
 };
 
 #endif
