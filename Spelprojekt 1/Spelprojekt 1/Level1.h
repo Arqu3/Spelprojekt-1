@@ -58,6 +58,7 @@ public:
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect);
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
+	void mouseReleased(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
@@ -125,6 +126,7 @@ private:
 
 	//Inventory
 	Inventory *mInventory;
+	sf::Sprite mCursorSprite;
 
 	//DialogueSystem
 	DialogueSystem *mDialogueSystem;

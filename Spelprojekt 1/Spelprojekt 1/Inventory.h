@@ -35,6 +35,7 @@ public:
 	void craftItem(int index1, int index2);
 	void swapItems(ItemVector &inputVector, int inputIndex, int swapIndex);
 	void setCraftableItems(ResourceHandler &handler, int index);
+	sf::Sprite getCursorSprite();
 
 	//Grid
 	void setDynamicGrid();
@@ -49,7 +50,10 @@ public:
 
 	Item* selectedItem();
 
-	void deSelect();
+	//Checks for valid deselection
+	void deSelectCheck();
+	//Forces deselection
+	void forceDeSelect();
 	void swapCheck();
 	bool checkDistance(sf::Vector2f point);
 
