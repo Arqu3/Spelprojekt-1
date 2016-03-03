@@ -114,7 +114,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.8f, 0.8f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
-
+		mINVSprite.setTexture(*handler.getTexture("clamINV.png"));
 	}
 
 	if (id == "Needle")
@@ -212,14 +212,10 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.17f, 0.17f)); //Fixa
-		
 		mCatWalking = *handler.getTexture("CatWalking.png");
 		mCatEating = *handler.getTexture("CatEating.png");
-
 		mSprite.setTexture(mCatWalking); 
 		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
-
-	
 	}
 
 	if (id == "Foodbowl")
@@ -293,6 +289,7 @@ mFrameTime(0.03f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("Pluto.png")); 
+		mINVSprite.setTexture(*handler.getTexture("plutoINV.png"));
 	}
 
 	if (id == "Saturn")
@@ -313,7 +310,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Venus.png"));
 		mINVSprite.setTexture(*handler.getTexture("pocketwatchINV.png"));
 	}
 
@@ -324,7 +321,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
-		mSprite.setTexture(*handler.getTexture("thomaswallstar.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomaswallstar.png"));
 	}
 
 	if (id == "Roger")
@@ -334,7 +331,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.07f, 0.07f));
-		//mRogerSwim = *handler.getTexture("RogerSwim.png");
+		mRogerSwim = *handler.getTexture("RogerSwim.png");
 		mSprite.setTexture(mRogerSwim);
 		mSprite.setOrigin(350, 0);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));

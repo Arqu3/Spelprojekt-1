@@ -100,7 +100,6 @@ private:
 	sf::Sound mMenuMainUISound;
 	sf::Sound mMenuHatSound;
 	sf::Sound mMenuInventorySound;
-	sf::Sound mCraftingSound;
 	sf::Sound mCriticalItemSound;
 
 	//Scene

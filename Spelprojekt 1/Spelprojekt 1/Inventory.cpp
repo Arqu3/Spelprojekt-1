@@ -252,6 +252,7 @@ void Inventory::removeItem(int index)
 			mItems.pop_back();
 		}
 
+		mCraftable.setString("");
 	}
 	
 	//If index is last

@@ -61,9 +61,18 @@ public:
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
-
 	//Level Complete
 	bool isLevelComplete();
+
+	//Update functions
+	void updateTargetItem(float deltaTime);
+	void lookAtTargetItem();
+	void pickupTargetItem();
+	void interactTargetItem();
+
+	//Mouseclick collision functions
+	void mouseClickCheckItemCollision(sf::Vector2f point);
+	void mouseClickCheckRectCollision(sf::Vector2f point);
 
 private:
 
@@ -91,7 +100,20 @@ private:
 
 	//Sound
 	sf::Music music;
-	sf::Sound ambientSound;
+	sf::Sound mAmbientSound;
+	sf::Sound mFishHitFloorSound;
+	sf::Sound mCatHissingSound;
+	sf::Sound mCatSound;
+	sf::Sound mRegularItemSound;
+	sf::Sound mCriticalItemSound;
+	sf::Sound mPlanetPuzzleSound;
+	sf::Sound mGramophoneSound;
+	sf::Sound mRunningWaterSound;
+	sf::Sound mScrewGlobeSound;
+	sf::Sound mJewelryBoxSound;
+	sf::Sound mMenuInventorySound;
+	sf::Sound mMenuHatSound;
+	sf::Sound mMenuMainUISound;
 
 	//Scene
 	bool mIsActive;
@@ -159,6 +181,11 @@ private:
 	bool mDollhouseInteracted;
 	bool mKidsFound;
 	bool mCatMoved;
+	bool mPlutoHanged;
+	bool mVenusHanged;
+	bool mEarthHanged;
+	bool mSaturnHanged;
+	bool mMarsHanged;
 
 	ResourceHandler &handler;
 

@@ -8,7 +8,7 @@ isOnPosition(true),
 moveTo(position),
 mActiveAnimation("Walk"),
 mWalk(false),
-mFrameTime(0.3f),
+mFrameTime(0.03f), //Lägre värde = Snabbare animation
 mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
@@ -27,9 +27,10 @@ mThomasActive(true)
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 	mSprite.setOrigin(400, 700);
 
-	//mThomasTexture = *handler.getTexture("ThomasWalk.png");
-	//mHilmaTexture = *handler.getTexture("HilmaWalk.png");
-	//mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
+	mThomasTexture = *handler.getTexture("ThomasWalk.png");
+	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
+	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
+	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
 	//mHilmaFishingTexture = *handler.getTexture("HatIconGlow.png");
 	
 
@@ -199,7 +200,8 @@ void Player::update(float deltaTime)
 		}
 	}
 
-	/*if (mActiveAnimation == "Fishing")
+	//Fishing Animation
+	if (mActiveAnimation == "Fishing")
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
@@ -225,10 +227,10 @@ void Player::update(float deltaTime)
 			}
 			mCurrentTime = 0;
 		}
-	}*/
+	}
 
 	//HatIconGlow Animation
-	if (mActiveAnimation == "Fishing")
+	/*if (mActiveAnimation == "Fishing")
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
@@ -236,11 +238,11 @@ void Player::update(float deltaTime)
 			if (mCurrentFrame < 49)
 			{
 				mFrameXOffset += 1;
-				if (mFrameXOffset % 11 == 10)
+				if (mFrameXOffset % 12 == 11)
 				{
 					mFrameYOffset++;
 				}
-				if (mFrameXOffset >= 10)
+				if (mFrameXOffset >= 11)
 				{
 					mFrameXOffset = 0;
 				}
@@ -254,7 +256,7 @@ void Player::update(float deltaTime)
 			}
 			mCurrentTime = 0;
 		}
-	}
+	}*/
 
 	//Fishing Pull Animation
 	if (mActiveAnimation == "FishingPull")

@@ -8,9 +8,9 @@ mItemInteraction(false),
 mLookedAtAquarium(false),
 mPushingBlock(false),
 mCubePlaced(false),
-mReadyForScrewdevice(false),
+mReadyForScrewdevice(true),
 mPickedUpScrewdevice(false),
-mMovedStar(false),
+mMovedStar(true),
 mReadyToLeave(false),
 mLevelComplete(false),
 mHasCraftedFishingRod(false),
@@ -225,7 +225,6 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
 		mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
 		mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
-		mCraftingSound.setBuffer(*handler.getSound("Crafting.ogg"));
 
 		//View
 		mView.setCenter(512, 288);
@@ -345,6 +344,9 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 	else
 	{
 		delete mPlayer;
+		delete mUI;
+		delete mInventory;
+		delete mDialogueSystem;
 	}
 	mIsActive = !mIsActive;
 }
@@ -711,33 +713,31 @@ void Level1::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
-	//Check if Hat Icon is clicked
-	if (checkCollision(mUI->getHatIconRect(), point))
-	{
-		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::HAT);
-		mMenuHatSound.play();
-	}
-
 	//Check if Menu Icon is clicked
-	else if (checkCollision(mUI->getMenuIconRect(), point))
+	if (checkCollision(mUI->getMenuIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
 		mUI->setState(UI::MAINUI);
 		mMenuMainUISound.play();
 	}
-
+	//Check if Hat Icon is clicked
+	else if (checkCollision(mUI->getHatIconRect(), point))
+	{
+		mCursor->setMode(Cursor::MENU);
+		mUI->setState(UI::HAT);
+		mMenuHatSound.play();
+	}
 	//Check if playrect collision
-	/*else if (checkCollision(getPlayRects(), point))
+	else if (checkCollision(getPlayRects(), point))
 	{
 		mPlayer->moveToPosition(point.x, point.y);
 		mItemInteraction = false;
-	}*/
-	else if (checkCollision(getPlayRects(), point))
+	}
+	/*else if (checkCollision(getPlayRects(), point))
 	{
 		mPlayer->setActiveAnimation("Fishing");
 		mItemInteraction = false;
-	}
+	}*/
 
 	//Check Item collision
 	mouseClickCheckItemCollision(point);
@@ -862,7 +862,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	if (mItemInteraction)
 	{
 		//Check if any part of the Player intersects with the Item
-		if (mPlayer->getGlobalRect().intersects(mTargetItem->getRectangle()) && mPlayer->getIsOnPosition())
+		if (mPlayer->getIsOnPosition())
 		{
 			//Check if Item has already been looked at
 			if (!mTargetItem->isLookedAt())
@@ -922,6 +922,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 		if (mReadyToLeave && !mDialogueSystem->getLevel1End())
 		{
+			music.stop();
+			mAmbientSound.stop();
+			mAquariumSound.stop();
 			mLevelComplete = true;
 		}
 	}
