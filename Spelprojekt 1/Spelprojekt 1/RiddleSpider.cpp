@@ -55,7 +55,7 @@ void RiddleSpider::moveUp(float deltaTime)
 
 void RiddleSpider::moveDown(float deltaTime)
 {
-	if (mPosition.y + mSprite.getGlobalBounds().height < 200)
+	if (mPosition.y + mSprite.getGlobalBounds().height < 150)
 	{
 		mPosition.y += 100.0f * deltaTime;
 	}
@@ -64,18 +64,18 @@ void RiddleSpider::moveDown(float deltaTime)
 void RiddleSpider::idleMove(float deltaTime)
 {
 	mTimer++;
-	if (mTimer >= 500)
+	if (mTimer >= 300)
 	{
 		mTimer = 0;
 	}
 
-	if (mTimer <= 250)
+	if (mTimer <= 150)
 	{
-		mPosition.y += 50.0f * deltaTime;
+		mPosition.y += 12.5f * deltaTime;
 	}
-	else if (mTimer >= 251)
+	else if (mTimer >= 151)
 	{
-		mPosition.y -= 50.0f * deltaTime;
+		mPosition.y -= 12.5f * deltaTime;
 	}
 }
 

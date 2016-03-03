@@ -144,6 +144,10 @@ void Level1::drawUI(sf::RenderWindow &window)
 	}
 
 	mCursor->draw(window);
+	if (mInventory->getSelectedItem() != -1)
+	{
+		mInventory->drawCursorSprite(window);
+	}
 }
 
 
@@ -815,6 +819,10 @@ void Level1::mouseReleased(sf::Event & event)
 
 		mAstronaut->toggleActive();
 	}
+	else
+	{
+		mInventory->deSelectCheck();
+	}
 }
 
 //Change mouse cursor depending on what it is hovering over
@@ -960,6 +968,17 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	//Inventory update
 	mInventory->update(window);
+
+	if (mUI->getState() == UI::INVENTORY)
+	{
+		if (mInventory->getSelectedItem() != -1)
+		{
+			if (!mInventory->checkDistance(mWorldPos))
+			{
+				mUI->setState(UI::INGAME);
+			}
+		}
+	}
 
 	//Spooky scary spider update
 	mSpider->update(deltaTime);

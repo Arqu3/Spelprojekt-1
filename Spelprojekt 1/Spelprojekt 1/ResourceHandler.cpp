@@ -282,7 +282,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addSound("Critical_Item.ogg");
 	addSound("Inventory_Move.ogg");
 
-    //LastLevel
+	//LastLevel
 	drawLoadScreen(window, "Laddar Sista Bananen");
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
@@ -304,7 +304,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("LastLevel_ItemTest1.png");
 	addTexture("LastLevel_ItemTest2.png");
 
-    	//Karaktärer
+		//Karaktärer
 	addTexture("ThomasWalk.png");
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
@@ -335,7 +335,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("Fisk1.png");
 
 
-        //Sounds
+		//Sounds
 	addSound("FootSteps.ogg");
 
 	//Animations

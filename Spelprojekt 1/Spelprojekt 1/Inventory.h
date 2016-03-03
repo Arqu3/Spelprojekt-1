@@ -26,6 +26,7 @@ public:
 
 	void update(sf::RenderWindow &window);
 	void draw(sf::RenderWindow &window);
+	void drawCursorSprite(sf::RenderWindow &window);
 
 	//Items
 	void addItem(Item* item);

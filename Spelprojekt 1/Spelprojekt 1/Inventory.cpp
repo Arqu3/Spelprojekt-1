@@ -112,10 +112,6 @@ void Inventory::update(sf::RenderWindow &window)
 
 void Inventory::draw(sf::RenderWindow &window)
 {
-	if (mSelectedItem1 != -1)
-	{
-		window.draw(mCursorSprite);
-	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//TODO - THIS DOESN'T WORK, NEEDS FIX
@@ -159,6 +155,11 @@ void Inventory::draw(sf::RenderWindow &window)
 	//Draw Item Description
 	window.draw(mDescription);
 	window.draw(mCraftable);
+}
+
+void Inventory::drawCursorSprite(sf::RenderWindow &window)
+{
+	window.draw(mCursorSprite);
 }
 
 void Inventory::addItem(Item* item)
@@ -298,7 +299,6 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 				mCursorSprite = mItems[mSelectedItem2]->getINVSprite();
 				cout << "Second selected item is: " << mSelectedItem2 << endl;
 			}
-
 			return;
 		}
 	}
