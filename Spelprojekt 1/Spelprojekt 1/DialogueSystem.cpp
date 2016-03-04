@@ -1472,7 +1472,48 @@ void DialogueSystem::displayLevel2MissingRocketAdvancedDialogue()
 
 void DialogueSystem::displayLevel2PutteAdvancedDialogue()
 {
+	std::string level2PutteTeller = "På hyllan satt en liten, liten varelse. Den påminde väldigt mycket om Hilma i utseendet. Det måste vara en till hittare! Den såg mycket bekymrad ut... När Thomas var påväg att fråga hittaren hur det stod till, hindrade Hilma honom hastigt.";
+	std::string level2PutteHilma = "Men kolla här borta! Det ser jätteintressant ut, vi borde kolla-";
+	std::string level2PutteTeller2 = "Men innan hon hann säga mycket mer hade Thomas redan frågat hittaren. Hilma slog sig irriterat för ansiktet.";
+	std::string level2PuttePutte = "En människa! Oh nej, jag måste gömma mig innan-";
+	std::string level2PutteTeller3 = "Då fick hittaren syn på Hilma och fick ett leende på läpparna. Hilma log dock inte tillbaka. Hon försökte istället undvika hittarens blick.";
+	std::string level2PuttePutte2 = "Men Hilma! Åh, vad bra att du är här! Vem är människan du är med? Inte visste jag att du hade människovän-";
+	std::string level2PutteHilma2 = "För det första, det angår inte dig! För det andra, så är vi lite upptagna. Om du ursäktar oss-";
+	std::string level2PutteThomas = "Jag heter Thomas! Trevligt att träffas!";
+	std::string level2PutteTeller4 = "Hilma blängde surt på Thomas och ryckte i hans ärm för att gå vidare.";
+	std::string level2PuttePutte3 = "Snälla gå inte! Jag behöver din hjälp! J-jag kanske kan hjälpa dig i utbyte!";
+	std::string level2PutteHilma3 = "Igen!? Hur många gånger måste jag hjälpa dig? Och hur ska jag kunna få hjälp av dig som inte ens kan sköta sitt jobb som hittare? Jag har inte någon nytta av dig, tapparen Putte!";
+	std::string level2PuttePutte4 = "Snälla! Jag ber dig! Jag har inte tappat något den här gången. Jag behöver nyckeln på den översta hyllan. Men jag når inte upp! Och... Jag kan inte komma ned...";
+	std::string level2PutteHilma4 = "Du har alltså tappat bort din nyckel OCH dina egna tankar?";
+	std::string level2PutteHilma5 = "Inte konstigt att du är fast däruppe. Ledsen men vi har inte tid med det här.";
+	std::string level2PutteThomas2 = "Men... Men Hilma. Ska vi inte hjälpa honom? Han behöver ju hjälp.";
+	std::string level2PuttePutte5 = "Nej! Jag har inte tappat bort nyckeln! Den blev stulen från mig av skatan!";
+	std::string level2PutteHilma6 = "Skata säger du... Och vad ska du med nyckeln till? Vad ger du mig i utbyte OM jag skulle hjälpa dig?";
+	std::string level2PuttePutte6 = "Jag behöver några saker i den låsta lådan, jag kan ge dig något från den lådan i utbyte!";
+	std::string level2PutteThomas3 = "Det kanske finns något därinne som vi behöver? Det är ju... mormors låda!";
+	std::string level2PutteHilma7 = "Okej, för den här gången. Men! Om det är något därinne som inte är värdig som utbyte, lämnar jag dig åt skatan!";
+	std::string level2PuttePutte7 = "Tack så mycket Hilma!";
+	std::string level2PutteThomas4 = "Du... tänker väl inte ge honom till skatan?";
+	std::string level2PutteHilma8 = "Skator har ett öga för saker som glittrar. Putte är så långt från glitter man kan komma.";
 
+	if (mState >= 24)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel2Putte = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+	if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level2PutteTeller, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
 }
 
 void DialogueSystem::displayLevel2SteamMachineAdvancedDialogue()
