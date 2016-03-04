@@ -13,7 +13,7 @@ mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mSpeed(100.0f),
+mSpeed(500.0f),
 mFacingLeft(true),
 mStepCooldown(0),
 mThomasActive(true)

@@ -156,7 +156,7 @@ mFrameTime(0.03f)
 		mName = "Grammofon";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.75f, 1.0f)); 
+		mSprite.setScale(sf::Vector2f(0.75f, 1.3f)); 
 		mSprite.setTexture(*handler.getTexture("transparent.png"));
 	}
 

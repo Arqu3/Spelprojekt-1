@@ -58,6 +58,27 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("HatIconGlow.png");
 	addTexture("HilmaFishing.png");
 
+	drawLoadScreen(window, "Lailar Ansiktsuttryck");
+	//Character Expressions
+	addTexture("expressionHilmaAngry.png");
+	addTexture("expressionHilmaConfident.png");
+	addTexture("expressionHilmaDetermined.png");
+	addTexture("expressionHilmaGrumpy.png");
+	addTexture("expressionHilmaHappy.png");
+	addTexture("expressionHilmaNeutral.png");
+	addTexture("expressionHilmaSad.png");
+	addTexture("expressionHilmaSigh.png");
+	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasCry.png");
+	addTexture("expressionThomasGrumpy.png");
+	addTexture("expressionThomasHappy.png");
+	addTexture("expressionThomasNeutral.png");
+	addTexture("expressionThomasSad.png");
+	addTexture("expressionThomasSigh.png");
+	addTexture("expressionThomasSmile.png");
+	addTexture("expressionThomasSurprised.png");
+
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
 	addTexture("haticon.png");
@@ -132,27 +153,6 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("thomaszoombg.png");
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
-
-	drawLoadScreen(window, "Lailar Ansiktsuttryck");
-	//Character Expressions
-	addTexture("expressionHilmaAngry.png");
-	addTexture("expressionHilmaConfident.png");
-	addTexture("expressionHilmaDetermined.png");
-	addTexture("expressionHilmaGrumpy.png");
-	addTexture("expressionHilmaHappy.png");
-	addTexture("expressionHilmaNeutral.png");
-	addTexture("expressionHilmaSad.png");
-	addTexture("expressionHilmaSigh.png");
-	addTexture("expressionHilmaSurprised.png");
-	addTexture("expressionThomasBlush.png");
-	addTexture("expressionThomasCry.png");
-	addTexture("expressionThomasGrumpy.png");
-	addTexture("expressionThomasHappy.png");
-	addTexture("expressionThomasNeutral.png");
-	addTexture("expressionThomasSad.png");
-	addTexture("expressionThomasSigh.png");
-	addTexture("expressionThomasSmile.png");
-	addTexture("expressionThomasSurprised.png");
 
 	drawLoadScreen(window, "Laddar Sepia");
 	//Sepia

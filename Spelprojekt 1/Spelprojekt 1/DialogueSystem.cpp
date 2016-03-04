@@ -14,7 +14,7 @@ mHandler(handler),
 mFirstCharacter(),
 mSecondCharacter(),
 mState(0),
-mLevel1Start(true),
+mLevel1Start(false),
 mLevel1End(false),
 mLineStarted(false)
 {
