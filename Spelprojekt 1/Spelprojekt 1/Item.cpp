@@ -17,7 +17,6 @@ mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
 mFrameTime(0.03f)
-
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -37,7 +36,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
-		mSprite.setTexture(*handler.getTexture("thomasstar.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomasstar.png"));
 	}
 
 	if (id == "Block")
@@ -47,7 +46,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("thomasblock.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomasblock.png"));
 	}
 
 	if (id == "String")
@@ -57,7 +56,7 @@ mFrameTime(0.03f)
 		mName = "Fiskespö";
 		mDescription = "Ett Leksaksfiskespö";
 		mSprite.setPosition(mPosition);
-		mSprite.setTexture(*handler.getTexture("FishingRod.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("FishingRod.png"));
 		mINVSprite.setTexture(*handler.getTexture("FishingRodINV.png"));
 	}
 
@@ -69,7 +68,7 @@ mFrameTime(0.03f)
 		mDescription = "En Magnet";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("thomasmagnet.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomasmagnet.png"));
 		mINVSprite.setTexture(*handler.getTexture("MagnetINV.png"));
 	}
 
@@ -80,7 +79,7 @@ mFrameTime(0.03f)
 		mDescription = "En Astronaut";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
-		mSprite.setTexture(*handler.getTexture("thomasastronaut.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomasastronaut.png"));
 		mINVSprite.setTexture(*handler.getTexture("AstronautINV.png"));
 	}
 
@@ -91,7 +90,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("thomasbowl.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomasbowl.png"));
 	}
 
 	if (id == "Cube")
@@ -101,7 +100,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("thomascube.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("thomascube.png"));
 	}
 
 	//Last Level
@@ -124,7 +123,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
-		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
 		mINVSprite.setTexture(*handler.getTexture("needleINV.png"));
 	}
 
@@ -201,7 +200,7 @@ mFrameTime(0.03f)
 		mName = "Fruktskål";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.5f, 0.5f)); //Fixa
+		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); 
 	}
 
@@ -224,7 +223,7 @@ mFrameTime(0.03f)
 		mName = "Matskål";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f)); //Fixa
+		mSprite.setScale(sf::Vector2f(0.5f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
 	}
 

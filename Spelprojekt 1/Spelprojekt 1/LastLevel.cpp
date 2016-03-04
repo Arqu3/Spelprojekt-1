@@ -94,7 +94,7 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 		window.draw(background3);
 		window.draw(playground3);
 	}
-	window.draw(rectangle);
+	/*window.draw(rectangle);
 	window.draw(rectangle2);
 	window.draw(rectangle3);
 	window.draw(rectangle4);
@@ -102,7 +102,7 @@ void LastLevel::drawBackground(sf::RenderWindow &window)
 	window.draw(rectangle6);
 	window.draw(rectangle7);
 	window.draw(rectangle8);
-	window.draw(rectangle9);
+	window.draw(rectangle9);*/
 	drawItems(mItems, window);
 }
 
@@ -278,9 +278,9 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mFish = new Item(handler, sf::Vector2f(830, 30), "Fish");
 		mGramophone = new Item(handler, sf::Vector2f(437, 108), "Gramophone");
 
-		mFruitbowl = new Item(handler, sf::Vector2f(674, 210), "Fruitbowl");
+		mFruitbowl = new Item(handler, sf::Vector2f(673, 195), "Fruitbowl");
 		mCat = new Item(handler, sf::Vector2f(236, 276), "Cat");
-		mFoodBowl = new Item(handler, sf::Vector2f(714, 396), "Foodbowl");
+		mFoodBowl = new Item(handler, sf::Vector2f(705, 385), "Foodbowl");
 		mHole = new Item(handler, sf::Vector2f(180, 335), "Hole");
 
 		mSaturn = new Item(handler, sf::Vector2f(606, 44), "Saturn");
@@ -437,17 +437,16 @@ void LastLevel::internalSwap(int num)
 		mPlayRects.push_back(createRect(108, 378, 610, 192));
 		mPlayRects.push_back(createRect(347, 324, 370, 52));
 
-
 		//Planets 1-9
-		mRects.push_back(createRect(289, 62, 25, 25));
-		mRects.push_back(createRect(317, 52, 40, 40));
-		mRects.push_back(createRect(395, 47, 25, 25));
-		mRects.push_back(createRect(458, 42, 23, 23));
-		mRects.push_back(createRect(503, 45, 70, 70));
+		mRects.push_back(createRect(285, 62, 25, 25));
+		mRects.push_back(createRect(320, 52, 40, 40));
+		mRects.push_back(createRect(385, 58, 25, 25));
+		mRects.push_back(createRect(450, 48, 23, 23));
+		mRects.push_back(createRect(495, 34, 70, 70));
 		mRects.push_back(createRect(606, 44, 30, 30));
-		mRects.push_back(createRect(664, 59, 28, 28));
+		mRects.push_back(createRect(666, 59, 28, 28));
 		mRects.push_back(createRect(723, 53, 28, 28));
-		mRects.push_back(createRect(772, 38, 13, 13));
+		mRects.push_back(createRect(775, 38, 25, 25));
 
 	
 		//BalconyDoor
@@ -1100,14 +1099,7 @@ void LastLevel::lookAtTargetItem()
 	}
 	if (mTargetItem->getId() == "Earth")
 	{
-		if (mEarthPickedUp)
-		{
-			mDialogueSystem->reset();
-			mDialogueSystem->hasClicked("emptyEarth", mPlayer);
-			mUI->setState(UI::INGAME);
-			mCursor->setMode(Cursor::DIALOGUE);
-		}
-		else
+		if (!mEarthPickedUp)
 		{
 			mDialogueSystem->reset();
 			mDialogueSystem->hasClicked("earthGlobe", mPlayer);
@@ -1171,7 +1163,6 @@ void LastLevel::pickupTargetItem()
 		if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Screwdevice")
 		{
 			mInventory->addItem(mTargetItem);
-			mEarth->toggleIsLookedAt();
 			mEarth->togglePickupable();
 			mEarthPickedUp = true;
 			std::cout << "Plockade upp Jordglob";
@@ -1545,10 +1536,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					}
 					else
 					{
-						mDialogueSystem->reset();
+						/*mDialogueSystem->reset();
 						mDialogueSystem->hasClicked("emptyVenus", mPlayer);
 						mUI->setState(UI::INGAME);
-						mCursor->setMode(Cursor::DIALOGUE);
+						mCursor->setMode(Cursor::DIALOGUE);*/
 					}
 					std::cout << "Planet 2!";
 					mPlayer->moveToPosition(535, 437);
@@ -1746,14 +1737,14 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					if (mSaturnHanged)
 					{
 						mDialogueSystem->reset();
-						mDialogueSystem->hasClicked("emptySaturn", mPlayer);
+						mDialogueSystem->hasClicked("saturn", mPlayer);
 						mUI->setState(UI::INGAME);
 						mCursor->setMode(Cursor::DIALOGUE);
 					}
 					else
 					{
 						mDialogueSystem->reset();
-						mDialogueSystem->hasClicked("saturn", mPlayer);
+						mDialogueSystem->hasClicked("emptySaturn", mPlayer);
 						mUI->setState(UI::INGAME);
 						mCursor->setMode(Cursor::DIALOGUE);
 					}

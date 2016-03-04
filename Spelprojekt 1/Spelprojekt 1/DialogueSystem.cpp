@@ -676,7 +676,7 @@ void DialogueSystem::update(float time)
 	}
 	if (mEmptyEarth == true)
 	{
-		displayEarthDialogue();
+		displayEmptyEarthDialogue();
 	}
 	if (mEmptyMars == true)
 	{
