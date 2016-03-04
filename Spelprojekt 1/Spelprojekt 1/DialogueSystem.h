@@ -25,9 +25,6 @@ public:
 	void drawFirstCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
 	void drawSecondCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
 
-	//Sepia
-	void drawSepiaBackground();
-
 	//Function that checks if an object has been clicked on
 	void hasClicked(std::string indexName, Player *player);
 
@@ -44,10 +41,22 @@ public:
 	bool isDialogueFinished();
 
 	//Advanced Dialogues
+	//Level 1
 	void displayLevel1StartAdvancedDialogue();
 	void displayLevel1EndAdvancedDialogue();
+
+	//Level 2
 	void displayLevel2StartAdvancedDialogue();
 	void displayLevel2EndAdvancedDialogue();
+	void displayLevel2MissingRocketAdvancedDialogue();
+	void displayLevel2PutteAdvancedDialogue();
+	void displayLevel2SteamMachineAdvancedDialogue();
+	void displayLevel2ArnoldAdvancedDialogue();
+	void displayLevel2ArnoldMemoriesAdvancedDialogue();
+	void displayLevel2PutteRescueAdvancedDialogue();
+	void displayLevel2OpenBoxAdvancedDialogue();
+	void displayLevel2MagpieStealsAdvancedDialogue();
+	void displayLevel2GrandmasClothAdvancedDialogue();
 
 	//Dialogues (functions with strings)
 	//Thomas' room
@@ -147,8 +156,18 @@ private:
 	//Advanced Dialogue
 	bool mLevel1Start;
 	bool mLevel1End;
+
 	bool mLevel2Start;
 	bool mLevel2End;
+	bool mLevel2MissingRocket;
+	bool mLevel2Putte;
+	bool mLevel2SteamMachine;
+	bool mLevel2Arnold;
+	bool mLevel2ArnoldMemories;
+	bool mLevel2PutteRescue;
+	bool mLevel2OpenBox;
+	bool mLevel2MapieSteals;
+	bool mLevel2GrandmasCloth;
 
 	//Item bools (Thomas' Room)
 	bool mBooks;

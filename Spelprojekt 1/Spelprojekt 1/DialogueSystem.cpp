@@ -16,7 +16,9 @@ mFirstCharacter(),
 mSecondCharacter(),
 mState(0),
 mLevel1Start(true),
-mLevel1End(false)
+mLevel1End(false),
+mLevel2Start(false),
+mLevel2End(false)
 {
 	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
@@ -249,13 +251,59 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 	//	mLevel1Start = true;
 	//	mHasClicked = true;
 	//}
+
+	if (indexName == "missingRocket" && mHasClicked == false)
+	{
+		mLevel2MissingRocket = true;
+		mHasClicked = true;
+	}
+	if (indexName == "putte" && mHasClicked == false)
+	{
+		mLevel2Putte = true;
+		mHasClicked = true;
+	}
+	if (indexName == "steamMachine" && mHasClicked == false)
+	{
+		mLevel2SteamMachine = true;
+		mHasClicked = true;
+	}
+	if (indexName == "arnold" && mHasClicked == false)
+	{
+		mLevel2Arnold = true;
+		mHasClicked = true;
+	}
+	if (indexName == "arnoldMemories" && mHasClicked == false)
+	{
+		mLevel2ArnoldMemories = true;
+		mHasClicked = true;
+	}
+	if (indexName == "putteRescue" && mHasClicked == false)
+	{
+		mLevel2PutteRescue = true;
+		mHasClicked = true;
+	}
+	if (indexName == "openBox" && mHasClicked == false)
+	{
+		mLevel2OpenBox = true;
+		mHasClicked = true;
+	}
+	if (indexName == "magpieSteals" && mHasClicked == false)
+	{
+		mLevel2MapieSteals = true;
+		mHasClicked = true;
+	}
+	if (indexName == "grandmasCloth" && mHasClicked == false)
+	{
+		mLevel2GrandmasCloth = true;
+		mHasClicked = true;
+	}
+
+	//Thomas' Room
 	if (indexName == "ScrewDevice" && mHasClicked == false)
 	{
 		mLevel1End = true;
 		mHasClicked = true;
 	}
-
-	//Thomas' Room
 	if (indexName == "books" && mHasClicked == false)
 	{
 		mBooks = true;
@@ -596,6 +644,50 @@ void DialogueSystem::update(float time)
 	{
 		displayLevel1EndAdvancedDialogue();
 	}
+	if (mLevel2Start == true)
+	{
+		displayLevel2StartAdvancedDialogue();
+	}
+	if (mLevel2End == true)
+	{
+		displayLevel2EndAdvancedDialogue();
+	}
+	if (mLevel2MissingRocket == true)
+	{
+		displayLevel2MissingRocketAdvancedDialogue();
+	}
+	if (mLevel2Putte == true)
+	{
+		displayLevel2PutteAdvancedDialogue();
+	}
+	if (mLevel2SteamMachine == true)
+	{
+		displayLevel2SteamMachineAdvancedDialogue();
+	}
+	if (mLevel2Arnold == true)
+	{
+		displayLevel2ArnoldAdvancedDialogue();
+	}
+	if (mLevel2ArnoldMemories == true)
+	{
+		displayLevel2ArnoldMemoriesAdvancedDialogue();
+	}
+	if (mLevel2PutteRescue == true)
+	{
+		displayLevel2PutteRescueAdvancedDialogue();
+	}
+	if (mLevel2OpenBox == true)
+	{
+		displayLevel2OpenBoxAdvancedDialogue();
+	}
+	if (mLevel2MapieSteals == true)
+	{
+		displayLevel2MagpieStealsAdvancedDialogue();
+	}
+	if (mLevel2GrandmasCloth == true)
+	{
+		displayLevel2GrandmasClothAdvancedDialogue();
+	}
 
 	//Thomas' Room
 	if (mBooks == true)
@@ -829,6 +921,7 @@ bool DialogueSystem::isDialogueFinished()
 }
 
 //Advanced Dialogues
+//Level 1
 void DialogueSystem::displayLevel1StartAdvancedDialogue()
 {
 	std::string level1StartHilma = "Men för bövelingen! Min flygfarkost alldeles förstörd! Förbaskade flygfän som alltid ska vara så livliga... Nä detta måste lagas!";
@@ -1231,12 +1324,188 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	}
 }
 
+//Level 2
 void DialogueSystem::displayLevel2StartAdvancedDialogue()
+{
+	std::string level2StartHilma = "Så det var här du såg mormor senast?";
+	std::string level2StartThomas = "Ja... Det är mormors verkstad.";
+	std::string level2StartHilma2 = "Jaså verkstad säger du? Då måste väl rymdfarkosten vara här?";
+	std::string level2StartThomas2 = "Mhm… den står längst in i verkstaden.";
+	std::string level2StartHilma3 = "Jaha ja! Låt mig få inspektera denna ‘Rymdfarkost.";
+	std::string level2StartThomas3 = "Ja visst! Åh nej! Cykeln fick punka... Och... styret verkar löst...";
+	std::string level2StartHilma4 = "Då får vi väl hitta på något sätt att laga den!";
+	std::string level2StartThomas4 = "Man brukar använda cykelpump för att fixa däcket... och en skruvmakapär för styret.";
+
+	if (mState == 8)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel2Start = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+	if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level2StartHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 1)
+	{
+		advancedText(level2StartThomas, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 2)
+	{
+		advancedText(level2StartHilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 3)
+	{
+		advancedText(level2StartThomas2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 4)
+	{
+		advancedText(level2StartHilma3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 5)
+	{
+		advancedText(level2StartThomas3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomas.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 6)
+	{
+		advancedText(level2StartHilma4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 7)
+	{
+		advancedText(level2StartThomas2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayLevel2EndAdvancedDialogue()
+{
+	std::string level2End = "";
+}
+
+void DialogueSystem::displayLevel2MissingRocketAdvancedDialogue()
+{
+	std::string level2MissingRocketTeller = "Men där rymdraketen skulle stå var det alldeles tomt. Nu var det inte bara mormor som hade försvunnit utan även rymdraketen! Vad kunde allt det här betyda?";
+	std::string level2MissingRocketHilma = "Jaha ja, jag kan inte se en rymdraket här. Ljög du om det här? För om det är något jag inte gillar så är det folk som ljuger!";
+	std::string level2MissingRocketThomas = "N-n-nej! Men-men varför är den borta?T-tänk om någon har snott den?";
+	std::string level2MissingRocketHilma2 = "Tja, det är ju inte helt fel. Det är inte som att det inte finns tjuvar här i staden-";
+	std::string level2MissingRocketTeller2 = "Thomas ögon blev blanka när Hilma sade så. Han höll på att gråta igen! Det här var inte bra, tänkte Hilma.";
+	std::string level2MissingRocketHilma3 = "Jag menar, den kanske har blivit borttappad? Det kan inte vara så svårt att hitta en stor rymdraket!";
+	std::string level2MissingRocketPutte = "Oh nej! Oh nej! Hur hamnade den där!?";
+	std::string level2MissingRocketTeller3 = "Vem kunde det vara som lät så eländig?";
+
+	if (mState == 8)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel2MissingRocket = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+	if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level2MissingRocketTeller, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 1)
+	{
+		advancedText(level2MissingRocketHilma, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 2)
+	{
+		advancedText(level2MissingRocketThomas, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 3)
+	{
+		advancedText(level2MissingRocketHilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 4)
+	{
+		advancedText(level2MissingRocketTeller2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 5)
+	{
+		advancedText(level2MissingRocketHilma3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 6)
+	{
+		advancedText(level2MissingRocketPutte, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+	if (mState == 7)
+	{
+		advancedText(level2MissingRocketTeller3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayLevel2PutteAdvancedDialogue()
 {
 
 }
 
-void DialogueSystem::displayLevel2EndAdvancedDialogue()
+void DialogueSystem::displayLevel2SteamMachineAdvancedDialogue()
+{
+
+}
+
+void DialogueSystem::displayLevel2ArnoldAdvancedDialogue()
+{
+
+}
+
+void DialogueSystem::displayLevel2ArnoldMemoriesAdvancedDialogue()
+{
+
+}
+
+void DialogueSystem::displayLevel2PutteRescueAdvancedDialogue()
+{
+
+}
+
+void DialogueSystem::displayLevel2OpenBoxAdvancedDialogue()
+{
+
+}
+
+void DialogueSystem::displayLevel2MagpieStealsAdvancedDialogue()
+{
+
+}
+
+void DialogueSystem::displayLevel2GrandmasClothAdvancedDialogue()
 {
 
 }
@@ -1245,7 +1514,7 @@ void DialogueSystem::displayLevel2EndAdvancedDialogue()
 //Thomas' Room
 void DialogueSystem::displayBooksDialogue()
 {
-	std::string booksHilma = "Hur många böcker har du egentligen?";
+	std::string booksHilma = "Hur många böcker  har du egentligen?";
 	std::string booksThomas = "Senast jag räknade var det tjugofyra, men... det var ju ett tag sen...";
 
 	if (mState == 2)
@@ -1261,13 +1530,13 @@ void DialogueSystem::displayBooksDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(booksHilma, mPlayer->getPosition(), -275, -200);
-			createTalkBubble(mPlayer->getPosition(), -290, -210, 0.28f, 0.15f);
+			text(booksHilma, mPlayer->getPosition(), -250, -200);
+			createTalkBubble(mPlayer->getPosition(), -265, -210, 0.25f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
 			text(booksHilma, mPlayer->getPosition(), 60, -200);
-			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.28f, 0.15f);
+			createTalkBubble(mPlayer->getPosition(), 45, -210, 0.25f, 0.15f);
 		}
 	}
 	if (mState == 1)
@@ -1667,7 +1936,7 @@ void DialogueSystem::displayMatDialogue()
 
 void DialogueSystem::displayStarDialogue()
 {
-	std::string starHilma = "Den här stjärnan ser inte ut som de andra... tror du att..?";
+	std::string starHilma = "Den här stjärnan  ser inte ut som de andra, tror du..?";
 
 	if (mState == 1)
 	{
@@ -1683,13 +1952,13 @@ void DialogueSystem::displayStarDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(starHilma, mPlayer->getPosition(), -250, -220);
-			createTalkBubble(mPlayer->getPosition(), -265, -260, 0.25f, 0.25f);
+			text(starHilma, mPlayer->getPosition(), -240, -200);
+			createTalkBubble(mPlayer->getPosition(), -255, -225, 0.23f, 0.2f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
-			text(starHilma, mPlayer->getPosition(), 60, -220);
-			createTalkBubble(mPlayer->getPosition(), 45, -260, 0.25f, 0.25f);
+			text(starHilma, mPlayer->getPosition(), 60, -200);
+			createTalkBubble(mPlayer->getPosition(), 45, -225, 0.23f, 0.2f);
 		}
 	}
 }
@@ -1874,8 +2143,8 @@ void DialogueSystem::displayMagnetDialogue()
 		mIsActive = true;
 		if (mPlayer->isFacingLeft() == true)
 		{
-			text(magnetHilma, mPlayer->getPosition(), -250, -200);
-			createTalkBubble(mPlayer->getPosition(), -265, -210, 0.27f, 0.15f);
+			text(magnetHilma, mPlayer->getPosition(), -270, -200);
+			createTalkBubble(mPlayer->getPosition(), -285, -210, 0.27f, 0.15f);
 		}
 		if (mPlayer->isFacingLeft() == false)
 		{
