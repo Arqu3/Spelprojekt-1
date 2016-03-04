@@ -86,7 +86,6 @@ void Level3::drawBackground(sf::RenderWindow &window)
 
 	else if (mActiveScene == 2)
 	{
-		mView.setCenter(512, 288);
 		window.draw(background3);
 		window.draw(playground3);
 	}
@@ -102,6 +101,11 @@ void Level3::drawBackground(sf::RenderWindow &window)
 	window.draw(rectangle10);
 	window.draw(rectangle11);
 	window.draw(rectangle12);
+	window.draw(rectangle13);
+	window.draw(rectangle14);
+	window.draw(rectangle15);
+	window.draw(rectangle16);
+	window.draw(rectangle17);
 	drawItems(mItems, window);
 
 }
@@ -193,6 +197,10 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		//Background 2
 		background2.setSize(sf::Vector2f(1511, 576));
 		background2.setTexture(handler.getTexture("CabinBackground.png"));
+
+		//Background 3
+		background3.setSize(sf::Vector2f(2560, 576));
+		background3.setTexture(handler.getTexture("MagicWorld.png"));
 
 		//Add sound
 		music.openFromFile("Level1Music.ogg");
@@ -328,34 +336,34 @@ void Level3::internalSwap(int num)
 		//Walkable Area
 		mPlayRects.push_back(createRect(0, 0, 1511, 576));
 		
-		//Help rectangle
-		rectangle.setSize(sf::Vector2f(70, 160));
-		rectangle.setPosition(72, 106);
-		rectangle2.setSize(sf::Vector2f(176, 150));
-		rectangle2.setPosition(109, 325);
-		rectangle3.setSize(sf::Vector2f(98, 123));
-		rectangle3.setPosition(285, 372);
-		rectangle4.setSize(sf::Vector2f(200, 76));
-		rectangle4.setPosition(150, 495);
-		rectangle5.setSize(sf::Vector2f(129, 46));
-		rectangle5.setPosition(285, 80);
-		rectangle6.setSize(sf::Vector2f(224, 49));
-		rectangle6.setPosition(831, 254);
-		rectangle7.setSize(sf::Vector2f(100, 200));
-		rectangle7.setPosition(1226, 157);
-		rectangle8.setSize(sf::Vector2f(76, 210));
-		rectangle8.setPosition(1432, 146);
-		rectangle9.setSize(sf::Vector2f(162, 169));
-		rectangle9.setPosition(900, 67);
-		rectangle10.setSize(sf::Vector2f(60, 53));
-		rectangle10.setPosition(241, 234);
-		rectangle11.setSize(sf::Vector2f(115, 51));
-		rectangle11.setPosition(1192, 52);
-		rectangle12.setSize(sf::Vector2f(215, 102));
-		rectangle12.setPosition(1053, 423);
+		////Help rectangle
+		//rectangle.setSize(sf::Vector2f(70, 160));
+		//rectangle.setPosition(72, 106);
+		//rectangle2.setSize(sf::Vector2f(176, 150));
+		//rectangle2.setPosition(109, 325);
+		//rectangle3.setSize(sf::Vector2f(98, 123));
+		//rectangle3.setPosition(285, 372);
+		//rectangle4.setSize(sf::Vector2f(200, 76));
+		//rectangle4.setPosition(150, 495);
+		//rectangle5.setSize(sf::Vector2f(129, 46));
+		//rectangle5.setPosition(285, 80);
+		//rectangle6.setSize(sf::Vector2f(224, 49));
+		//rectangle6.setPosition(831, 254);
+		//rectangle7.setSize(sf::Vector2f(100, 200));
+		//rectangle7.setPosition(1226, 157);
+		//rectangle8.setSize(sf::Vector2f(76, 210));
+		//rectangle8.setPosition(1432, 146);
+		//rectangle9.setSize(sf::Vector2f(162, 169));
+		//rectangle9.setPosition(900, 67);
+		//rectangle10.setSize(sf::Vector2f(60, 53));
+		//rectangle10.setPosition(241, 234);
+		//rectangle11.setSize(sf::Vector2f(115, 51));
+		//rectangle11.setPosition(1192, 52);
+		//rectangle12.setSize(sf::Vector2f(215, 102));
+		//rectangle12.setPosition(1053, 423);
 
 		//Rectangles
-		mRects.push_back(createRect(72, 160, 70, 106));
+		mRects.push_back(createRect(72, 106, 70, 160));
 		mRects.push_back(createRect(109, 325, 176, 150));
 		mRects.push_back(createRect(285, 372, 98, 123));
 		mRects.push_back(createRect(150, 495, 200, 76));
@@ -375,8 +383,79 @@ void Level3::internalSwap(int num)
 		mActiveScene = 2;
 
 		//Walkable Area
+		mPlayRects.push_back(createRect(0,0, 2048, 576));
 		
-		//Rectangles
+		//Rectangles - (om inget annat anges: dialogrespons på alla rektanglar)
+		//Använd magnetfiskare. Lägger "guldmynt" i inventory
+		rectangle.setSize(sf::Vector2f(156, 78));
+		rectangle.setPosition(133, 416);
+		//Spelar melodi och ändrar sprite. (se: musikpussel)
+		rectangle2.setSize(sf::Vector2f(73, 85));
+		rectangle2.setPosition(740, 158);
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
+		rectangle3.setSize(sf::Vector2f(47, 37));
+		rectangle3.setPosition(709, 56);
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
+		rectangle4.setSize(sf::Vector2f(41, 36));
+		rectangle4.setPosition(758, 30);
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
+		rectangle5.setSize(sf::Vector2f(44, 37));
+		rectangle5.setPosition(804, 57);
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
+		rectangle6.setSize(sf::Vector2f(45, 34));
+		rectangle6.setPosition(759, 97);
+		//(kurragömmapussel - prata med design)
+		rectangle7.setSize(sf::Vector2f(82, 42));
+		rectangle7.setPosition(1067, 297);
+		//(kurragömmapussel - prata med design)
+		rectangle8.setSize(sf::Vector2f(115, 31));
+		rectangle8.setPosition(1831, 257);
+		//(kurragömmapussel - prata med design)
+		rectangle9.setSize(sf::Vector2f(141, 60));
+		rectangle9.setPosition(2059, 216);
+		//(kurragömmapussel - prata med design)
+		rectangle10.setSize(sf::Vector2f(108, 24));
+		rectangle10.setPosition(1604, 194);
+		//om pussel avklarade > klara banan. Else: dialogrespons
+		rectangle11.setSize(sf::Vector2f(122, 168));
+		rectangle11.setPosition(322, 102);
+		//triggers various dialogs
+		rectangle12.setSize(sf::Vector2f(47, 96));
+		rectangle12.setPosition(2423, 232);
+		//endast dialogrespons
+		rectangle13.setSize(sf::Vector2f(58, 83));
+		rectangle13.setPosition(611, 415);
+		//triggers various dialogs
+		rectangle14.setSize(sf::Vector2f(63, 85));
+		rectangle14.setPosition(1495, 333);
+		//endast dialogrespons
+		rectangle15.setSize(sf::Vector2f(160, 232));
+		rectangle15.setPosition(25, 49);
+		//endast dialogrespons
+		rectangle16.setSize(sf::Vector2f(129, 173));
+		rectangle16.setPosition(1342, 90);
+		//endast dialogrespons
+		rectangle17.setSize(sf::Vector2f(173, 92));
+		rectangle17.setPosition(2337, 474);
+
+		//Real rects
+		mRects.push_back(createRect(133, 416, 156, 78));
+		mRects.push_back(createRect(745, 160, 73, 85));
+		mRects.push_back(createRect(709, 56, 47, 37));
+		mRects.push_back(createRect(753, 30, 41, 31));
+		mRects.push_back(createRect(804, 57, 44, 37));
+		mRects.push_back(createRect(759, 97, 45, 34));
+		mRects.push_back(createRect(1067, 297, 82, 42));
+		mRects.push_back(createRect(1831, 257, 115, 31));
+		mRects.push_back(createRect(2059, 216, 141, 60));
+		mRects.push_back(createRect(1604, 194, 108, 24));
+		mRects.push_back(createRect(322, 102, 122, 168));
+		mRects.push_back(createRect(2423, 232, 47, 96));
+		mRects.push_back(createRect(611, 415, 58, 83));
+		mRects.push_back(createRect(1495, 333, 63, 85));
+		mRects.push_back(createRect(25, 49, 160, 232));
+		mRects.push_back(createRect(1342, 90, 129, 175));
+		mRects.push_back(createRect(2337, 474, 173, 92));
 	}
 }
 
@@ -741,6 +820,24 @@ void Level3::mouseClick(sf::Event &event)
 					std::cout << "Dörr!";
 				}
 			}
+
+			if (i == 7)
+			{
+				if (getActiveScene() == 1)
+				{
+					std::cout << "Door to scene 3!";
+							//Make Player get into position for Scene change
+							mPlayer->moveToPosition(1400, 370);
+							//Set Collision Rect to Scene change position
+							mSceneChangeRect = sf::FloatRect(sf::Vector2f(1400, 370), sf::Vector2f(10, 10));
+							//Set if Player should toggle on Scene Change
+							mPlayerToggle = false;
+							//Set starting position of Player in new Scene
+							mSceneChangePlayerPos = sf::Vector2f(950, 480);
+							mNewScene = 2;
+				}
+				
+			}
 		}
 	}
 }
@@ -772,6 +869,14 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 	if (getActiveScene() == 1)
 	{
 		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1000)
+		{
+			moveViewWithPlayer(mPlayer->getPosition().x);
+		}
+	}
+
+	if (getActiveScene() == 2)
+	{
+		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 2000)
 		{
 			moveViewWithPlayer(mPlayer->getPosition().x);
 		}
