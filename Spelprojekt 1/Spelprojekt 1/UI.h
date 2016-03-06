@@ -23,7 +23,7 @@ public:
 		INGAME
 	};
 
-	void update();
+	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 	void drawMainMenu(sf::RenderWindow &window);
 	void drawExit(sf::RenderWindow &window);
@@ -40,6 +40,9 @@ public:
 	bool load();
 
 	void setUIPosition(sf::Vector2f viewCenter);
+
+	void setActiveAnimation(std::string animation);
+	std::string getActiveAnimation();
 
 private:
 	State mState;
@@ -60,6 +63,8 @@ private:
 	sf::Sprite mInventoryMenu;
 
 	//UI Rects
+	sf::FloatRect mHatRect;
+	sf::FloatRect mMenuRect;
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
 	sf::FloatRect mMemoriesRect;
@@ -79,6 +84,17 @@ private:
 	sf::Sound mMenuInventorySound;
 	sf::Sound mMenuMainUISound;
 	sf::Sound mMenuHatSound;
+
+	//Animations
+	std::string mActiveAnimation;
+	float mFrameTime;
+	float mCurrentTime;
+	int mCurrentFrame;
+	int mFrameXOffset;
+	int mFrameYOffset;
+	
+	//Spritesheets
+	
 };
 
 #endif

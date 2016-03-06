@@ -31,7 +31,6 @@ mThomasActive(true)
 	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
 	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
 	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
-	//mHilmaFishingTexture = *handler.getTexture("HatIconGlow.png");
 	
 
 	mSprite.setTexture(mThomasTexture);
@@ -228,35 +227,6 @@ void Player::update(float deltaTime)
 			mCurrentTime = 0;
 		}
 	}
-
-	//HatIconGlow Animation
-	/*if (mActiveAnimation == "Fishing")
-	{
-		if (mCurrentTime >= mFrameTime)
-		{
-			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
-			if (mCurrentFrame < 49)
-			{
-				mFrameXOffset += 1;
-				if (mFrameXOffset % 12 == 11)
-				{
-					mFrameYOffset++;
-				}
-				if (mFrameXOffset >= 11)
-				{
-					mFrameXOffset = 0;
-				}
-				mCurrentFrame += 1;
-			}
-			else
-			{
-				mCurrentFrame = 0;
-				mFrameXOffset = 0;
-				mFrameYOffset = 0;
-			}
-			mCurrentTime = 0;
-		}
-	}*/
 
 	//Fishing Pull Animation
 	if (mActiveAnimation == "FishingPull")

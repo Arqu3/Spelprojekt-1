@@ -721,6 +721,10 @@ void Level1::mouseClick(sf::Event &event)
 	{
 		mCursor->setMode(Cursor::MENU);
 		mUI->setState(UI::MAINUI);
+		if (mUI->getActiveAnimation() == "MenuIconGlow")
+		{
+			mUI->setActiveAnimation("None");
+		}
 		mMenuMainUISound.play();
 	}
 	//Check if Hat Icon is clicked
@@ -728,6 +732,10 @@ void Level1::mouseClick(sf::Event &event)
 	{
 		mCursor->setMode(Cursor::MENU);
 		mUI->setState(UI::HAT);
+		if (mUI->getActiveAnimation() == "HatIconGlow")
+		{
+			mUI->setActiveAnimation("None");
+		}
 		mMenuHatSound.play();
 	}
 	//Check if playrect collision
@@ -889,6 +897,9 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	//Inventory update
 	mInventory->update(window);
+
+	//UI update
+	mUI->update(deltaTime);
 
 	//DialogueSystem update and reset when finished
 	mDialogueSystem->update(deltaTime);

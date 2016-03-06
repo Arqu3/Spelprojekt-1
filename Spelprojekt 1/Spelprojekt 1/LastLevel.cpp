@@ -447,7 +447,6 @@ void LastLevel::internalSwap(int num)
 		mRects.push_back(createRect(666, 59, 28, 28));
 		mRects.push_back(createRect(723, 53, 28, 28));
 		mRects.push_back(createRect(775, 38, 25, 25));
-
 	
 		//BalconyDoor
 		mRects.push_back(createRect(445, 186, 80, 50));
@@ -869,13 +868,16 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	//Inventory
 	mInventory->update(window);
 
+	//UI
+	mUI->update(deltaTime);
+
 	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
 	if (mTargetItem != NULL)
 	{
 		updateTargetItem(deltaTime);
 	}
 
-	mCursor->setPosition(sf::Vector2f(mWorldPos));
+	//Cursor
 	mCursor->update(window);
 
 	//DialogueSystem update and reset when finished
@@ -1503,7 +1505,7 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Refrigerator!";
-					mPlayer->moveToPosition(870, 349);
+					//mPlayer->moveToPosition(870, 349);
 				}
 			}
 
@@ -1551,7 +1553,7 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Books!";
-					mPlayer->moveToPosition(356, 377);
+					//mPlayer->moveToPosition(356, 377);
 				}
 				else
 				{
@@ -1560,9 +1562,9 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Tap!";
-					mPlayer->moveToPosition(419, 388);
 					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Magic Clam")
 					{
+						mPlayer->moveToPosition(419, 388);
 						mRunningWaterSound.play();
 						mInventory->removeItem(mInventory->getSelectedItem());
 						mInventory->addItem(mPearl);
@@ -1619,7 +1621,7 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mCursor->setMode(Cursor::DIALOGUE);
 					//TODO - Play mJewelryBoxSound in the middle of dialogue here
 					std::cout << "Jewelry Box!";
-					mPlayer->moveToPosition(591, 391);
+					//mPlayer->moveToPosition(591, 391);
 					
 				}
 				else
@@ -1683,7 +1685,7 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Crotch Rocket!";
-					mPlayer->moveToPosition(452, 379);
+					//mPlayer->moveToPosition(452, 379);
 				}
 
 			}
@@ -1707,7 +1709,7 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Mask!";
-					mPlayer->moveToPosition(1263, 458);
+					//mPlayer->moveToPosition(1263, 458);
 				}
 
 			}
@@ -1870,3 +1872,4 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 		}
 	}
 }
+

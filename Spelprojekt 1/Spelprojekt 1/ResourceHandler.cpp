@@ -55,7 +55,6 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	//Hilma
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
-	addTexture("HatIconGlow.png");
 	addTexture("HilmaFishing.png");
 
 	drawLoadScreen(window, "Lailar Ansiktsuttryck");
@@ -81,8 +80,8 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
+	addTexture("HatIconGlow.png");
+	addTexture("MenuIconGlow.png");
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");
