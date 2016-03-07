@@ -12,18 +12,19 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
-	addTexture("loadscreen.jpg");
+	addTexture("loadscreen.png");
 	addTexture("MainMenuBackground.png");
 	addTexture("Test1.png");
 
-	loadScreen.setTexture(*getTexture("loadscreen.jpg"));
+	loadScreen.setSize(sf::Vector2f(1024, 576));
+	loadScreen.setTexture(getTexture("loadscreen.png"));
 
 	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
 	mLoadMessage.setFont(mFont);
 	mLoadMessage.setCharacterSize(18);
 	mLoadMessage.setStyle(sf::Text::Bold);
-	mLoadMessage.setColor(sf::Color::Black);
-	mLoadMessage.setPosition(420, 420);
+	mLoadMessage.setColor(sf::Color::White);
+	mLoadMessage.setPosition(430, 490);
 	mLoadMessage.setString("Laddar...");
 }
 
@@ -46,10 +47,8 @@ void ResourceHandler::internalClear()
 	mMusicNames.clear();
 }
 
-void ResourceHandler::loadLevel1(sf::RenderWindow &window)
+void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 {
-	//internalClear();
-
 	drawLoadScreen(window, "Teklar Karaktärer");
 	//Thomas
 	addTexture("ThomasWalk.png");
@@ -57,26 +56,40 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 	addTexture("HilmaFishing.png");
+	//Mr. RiddleSpider
+	addTexture("RiddleSpider.png");
+
+	drawLoadScreen(window, "Lailar Ansiktsuttryck");
+	//Character Expressions
+	addTexture("expressionHilmaAngry.png");
+	addTexture("expressionHilmaConfident.png");
+	addTexture("expressionHilmaDetermined.png");
+	addTexture("expressionHilmaGrumpy.png");
+	addTexture("expressionHilmaHappy.png");
+	addTexture("expressionHilmaNeutral.png");
+	addTexture("expressionHilmaSad.png");
+	addTexture("expressionHilmaSigh.png");
+	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasCry.png");
+	addTexture("expressionThomasGrumpy.png");
+	addTexture("expressionThomasHappy.png");
+	addTexture("expressionThomasNeutral.png");
+	addTexture("expressionThomasSad.png");
+	addTexture("expressionThomasSigh.png");
+	addTexture("expressionThomasSmile.png");
+	addTexture("expressionThomasSurprised.png");
 
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
+	addTexture("HatIconGlow.png");
+	addTexture("MenuIconGlow.png");
+	addTexture("InventoryIconGlow.png");
+	addTexture("ClueIconGlow.png");
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");
 	addTexture("ClueBackground1.png");
-
-	drawLoadScreen(window, "Hämtar hemsk spindel");
-	//Spooky scary spider
-	addTexture("RiddleSpider.png");
-
-	drawLoadScreen(window, "Davidar Inventoryikoner");
-	//Inventory icons
-	addTexture("AstronautINV.png");
-	addTexture("FishingRodINV.png");
-	addTexture("MagnetINV.png");
-	addTexture("ScrewDeviceINV.png");
 
 	drawLoadScreen(window, "Davidar Muspekare");
 	//Cursors
@@ -86,6 +99,39 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("speechbubble.png");
 	addTexture("eyecursor.png");
 	addTexture("scenechangecursor.png");
+
+	drawLoadScreen(window, "Davidar Pratbubblor");
+	//Textbubble
+	addTexture("textbubble.png");
+	addTexture("textbox.png");
+
+	drawLoadScreen(window, "Matatasar Ljud");
+	//Sound
+	addSound("Footsteps_Thomas.ogg");
+	addSound("Regular_Item_Pickup.ogg");
+	addSound("Menu_Hat.ogg");
+	addSound("Menu_Inventory.ogg");
+	addSound("Menu_MainUI.ogg");
+	addSound("Critical_Item.ogg");
+	addSound("Inventory_Move.ogg");
+	addSound("Crafting.ogg");
+
+	drawLoadScreen(window, "PerHeimerar Musik");
+	//Music
+	addMusic("VoiceActingTest.ogg");
+	addMusic("VoiceActingTest2.ogg");
+}
+
+void ResourceHandler::loadLevel1(sf::RenderWindow &window)
+{
+	//internalClear();
+
+	drawLoadScreen(window, "Davidar Inventoryikoner");
+	//Inventory icons
+	addTexture("AstronautINV.png");
+	addTexture("FishingRodINV.png");
+	addTexture("MagnetINV.png");
+	addTexture("ScrewDeviceINV.png");
 
 	// Level1
 	drawLoadScreen(window, "Maxar Objekt");
@@ -111,32 +157,6 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("thomaszoompg.png");
 	addTexture("thomaszoomfg.png");
 
-	drawLoadScreen(window, "Davidar Pratbubblor");
-	//Textbubble
-	addTexture("textbubble.png");
-	addTexture("textbox.png");
-
-	drawLoadScreen(window, "Lailar Ansiktsuttryck");
-	//Character Expressions
-	addTexture("expressionHilmaAngry.png");
-	addTexture("expressionHilmaConfident.png");
-	addTexture("expressionHilmaDetermined.png");
-	addTexture("expressionHilmaGrumpy.png");
-	addTexture("expressionHilmaHappy.png");
-	addTexture("expressionHilmaNeutral.png");
-	addTexture("expressionHilmaSad.png");
-	addTexture("expressionHilmaSigh.png");
-	addTexture("expressionHilmaSurprised.png");
-	addTexture("expressionThomasBlush.png");
-	addTexture("expressionThomasCry.png");
-	addTexture("expressionThomasGrumpy.png");
-	addTexture("expressionThomasHappy.png");
-	addTexture("expressionThomasNeutral.png");
-	addTexture("expressionThomasSad.png");
-	addTexture("expressionThomasSigh.png");
-	addTexture("expressionThomasSmile.png");
-	addTexture("expressionThomasSurprised.png");
-
 	drawLoadScreen(window, "Laddar Sepia");
 	//Sepia
 	addTexture("sepia.png");
@@ -154,15 +174,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addSound("Magnet_Drop.ogg");
 	addSound("Pushing_Object.ogg");
 	addSound("Radio_Noise.ogg");
-	addSound("Regular_Item_Pickup.ogg");
-	addSound("Crafting.ogg");
-	addSound("Menu_Hat.ogg");
-	addSound("Menu_Inventory.ogg");
-	addSound("Menu_MainUI.ogg");
-	addSound("Critical_Item.ogg");
-	addSound("Inventory_Move.ogg");
 }
-
 
 void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 {
@@ -172,28 +184,8 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("GardenForeground.png");
 
 	//Karaktärer
-	addTexture("ThomasWalk.png");
-	addTexture("HilmaWalk.png");
-	addTexture("HilmaPush.png");
-	addTexture("HilmaFishing.png");
 	addTexture("DogRunning.png");
 	addTexture("GardenLady.png");
-
-
-	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
-	addTexture("hatmenu.png");
-	addTexture("menu.png");
-	addTexture("inventory.png");
-
-	//Cursors
-	addTexture("mousecursor.png");
-	addTexture("openhand.png");
-	addTexture("closedhand.png");
-	addTexture("speechbubble.png");
-	addTexture("eyecursor.png");
-	addTexture("scenechangecursor.png");
 
 	//Props
 	addTexture("thomasbowl.png");
@@ -209,42 +201,32 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("Trimmer.png");
 	addTexture("TrimmerIcon.png");
 
-	//Sound
-	addSound("Footsteps_Thomas.ogg");
-	addSound("Level1_Ambience.ogg");
-	addSound("Aquarium.ogg");
-	addSound("Magnet_Catch.ogg");
-	addSound("Magnet_Drop.ogg");
-	addSound("Pushing_Object.ogg");
-	addSound("Radio_Noise.ogg");
-	addSound("Regular_Item_Pickup.ogg");
-	addSound("Crafting.ogg");
-	addSound("Menu_Hat.ogg");
-	addSound("Menu_Inventory.ogg");
-	addSound("Menu_MainUI.ogg");
-	addSound("Critical_Item.ogg");
-	addSound("Inventory_Move.ogg");
-
 	//Remove this later
 	addTexture("saturnusINV.png");
 }
-
 
 void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 {
 	//internalClear();
 
-	drawLoadScreen(window, "Laddar Karaktärer");
-	
-	drawLoadScreen(window, "Laddar UI");
-	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
-	addTexture("hatmenu.png");
-	addTexture("menu.png");
-	addTexture("inventory.png");
+	drawLoadScreen(window, "Matatasar Ljud");
+	//Sound
+	addSound("Fish_Hit_Floor.ogg");
+	addSound("Cat_Hissing.ogg");
+	addSound("Cat.ogg");
+	addSound("Planet_Puzzle.ogg");
+	addSound("Gramophone.ogg");
+	addSound("Running_Water.ogg");
+	addSound("Screw_Globe.ogg");
+	addSound("Jewelry_Box.ogg");
 
-	drawLoadScreen(window, "Laddar Inventoryikoner");
+	drawLoadScreen(window, "Lailar Karaktärer");
+	//Static Characters
+	addTexture("LisaTotte.png");
+	addTexture("PutteSad.png");
+	addTexture("PutteLillemor.png");
+
+	drawLoadScreen(window, "Davidar Inventoryikoner");
 	//Inventory icons
 	addTexture("beigeballINV.png");
 	addTexture("needleINV.png");
@@ -255,93 +237,48 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("fishINV.png");
 	addTexture("saturnusINV.png");
 	addTexture("ScrewDeviceINV.png");
+	addTexture("plutoINV.png");
+	addTexture("clamINV.png");
+	addTexture("MagnetINV.png"); //TODO - Replace with Pump INV Texture
 
-	drawLoadScreen(window, "Laddar Muspekare");
-	//Cursors
-	addTexture("mousecursor.png");
-	addTexture("openhand.png");
-	addTexture("closedhand.png");
-	addTexture("speechbubble.png");
-	addTexture("eyecursor.png");
-	addTexture("scenechangecursor.png");
+	drawLoadScreen(window, "PerHeimerar Musik");
+	//Music
+	addMusic("LastLevelMusic.ogg");
 
-	drawLoadScreen(window, "Laddar Ljud");
-	//Sound
-	addSound("Footsteps_Thomas.ogg");
-	addSound("Level1_Ambience.ogg");
-	addSound("Aquarium.ogg");
-	addSound("Magnet_Catch.ogg");
-	addSound("Magnet_Drop.ogg");
-	addSound("Pushing_Object.ogg");
-	addSound("Radio_Noise.ogg");
-	addSound("Regular_Item_Pickup.ogg");
-	addSound("Crafting.ogg");
-	addSound("Menu_Hat.ogg");
-	addSound("Menu_Inventory.ogg");
-	addSound("Menu_MainUI.ogg");
-	addSound("Critical_Item.ogg");
-	addSound("Inventory_Move.ogg");
-
-	//LastLevel
-	drawLoadScreen(window, "Laddar Sista Bananen");
+	drawLoadScreen(window, "Maxar Bakgrunder");
+	//Backgrounds
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
 	addTexture("ARBETSRUMförgrund.png");
-
 	addTexture("VARDAGSRUMbakgrund.png");
 	addTexture("VARDAGSRUMmellangrund.png");
 	addTexture("VARDAGSRUMförgrund.png");
-	addTexture("Fisk2.png");
-	addTexture("Jordglob.png");
-
 	addTexture("KÖKbakgrund.png");
 	addTexture("KÖKmellangrund.png");
 	addTexture("KÖKförgrund.png");
-	addTexture("Apelsin.png");
 	addTexture("Tavlan.png");
 
-	addTexture("transparent.png");
-	addTexture("LastLevel_ItemTest1.png");
-	addTexture("LastLevel_ItemTest2.png");
-
-		//Karaktärer
-	addTexture("ThomasWalk.png");
-	addTexture("HilmaWalk.png");
-	addTexture("HilmaPush.png");
-	addTexture("HilmaFishing.png");
-	addTexture("Katten.png");
-	addTexture("Lisa.png");
-	addTexture("PutteSad.png");
-
-	//Cursors
-	addTexture("mousecursor.png");
-	addTexture("openhand.png");
-	addTexture("closedhand.png");
-	addTexture("speechbubble.png");
-	addTexture("eyecursor.png");
-
-	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
-	addTexture("hatmenu.png");
-	addTexture("menu.png");
-	addTexture("inventory.png");
-
-	//Props
+	drawLoadScreen(window, "Maxar Objekt");
+	//Items
+	addTexture("Fisk2.png");
+	addTexture("Jordglob.png");
+	addTexture("Apelsin.png");
 	addTexture("thomasbowl.png");
 	addTexture("Saturnus.png");
 	addTexture("Venus.png");
 	addTexture("Pluto.png");
 	addTexture("Fisk1.png");
+	addTexture("transparent.png");
 
+	drawLoadScreen(window, "Beccar Testsaker");
+	//Test Textures
+	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
 
-		//Sounds
-	addSound("FootSteps.ogg");
-
+	drawLoadScreen(window, "Teklar Katten");
 	//Animations
 	addTexture("CatWalking.png");
 	addTexture("CatEating.png");
-
 }
 
 //Adds a texture to the texture vector

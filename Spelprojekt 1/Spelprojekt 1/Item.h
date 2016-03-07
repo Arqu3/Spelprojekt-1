@@ -80,7 +80,7 @@ public:
 	void setActiveAnimation(std::string animation);
 	std::string getActiveAnimation();
 
-	
+	void setCraftIndex(int craftIndex);
 
 private:
 	bool mIsActive;

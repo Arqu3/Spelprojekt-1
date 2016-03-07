@@ -52,7 +52,7 @@ public:
 	virtual void internalSwap(int num) = 0;
 	virtual void changeScene(int num) = 0;
 	virtual int getActiveScene() = 0;
-	virtual void toggleActive(ResourceHandler &handler, sf::RenderWindow &window) = 0;
+	virtual void toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui) = 0;
 	virtual bool isActive() = 0;
 
 	//Eventstuff

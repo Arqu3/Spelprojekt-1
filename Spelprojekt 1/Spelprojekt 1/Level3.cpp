@@ -165,7 +165,7 @@ void Level3::addRect(sf::FloatRect *rect)
 }
 
 
-void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
+void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui)
 {
 	if (!mIsActive)
 	{
@@ -240,9 +240,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mCursor = new Cursor(handler);
 
 		//UI
-		mUI = new UI(handler);
-
-
+		mUI = ui;
 
 		//Rectangles
 		mRects.push_back(createRect(630, 126, 66, 134));

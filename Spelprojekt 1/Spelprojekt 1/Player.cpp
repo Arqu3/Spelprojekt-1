@@ -8,12 +8,12 @@ isOnPosition(true),
 moveTo(position),
 mActiveAnimation("Walk"),
 mWalk(false),
-mFrameTime(0.03f),
+mFrameTime(0.03f), //Lägre värde = Snabbare animation
 mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mSpeed(100.0f),
+mSpeed(500.0f),
 mFacingLeft(true),
 mStepCooldown(0),
 mThomasActive(true)
@@ -170,7 +170,6 @@ void Player::update(float deltaTime)
 		mWalkingSound.pause();
 	}
 
-	//Push Animation
 	if (mActiveAnimation == "Push")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -204,8 +203,8 @@ void Player::update(float deltaTime)
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
-			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 500, mFrameYOffset * 500, 500, 500));
-			if (mCurrentFrame < 35)
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 27)
 			{
 				mFrameXOffset += 1;
 				if (mFrameXOffset % 7 == 6)
@@ -220,9 +219,38 @@ void Player::update(float deltaTime)
 			}
 			else
 			{
-				mCurrentFrame = 35;
-				mFrameXOffset = 5;
-				mFrameYOffset = 5;
+				mCurrentFrame = 27;
+				mFrameXOffset = 3;
+				mFrameYOffset = 4;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+	//Fishing Pull Animation
+	if (mActiveAnimation == "FishingPull")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 11)
+			{
+				mFrameXOffset -= 1;
+				if (mFrameXOffset % 7 == 0)
+				{
+					mFrameYOffset--;
+				}
+				if (mFrameXOffset <= 0)
+				{
+					mFrameXOffset = 5;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 11;
+				mFrameXOffset = 3;
+				mFrameYOffset = 4;
 			}
 			mCurrentTime = 0;
 		}
@@ -348,6 +376,14 @@ void Player::setActiveAnimation(std::string animation)
 		mSprite.setTexture(mHilmaFishingTexture);
 		mWalk = false;
 	}
+	else if (animation == "FishingPull")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 3;
+		mFrameYOffset = 4;
+		mSprite.setTexture(mHilmaFishingTexture);
+		mWalk = false;
+	}
 	else if (animation == "Idle")
 	{
 		if (mThomasActive)
@@ -426,4 +462,9 @@ void Player::setScale(sf::Vector2f scale)
 int Player::getCurrentFrame()
 {
 	return mCurrentFrame;
+}
+
+void Player::setFrameTime(float frametime)
+{
+	mFrameTime = frametime;
 }
