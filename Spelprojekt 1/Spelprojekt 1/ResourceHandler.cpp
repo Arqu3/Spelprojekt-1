@@ -166,6 +166,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	//Level 3
 	addTexture("Garden.png");
 	addTexture("GardenForeground.png");
+	addTexture("CabinBackground.png");
 
 	//Karaktärer
 	addTexture("ThomasWalk.png");
@@ -223,7 +224,8 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addSound("Critical_Item.ogg");
 	addSound("Inventory_Move.ogg");
 	
-
+	//Remove this later
+	addTexture("saturnusINV.png");
 
 }
 

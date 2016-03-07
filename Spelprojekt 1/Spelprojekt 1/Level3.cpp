@@ -90,7 +90,20 @@ void Level3::drawBackground(sf::RenderWindow &window)
 		window.draw(background3);
 		window.draw(playground3);
 	}
+
 	window.draw(rectangle);
+	window.draw(rectangle2);
+	window.draw(rectangle3);
+	window.draw(rectangle4);
+	window.draw(rectangle5);
+	window.draw(rectangle6);
+	window.draw(rectangle7);
+	window.draw(rectangle8);
+	window.draw(rectangle9);
+	window.draw(rectangle10);
+	window.draw(rectangle11);
+	window.draw(rectangle12);
+
 	drawItems(mItems, window);
 
 }
@@ -175,38 +188,13 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		background.setSize(sf::Vector2f(2048, 576));
 		background.setTexture(handler.getTexture("Garden.png"));
 
-		//Playground Texture scene 1
-		playground.setSize(sf::Vector2f(1024, 576));
-		playground.setTexture(handler.getTexture("ARBETSRUMmellangrund.png")); //Add correct texture!
-
 		//Foreground Texture scene 1
 		foreground.setSize(sf::Vector2f(2048, 576));
 		foreground.setTexture(handler.getTexture("GardenForeground.png")); 
 
-		//Background Texture scene 2
-		background2.setSize(sf::Vector2f(1536, 576));
-		background2.setTexture(handler.getTexture("VARDAGSRUMbakgrund.png")); //Add correct texture!
-
-		//Playground Texture scene 2
-		playground2.setSize(sf::Vector2f(1536, 576));
-		playground2.setTexture(handler.getTexture("VARDAGSRUMmellangrund.png")); //Add correct texture!
-
-		//Foreground Texture scene 2
-		foreground2.setSize(sf::Vector2f(1536, 576));
-		foreground2.setTexture(handler.getTexture("VARDAGSRUMförgrund.png")); //Add correct texture!
-
-
-		//Background Texture scene 3
-		background3.setSize(sf::Vector2f(1024, 576));
-		background3.setTexture(handler.getTexture("KÖKbakgrund.png")); //Add correct texture!
-
-		//Playground Texture scene 3
-		playground3.setSize(sf::Vector2f(1024, 576));
-		playground3.setTexture(handler.getTexture("KÖKmellangrund.png")); //Add correct texture!
-
-		//Foreground Texture scene 3
-		foreground3.setSize(sf::Vector2f(1024, 576));
-		foreground3.setTexture(handler.getTexture("KÖKförgrund.png")); //Add correct texture!
+		//Background 2
+		background2.setSize(sf::Vector2f(1511, 576));
+		background2.setTexture(handler.getTexture("CabinBackground.png"));
 
 		//Add sound
 		music.openFromFile("Level1Music.ogg");
@@ -295,7 +283,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		
 		
-
+		changeScene(1);
 	}
 
 	mIsActive = !mIsActive;
@@ -340,13 +328,53 @@ void Level3::internalSwap(int num)
 
 	else if (num == 1)
 	{
-		
+		mPlayer->togglePlayer();
+		mPlayer->setScale(sf::Vector2f(0.4f, 0.4f));
 		//Scene 2
 		mActiveScene = 1;
 
 		//Walkable Area
+		mPlayRects.push_back(createRect(0, 0, 1511, 576));
 		
+		//Help rectangle
+		rectangle.setSize(sf::Vector2f(70, 160));
+		rectangle.setPosition(72, 106);
+		rectangle2.setSize(sf::Vector2f(176, 150));
+		rectangle2.setPosition(109, 325);
+		rectangle3.setSize(sf::Vector2f(98, 123));
+		rectangle3.setPosition(285, 372);
+		rectangle4.setSize(sf::Vector2f(200, 76));
+		rectangle4.setPosition(150, 495);
+		rectangle5.setSize(sf::Vector2f(129, 46));
+		rectangle5.setPosition(285, 80);
+		rectangle6.setSize(sf::Vector2f(224, 49));
+		rectangle6.setPosition(831, 254);
+		rectangle7.setSize(sf::Vector2f(100, 200));
+		rectangle7.setPosition(1226, 157);
+		rectangle8.setSize(sf::Vector2f(76, 210));
+		rectangle8.setPosition(1432, 146);
+		rectangle9.setSize(sf::Vector2f(162, 169));
+		rectangle9.setPosition(900, 67);
+		rectangle10.setSize(sf::Vector2f(60, 53));
+		rectangle10.setPosition(241, 234);
+		rectangle11.setSize(sf::Vector2f(115, 51));
+		rectangle11.setPosition(1192, 52);
+		rectangle12.setSize(sf::Vector2f(215, 102));
+		rectangle12.setPosition(1053, 423);
+
 		//Rectangles
+		mRects.push_back(createRect(72, 160, 70, 106));
+		mRects.push_back(createRect(109, 325, 176, 150));
+		mRects.push_back(createRect(285, 372, 98, 123));
+		mRects.push_back(createRect(150, 495, 200, 76));
+		mRects.push_back(createRect(285, 80, 129, 46));
+		mRects.push_back(createRect(831, 254, 224, 49));
+		mRects.push_back(createRect(1226, 157, 100, 200));
+		mRects.push_back(createRect(1432, 146, 76, 210));
+		mRects.push_back(createRect(900, 67, 162, 169));
+		mRects.push_back(createRect(241, 234, 60, 53));
+		mRects.push_back(createRect(1192, 52, 115, 51));
+		mRects.push_back(createRect(1053, 423, 215, 102));
 
 	}
 	else if (num == 2)
@@ -677,6 +705,7 @@ void Level3::mouseClick(sf::Event &event)
 			mPlayer->setActiveAnimation("Walk");
 
 			// i == 0 is Planet 1 if ActiveScene is 0, or Door if ActiveScene is 1, or Refrigerator if ActiveScene is 2.
+
 			if (i == 0)
 			{
 				if (getActiveScene() == 0)
@@ -706,6 +735,7 @@ void Level3::mouseClick(sf::Event &event)
 				}
 			}
 
+
 			if (i == 1)
 			{
 				if (getActiveScene() == 0)
@@ -732,6 +762,10 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 	//Only do this if the level needs moving camera
 	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
 
+	//Make sure UI is in correct position at all times
+	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
+
 	//Scene 1 is the big, second room in LastLevel, change as necessary
 	if (getActiveScene() == 0)
 	{
@@ -745,7 +779,13 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 		}
 	}
 
-
+	if (getActiveScene() == 1)
+	{
+		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1000)
+		{
+			moveViewWithPlayer(mPlayer->getPosition().x);
+		}
+	}
 
 	//Check if Player is in position to change Scene
 	if (mPlayer->getRect().intersects(mSceneChangeRect))
@@ -1008,58 +1048,58 @@ void Level3::mouseHover()
 	{
 		if (checkCollision(getRects()[i], mCursor->getRect()))
 		{
-			// i == 10 is stairs in scene 1
-			if (i == 10)
-			{
-				if (mActiveScene == 0)
-				{
-					mCursor->setMode(Cursor::NORMAL);
-				}
-				else
-				{
-					mCursor->setMode(Cursor::EYE);
-				}
-			}
+			//// i == 10 is stairs in scene 1
+			//if (i == 10)
+			//{
+			//	if (mActiveScene == 0)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//	else
+			//	{
+			//		mCursor->setMode(Cursor::EYE);
+			//	}
+			//}
 
-			// i == 5 is stairs in scene 2
-			else if (i == 5)
-			{
-				if (mActiveScene == 1)
-				{
-					mCursor->setMode(Cursor::NORMAL);
-				}
-				else
-				{
-					mCursor->setMode(Cursor::EYE);
-				}
-			}
+			//// i == 5 is stairs in scene 2
+			//else if (i == 5)
+			//{
+			//	if (mActiveScene == 1)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//	else
+			//	{
+			//		mCursor->setMode(Cursor::EYE);
+			//	}
+			//}
 
-			// i == 0 is door in scene 2
-			else if (i == 0)
-			{
-				if (mActiveScene == 1)
-				{
-					mCursor->setMode(Cursor::NORMAL);
-				}
-			}
+			//// i == 0 is door in scene 2
+			//else if (i == 0)
+			//{
+			//	if (mActiveScene == 1)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//}
 
-			//i == 2 is door in scene 3
-			else if (i == 2)
-			{
-				if (mActiveScene == 2)
-				{
-					mCursor->setMode(Cursor::NORMAL);
-				}
-				else
-				{
-					mCursor->setMode(Cursor::NORMAL);
-				}
-			}
+			////i == 2 is door in scene 3
+			//else if (i == 2)
+			//{
+			//	if (mActiveScene == 2)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//	else
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//}
 
-			else
-			{
+			//else
+			//{
 				mCursor->setMode(Cursor::EYE);
-			}
+			//}
 		}
 	}
 
