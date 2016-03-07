@@ -338,9 +338,9 @@ void Level3::internalSwap(int num)
 		
 		////Help rectangle
 		//rectangle.setSize(sf::Vector2f(70, 160));
-		//rectangle.setPosition(72, 106);
+		//rectangle.setPosition(72, 106); 
 		//rectangle2.setSize(sf::Vector2f(176, 150));
-		//rectangle2.setPosition(109, 325);
+		//rectangle2.setPosition(109, 325); 
 		//rectangle3.setSize(sf::Vector2f(98, 123));
 		//rectangle3.setPosition(285, 372);
 		//rectangle4.setSize(sf::Vector2f(200, 76));
@@ -362,18 +362,30 @@ void Level3::internalSwap(int num)
 		//rectangle12.setSize(sf::Vector2f(215, 102));
 		//rectangle12.setPosition(1053, 423);
 
-		//Rectangles
+		//Rectangles - skjulet. OBS: kan bara lägga till ett objekt åt gången i detta rum
+		//endast dialogrespons
 		mRects.push_back(createRect(72, 106, 70, 160));
+		//lägger till badmintonboll i inventory
 		mRects.push_back(createRect(109, 325, 176, 150));
+		//lägger till spik i inventory
 		mRects.push_back(createRect(285, 372, 98, 123));
+		//använda häcksax med denna lägger till tygbit i inventory
 		mRects.push_back(createRect(150, 495, 200, 76));
+		//lägger till spik i invetory
 		mRects.push_back(createRect(285, 80, 129, 46));
+		//lägger till sågspån i inventory
 		mRects.push_back(createRect(831, 254, 224, 49));
+		//triggers various dialogs
 		mRects.push_back(createRect(1226, 157, 100, 200));
+		//tar spelaren till nästa rum
 		mRects.push_back(createRect(1432, 146, 76, 210));
+		//endast dialogrespons
 		mRects.push_back(createRect(900, 67, 162, 169));
+		//lägger till treklöver i inventory
 		mRects.push_back(createRect(241, 234, 60, 53));
+		//lägger till bomullstuss i inventory
 		mRects.push_back(createRect(1192, 52, 115, 51));
+		//endast dialogrespons
 		mRects.push_back(createRect(1053, 423, 215, 102));
 
 	}
@@ -385,76 +397,76 @@ void Level3::internalSwap(int num)
 		//Walkable Area
 		mPlayRects.push_back(createRect(0,0, 2048, 576));
 		
-		//Rectangles - (om inget annat anges: dialogrespons på alla rektanglar)
-		//Använd magnetfiskare. Lägger "guldmynt" i inventory
+		//Rectangles
 		rectangle.setSize(sf::Vector2f(156, 78));
 		rectangle.setPosition(133, 416);
-		//Spelar melodi och ändrar sprite. (se: musikpussel)
 		rectangle2.setSize(sf::Vector2f(73, 85));
-		rectangle2.setPosition(740, 158);
-		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
+		rectangle2.setPosition(745, 160);
 		rectangle3.setSize(sf::Vector2f(47, 37));
 		rectangle3.setPosition(709, 56);
-		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		rectangle4.setSize(sf::Vector2f(41, 36));
 		rectangle4.setPosition(758, 30);
-		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		rectangle5.setSize(sf::Vector2f(44, 37));
 		rectangle5.setPosition(804, 57);
-		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		rectangle6.setSize(sf::Vector2f(45, 34));
 		rectangle6.setPosition(759, 97);
-		//(kurragömmapussel - prata med design)
 		rectangle7.setSize(sf::Vector2f(82, 42));
 		rectangle7.setPosition(1067, 297);
-		//(kurragömmapussel - prata med design)
 		rectangle8.setSize(sf::Vector2f(115, 31));
 		rectangle8.setPosition(1831, 257);
-		//(kurragömmapussel - prata med design)
 		rectangle9.setSize(sf::Vector2f(141, 60));
 		rectangle9.setPosition(2059, 216);
-		//(kurragömmapussel - prata med design)
 		rectangle10.setSize(sf::Vector2f(108, 24));
 		rectangle10.setPosition(1604, 194);
-		//om pussel avklarade > klara banan. Else: dialogrespons
 		rectangle11.setSize(sf::Vector2f(122, 168));
 		rectangle11.setPosition(322, 102);
-		//triggers various dialogs
 		rectangle12.setSize(sf::Vector2f(47, 96));
 		rectangle12.setPosition(2423, 232);
-		//endast dialogrespons
 		rectangle13.setSize(sf::Vector2f(58, 83));
 		rectangle13.setPosition(611, 415);
-		//triggers various dialogs
 		rectangle14.setSize(sf::Vector2f(63, 85));
 		rectangle14.setPosition(1495, 333);
-		//endast dialogrespons
 		rectangle15.setSize(sf::Vector2f(160, 232));
 		rectangle15.setPosition(25, 49);
-		//endast dialogrespons
 		rectangle16.setSize(sf::Vector2f(129, 173));
 		rectangle16.setPosition(1342, 90);
-		//endast dialogrespons
 		rectangle17.setSize(sf::Vector2f(173, 92));
 		rectangle17.setPosition(2337, 474);
 
-		//Real rects
+		//Rectangles - hittarnas värld
+		//Använd magnetfiskare. Lägger "guldmynt" i inventory
 		mRects.push_back(createRect(133, 416, 156, 78));
+		//Spelar melodi och ändrar sprite. (se: musikpussel)
 		mRects.push_back(createRect(745, 160, 73, 85));
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		mRects.push_back(createRect(709, 56, 47, 37));
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		mRects.push_back(createRect(753, 30, 41, 31));
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		mRects.push_back(createRect(804, 57, 44, 37));
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		mRects.push_back(createRect(759, 97, 45, 34));
+		//(kurragömmapussel - prata med design)
 		mRects.push_back(createRect(1067, 297, 82, 42));
+		//(kurragömmapussel - prata med design)
 		mRects.push_back(createRect(1831, 257, 115, 31));
+		//(kurragömmapussel - prata med design)
 		mRects.push_back(createRect(2059, 216, 141, 60));
+		//(kurragömmapussel - prata med design)
 		mRects.push_back(createRect(1604, 194, 108, 24));
+		//om pussel avklarade > klara banan. Else: dialogrespons
 		mRects.push_back(createRect(322, 102, 122, 168));
+		//triggers various dialogs
 		mRects.push_back(createRect(2423, 232, 47, 96));
+		//endast dialogrespons
 		mRects.push_back(createRect(611, 415, 58, 83));
+		//triggers various dialogs
 		mRects.push_back(createRect(1495, 333, 63, 85));
+		//endast dialogrespons
 		mRects.push_back(createRect(25, 49, 160, 232));
+		//endast dialogrespons
 		mRects.push_back(createRect(1342, 90, 129, 175));
+		//endast dialogrespons
 		mRects.push_back(createRect(2337, 474, 173, 92));
 	}
 }
