@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Clue.cpp" />
     <ClCompile Include="Crafting.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="DialogueSystem.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LastLevel.cpp" />
     <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="Level3.cpp" />
     <ClCompile Include="LevelHandler.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -101,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Clue.h" />
     <ClInclude Include="Crafting.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="DialogueSystem.h" />
@@ -110,6 +113,7 @@
     <ClInclude Include="LastLevel.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="Level3.h" />
     <ClInclude Include="LevelHandler.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Player.h" />

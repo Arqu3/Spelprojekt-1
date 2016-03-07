@@ -4,6 +4,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Clue.cpp">
+      <Filter>.cpp</Filter>
+    </ClCompile>
     <ClCompile Include="Crafting.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
@@ -28,6 +31,9 @@
     <ClCompile Include="Level1.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Level3.cpp">
+      <Filter>.cpp</Filter>
+    </ClCompile>
     <ClCompile Include="LevelHandler.cpp">
       <Filter>.cpp</Filter>
     </ClCompile>
@@ -46,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h">
+      <Filter>.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Clue.h">
       <Filter>.h</Filter>
     </ClInclude>
     <ClInclude Include="Crafting.h">
@@ -75,6 +84,9 @@
     <ClInclude Include="Level1.h">
       <Filter>.h</Filter>
     </ClInclude>
+    <ClInclude Include="Level3.h">
+      <Filter>.h</Filter>
+    </ClInclude>
     <ClInclude Include="LevelHandler.h">
       <Filter>.h</Filter>
     </ClInclude>
@@ -89,11 +101,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include=".h">
-      <UniqueIdentifier>{d47fc4e1-729d-4a42-bb5e-cf74e59f1b27}</UniqueIdentifier>
-    </Filter>
     <Filter Include=".cpp">
-      <UniqueIdentifier>{d7ffa7d7-13c9-4646-8a65-fbbc39dbcd5c}</UniqueIdentifier>
+      <UniqueIdentifier>{89ac477a-2eeb-4ee3-bbf4-5115e3a76e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".h">
+      <UniqueIdentifier>{548b6c8f-2e20-4e2b-94e5-2cb818fb4f7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -6,7 +6,6 @@ Game::Game():
 mRHandler(),
 mLHandler(mRHandler)
 {
-	loadScreen.setTexture(*mRHandler.getTexture("loadscreen.jpg"));
 }
 
 Game::~Game()
@@ -17,14 +16,8 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
-	window.clear(sf::Color::Black);
-	window.draw(loadScreen);
-	window.display();
-
 	window.setMouseCursorVisible(false);
-
-	mLHandler.setActiveLevel(0, mRHandler, true);
-
+	mLHandler.setActiveLevel(0, mRHandler, true, window);
 
 	while (window.isOpen())
 	{

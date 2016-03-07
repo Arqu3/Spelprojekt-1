@@ -18,7 +18,7 @@
 class Inventory
 {
 public:
-	Inventory();
+	Inventory(ResourceHandler &handler);
 	~Inventory();
 
 	//Vectors
@@ -49,10 +49,13 @@ public:
 
 	Item* selectedItem();
 
+	void deSelect();
+
+	void setGridPosition(sf::Vector2f viewCenter);
+
 private:
 	void setInitialGrid();
 	void swapPos(Item &item1, Item &item2);
-	void deSelect();
 
 	//Grid specific
 	float mRow;
@@ -103,6 +106,17 @@ private:
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
 	sf::FloatRect mMemoriesRect;
+
+	//Sounds
+	sf::Sound mCraftingSound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
+	sf::Sound mInventoryMoveSound;
+
+	//Font / Text
+	sf::Font mFont;
+	sf::Text mDescription;
+	sf::Text mCraftable;
 };
 
 #endif
