@@ -56,6 +56,8 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 	addTexture("HilmaFishing.png");
+	//Mr. RiddleSpider
+	addTexture("RiddleSpider.png");
 
 	drawLoadScreen(window, "Lailar Ansiktsuttryck");
 	//Character Expressions
@@ -172,6 +174,35 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addSound("Magnet_Drop.ogg");
 	addSound("Pushing_Object.ogg");
 	addSound("Radio_Noise.ogg");
+}
+
+void ResourceHandler::loadLevel3(sf::RenderWindow &window)
+{
+	drawLoadScreen(window, "Gör Saker Med Blommor");
+	//Level 3
+	addTexture("Garden.png");
+	addTexture("GardenForeground.png");
+
+	//Karaktärer
+	addTexture("DogRunning.png");
+	addTexture("GardenLady.png");
+
+	//Props
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
+	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
+	addTexture("transparent.png");
+	addTexture("Stick.png");
+	addTexture("StickIcon.png");
+	addTexture("Trimmer.png");
+	addTexture("TrimmerIcon.png");
+
+	//Remove this later
+	addTexture("saturnusINV.png");
 }
 
 void ResourceHandler::loadLastLevel(sf::RenderWindow &window)

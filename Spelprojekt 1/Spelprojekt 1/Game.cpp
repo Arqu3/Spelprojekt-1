@@ -33,7 +33,7 @@ void Game::update()
 			mUI->drawMainMenu(window);
 			if (mUI->getLevelStart())
 			{
-				mLHandler.setActiveLevel(1, mRHandler, true, window, mUI);
+				mLHandler.setActiveLevel(0, mRHandler, true, window, mUI);
 				mUI->setLevelStart();
 			}
 		}
