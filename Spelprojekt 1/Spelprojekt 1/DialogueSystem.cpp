@@ -191,6 +191,11 @@ void DialogueSystem::actorText(std::string actorText, float posX, float posY, fl
 	mActorText.setString(actorText);
 }
 
+void DialogueSystem::getSpiderText(float posX, float posY, float offsetX, float offsetY)
+{
+
+}
+
 //Draw function for game to use
 void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 {
@@ -244,6 +249,13 @@ void DialogueSystem::drawSecondCharacter(ResourceHandler &handler, float x, floa
 void DialogueSystem::hasClicked(std::string indexName, Player *player)
 {
 	mPlayer = player;
+
+	//Spider
+	if (indexName == "spider" && mHasClicked == false)
+	{
+		mSpider = true;
+		mHasClicked = true;
+	}
 
 	//Advanced Dialogue
 	//if (indexName == "level1Start" && mHasClicked == false)
@@ -635,6 +647,12 @@ bool DialogueSystem::getLevel2Start()
 //Update function
 void DialogueSystem::update(float time)
 {
+	//Spider Dialogue
+	if (mSpider == true)
+	{
+		displaySpiderDialogue();
+	}
+
 	//Advanced Dialogue
 	if (mLevel1Start == true)
 	{
@@ -915,9 +933,37 @@ void DialogueSystem::setState()
 	mState++;
 }
 
+void DialogueSystem::setStateManual(int state)
+{
+	mState = state;
+}
+
 bool DialogueSystem::isDialogueFinished()
 {
 	return mFinishedDialogue;
+}
+
+//Spider Dialogue
+void DialogueSystem::displaySpiderDialogue()
+{
+	if (mState >= 25)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel1Start = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState >= 0 && mState <= 24)
+	{
+		mAdvancedIsActive = true;
+		getSpiderText(100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("", 480.f, 307.f, 1.f, 1.f);
+	}
 }
 
 //Advanced Dialogues

@@ -15,6 +15,7 @@ public:
 	void text(std::string text, sf::Vector2f &position, float x, float y);
 	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
 	void actorText(std::string actorText, float posX, float posY, float offsetX, float offsetY);
+	void getSpiderText(float posX, float posY, float offsetX, float offsetY);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
@@ -36,9 +37,13 @@ public:
 
 	//Sets the state value
 	void setState();
+	void setStateManual(int state);
 
 	//Function to check in dialogue is finished
 	bool isDialogueFinished();
+
+	//Spider Dialogue
+	void displaySpiderDialogue();
 
 	//Advanced Dialogues
 	//Level 1
@@ -152,6 +157,9 @@ private:
 	sf::RectangleShape mSepia;
 	Player *mPlayer;
 	ResourceHandler &mHandler;
+
+	//Spider Dialogue
+	bool mSpider;
 
 	//Advanced Dialogue
 	bool mLevel1Start;
