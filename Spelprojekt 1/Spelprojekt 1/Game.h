@@ -4,6 +4,7 @@
 #include "LevelHandler.h"
 #include "DialogueSystem.h"
 #include "ResourceHandler.h"
+#include "UI.h"
 #include "SFML\System.hpp"
 #include "SFML\Window.hpp"
 
@@ -25,6 +26,9 @@ private:
 
 	//Sound
 	sf::Music music;
+
+	//UI
+	UI *mUI;
 };
 
 #endif

@@ -24,6 +24,7 @@ public:
 	sf::SoundBuffer* getSound(std::string name);
 	std::string getMusic(std::string name);
 
+	void loadGeneral(sf::RenderWindow &window);
 
 	void loadLevel1(sf::RenderWindow &window);
 	void loadLevel3(sf::RenderWindow &window);
@@ -68,7 +69,7 @@ private:
 	sf::Text mLoadMessage;
 
 	//Loading screen
-	sf::Sprite loadScreen;
+	sf::RectangleShape loadScreen;
 };
 
 #endif
