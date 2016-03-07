@@ -25,12 +25,15 @@ public:
 	State getState();
 	sf::FloatRect getRect();
 	void addText(std::string text);
+	void resetActiveTimer();
+	void resetMoveTimer();
 
 private:
 	State mState;
 	sf::Sprite mSprite;
 	sf::Vector2f mPosition;
-	float mTimer;
+	float mMoveTimer;
+	float mActiveTimer;
 	int mTextCounter;
 	sf::Font mFont;
 
@@ -40,6 +43,7 @@ private:
 	void moveUp(float deltaTime);
 	void moveDown(float deltaTime);
 	void idleMove(float deltaTime);
+	void activeTimerTick();
 };
 
 #endif
