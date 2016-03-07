@@ -16,7 +16,7 @@ mCurrentFrame(0),
 mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
-mFrameTime(0.02f)
+mFrameTime(0.06f)
 
 {
 	//Create items here
@@ -374,7 +374,7 @@ mFrameTime(0.02f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(5.8f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); 
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture FlowerIcon
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture FlowerIcon
 	}
 
 	if (id == "Leash")
@@ -419,7 +419,7 @@ mFrameTime(0.02f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
 		
 	}
 
@@ -801,11 +801,11 @@ void Item::update(float deltaTime)
 			if (mCurrentFrame < 16)
 			{
 				mFrameXOffset += 1;
-				if (mFrameXOffset % 5 == 4)
+				if (mFrameXOffset % 7 == 6)
 				{
 					mFrameYOffset++;
 				}
-				if (mFrameXOffset >= 4)
+				if (mFrameXOffset >= 6)
 				{
 					mFrameXOffset = 0;
 				}

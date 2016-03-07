@@ -861,12 +861,14 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 					{
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Stick" && mUnleashed == true)
 						{
-							
+							mInventory->removeItem(mInventory->getSelectedItem());
+
 							mTargetItem->moveToPosition(1272, 500);
 							std::cout << "Kastade pinnen!";
 							mCursor->setMode(Cursor::DISABLED);
 							mTargetItem->setActiveAnimation("Dog");
 							mDogRunning = true;
+
 
 							mPlayRects.push_back(createRect(683, 360, 673, 160));
 						}
@@ -952,6 +954,11 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 	{
 		mUpdateTime++;
 	}
+
+	//Make sure UI is in correct place at all times
+	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
+
 }
 
 void Level3::mouseHover()
