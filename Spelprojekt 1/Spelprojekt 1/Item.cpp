@@ -16,7 +16,7 @@ mCurrentFrame(0),
 mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
-mFrameTime(0.06f)
+mFrameTime(0.08f)
 
 {
 	//Create items here
@@ -352,7 +352,7 @@ mFrameTime(0.06f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
 		mSprite.setTexture(*handler.getTexture("Trimmer.png")); 
-		mINVSprite.setTexture(*handler.getTexture("TrimmerIcon.png")); //Add correct texture smaller icon
+		mINVSprite.setTexture(*handler.getTexture("TrimmerINV.png")); 
 	}
 
 	if (id == "Stick")
@@ -363,7 +363,7 @@ mFrameTime(0.06f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.9f, 0.9f));
 		mSprite.setTexture(*handler.getTexture("Stick.png")); 
-		mINVSprite.setTexture(*handler.getTexture("StickIcon.png")); //Add correct texture smaller icon
+		mINVSprite.setTexture(*handler.getTexture("StickINV.png")); 
 	}
 
 	if (id == "Flowers")
@@ -383,8 +383,8 @@ mFrameTime(0.06f)
 		mName = "Koppel";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.5f));
-		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture ?
+		mSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("Leash.png")); 
 	}
 
 	if (id == "Dog")

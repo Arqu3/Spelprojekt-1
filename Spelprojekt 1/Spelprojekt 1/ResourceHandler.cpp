@@ -201,9 +201,11 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("LastLevel_ItemTest2.png");
 	addTexture("transparent.png");
 	addTexture("Stick.png");
+	addTexture("StickINV.png");
 	addTexture("StickIcon.png");
 	addTexture("Trimmer.png");
-	addTexture("TrimmerIcon.png");
+	addTexture("TrimmerINV.png");
+	addTexture("Leash.png");
 
 	//Sound
 	addSound("Footsteps_Thomas.ogg");
