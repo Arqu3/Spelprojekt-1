@@ -162,7 +162,7 @@ const Level::rectVector Level1::getPlayRects()
 }
 
 
-void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
+void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui)
 {
 	if (!mIsActive)
 	{
@@ -246,7 +246,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mCursor->setMode(Cursor::DIALOGUE);
 
 		//Menu
-		mUI = new UI(handler);
+		mUI = ui; //TODO - Test mUI** and &ui
 
 		//Clues
 		mClues = new Clue(handler, "ClueBackground1.png");

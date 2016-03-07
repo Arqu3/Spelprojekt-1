@@ -10,7 +10,8 @@ mCurrentTime(0),
 mFrameTime(0.03f),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mActiveAnimation("None")
+mActiveAnimation("None"),
+mLevelStart(false)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -301,6 +302,7 @@ void UI::eventListen(sf::RenderWindow &window)
 					if (mMainButtons[0]->isPressed(window))
 					{
 						mLoad = true;
+						mLevelStart = true;
 						setState(INGAME);
 					}
 					else
@@ -510,4 +512,14 @@ void UI::setActiveAnimation(std::string animation)
 std::string UI::getActiveAnimation()
 {
 	return mActiveAnimation;
+}
+
+bool UI::getLevelStart()
+{
+	return mLevelStart;
+}
+
+void UI::setLevelStart()
+{
+	mLevelStart = false;
 }

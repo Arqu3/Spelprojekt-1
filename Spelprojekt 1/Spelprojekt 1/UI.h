@@ -44,9 +44,13 @@ public:
 	void setActiveAnimation(std::string animation);
 	std::string getActiveAnimation();
 
+	bool getLevelStart();
+	void setLevelStart();
+
 private:
 	State mState;
 	bool mLoad;
+	bool mLevelStart;
 
 	//Buttons
 	typedef std::vector<Button*> ButtonVector;
@@ -76,7 +80,7 @@ private:
 	//Mouse position
 	sf::Vector2i mPixelPos;
 	sf::Vector2f mWorldPos;
-	//Custom cursos
+	//Custom cursor
 	Cursor* mCursor;
 
 	//Help Rectangle

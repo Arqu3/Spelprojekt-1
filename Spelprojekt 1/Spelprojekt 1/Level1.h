@@ -37,7 +37,7 @@ public:
 	const rectVector getPlayRects();
 
 	//Active Level
-	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window);
+	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui);
 	bool isActive();
 
 	//View

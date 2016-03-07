@@ -176,7 +176,7 @@ void LastLevel::addRect(sf::FloatRect *rect)
 }
 
 
-void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
+void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui)
 {
 	if (!mIsActive)
 	{
