@@ -4,6 +4,7 @@
 #include <string>
 #include "Item.h"
 #include "Player.h"
+#include "RiddleSpider.h"
 
 class DialogueSystem
 {
@@ -155,11 +156,12 @@ private:
 	sf::Sprite mFirstCharacter;
 	sf::Sprite mSecondCharacter;
 	sf::RectangleShape mSepia;
+	RiddleSpider *mSpider;
 	Player *mPlayer;
 	ResourceHandler &mHandler;
 
 	//Spider Dialogue
-	bool mSpider;
+	bool mDialogueSpider;
 
 	//Advanced Dialogue
 	bool mLevel1Start;

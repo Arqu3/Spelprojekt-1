@@ -193,7 +193,7 @@ void DialogueSystem::actorText(std::string actorText, float posX, float posY, fl
 
 void DialogueSystem::getSpiderText(float posX, float posY, float offsetX, float offsetY)
 {
-
+	
 }
 
 //Draw function for game to use
@@ -253,7 +253,7 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 	//Spider
 	if (indexName == "spider" && mHasClicked == false)
 	{
-		mSpider = true;
+		mDialogueSpider = true;
 		mHasClicked = true;
 	}
 
@@ -648,7 +648,7 @@ bool DialogueSystem::getLevel2Start()
 void DialogueSystem::update(float time)
 {
 	//Spider Dialogue
-	if (mSpider == true)
+	if (mDialogueSpider == true)
 	{
 		displaySpiderDialogue();
 	}

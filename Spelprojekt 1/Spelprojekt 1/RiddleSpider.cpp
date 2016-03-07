@@ -12,7 +12,7 @@ mTexts()
 	mSprite.setTexture(*handler.getTexture("RiddleSpider.png"));
 	mSprite.setPosition(position);
 	mSprite.setScale(0.1f, 0.1f);
-	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
 }
 
 RiddleSpider::~RiddleSpider()
