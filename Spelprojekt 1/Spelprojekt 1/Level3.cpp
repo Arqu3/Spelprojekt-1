@@ -91,7 +91,7 @@ void Level3::drawBackground(sf::RenderWindow &window)
 		window.draw(playground3);
 	}
 
-	window.draw(rectangle);
+	/*window.draw(rectangle);
 	window.draw(rectangle2);
 	window.draw(rectangle3);
 	window.draw(rectangle4);
@@ -102,7 +102,7 @@ void Level3::drawBackground(sf::RenderWindow &window)
 	window.draw(rectangle9);
 	window.draw(rectangle10);
 	window.draw(rectangle11);
-	window.draw(rectangle12);
+	window.draw(rectangle12);*/
 
 	drawItems(mItems, window);
 
@@ -195,6 +195,14 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		//Background 2
 		background2.setSize(sf::Vector2f(1511, 576));
 		background2.setTexture(handler.getTexture("CabinBackground.png"));
+
+		//Foreground 2
+		foreground2.setSize(sf::Vector2f(1511, 576));
+		foreground2.setTexture(handler.getTexture("CabinForeground.png"));
+
+		//Playground 2
+		playground2.setSize(sf::Vector2f(1511, 576));
+		playground2.setTexture(handler.getTexture("CabinPlayground.png"));
 
 		//Add sound
 		music.openFromFile("Level1Music.ogg");

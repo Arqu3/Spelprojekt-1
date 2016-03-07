@@ -167,6 +167,8 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("Garden.png");
 	addTexture("GardenForeground.png");
 	addTexture("CabinBackground.png");
+	addTexture("CabinForeground.png");
+	addTexture("CabinPlayground.png");
 
 	//Karaktärer
 	addTexture("ThomasWalk.png");
@@ -175,6 +177,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("HilmaFishing.png");
 	addTexture("DogRunning.png");
 	addTexture("GardenLady.png");
+	addTexture("KNEKT.png");
 
 
 	//In-game UI
@@ -193,13 +196,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("scenechangecursor.png");
 
 	//Props
-	addTexture("thomasbowl.png");
-	addTexture("Saturnus.png");
-	addTexture("Venus.png");
-	addTexture("Pluto.png");
-	addTexture("Fisk1.png");
-	addTexture("LastLevel_ItemTest1.png");
-	addTexture("LastLevel_ItemTest2.png");
+	
 	addTexture("transparent.png");
 	addTexture("Stick.png");
 	addTexture("StickINV.png");
@@ -207,6 +204,10 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("Trimmer.png");
 	addTexture("TrimmerINV.png");
 	addTexture("Leash.png");
+	addTexture("Sawdust.png");
+	addTexture("Featherball.png");
+	addTexture("Skjuletfjun.png");
+	addTexture("Clover.png");
 
 	//Sound
 	addSound("Footsteps_Thomas.ogg");
@@ -226,6 +227,13 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	
 	//Remove this later
 	addTexture("saturnusINV.png");
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
+	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
 
 }
 
