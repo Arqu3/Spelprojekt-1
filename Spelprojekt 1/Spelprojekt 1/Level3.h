@@ -98,6 +98,11 @@ private:
 	sf::RectangleShape rectangle10; //HelpRect
 	sf::RectangleShape rectangle11; //HelpRect
 	sf::RectangleShape rectangle12; //HelpRect
+	sf::RectangleShape rectangle13; //HelpRect
+	sf::RectangleShape rectangle14; //HelpRect
+	sf::RectangleShape rectangle15; //HelpRect
+	sf::RectangleShape rectangle16; //HelpRect
+	sf::RectangleShape rectangle17; //HelpRect
 	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
 
 	//Sound

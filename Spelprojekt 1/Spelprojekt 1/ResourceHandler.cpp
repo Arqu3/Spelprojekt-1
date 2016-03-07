@@ -169,6 +169,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("CabinBackground.png");
 	addTexture("CabinForeground.png");
 	addTexture("CabinPlayground.png");
+	addTexture("MagicWorld.png");
 
 	//Karaktärer
 	addTexture("ThomasWalk.png");
