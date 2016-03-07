@@ -1080,10 +1080,10 @@ void LastLevel::lookAtTargetItem()
 	}
 	if (mTargetItem->getId() == "Kids")
 	{
-		mDialogueSystem->reset();
-		mDialogueSystem->hasClicked("kids", mPlayer);
+		/*mDialogueSystem->reset();
+		mDialogueSystem->hasClicked("kids", mPlayer);*/
 		mUI->setState(UI::INGAME);
-		mCursor->setMode(Cursor::DIALOGUE);
+		//mCursor->setMode(Cursor::DIALOGUE);
 	}
 	if (mTargetItem->getId() == "Dollhouse")
 	{
@@ -1680,10 +1680,10 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 				}
 				else if (getActiveScene() == 1)
 				{
-					mDialogueSystem->reset();
+					/*mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("crotchRocket", mPlayer);
 					mUI->setState(UI::INGAME);
-					mCursor->setMode(Cursor::DIALOGUE);
+					mCursor->setMode(Cursor::DIALOGUE);*/
 					std::cout << "Crotch Rocket!";
 					//mPlayer->moveToPosition(452, 379);
 				}

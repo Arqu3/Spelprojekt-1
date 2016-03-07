@@ -47,6 +47,20 @@ mActiveAnimation("None")
 	mInventoryMenu.setPosition(sf::Vector2f(250, 50));
 	mInventoryMenu.setScale(sf::Vector2f(0.6f, 0.6f));
 
+	//InventoryGlow
+	handler.getTexture("InventoryIconGlow.png")->setSmooth(true);
+	mInventoryGlow = *handler.getTexture("InventoryIconGlow.png");
+	mInventoryIcon.setTexture(mInventoryGlow);
+	mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+	mInventoryIcon.setScale(sf::Vector2f(0.6f, 0.6f));
+
+	//ClueGlow
+	handler.getTexture("ClueIconGlow.png")->setSmooth(true);
+	mClueGlow = *handler.getTexture("ClueIconGlow.png");
+	mClueIcon.setTexture(mClueGlow);
+	mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+	mClueIcon.setScale(sf::Vector2f(0.6f, 0.6f));
+
 	//UI Rects
 	mHatRect = sf::FloatRect(sf::Vector2f(10, 470), sf::Vector2f(80, 85));
 	mMenuRect = sf::FloatRect(sf::Vector2f(90, 510), sf::Vector2f(75, 80));
@@ -142,6 +156,14 @@ void UI::update(float deltaTime)
 			{
 				mMenuIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
+			else if (mActiveAnimation == "InventoryIconGlow")
+			{
+				mInventoryIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "ClueIconGlow")
+			{
+				mClueIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
 			if (mCurrentFrame < 49)
 			{
 				mFrameXOffset += 1;
@@ -169,6 +191,8 @@ void UI::update(float deltaTime)
 		//TODO - Add bool so that this isn't done over and over again
 		mHatIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
 		mMenuIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
 	}
 }
 
@@ -178,6 +202,14 @@ void UI::draw(sf::RenderWindow &window)
 	{
 	case HAT:
 		window.draw(mHatMenu);
+		if (mActiveAnimation == "InventoryIconGlow")
+		{
+			window.draw(mInventoryIcon);
+		}
+		if (mActiveAnimation == "ClueIconGlow")
+		{
+			window.draw(mClueIcon);
+		}
 		break;
 
 	case MAINUI:
@@ -341,11 +373,19 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mInventoryRect.contains(point))
 		{
 			setState(INVENTORY);
+			if (mActiveAnimation == "InventoryIconGlow")
+			{
+				setActiveAnimation("None");
+			}
 			mMenuInventorySound.play();
 		}
 		if (mCluesRect.contains(point))
 		{
 			setState(CLUES);
+			if (mActiveAnimation == "ClueIconGlow")
+			{
+				setActiveAnimation("None");
+			}
 			cout << "CLUES MENU ENGAGED" << endl;
 		}
 		if (mMemoriesRect.contains(point))
@@ -413,6 +453,9 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 	mSettingsRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 432, 320), sf::Vector2f(90, 90));
 	mExitRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 332, 430), sf::Vector2f(85, 80));
 
+	mInventoryIcon.setPosition(sf::Vector2f(viewCenter.x - 544.5f, 245));
+	mClueIcon.setPosition(sf::Vector2f(viewCenter.x - 423, 299.5f));
+
 	//mHelpRectangle.setPosition(sf::Vector2f(viewCenter.x - 416, 513));
 	//mHelpRectangle.setSize(sf::Vector2f(40, 40));
 
@@ -438,6 +481,18 @@ void UI::setActiveAnimation(std::string animation)
 		mFrameYOffset = 0;
 	}
 	if (animation == "MenuIconGlow")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+	}
+	if (animation == "InventoryIconGlow")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+	}
+	if (animation == "ClueIconGlow")
 	{
 		mCurrentFrame = 0;
 		mFrameXOffset = 0;

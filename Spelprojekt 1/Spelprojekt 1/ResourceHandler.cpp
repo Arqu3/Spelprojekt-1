@@ -82,6 +82,8 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	//In-game UI
 	addTexture("HatIconGlow.png");
 	addTexture("MenuIconGlow.png");
+	addTexture("InventoryIconGlow.png");
+	addTexture("ClueIconGlow.png");
 	addTexture("hatmenu.png");
 	addTexture("menu.png");
 	addTexture("inventory.png");

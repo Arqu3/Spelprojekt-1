@@ -61,6 +61,8 @@ private:
 	sf::Sprite mHatMenu;
 	sf::Sprite mMainUI;
 	sf::Sprite mInventoryMenu;
+	sf::Sprite mInventoryIcon;
+	sf::Sprite mClueIcon;
 
 	//UI Rects
 	sf::FloatRect mHatRect;
@@ -94,7 +96,8 @@ private:
 	int mFrameYOffset;
 	
 	//Spritesheets
-	
+	sf::Texture mInventoryGlow;
+	sf::Texture mClueGlow;
 };
 
 #endif
