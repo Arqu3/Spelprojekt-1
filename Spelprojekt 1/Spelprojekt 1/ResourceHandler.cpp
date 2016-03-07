@@ -67,6 +67,10 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("inventory.png");
 	addTexture("ClueBackground1.png");
 
+	drawLoadScreen(window, "Hämtar hemsk spindel");
+	//Spooky scary spider
+	addTexture("RiddleSpider.png");
+
 	drawLoadScreen(window, "Davidar Inventoryikoner");
 	//Inventory icons
 	addTexture("AstronautINV.png");
@@ -226,9 +230,9 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addSound("Menu_MainUI.ogg");
 	addSound("Critical_Item.ogg");
 	addSound("Inventory_Move.ogg");
-	
 
-
+	//Remove this later
+	addTexture("saturnusINV.png");
 }
 
 
@@ -284,7 +288,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addSound("Critical_Item.ogg");
 	addSound("Inventory_Move.ogg");
 
-    //LastLevel
+	//LastLevel
 	drawLoadScreen(window, "Laddar Sista Bananen");
 	addTexture("ARBETSRUMbakgrund.png");
 	addTexture("ARBETSRUMmellangrund.png");
@@ -306,7 +310,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("LastLevel_ItemTest1.png");
 	addTexture("LastLevel_ItemTest2.png");
 
-    	//Karaktärer
+		//Karaktärer
 	addTexture("ThomasWalk.png");
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
@@ -337,7 +341,7 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("Fisk1.png");
 
 
-        //Sounds
+		//Sounds
 	addSound("FootSteps.ogg");
 
 	//Animations

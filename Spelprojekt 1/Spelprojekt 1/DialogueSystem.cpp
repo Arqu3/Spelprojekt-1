@@ -996,7 +996,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	std::string level1StartHilma14 = "Då så, Thomas. Då ska jag hitta en stjärna, en astronaut och en skruvmackapär åt dig!";
 	std::string level1StartInterlude = "*Thomas nickar tveksamt*";
 
-	if (mState == 25)
+	if (mState >= 25)
 	{
 		mText.setString("");
 		mActorText.setString("");

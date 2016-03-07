@@ -26,6 +26,7 @@ public:
 
 	void update(sf::RenderWindow &window);
 	void draw(sf::RenderWindow &window);
+	void drawCursorSprite(sf::RenderWindow &window);
 
 	//Items
 	void addItem(Item* item);
@@ -35,6 +36,7 @@ public:
 	void craftItem(int index1, int index2);
 	void swapItems(ItemVector &inputVector, int inputIndex, int swapIndex);
 	void setCraftableItems(ResourceHandler &handler, int index);
+	sf::Sprite getCursorSprite();
 
 	//Grid
 	void setDynamicGrid();
@@ -49,7 +51,12 @@ public:
 
 	Item* selectedItem();
 
-	void deSelect();
+	//Checks for valid deselection
+	void deSelectCheck();
+	//Forces deselection
+	void forceDeSelect();
+	void swapCheck();
+	bool checkDistance(sf::Vector2f point);
 
 	void setGridPosition(sf::Vector2f viewCenter);
 
@@ -93,11 +100,16 @@ private:
 	bool mIsCraftable;
 	bool mHasCraft1;
 	bool mHasCraft2;
+	sf::Sprite mCursorSprite;
 
 	//Mouse
 	sf::RectangleShape mRectShape;
 	sf::Vector2i mPixelPos;
 	sf::Vector2f mWorldPos;
+
+	//Centerpoints
+	sf::Vector2f mCircle1Mid;
+	sf::Vector2f mCircle2Mid;
 
 	//Event
 	sf::Event mEvent;

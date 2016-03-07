@@ -19,7 +19,9 @@ mCraftSelect1(-1),
 mCraftSelect2(-1),
 mIsCraftable(false),
 mHasCraft1(false),
-mHasCraft2(false)
+mHasCraft2(false),
+mCircle1Mid(487, 276),
+mCircle2Mid(725, 175)
 {
 	//Size check
 	cout << mItems.size() << endl;
@@ -103,23 +105,13 @@ void Inventory::update(sf::RenderWindow &window)
 	//Set select rectangle position
 	if (mSelectedItem1 != -1)
 	{
+		mCursorSprite.setPosition(sf::Vector2f(mWorldPos.x - mCursorSprite.getGlobalBounds().width / 2, mWorldPos.y - mCursorSprite.getGlobalBounds().height / 2));
 		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getINVPosition().x - 3, mItems[mSelectedItem1]->getINVPosition().y - 3));
-	}
-
-	//Swap selected items
-	if (mSelectedItem1 != -1 && mSelectedItem2 != -1)
-	{
-		swapItems(mItems, mSelectedItem1, mSelectedItem2);
-		deSelect();
 	}
 }
 
 void Inventory::draw(sf::RenderWindow &window)
 {
-	if (mSelectedItem1 != -1)
-	{
-		window.draw(mSelectRect);
-	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//TODO - THIS DOESN'T WORK, NEEDS FIX
@@ -163,6 +155,11 @@ void Inventory::draw(sf::RenderWindow &window)
 	//Draw Item Description
 	window.draw(mDescription);
 	window.draw(mCraftable);
+}
+
+void Inventory::drawCursorSprite(sf::RenderWindow &window)
+{
+	window.draw(mCursorSprite);
 }
 
 void Inventory::addItem(Item* item)
@@ -282,6 +279,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			if (mSelectedItem1 == -1)
 			{
 				mSelectedItem1 = i;
+				mCursorSprite = mItems[mSelectedItem1]->getINVSprite();
 				cout << "First selected item is: " << mSelectedItem1 << endl;
 				mDescription.setString(mItems[mSelectedItem1]->getDescription());
 				if (mItems[mSelectedItem1]->getCraftIndex() != -1)
@@ -298,6 +296,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			if (mSelectedItem1 != -1 && mSelectedItem2 == -1 && mSelectedItem1 != i)
 			{
 				mSelectedItem2 = i;
+				mCursorSprite = mItems[mSelectedItem2]->getINVSprite();
 				cout << "Second selected item is: " << mSelectedItem2 << endl;
 			}
 			return;
@@ -328,7 +327,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 	}
 	else
 	{
-		deSelect();
+		deSelectCheck();
 	}
 }
 
@@ -377,7 +376,7 @@ void Inventory::setCraftPos(int index)
 		}
 		return;
 	}
-	deSelect();
+	deSelectCheck();
 }
 
 void Inventory::craftItem(int index1, int index2)
@@ -440,12 +439,25 @@ void Inventory::swapPos(Item &item1, Item &item2)
 	item2.setINVPosition(tempPos.x, tempPos.y);
 }
 
-void Inventory::deSelect()
+void Inventory::deSelectCheck()
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//Deselect if you click on nothing interactable
-		if (!mItems[i]->getINVRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
+		if (!mItems[i]->getINVRectangle().contains(mWorldPos) 
+			&& !mItem1Rect.getGlobalBounds().contains(mWorldPos) 
+			&& !mItem2Rect.getGlobalBounds().contains(mWorldPos) 
+			&& !mCraftButton.getGlobalBounds().contains(mWorldPos))
+		{
+			mSelectedItem1 = -1;
+			mSelectedItem2 = -1;
+			mHasCraft1 = false;
+			mHasCraft2 = false;
+			mCraftSelect1 = -1;
+			mCraftSelect2 = -1;
+		}
+		//Check if has selected item and releases on same item
+		else if (mSelectedItem1 == i && mItems[i]->getINVRectangle().contains(mWorldPos))
 		{
 			mSelectedItem1 = -1;
 			mSelectedItem2 = -1;
@@ -458,6 +470,76 @@ void Inventory::deSelect()
 
 	mDescription.setString("");
 	mCraftable.setString("");
+}
+
+void Inventory::forceDeSelect()
+{
+	mSelectedItem1 = -1;
+	mSelectedItem2 = -1;
+	mHasCraft1 = false;
+	mHasCraft2 = false;
+	mCraftSelect1 = -1;
+	mCraftSelect2 = -1;
+}
+
+void Inventory::swapCheck()
+{
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		if (mSelectedItem1 != -1)
+		{
+			if (mSelectedItem1 != i)
+			{
+				if (mCursorSprite.getGlobalBounds().intersects(mItems[i]->getINVSprite().getGlobalBounds()))
+				{
+					swapItems(mItems, mSelectedItem1, i);
+				}
+			}
+		}
+	}
+}
+
+bool Inventory::checkDistance(sf::Vector2f point)
+{
+	//Distance 1
+	sf::Vector2f delta(mCircle1Mid - point);
+
+	float deltaX = delta.x;
+	float deltaY = delta.y;
+
+	float squareX = (deltaX * deltaX);
+	float squareY = (deltaY * deltaY);
+
+	float added = (squareX + squareY);
+
+	float distance = sqrt(added);
+
+	//Distance 2
+	sf::Vector2f delta2(mCircle2Mid - point);
+
+	float deltaX2 = delta2.x;
+	float deltaY2 = delta2.y;
+
+	float squareX2 = (deltaX2 * deltaX2);
+	float squareY2 = (deltaY2 * deltaY2);
+
+	float added2 = (squareX2 + squareY2);
+
+	float distance2 = sqrt(added2);
+
+	cout << distance << endl;
+	cout << distance2 << endl;
+	
+	if (distance <= 220)
+	{
+		return true;
+	}
+	else if (distance2 <= 97)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool Inventory::craftCheck()
@@ -503,6 +585,11 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 	{
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Saturn"));
 	}
+}
+
+sf::Sprite Inventory::getCursorSprite()
+{
+	return mCursorSprite;
 }
 
 int Inventory::getSelectedItem()
