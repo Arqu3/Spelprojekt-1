@@ -107,6 +107,9 @@ void Level1::drawForeground(sf::RenderWindow &window)
 
 void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 {
+	//Spooky scary spider draw
+	mSpider->draw(window);
+
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		if (mItems[i]->getActive() && mItems[i]->getId() != "Screwdevice")
@@ -141,6 +144,10 @@ void Level1::drawUI(sf::RenderWindow &window)
 	}
 
 	mCursor->draw(window);
+	if (mInventory->getSelectedItem() != -1)
+	{
+		mInventory->drawCursorSprite(window);
+	}
 }
 
 
@@ -270,6 +277,10 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		mClues->add(handler, "Test1.png", sf::Vector2f(800, 400));
 		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
+
+		//Spooky scary spider
+		mSpider = new RiddleSpider(handler, sf::Vector2f(750, -500));
+		mSpider->setState(RiddleSpider::ENTERING);
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -631,8 +642,6 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 
-				mInventory->setCraftPos(mInventory->getSelectedItem());
-
 				if (mInventory->craftCheck())
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
@@ -656,6 +665,20 @@ void Level1::eventListen(sf::RenderWindow &window)
 			else if (mCursor->getMode() != Cursor::DISABLED && !mPushingBlock)
 			{
 				mouseClick(event);
+			}
+			break;
+
+			//Mouse button released
+		case sf::Event::MouseButtonReleased:
+			if (mUI->getState() == UI::INVENTORY)
+			{
+				mInventory->swapCheck();
+				mInventory->deSelectCheck();
+				mInventory->setCraftPos(mInventory->getSelectedItem());
+			}
+			else if (mCursor->getMode() != Cursor::DISABLED && !mPushingBlock)
+			{
+				mouseReleased(event);
 			}
 			break;
 
@@ -690,6 +713,19 @@ void Level1::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::MAINUI);
 					mCursor->setMode(Cursor::MENU);
 				}
+			}
+
+			if (event.key.code == sf::Keyboard::A)
+			{
+				mSpider->setState(RiddleSpider::ENTERING);
+			}
+			if (event.key.code == sf::Keyboard::S)
+			{
+				mSpider->setState(RiddleSpider::LEAVING);
+			}
+			if (event.key.code == sf::Keyboard::D)
+			{
+				mSpider->setState(RiddleSpider::IDLE);
 			}
 			break;
 
@@ -739,6 +775,54 @@ void Level1::mouseClick(sf::Event &event)
 
 	//Check Rect Collisions
 	mouseClickCheckRectCollision(point);
+}
+
+void Level1::mouseReleased(sf::Event & event)
+{
+	std::cout << "Mouse Released" << std::endl;
+	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+
+	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+
+	//Special
+	if (mInventory->selectedItem() != NULL 
+		&& mAstronaut->isLookedAt() 
+		&& mInventory->selectedItem()->getId() == "FishingRodMagnet" 
+		&& mAstronaut->getRectangle().contains(mWorldPos))
+	{
+		//Place Rubics Cube in front of Block
+		//TODO - Add Dialogue for the placing of the Cube
+		addItem(mCube);
+		mCube->setScale(-1.0f, 1.0f);
+		mCube->setPosition(645.0f, 450.0f);
+		mCubePlaced = true;
+		//TODO - Add Hilma Jump
+		mPlayer->setPosition(700, 450);
+		mPlayer->moveToPosition(700, 450);
+		if (!mPlayer->isFacingLeft())
+		{
+			mPlayer->flipPlayer();
+		}
+		mPlayer->setActiveAnimation("Fishing");
+		mPlayer->setScale(sf::Vector2f(0.9f, 0.9f));
+		mFishing = true;
+		mCursor->setMode(Cursor::DISABLED);
+		mTargetItem->toggleActive();
+		mTargetItem->setSpeed(20.0f);
+		mTargetItem->moveToPosition(500, 250);
+
+		//Clues
+		mClues->getClue(4)->setState2();
+		mClues->getClue(5)->setState1();
+
+		mAstronaut->toggleActive();
+	}
+	else
+	{
+		mInventory->deSelectCheck();
+	}
 }
 
 //Change mouse cursor depending on what it is hovering over
@@ -885,6 +969,20 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	//Inventory update
 	mInventory->update(window);
 
+	if (mUI->getState() == UI::INVENTORY)
+	{
+		if (mInventory->getSelectedItem() != -1)
+		{
+			if (!mInventory->checkDistance(mWorldPos))
+			{
+				mUI->setState(UI::INGAME);
+			}
+		}
+	}
+
+	//Spooky scary spider update
+	mSpider->update(deltaTime);
+
 	//DialogueSystem update and reset when finished
 	mDialogueSystem->update(deltaTime);
 	if (mDialogueSystem->isDialogueFinished())
@@ -901,7 +999,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	mCursor->update(window);
 
 	//Change mouse cursor on hover
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME && mUpdateTime > 60)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME && mUpdateTime > 0)
 	{
 		mouseHover();
 		mUpdateTime = 0;
@@ -1036,7 +1134,7 @@ void Level1::updateTargetItem(float deltaTime)
 				mPlayer->moveToPosition(490, 500);
 				mCursor->setMode(Cursor::NORMAL);
 				mReadyForScrewdevice = true;
-				mInventory->deSelect();
+				mInventory->deSelectCheck();
 			}
 		}
 	}
@@ -1112,40 +1210,45 @@ void Level1::pickupTargetItem()
 		std::cout << "Plockade upp fiskespo";
 		mRegularItemSound.play();
 	}
+
 	if (mTargetItem->getId() == "Astronaut")
 	{
-		if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
-		{
-			//Place Rubics Cube in front of Block
-			//TODO - Add Dialogue for the placing of the Cube
-			addItem(mCube);
-			mCube->setScale(-1.0f, 1.0f);
-			mCube->setPosition(645.0f, 450.0f);
-			mCubePlaced = true;
-			//TODO - Add Hilma Jump
-			mPlayer->setPosition(700, 450);
-			mPlayer->moveToPosition(700, 450);
-			if (!mPlayer->isFacingLeft())
-			{
-				mPlayer->flipPlayer();
-			}
-			mPlayer->setActiveAnimation("Fishing");
-			mPlayer->setScale(sf::Vector2f(0.9f, 0.9f));
-			mFishing = true;
-			mCursor->setMode(Cursor::DISABLED);
-			mTargetItem->toggleActive();
-			mTargetItem->setSpeed(20.0f);
-			mTargetItem->moveToPosition(500, 250);
-
-			//Clues
-			mClues->getClue(4)->setState2();
-			mClues->getClue(5)->setState1();
-		}
-		else
-		{
-			mTargetItem->toggleActive();
-		}
+		mTargetItem->toggleActive();
 	}
+	//if (mTargetItem->getId() == "Astronaut")
+	//{
+	//	if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+	//	{
+	//		//Place Rubics Cube in front of Block
+	//		//TODO - Add Dialogue for the placing of the Cube
+	//		addItem(mCube);
+	//		mCube->setScale(-1.0f, 1.0f);
+	//		mCube->setPosition(645.0f, 450.0f);
+	//		mCubePlaced = true;
+	//		//TODO - Add Hilma Jump
+	//		mPlayer->setPosition(700, 450);
+	//		mPlayer->moveToPosition(700, 450);
+	//		if (!mPlayer->isFacingLeft())
+	//		{
+	//			mPlayer->flipPlayer();
+	//		}
+	//		mPlayer->setActiveAnimation("Fishing");
+	//		mPlayer->setScale(sf::Vector2f(0.9f, 0.9f));
+	//		mFishing = true;
+	//		mCursor->setMode(Cursor::DISABLED);
+	//		mTargetItem->toggleActive();
+	//		mTargetItem->setSpeed(20.0f);
+	//		mTargetItem->moveToPosition(500, 250);
+
+	//		//Clues
+	//		mClues->getClue(4)->setState2();
+	//		mClues->getClue(5)->setState1();
+	//	}
+	//	else
+	//	{
+	//		mTargetItem->toggleActive();
+	//	}
+	//}
 }
 
 void Level1::interactTargetItem()

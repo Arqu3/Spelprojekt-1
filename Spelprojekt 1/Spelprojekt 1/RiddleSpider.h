@@ -1,0 +1,45 @@
+#ifndef INCLUDED_RS
+#define INCLUDED_RS
+
+#include "ResourceHandler.h"
+
+class RiddleSpider
+{
+public:
+	RiddleSpider(ResourceHandler &handler, sf::Vector2f position);
+	~RiddleSpider();
+
+	void update(float deltaTime);
+	void draw(sf::RenderWindow &window);
+
+	enum State
+	{
+		ENTERING,
+		LEAVING,
+		DIALOGUE,
+		IDLE,
+		INACTIVE
+	};
+
+	void setState(State newState);
+	State getState();
+	sf::FloatRect getRect();
+	void addText(std::string text);
+
+private:
+	State mState;
+	sf::Sprite mSprite;
+	sf::Vector2f mPosition;
+	float mTimer;
+	int mTextCounter;
+	sf::Font mFont;
+
+	typedef std::vector<sf::Text> TextVector;
+	TextVector mTexts;
+
+	void moveUp(float deltaTime);
+	void moveDown(float deltaTime);
+	void idleMove(float deltaTime);
+};
+
+#endif
