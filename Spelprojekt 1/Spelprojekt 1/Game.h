@@ -22,6 +22,7 @@ private:
 
 	//Deltatime
 	sf::Clock deltaClock;
+	sf::Clock fpsClock;
 
 	//Sound
 	sf::Music music;

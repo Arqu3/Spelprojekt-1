@@ -16,12 +16,20 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
+	window.setVerticalSyncEnabled(true);
+
 	window.setMouseCursorVisible(false);
 	mLHandler.setActiveLevel(0, mRHandler, true, window);
+
+	float fpsTimer = 0;
 
 	while (window.isOpen())
 	{
 		window.clear(sf::Color::Black);
+
+		sf::Time fpsTime = fpsClock.getElapsedTime();
+
+		fpsTimer++;
 
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
@@ -44,6 +52,14 @@ void Game::update()
 			}
 			mLHandler.draw(window);
 		}
+
+		if (fpsTimer >= 60.0f)
+		{
+			cout << 1.0f / fpsTime.asSeconds() << endl;
+			fpsTimer = 0.0f;
+		}
+
+		fpsClock.restart().asSeconds();
 
 		deltaClock.restart();
 		window.display();
