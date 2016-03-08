@@ -126,6 +126,13 @@ private:
 	Item* mDog;
 	Item* mFlagpole;
 	Item *mLady;
+	Item* mClover;
+	Item* mFeatherball;
+	Item* mNail;
+	Item* mSawdust;
+	Item* mFjun;
+	Item *mJack;
+
 
 
 	bool mLevelComplete;
@@ -163,6 +170,7 @@ private:
 	bool mFlowerPickedUp;
 	bool mFlowersPlaced;
 	bool mDogRunning;
+	bool mItemPicked;
 	
 
 	ResourceHandler &handler;

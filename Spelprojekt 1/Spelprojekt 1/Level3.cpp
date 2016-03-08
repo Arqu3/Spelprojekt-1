@@ -232,6 +232,13 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mSingleFlower = new Item(handler, sf::Vector2f(1390, 265), "Singleflower");
 		mLady = new Item(handler, sf::Vector2f(565, 87), "Lady");
 
+		mClover = new Item(handler, sf::Vector2f(241, 234), "Clover");
+		mSawdust = new Item(handler, sf::Vector2f(831, 254), "Sawdust");
+		mNail = new Item(handler, sf::Vector2f(0, 0), "Nail"); //Plockas upp
+		mFjun = new Item(handler, sf::Vector2f(1192, 52), "Fjun");
+		mFeatherball = new Item(handler, sf::Vector2f(285, 372), "Featherball");
+		mJack = new Item(handler, sf::Vector2f(1226, 157), "Jack");
+
 		//View
 		mView.setSize(1024, 576);
 		mView.setCenter(512, 288);
@@ -288,6 +295,26 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		mLady->toggleActive();
 		mLady->setActiveAnimation("GardenLady");
+
+		mClover->toggleActive();
+		mClover->toggleLookable();
+		mClover->togglePickupable();
+
+		mSawdust->toggleActive();
+		mSawdust->toggleLookable();
+		mSawdust->togglePickupable();
+
+		mFjun->toggleActive();
+		mFjun->toggleLookable();
+		mFjun->togglePickupable();
+
+		mFeatherball->toggleActive();
+		mFeatherball->toggleLookable();
+		mFeatherball->togglePickupable();
+
+		mJack->toggleActive();
+		mJack->toggleLookable();
+		mJack->toggleInteractable();
 
 		//Add to Itemvector
 		addItem(mTrimmer);
@@ -381,18 +408,49 @@ void Level3::internalSwap(int num)
 		//rectangle12.setPosition(1053, 423);
 
 		//Rectangles
+		//Dörr
 		mRects.push_back(createRect(72, 106, 70, 160));
+		//Fjäder 1
 		mRects.push_back(createRect(109, 325, 176, 150));
+		//Fjäder 
 		mRects.push_back(createRect(285, 372, 98, 123));
+		//Duk
 		mRects.push_back(createRect(150, 495, 200, 76));
 		mRects.push_back(createRect(285, 80, 129, 46));
+		//Sågspån
 		mRects.push_back(createRect(831, 254, 224, 49));
+		//Knekt
 		mRects.push_back(createRect(1226, 157, 100, 200));
 		mRects.push_back(createRect(1432, 146, 76, 210));
 		mRects.push_back(createRect(900, 67, 162, 169));
+		//Klöver
 		mRects.push_back(createRect(241, 234, 60, 53));
+		//Fjun
 		mRects.push_back(createRect(1192, 52, 115, 51));
 		mRects.push_back(createRect(1053, 423, 215, 102));
+
+		if (mClover->getActive())
+		{
+			addItem(mClover);
+		}
+		if (mSawdust->getActive())
+		{
+			addItem(mSawdust);
+		}
+		if (mFjun->getActive())
+		{
+			addItem(mFjun);
+		}
+		if (mFeatherball->getActive())
+		{
+			addItem(mFeatherball);
+		}
+		if (mJack->getActive())
+		{
+			addItem(mJack);
+		}
+
+		addItem(mNail);
 
 	}
 	else if (num == 2)
@@ -404,54 +462,71 @@ void Level3::internalSwap(int num)
 		mPlayRects.push_back(createRect(0,0, 2048, 576));
 		
 		//Rectangles - (om inget annat anges: dialogrespons på alla rektanglar)
+
 		//Använd magnetfiskare. Lägger "guldmynt" i inventory
 		rectangle.setSize(sf::Vector2f(156, 78));
 		rectangle.setPosition(133, 416);
+
 		//Spelar melodi och ändrar sprite. (se: musikpussel)
 		rectangle2.setSize(sf::Vector2f(73, 85));
 		rectangle2.setPosition(740, 158);
+
 		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		rectangle3.setSize(sf::Vector2f(47, 37));
 		rectangle3.setPosition(709, 56);
+
 		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		rectangle4.setSize(sf::Vector2f(41, 36));
 		rectangle4.setPosition(758, 30);
+
 		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		rectangle5.setSize(sf::Vector2f(44, 37));
 		rectangle5.setPosition(804, 57);
+
 		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
 		rectangle6.setSize(sf::Vector2f(45, 34));
 		rectangle6.setPosition(759, 97);
+
 		//(kurragömmapussel - prata med design)
 		rectangle7.setSize(sf::Vector2f(82, 42));
 		rectangle7.setPosition(1067, 297);
+
 		//(kurragömmapussel - prata med design)
 		rectangle8.setSize(sf::Vector2f(115, 31));
 		rectangle8.setPosition(1831, 257);
+
 		//(kurragömmapussel - prata med design)
 		rectangle9.setSize(sf::Vector2f(141, 60));
 		rectangle9.setPosition(2059, 216);
+
 		//(kurragömmapussel - prata med design)
 		rectangle10.setSize(sf::Vector2f(108, 24));
 		rectangle10.setPosition(1604, 194);
+
 		//om pussel avklarade > klara banan. Else: dialogrespons
 		rectangle11.setSize(sf::Vector2f(122, 168));
 		rectangle11.setPosition(322, 102);
+
 		//triggers various dialogs
 		rectangle12.setSize(sf::Vector2f(47, 96));
 		rectangle12.setPosition(2423, 232);
+
 		//endast dialogrespons
 		rectangle13.setSize(sf::Vector2f(58, 83));
 		rectangle13.setPosition(611, 415);
+
 		//triggers various dialogs
 		rectangle14.setSize(sf::Vector2f(63, 85));
 		rectangle14.setPosition(1495, 333);
+
 		//endast dialogrespons
 		rectangle15.setSize(sf::Vector2f(160, 232));
 		rectangle15.setPosition(25, 49);
+
 		//endast dialogrespons
 		rectangle16.setSize(sf::Vector2f(129, 173));
 		rectangle16.setPosition(1342, 90);
+
 		//endast dialogrespons
 		rectangle17.setSize(sf::Vector2f(173, 92));
 		rectangle17.setPosition(2337, 474);
@@ -781,6 +856,78 @@ void Level3::mouseClick(sf::Event &event)
 
 				}
 
+				if (getItems()[i]->getId() == "Clover")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(338, 316);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på klöver!";
+
+				}
+
+				if (getItems()[i]->getId() == "Sawdust")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(819, 301);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på sågspån!";
+
+				}
+
+				if (getItems()[i]->getId() == "Fjun")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(1200, 370);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på fjun!";
+
+				}
+
+				if (getItems()[i]->getId() == "Nail")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					//mPlayer->moveToPosition(1354, 374);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på spik!";
+
+				}
+
+				if (getItems()[i]->getId() == "Featherball")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(463, 415);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på fjäderboll!";
+
+				}
+
+				if (getItems()[i]->getId() == "Jack")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(1250, 370);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på knekt!";
+
+				}
+
 			}
 		}
 	}
@@ -855,9 +1002,10 @@ void Level3::mouseClick(sf::Event &event)
 							//Set starting position of Player in new Scene
 							mSceneChangePlayerPos = sf::Vector2f(950, 480);
 							mNewScene = 2;
-				}
+					}
 				
 
+				}
 			}
 		}
 	}
@@ -983,6 +1131,63 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 				}
 
+				if (mTargetItem->getId() == "Clover")
+				{
+					if (mItemPicked == false)
+					{
+						mInventory->addItem(mTargetItem);
+						mItemPicked = true;
+						std::cout << "Plockade upp klöver!";
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
+				}
+
+				if (mTargetItem->getId() == "Sawdust")
+				{
+					if (mItemPicked == false)
+					{
+						mInventory->addItem(mTargetItem);
+						mItemPicked = true;
+						std::cout << "Plockade upp sågspån!";
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
+				}
+
+				if (mTargetItem->getId() == "Fjun")
+				{
+					if (mItemPicked == false)
+					{
+						mInventory->addItem(mTargetItem);
+						mItemPicked = true;
+						std::cout << "Plockade upp fjun!";
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
+				}
+
+				if (mTargetItem->getId() == "Featherball")
+				{
+					if (mItemPicked == false)
+					{
+						mInventory->addItem(mTargetItem);
+						mItemPicked = true;
+						std::cout << "Plockade upp fjäderboll!";
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
+				}
+
+
 			}
 
 
@@ -994,7 +1199,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 				{
 					mTargetItem->toggleInteractable();
 
-
+					//Koppel
 					if (mTargetItem->getId() == "Leash")
 					{
 
@@ -1013,6 +1218,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 						
 					}
 
+					//Hund
 					if (mTargetItem->getId() == "Dog")
 					{
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Stick" && mUnleashed == true)
@@ -1036,7 +1242,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 					}
 
-
+					//Flaggstång
 					if (mTargetItem->getId() == "Flagpole")
 					{
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Flowers")
@@ -1062,9 +1268,26 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 					}
 
+					//Knippe blommor
 					if (mTargetItem->getId() == "Singleflower")
 					{
 						mTargetItem->moveToPosition(1390, 121);
+					}
+
+					//KNEKTEN 
+					if (mTargetItem->getId() == "Jack")
+					{
+						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() != "Screwdevice")
+						{
+							if (mInventory->selectedItem()->getId() == "Clover" || mInventory->selectedItem()->getId() == "Nail" || mInventory->selectedItem()->getId() == "Featherball" || mInventory->selectedItem()->getId() == "Fjun" || mInventory->selectedItem()->getId() == "Sawdust")
+							{
+								mInventory->removeItem(mInventory->getSelectedItem());
+								mItemPicked = false;
+								mTargetItem->toggleInteractable();
+
+								//OBSOBS vad mer ska hända?
+							}
+						}
 					}
 				}
 			}
