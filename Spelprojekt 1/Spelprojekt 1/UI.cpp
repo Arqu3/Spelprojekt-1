@@ -4,14 +4,14 @@ using namespace std;
 
 UI::UI(ResourceHandler &handler) :
 mState(MAINMENU),
-mLoad(false),
 mCurrentFrame(0),
 mCurrentTime(0),
 mFrameTime(0.03f),
 mFrameXOffset(0),
 mFrameYOffset(0),
 mActiveAnimation("None"),
-mLevelStart(false)
+mLevelStart(false),
+mInfoBoxDisplay(true)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -70,6 +70,18 @@ mLevelStart(false)
 	mMemoriesRect = sf::FloatRect(sf::Vector2f(195, 475), sf::Vector2f(75, 80));
 	mSettingsRect = sf::FloatRect(sf::Vector2f(80, 320), sf::Vector2f(90, 90));
 	mExitRect = sf::FloatRect(sf::Vector2f(180, 430), sf::Vector2f(85, 80));
+
+	//Tutorial Info Icon
+	handler.getTexture("InfoIcon.png")->setSmooth(true);
+	mInfoIcon.setTexture(*handler.getTexture("InfoIcon.png"));
+	mInfoIcon.setPosition(sf::Vector2f(500, 400));
+	mInfoIcon.setScale(sf::Vector2f(0.5f, 0.5f));
+
+	//Tutorial Info Box
+	handler.getTexture("InfoBox.png")->setSmooth(true);
+	mInfoBox.setTexture(*handler.getTexture("InfoBox.png"));
+	mInfoBox.setPosition(sf::Vector2f(700, 300));
+	mInfoBox.setScale(sf::Vector2f(0.7f, 0.3f));
 
 	//Help Rectangle
 	mHelpRectangle.setPosition(sf::Vector2f(180, 430));
@@ -223,6 +235,11 @@ void UI::draw(sf::RenderWindow &window)
 	case INVENTORY:
 		window.draw(mHatMenu);
 		window.draw(mInventoryMenu);
+		window.draw(mInfoIcon);
+		if (mInfoBoxDisplay)
+		{
+			window.draw(mInfoBox);
+		}
 		break;
 
 	case CLUES:
@@ -301,15 +318,9 @@ void UI::eventListen(sf::RenderWindow &window)
 				case MAINMENU:
 					if (mMainButtons[0]->isPressed(window))
 					{
-						mLoad = true;
 						mLevelStart = true;
 						setState(INGAME);
 					}
-					else
-					{
-						mLoad = false;
-					}
-
 					if (mMainButtons[2]->isPressed(window))
 					{
 						window.close();
@@ -433,11 +444,6 @@ sf::FloatRect UI::getMenuIconRect()
 	return mMenuRect;
 }
 
-bool UI::load()
-{
-	return mLoad;
-}
-
 void UI::setUIPosition(sf::Vector2f viewCenter)
 {
 	//viewCenter.x - (512 - distance from left edge of screen)
@@ -457,6 +463,9 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 
 	mInventoryIcon.setPosition(sf::Vector2f(viewCenter.x - 544.5f, 245));
 	mClueIcon.setPosition(sf::Vector2f(viewCenter.x - 423, 299.5f));
+
+	mInfoIcon.setPosition(sf::Vector2f(viewCenter.x + 160, 400));
+	mInfoBox.setPosition(sf::Vector2f(viewCenter.x + 200, 350));
 
 	//mHelpRectangle.setPosition(sf::Vector2f(viewCenter.x - 416, 513));
 	//mHelpRectangle.setSize(sf::Vector2f(40, 40));
@@ -522,4 +531,19 @@ bool UI::getLevelStart()
 void UI::setLevelStart()
 {
 	mLevelStart = false;
+}
+
+sf::FloatRect UI::getInfoIconRect()
+{
+	return mInfoIcon.getGlobalBounds();
+}
+
+bool UI::getInfoBoxDisplay()
+{
+	return mInfoBoxDisplay;
+}
+
+void UI::setInfoBoxDisplay(bool display)
+{
+	mInfoBoxDisplay = display;
 }

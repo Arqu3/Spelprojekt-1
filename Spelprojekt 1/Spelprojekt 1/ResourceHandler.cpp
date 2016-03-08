@@ -90,6 +90,8 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("menu.png");
 	addTexture("inventory.png");
 	addTexture("ClueBackground1.png");
+	addTexture("InfoIcon.png");
+	addTexture("InfoBox.png");
 
 	drawLoadScreen(window, "Davidar Muspekare");
 	//Cursors
