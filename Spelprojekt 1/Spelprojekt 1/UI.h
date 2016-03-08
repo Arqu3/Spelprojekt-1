@@ -23,7 +23,7 @@ public:
 		INGAME
 	};
 
-	void update();
+	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 	void drawMainMenu(sf::RenderWindow &window);
 	void drawExit(sf::RenderWindow &window);
@@ -39,9 +39,18 @@ public:
 
 	bool load();
 
+	void setUIPosition(sf::Vector2f viewCenter);
+
+	void setActiveAnimation(std::string animation);
+	std::string getActiveAnimation();
+
+	bool getLevelStart();
+	void setLevelStart();
+
 private:
 	State mState;
 	bool mLoad;
+	bool mLevelStart;
 
 	//Buttons
 	typedef std::vector<Button*> ButtonVector;
@@ -54,10 +63,14 @@ private:
 	sf::Sprite mHatIcon;
 	sf::Sprite mMenuIcon;
 	sf::Sprite mHatMenu;
-	sf::Sprite mMainMenu;
+	sf::Sprite mMainUI;
 	sf::Sprite mInventoryMenu;
+	sf::Sprite mInventoryIcon;
+	sf::Sprite mClueIcon;
 
 	//UI Rects
+	sf::FloatRect mHatRect;
+	sf::FloatRect mMenuRect;
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
 	sf::FloatRect mMemoriesRect;
@@ -67,11 +80,28 @@ private:
 	//Mouse position
 	sf::Vector2i mPixelPos;
 	sf::Vector2f mWorldPos;
-	//Custom cursos
+	//Custom cursor
 	Cursor* mCursor;
 
 	//Help Rectangle
 	sf::RectangleShape mHelpRectangle;
+
+	//Sounds
+	sf::Sound mMenuInventorySound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
+
+	//Animations
+	std::string mActiveAnimation;
+	float mFrameTime;
+	float mCurrentTime;
+	int mCurrentFrame;
+	int mFrameXOffset;
+	int mFrameYOffset;
+	
+	//Spritesheets
+	sf::Texture mInventoryGlow;
+	sf::Texture mClueGlow;
 };
 
 #endif

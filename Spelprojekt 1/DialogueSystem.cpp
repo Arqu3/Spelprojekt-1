@@ -18,17 +18,13 @@ mState(0),
 mLevel1Start(true),
 mLevel1End(false),
 mLevel2Start(false),
-mLevel2End(false),
-mLineStarted(false)
+mLevel2End(false)
 {
 	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
 	mBubble.setTexture(*handler.getTexture("textbubble.png"));
 	mTextBox.setTexture(*handler.getTexture("textbox.png"));
 	mSepia.setSize(sf::Vector2f(1024, 576));
 	mSepia.setTexture(handler.getTexture("sepia.png"));
-
-	voiceActingTest.openFromFile(handler.getMusic("VoiceActingTest.ogg"));
-	voiceActingTest2.openFromFile(handler.getMusic("VoiceActingTest2.ogg"));
 }
 
 DialogueSystem::~DialogueSystem()
@@ -195,11 +191,6 @@ void DialogueSystem::actorText(std::string actorText, float posX, float posY, fl
 	mActorText.setString(actorText);
 }
 
-void DialogueSystem::getSpiderText(float posX, float posY, float offsetX, float offsetY)
-{
-	
-}
-
 //Draw function for game to use
 void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 {
@@ -253,13 +244,6 @@ void DialogueSystem::drawSecondCharacter(ResourceHandler &handler, float x, floa
 void DialogueSystem::hasClicked(std::string indexName, Player *player)
 {
 	mPlayer = player;
-
-	//Spider
-	if (indexName == "spider" && mHasClicked == false)
-	{
-		mDialogueSpider = true;
-		mHasClicked = true;
-	}
 
 	//Advanced Dialogue
 	//if (indexName == "level1Start" && mHasClicked == false)
@@ -651,12 +635,6 @@ bool DialogueSystem::getLevel2Start()
 //Update function
 void DialogueSystem::update(float time)
 {
-	//Spider Dialogue
-	if (mDialogueSpider == true)
-	{
-		displaySpiderDialogue();
-	}
-
 	//Advanced Dialogue
 	if (mLevel1Start == true)
 	{
@@ -864,7 +842,7 @@ void DialogueSystem::update(float time)
 	}
 	if (mEmptyEarth == true)
 	{
-		displayEmptyEarthDialogue();
+		displayEarthDialogue();
 	}
 	if (mEmptyMars == true)
 	{
@@ -934,41 +912,12 @@ void DialogueSystem::update(float time)
 
 void DialogueSystem::setState()
 {
-	mLineStarted = false;
 	mState++;
-}
-
-void DialogueSystem::setStateManual(int state)
-{
-	mState = state;
 }
 
 bool DialogueSystem::isDialogueFinished()
 {
 	return mFinishedDialogue;
-}
-
-//Spider Dialogue
-void DialogueSystem::displaySpiderDialogue()
-{
-	if (mState >= 25)
-	{
-		mText.setString("");
-		mActorText.setString("");
-		mHasClicked = false;
-		mLevel1Start = false;
-		mAdvancedIsActive = false;
-		mFinishedDialogue = true;
-	}
-
-	else if (mState >= 0 && mState <= 24)
-	{
-		mAdvancedIsActive = true;
-		getSpiderText(100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "");
-		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
-		actorText("", 480.f, 307.f, 1.f, 1.f);
-	}
 }
 
 //Advanced Dialogues
@@ -1001,7 +950,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	std::string level1StartHilma14 = "Då så, Thomas. Då ska jag hitta en stjärna, en astronaut och en skruvmackapär åt dig!";
 	std::string level1StartInterlude = "*Thomas nickar tveksamt*";
 
-	if (mState >= 25)
+	if (mState == 25)
 	{
 		mText.setString("");
 		mActorText.setString("");
@@ -1018,61 +967,22 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
-
-		//Voice Acting Template
-		if (!mLineStarted && voiceActingTest.getStatus() != 2)
-		{
-			voiceActingTest.play();
-			mLineStarted = true;
-		}
-		if (mLineStarted && voiceActingTest.getStatus() == 0)
-		{
-			mLineStarted = false;
-			setState();
-		}
 	}
 	if (mState == 1)
 	{
 		advancedText(level1StartTeller, 100.f, 420.f, 1.f, 1.f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
-
-		//Voice Acting Template
-		voiceActingTest.stop();
-		if (!mLineStarted && voiceActingTest2.getStatus() != 2)
-		{
-			voiceActingTest2.play();
-			mLineStarted = true;
-		}
-		if (mLineStarted && voiceActingTest2.getStatus() == 0)
-		{
-			mLineStarted = false;
-			setState();
-		}
 	}
 	if (mState == 2)
 	{
 		advancedText(level1StartHilma2, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
-
-		//Voice Acting Template
-		voiceActingTest2.stop();
-		if (!mLineStarted && voiceActingTest.getStatus() != 2)
-		{
-			voiceActingTest.play();
-			mLineStarted = true;
-		}
-		if (mLineStarted && voiceActingTest.getStatus() == 0)
-		{
-			mLineStarted = false;
-			setState();
-		}
 	}
 	if (mState == 3)
 	{
 		advancedText(level1StartHilma3, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAbject.png");
-		voiceActingTest.stop();
 	}
 	if (mState == 4)
 	{
@@ -1562,48 +1472,7 @@ void DialogueSystem::displayLevel2MissingRocketAdvancedDialogue()
 
 void DialogueSystem::displayLevel2PutteAdvancedDialogue()
 {
-	std::string level2PutteTeller = "På hyllan satt en liten, liten varelse. Den påminde väldigt mycket om Hilma i utseendet. Det måste vara en till hittare! Den såg mycket bekymrad ut... När Thomas var påväg att fråga hittaren hur det stod till, hindrade Hilma honom hastigt.";
-	std::string level2PutteHilma = "Men kolla här borta! Det ser jätteintressant ut, vi borde kolla-";
-	std::string level2PutteTeller2 = "Men innan hon hann säga mycket mer hade Thomas redan frågat hittaren. Hilma slog sig irriterat för ansiktet.";
-	std::string level2PuttePutte = "En människa! Oh nej, jag måste gömma mig innan-";
-	std::string level2PutteTeller3 = "Då fick hittaren syn på Hilma och fick ett leende på läpparna. Hilma log dock inte tillbaka. Hon försökte istället undvika hittarens blick.";
-	std::string level2PuttePutte2 = "Men Hilma! Åh, vad bra att du är här! Vem är människan du är med? Inte visste jag att du hade människovän-";
-	std::string level2PutteHilma2 = "För det första, det angår inte dig! För det andra, så är vi lite upptagna. Om du ursäktar oss-";
-	std::string level2PutteThomas = "Jag heter Thomas! Trevligt att träffas!";
-	std::string level2PutteTeller4 = "Hilma blängde surt på Thomas och ryckte i hans ärm för att gå vidare.";
-	std::string level2PuttePutte3 = "Snälla gå inte! Jag behöver din hjälp! J-jag kanske kan hjälpa dig i utbyte!";
-	std::string level2PutteHilma3 = "Igen!? Hur många gånger måste jag hjälpa dig? Och hur ska jag kunna få hjälp av dig som inte ens kan sköta sitt jobb som hittare? Jag har inte någon nytta av dig, tapparen Putte!";
-	std::string level2PuttePutte4 = "Snälla! Jag ber dig! Jag har inte tappat något den här gången. Jag behöver nyckeln på den översta hyllan. Men jag når inte upp! Och... Jag kan inte komma ned...";
-	std::string level2PutteHilma4 = "Du har alltså tappat bort din nyckel OCH dina egna tankar?";
-	std::string level2PutteHilma5 = "Inte konstigt att du är fast däruppe. Ledsen men vi har inte tid med det här.";
-	std::string level2PutteThomas2 = "Men... Men Hilma. Ska vi inte hjälpa honom? Han behöver ju hjälp.";
-	std::string level2PuttePutte5 = "Nej! Jag har inte tappat bort nyckeln! Den blev stulen från mig av skatan!";
-	std::string level2PutteHilma6 = "Skata säger du... Och vad ska du med nyckeln till? Vad ger du mig i utbyte OM jag skulle hjälpa dig?";
-	std::string level2PuttePutte6 = "Jag behöver några saker i den låsta lådan, jag kan ge dig något från den lådan i utbyte!";
-	std::string level2PutteThomas3 = "Det kanske finns något därinne som vi behöver? Det är ju... mormors låda!";
-	std::string level2PutteHilma7 = "Okej, för den här gången. Men! Om det är något därinne som inte är värdig som utbyte, lämnar jag dig åt skatan!";
-	std::string level2PuttePutte7 = "Tack så mycket Hilma!";
-	std::string level2PutteThomas4 = "Du... tänker väl inte ge honom till skatan?";
-	std::string level2PutteHilma8 = "Skator har ett öga för saker som glittrar. Putte är så långt från glitter man kan komma.";
 
-	if (mState >= 24)
-	{
-		mText.setString("");
-		mActorText.setString("");
-		mHasClicked = false;
-		mLevel2Putte = false;
-		mAdvancedIsActive = false;
-		mFinishedDialogue = true;
-	}
-	if (mState == 0)
-	{
-		mAdvancedIsActive = true;
-		advancedText(level2PutteTeller, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
-		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
-		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
-	}
 }
 
 void DialogueSystem::displayLevel2SteamMachineAdvancedDialogue()

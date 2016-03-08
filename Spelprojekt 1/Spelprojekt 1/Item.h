@@ -76,6 +76,12 @@ public:
 	//Change texture
 	void changeTexture(ResourceHandler &handler, std::string filename);
 
+	//Animations
+	void setActiveAnimation(std::string animation);
+	std::string getActiveAnimation();
+
+	void setCraftIndex(int craftIndex);
+
 private:
 	bool mIsActive;
 	bool mIsLookable;
@@ -101,6 +107,27 @@ private:
 	bool isOnPosition;
 
 	float mSpeed;
+
+
+	//Animations
+	bool mWalk;
+	bool mPush;
+
+	//Animation Values
+	int mCurrentFrame;
+	int mFrameYOffset;
+	int mFrameXOffset;
+	float mCurrentTime;
+	float mFrameTime;
+	std::string mActiveAnimation;
+
+	//Animation Textures
+	sf::Texture mGardenLady;
+	sf::Texture mDog;
+	sf::Texture mCatWalking;
+	sf::Texture mCatEating;
+	sf::Texture mRogerSwim;
+
 };
 
 #endif

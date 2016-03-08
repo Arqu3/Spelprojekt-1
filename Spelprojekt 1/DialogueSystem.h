@@ -4,7 +4,6 @@
 #include <string>
 #include "Item.h"
 #include "Player.h"
-#include "RiddleSpider.h"
 
 class DialogueSystem
 {
@@ -16,7 +15,6 @@ public:
 	void text(std::string text, sf::Vector2f &position, float x, float y);
 	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
 	void actorText(std::string actorText, float posX, float posY, float offsetX, float offsetY);
-	void getSpiderText(float posX, float posY, float offsetX, float offsetY);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
@@ -38,13 +36,9 @@ public:
 
 	//Sets the state value
 	void setState();
-	void setStateManual(int state);
 
 	//Function to check in dialogue is finished
 	bool isDialogueFinished();
-
-	//Spider Dialogue
-	void displaySpiderDialogue();
 
 	//Advanced Dialogues
 	//Level 1
@@ -156,12 +150,8 @@ private:
 	sf::Sprite mFirstCharacter;
 	sf::Sprite mSecondCharacter;
 	sf::RectangleShape mSepia;
-	RiddleSpider *mSpider;
 	Player *mPlayer;
 	ResourceHandler &mHandler;
-
-	//Spider Dialogue
-	bool mDialogueSpider;
 
 	//Advanced Dialogue
 	bool mLevel1Start;
@@ -239,10 +229,6 @@ private:
 	bool mDollHouse;
 	bool mPutte;
 	bool mPutteFamily;
-
-	sf::Music voiceActingTest;
-	sf::Music voiceActingTest2;
-	bool mLineStarted;
 };
 
 #endif

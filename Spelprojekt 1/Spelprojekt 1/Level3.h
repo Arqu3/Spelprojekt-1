@@ -1,14 +1,14 @@
-#ifndef INCLUDED_LASTLEVEL
-#define INCLUDED_LASTLEVEL
+#ifndef INCLUDED_LEVEL3
+#define INCLUDED_LEVEL3
 
 #include "Level.h"
 #include "SFML\System.hpp"
 
-class LastLevel: public Level{
+class Level3 :public Level{
 public:
 
-	LastLevel(ResourceHandler &handler);
-	~LastLevel();
+	Level3(ResourceHandler &handler);
+	~Level3();
 
 	//Item
 	ItemVector getItems();
@@ -61,18 +61,9 @@ public:
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
+
 	//Level Complete
 	bool isLevelComplete();
-
-	//Update functions
-	void updateTargetItem(float deltaTime);
-	void lookAtTargetItem();
-	void pickupTargetItem();
-	void interactTargetItem();
-
-	//Mouseclick collision functions
-	void mouseClickCheckItemCollision(sf::Vector2f point);
-	void mouseClickCheckRectCollision(sf::Vector2f point);
 
 private:
 
@@ -96,32 +87,11 @@ private:
 	sf::RectangleShape foreground3;
 
 	sf::RectangleShape rectangle; //HelpRect
-	sf::RectangleShape rectangle2; //HelpRect
-	sf::RectangleShape rectangle3; //HelpRect
-	sf::RectangleShape rectangle4; //HelpRect
-	sf::RectangleShape rectangle5; //HelpRect
-	sf::RectangleShape rectangle6; //HelpRect
-	sf::RectangleShape rectangle7; //HelpRect
-	sf::RectangleShape rectangle8; //HelpRect
-	sf::RectangleShape rectangle9; //HelpRect
 	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
 
 	//Sound
 	sf::Music music;
-	sf::Sound mAmbientSound;
-	sf::Sound mFishHitFloorSound;
-	sf::Sound mCatHissingSound;
-	sf::Sound mCatSound;
-	sf::Sound mRegularItemSound;
-	sf::Sound mCriticalItemSound;
-	sf::Sound mPlanetPuzzleSound;
-	sf::Sound mGramophoneSound;
-	sf::Sound mRunningWaterSound;
-	sf::Sound mScrewGlobeSound;
-	sf::Sound mJewelryBoxSound;
-	sf::Sound mMenuInventorySound;
-	sf::Sound mMenuHatSound;
-	sf::Sound mMenuMainUISound;
+	sf::Sound ambientSound;
 
 	//Scene
 	bool mIsActive;
@@ -132,27 +102,14 @@ private:
 
 	//Items
 	ItemVector mItems;
-	Item* mPutte;
-	Item* mDollhouse;
-	Item* mMagicClam;
-	Item* mNeedle;
-	Item* mEarth;
-	Item* mFish;
-	Item* mGramophone;
-	Item* mHoolaHoop;
-	Item* mBeigeBall;
-	Item* mFruitbowl;
-	Item* mRedApple;
-	Item* mCat;
-	Item* mFoodBowl;
-	Item* mKids;
-	Item* mHole;
-	Item* mPearl;
-	Item* mScrewDevice;
-	Item* mSaturn;
-	Item* mVenus;
-	Item* mPump;
-	Item* mPumpedSaturn;
+	Item* mTrimmer;
+	Item* mStick;
+	Item* mFlowers;
+	Item *mSingleFlower;
+	Item *mLeash;
+	Item* mDog;
+	Item* mFlagpole;
+
 
 	bool mLevelComplete;
 
@@ -185,21 +142,14 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
-	bool mFishFalling;
-	bool mCatWalking;
-	bool mEarthPickedUp;
-	bool mDollhouseInteracted;
-	bool mKidsFound;
-	bool mCatMoved;
-	bool mPlutoHanged;
-	bool mVenusHanged;
-	bool mEarthHanged;
-	bool mSaturnHanged;
-	bool mMarsHanged;
+	bool mUnleashed;
+	bool mFlowerPickedUp;
+	bool mFlowersPlaced;
 
 	ResourceHandler &handler;
 
 	int mUpdateTime;
-};
+
+	};
 
 #endif
