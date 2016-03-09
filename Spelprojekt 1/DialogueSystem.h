@@ -4,8 +4,6 @@
 #include <string>
 #include "Item.h"
 #include "Player.h"
-#include "RiddleSpider.h"
-#include <vector>
 
 class DialogueSystem
 {
@@ -13,13 +11,10 @@ public:
 	DialogueSystem(ResourceHandler &handler);
 	~DialogueSystem();
 
-	typedef std::vector<sf::Text> TextVector;
-
 	//Talk functions
 	void text(std::string text, sf::Vector2f &position, float x, float y);
 	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
 	void actorText(std::string actorText, float posX, float posY, float offsetX, float offsetY);
-	void getSpiderText(TextVector &inputVector);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
@@ -41,13 +36,9 @@ public:
 
 	//Sets the state value
 	void setState();
-	//void setStateManual(int state);
 
 	//Function to check in dialogue is finished
 	bool isDialogueFinished();
-
-	//Spider Dialogue
-	void displaySpiderDialogue();
 
 	//Advanced Dialogues
 	//Level 1
@@ -149,7 +140,6 @@ private:
 	bool mAdvancedIsActive;
 	bool mFinishedDialogue;
 	int mState;
-	TextVector mTexts;
 	std::string mTexture;
 	sf::Text mText;
 	sf::Text mActorText;
@@ -160,12 +150,8 @@ private:
 	sf::Sprite mFirstCharacter;
 	sf::Sprite mSecondCharacter;
 	sf::RectangleShape mSepia;
-	RiddleSpider *mSpider;
 	Player *mPlayer;
 	ResourceHandler &mHandler;
-
-	//Spider Dialogue
-	bool mDialogueSpider;
 
 	//Advanced Dialogue
 	bool mLevel1Start;
@@ -243,10 +229,6 @@ private:
 	bool mDollHouse;
 	bool mPutte;
 	bool mPutteFamily;
-
-	sf::Music voiceActingTest;
-	sf::Music voiceActingTest2;
-	bool mLineStarted;
 };
 
 #endif

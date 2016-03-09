@@ -28,6 +28,7 @@ public:
 	bool getIsOnPosition();
 	void setScale(sf::Vector2f scale);
 	int getCurrentFrame();
+	void setFrameTime(float frametime);
 
 private:
 	void move(float deltaTime);
