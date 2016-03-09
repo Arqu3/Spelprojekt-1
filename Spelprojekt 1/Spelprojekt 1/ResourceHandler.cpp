@@ -75,6 +75,7 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionHilmaThoughtful.png");
 	addTexture("expressionThomasAngry.png");
 	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasChocked.png");
 	addTexture("expressionThomasCry.png");
 	addTexture("expressionThomasDetermined.png");
 	addTexture("expressionThomasHappy.png");

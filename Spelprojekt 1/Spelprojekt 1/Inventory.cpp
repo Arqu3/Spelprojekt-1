@@ -73,7 +73,7 @@ mCircle2Mid(725, 175)
 	mCraftingSound.setVolume(50);
 
 	//Font / Text
-	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
 	mDescription.setFont(mFont);
 	mDescription.setCharacterSize(18);
 	mDescription.setStyle(sf::Text::Bold);

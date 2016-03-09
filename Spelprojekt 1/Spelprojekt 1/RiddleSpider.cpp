@@ -115,10 +115,22 @@ void RiddleSpider::addText(string text)
 {
 	mTextCounter++;
 	mTexts.push_back(sf::Text());
-	mTexts[mTextCounter].setCharacterSize(18);
-	mTexts[mTextCounter].setStyle(sf::Text::Bold);
-	mTexts[mTextCounter].setColor(sf::Color::Black);
-	mTexts[mTextCounter].setFont(mFont);
+
+	//Isn't needed, this is made by the DialogueSystem Component
+	//mTexts[mTextCounter].setCharacterSize(18);
+	//mTexts[mTextCounter].setStyle(sf::Text::Bold);
+	//mTexts[mTextCounter].setColor(sf::Color::Black);
+	//mTexts[mTextCounter].setFont(mFont);
+}
+
+void RiddleSpider::setText(std::string text)
+{
+	mText.setString(text);
+}
+
+std::string RiddleSpider::getText()
+{
+	return mText.getString();
 }
 
 void RiddleSpider::resetActiveTimer()
