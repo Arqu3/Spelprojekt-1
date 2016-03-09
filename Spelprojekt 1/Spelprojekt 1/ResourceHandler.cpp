@@ -16,6 +16,16 @@ musicCounter(0)
 	addTexture("MainMenuBackground.png");
 	addTexture("Test1.png");
 
+	//Main menu buttons
+	addTexture("NewGame.png");
+	addTexture("NewGameGLOW.png");
+	addTexture("Continue.png");
+	addTexture("ContinueGLOW.png");
+	addTexture("Options.png");
+	addTexture("OptionsGLOW.png");
+	addTexture("Exit.png");
+	addTexture("ExitGLOW.png");
+
 	loadScreen.setSize(sf::Vector2f(1024, 576));
 	loadScreen.setTexture(getTexture("loadscreen.png"));
 
