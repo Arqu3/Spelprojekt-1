@@ -5,6 +5,8 @@ mRects(),
 mPlayRects(),
 mIsActive(false),
 mItemInteraction(false),
+mPickedUpFishingRod(false),
+mPickedUpMagnet(false),
 mLookedAtAquarium(false),
 mPushingBlock(false),
 mCubePlaced(false),
@@ -253,7 +255,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mCursor->setMode(Cursor::DIALOGUE);
 
 		//Menu
-		mUI = ui; //TODO - Test mUI** and &ui
+		mUI = ui; //TODO - Test mUI** and &ui if not working
 
 		//Clues
 		mClues = new Clue(handler, "ClueBackground1.png");
@@ -276,6 +278,10 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 		mClues->add(handler, "Test1.png", sf::Vector2f(800, 400));
 		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
+
+		mClues->add(handler, "InfoIcon.png", sf::Vector2f(280, 450));
+		mClues->getClue(6)->setStrings("Detta är ledtrådskartan. \nHär kan du läsa vad du har gjort \nhittills och vad du bör göra \nhärnäst. Bara håll musen över \nen ledtråd för att läsa den. \nPilarna låter dig se ledtrådar \nför banor du tidigare klarat.", "");
+		mClues->getClue(6)->setState1();
 
 		//Spooky scary spider
 		mSpider = new RiddleSpider(handler, sf::Vector2f(750, -500));
@@ -350,6 +356,8 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		addItem(mBowl);
 		addItem(mCube);
 		addItem(mRoger);
+
+		mUI->setActiveAnimation("ClueIconGlow");
 	}
 	else
 	{
@@ -657,6 +665,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 					{
 						mClues->getClue(3)->setState2();
 						mClues->getClue(4)->setState1();
+						mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
 					}
 				}
 			}
@@ -705,6 +714,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mPlayer->togglePlayer();
+				mUI->setActiveAnimation("HatIconGlowOnce");
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
@@ -888,7 +898,8 @@ void Level1::mouseReleased(sf::Event & event)
 	if (mInventory->selectedItem() != NULL
 		&& mAstronaut->isLookedAt()
 		&& mInventory->selectedItem()->getId() == "FishingRodMagnet"
-		&& mAstronaut->getRectangle().contains(mWorldPos))
+		&& mAstronaut->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
 	{
 		//Place Rubics Cube in front of Block
 		//TODO - Add Dialogue for the placing of the Cube
@@ -1142,6 +1153,7 @@ void Level1::updateTargetItem(float deltaTime)
 				mFishing = false;
 				mTargetItem->toggleActive();
 				mInventory->addItem(mTargetItem);
+				mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
 				mPlayer->setFrameTime(0.03f);
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
@@ -1216,14 +1228,26 @@ void Level1::pickupTargetItem()
 	if (mTargetItem->getId() == "Magnet")
 	{
 		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
 		std::cout << "Plockade upp magnet";
 		mRegularItemSound.play();
+		mPickedUpMagnet = true;
+		if (mPickedUpFishingRod)
+		{
+			mUI->setActiveAnimation("InventoryIconGlow");
+		}
 	}
 	if (mTargetItem->getId() == "String")
 	{
 		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
 		std::cout << "Plockade upp fiskespo";
 		mRegularItemSound.play();
+		mPickedUpFishingRod = true;
+		if (mPickedUpMagnet)
+		{
+			mUI->setActiveAnimation("InventoryIconGlow");
+		}
 	}
 	if (mTargetItem->getId() == "Astronaut")
 	{
@@ -1275,6 +1299,7 @@ void Level1::interactTargetItem()
 			mMovedStar = true;
 			mClues->getClue(1)->setState2();
 			mClues->getClue(2)->setState1();
+			mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "ClueIconGlowOnce"
 			std::cout << "Satte stjärnan på väggen";
 		}
 	}
@@ -1352,12 +1377,14 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 					//Clues
 					mClues->getClue(2)->setState2();
 					mClues->getClue(3)->setState1();
+					mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
 
 					//Set correct clue depending on crafted item
 					if (mHasCraftedFishingRod)
 					{
 						mClues->getClue(3)->setState2();
 						mClues->getClue(4)->setState1();
+						mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
 					}
 				}
 				if (getItems()[i]->getId() == "String")
@@ -1477,6 +1504,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 							{
 								mCriticalItemSound.play();
 								mInventory->addItem(getItems()[i]);
+								mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
 								getItems()[i]->toggleActive();
 								mPickedUpScrewdevice = true;
 								mClues->getClue(5)->setState2();

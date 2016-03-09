@@ -11,7 +11,8 @@ mFrameXOffset(0),
 mFrameYOffset(0),
 mActiveAnimation("None"),
 mLevelStart(false),
-mInfoBoxDisplay(true)
+mInfoBoxDisplay(true),
+mReset(false)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -114,6 +115,14 @@ mInfoBoxDisplay(true)
 	mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
 	mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
 	mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
+
+	//Text
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
+	mInfoText.setFont(mFont);
+	mInfoText.setCharacterSize(18);
+	mInfoText.setColor(sf::Color::Black);
+	mInfoText.setPosition(400, 420);
+	mInfoText.setString("Detta är din saksamling. \nHär hittar du alla föremål du \nsamlat på dig under spelet. \nOm du drar två föremål som \nkan kombineras till verkstaden \nkan du skapa nya föremål \nsom du kan använda.");
 }
 
 UI::~UI()
@@ -159,22 +168,25 @@ void UI::update(float deltaTime)
 	//Glow Animations
 	if (mActiveAnimation != "None")
 	{
+		mReset = false;
 		if (mCurrentTime >= mFrameTime)
 		{
-			if (mActiveAnimation == "HatIconGlow")
+			if (mActiveAnimation == "HatIconGlow" || mActiveAnimation == "HatIconGlowOnce")
 			{
 				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
-			else if (mActiveAnimation == "MenuIconGlow")
+			else if (mActiveAnimation == "MenuIconGlow" || mActiveAnimation == "MenuIconGlowOnce")
 			{
 				mMenuIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
 			else if (mActiveAnimation == "InventoryIconGlow")
 			{
+				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 				mInventoryIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
 			else if (mActiveAnimation == "ClueIconGlow")
 			{
+				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 				mClueIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
 			if (mCurrentFrame < 49)
@@ -195,17 +207,24 @@ void UI::update(float deltaTime)
 				mCurrentFrame = 0;
 				mFrameXOffset = 0;
 				mFrameYOffset = 0;
+				if (mActiveAnimation == "HatIconGlowOnce" || mActiveAnimation == "MenuIconGlowOnce")
+				{
+					mActiveAnimation = "None";
+				}
 			}
 		mCurrentTime = 0;
 		}
 	}
 	else
 	{
-		//TODO - Add bool so that this isn't done over and over again
-		mHatIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
-		mMenuIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
-		mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
-		mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		if (!mReset)
+		{
+			mHatIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mMenuIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mReset = true;
+		}	
 	}
 }
 
@@ -239,6 +258,7 @@ void UI::draw(sf::RenderWindow &window)
 		if (mInfoBoxDisplay)
 		{
 			window.draw(mInfoBox);
+			window.draw(mInfoText);
 		}
 		break;
 
@@ -466,6 +486,7 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 
 	mInfoIcon.setPosition(sf::Vector2f(viewCenter.x + 160, 400));
 	mInfoBox.setPosition(sf::Vector2f(viewCenter.x + 200, 350));
+	mInfoText.setPosition(sf::Vector2f(viewCenter.x + 210, 360));
 
 	//mHelpRectangle.setPosition(sf::Vector2f(viewCenter.x - 416, 513));
 	//mHelpRectangle.setSize(sf::Vector2f(40, 40));

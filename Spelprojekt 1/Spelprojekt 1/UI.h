@@ -106,6 +106,12 @@ private:
 	//Spritesheets
 	sf::Texture mInventoryGlow;
 	sf::Texture mClueGlow;
+
+	//Text
+	sf::Font mFont;
+	sf::Text mInfoText;
+
+	bool mReset;
 };
 
 #endif

@@ -159,6 +159,8 @@ private:
 	bool mRogerOnPoint;
 
 	bool mPlayerToggle;
+	bool mPickedUpFishingRod;
+	bool mPickedUpMagnet;
 	bool mLookedAtAquarium;
 	bool mPushingBlock;
 	bool mCubePlaced;
