@@ -258,24 +258,24 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 		//Clues
 		mClues = new Clue(handler, "ClueBackground1.png");
-		mClues->add(handler, "Test1.png", sf::Vector2f(75, 60));
+		mClues->add(handler, "Clue1First.png", sf::Vector2f(75, 60));
 		mClues->getClue(0)->setStrings("Jag måste hitta en stjärna, en \nastronaut, och en skruvmakapär.", "");
 		mClues->getClue(0)->setState1();
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(220, 200));
+		mClues->add(handler, "thomasstar.png", sf::Vector2f(220, 200));
 		mClues->getClue(1)->setStrings("Först måste jag hitta stjärnan.", "Jag hittade stjärnan på golvet!");
 		mClues->getClue(1)->setState1();
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(425, 115));
+		mClues->add(handler, "thomasastronaut.png", sf::Vector2f(425, 115));
 		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet men \njag måste fiska upp den!");
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(630, 60));
+		mClues->add(handler, "Clue1Aqua.png", sf::Vector2f(630, 60));
 		mClues->getClue(3)->setStrings("Jag måste hitta något att fiska \nupp astronauten med.", "Med magnetfiskaren kan jag få \ntag i astronauten!");
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(685, 240));
+		mClues->add(handler, "FishingRodMagnet.png", sf::Vector2f(685, 240));
 		mClues->getClue(4)->setStrings("Nu måste jag bara fiska upp \nastronauten också.", "Astronauten har blivit hittad!");
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(800, 400));
+		mClues->add(handler, "ScrewDeviceINV.png", sf::Vector2f(800, 400));
 		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
 
 		mClues->add(handler, "InfoIcon.png", sf::Vector2f(280, 450));

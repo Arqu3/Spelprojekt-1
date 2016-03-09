@@ -46,12 +46,19 @@ public:
 			{
 				mState1 = true;
 				mText.setString(mText1);
+
+				if (mText2 != "")
+				{
+					mSprite.setColor(sf::Color(255, 255, 255, 128));
+				}
 			}
 		}
 		void setState2()
 		{
 			mState2 = true;
 			mText.setString(mText2);
+
+			mSprite.setColor(sf::Color(255, 255, 255, 255));
 		}
 
 		bool getState1()
