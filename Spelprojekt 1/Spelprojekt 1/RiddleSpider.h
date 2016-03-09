@@ -25,6 +25,8 @@ public:
 	State getState();
 	sf::FloatRect getRect();
 	void addText(std::string text);
+	void setText(std::string text);
+	std::string getText();
 	void resetActiveTimer();
 	void resetMoveTimer();
 
@@ -36,6 +38,7 @@ private:
 	float mActiveTimer;
 	int mTextCounter;
 	sf::Font mFont;
+	sf::Text mText;
 
 	typedef std::vector<sf::Text> TextVector;
 	TextVector mTexts;
