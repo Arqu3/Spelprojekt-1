@@ -20,6 +20,7 @@ public:
 		{
 			mSprite.setTexture(*handler.getTexture(textureName));
 			mSprite.setPosition(position);
+			//TODO - Add sf::Vector2f scale parameter and use that to set the proper scale for mSprite?
 			if (textureName == "InfoIcon.png")
 			{
 				mSprite.setScale(sf::Vector2f(0.5f, 0.5f));

@@ -266,8 +266,8 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mClues->getClue(1)->setStrings("Först måste jag hitta stjärnan.", "Jag hittade stjärnan på golvet!");
 		mClues->getClue(1)->setState1();
 
-		mClues->add(handler, "thomasastronaut.png", sf::Vector2f(425, 115));
-		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet men \njag måste fiska upp den!");
+		mClues->add(handler, "AstronautINV.png", sf::Vector2f(425, 115));
+		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet \nmen jag måste fiska upp den!");
 
 		mClues->add(handler, "Clue1Aqua.png", sf::Vector2f(630, 60));
 		mClues->getClue(3)->setStrings("Jag måste hitta något att fiska \nupp astronauten med.", "Med magnetfiskaren kan jag få \ntag i astronauten!");
