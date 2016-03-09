@@ -16,6 +16,16 @@ musicCounter(0)
 	addTexture("MainMenuBackground.png");
 	addTexture("Test1.png");
 
+	//Main menu buttons
+	addTexture("NewGame.png");
+	addTexture("NewGameGLOW.png");
+	addTexture("Continue.png");
+	addTexture("ContinueGLOW.png");
+	addTexture("Options.png");
+	addTexture("OptionsGLOW.png");
+	addTexture("Exit.png");
+	addTexture("ExitGLOW.png");
+
 	loadScreen.setSize(sf::Vector2f(1024, 576));
 	loadScreen.setTexture(getTexture("loadscreen.png"));
 
@@ -140,6 +150,9 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("FishingRodINV.png");
 	addTexture("MagnetINV.png");
 	addTexture("ScrewDeviceINV.png");
+	//Custom clue icons
+	addTexture("Clue1Aqua.png");
+	addTexture("Clue1First.png");
 
 	// Level1
 	drawLoadScreen(window, "Maxar Objekt");

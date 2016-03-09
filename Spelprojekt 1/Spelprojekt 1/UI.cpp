@@ -89,13 +89,14 @@ mLevelStart(false)
 	mBackground.setTexture(handler.getTexture("MainMenuBackground.png"));
 
 	//Adds main menu buttons
-	mMainButtons.push_back(new Button(200, 100, sf::Color::Red));
-	mMainButtons.push_back(new Button(200, 100, sf::Color::Blue));
-	mMainButtons.push_back(new Button(200, 100, sf::Color::Green));
+	mMainButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "NewGame.png", "NewGameGLOW.png"));
+	mMainButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Continue.png", "ContinueGLOW.png"));
+	mMainButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(393, 120)), "Options.png", "OptionsGLOW.png"));
+	mMainButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Exit.png", "ExitGLOW.png"));
 
 	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
 	{
-		mMainButtons[i]->setPosition(512.0f - (mMainButtons[0]->getRect().width / 2), 100.0f + (160.0f * i));
+		mMainButtons[i]->setPosition(240.0f - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
 	}
 
 	//Sounds
@@ -310,7 +311,7 @@ void UI::eventListen(sf::RenderWindow &window)
 						mLoad = false;
 					}
 
-					if (mMainButtons[2]->isPressed(window))
+					if (mMainButtons[3]->isPressed(window))
 					{
 						window.close();
 					}

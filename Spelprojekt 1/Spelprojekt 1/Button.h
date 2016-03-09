@@ -13,6 +13,7 @@ public:
 	Button(sf::RectangleShape &rect, sf::Color col);
 	Button(ResourceHandler &handler, float x, float y, std::string textureName);
 	Button(ResourceHandler &handler, sf::Vector2f &pos, std::string textureName);
+	Button(ResourceHandler &handler, sf::RectangleShape &rect, std::string textureName, std::string hoverName);
 	~Button();
 
 	bool isPressed(sf::RenderWindow &window);
@@ -34,6 +35,7 @@ public:
 private:
 	//Variables
 	sf::RectangleShape mRect;
+	sf::RectangleShape mHoverRect;
 	sf::FloatRect mFRect;
 	sf::Vector2f mMoveToPosition;
 	sf::Vector2f mDirection;
