@@ -1125,7 +1125,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	std::string level1StartHilma3 = "Det var det bästa utbytet jag hittills har fått! Jag som hade hittat så bra...";
 	std::string level1StartThomas = "V-vad har du tappat?";
 	std::string level1StartHilma4 = "För det första, jag har inte tappat bort något. För det andra, är det en mycket ovärderlig sak som tog väldigt lång tid att få. Det var en fantastisk skruvmackapär. Med den skulle jag bygga en mycket finare flygfarkost än denna skrothög. Men nu har jag INGENTING jag kan laga skrothögen med.";
-	std::string level1StartTeller2 = "Pojken tyckte synd om den lilla varelsen och undrade om han kunde hjälpa till. Då kom han på en idé.";
+	std::string level1StartTeller2 = "Pojken tyckte det var lite synd om den lilla varelsen och undrade om han kunde hjälpa till. Då kom han på en idé.";
 	std::string level1StartThomas2 = "J-jag kanske... har en skruvmackapär-";
 	std::string level1StartHilma5 = "Jamen då så! Var har du den?";
 	std::string level1StartThomas3 = "Eh... jag vet inte...";
@@ -1375,7 +1375,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	std::string level1EndTeller = "När Thomas fick syn på alla föremål kunde han inte tro sina ögon. Han som hade letat så mycket själv! Hans mamma hade sagt att när något försvann i hans stökiga rum, var det försvunnet för alltid. Tydligen inte för en hittare.";
 	std::string level1EndHilma2 = "Jag sa ju det! Jag hittar vad som helst, var som helst!";
 	std::string level1EndTeller2 = "Då fick han ett litet, litet leende på läpparna och tackade så mycket för Hilmas hjälp. Men leendet försvann snabbt när han såg på skruvmackapären.";
-	std::string level1EndTeller3 = "Han blev alldeles tyst och stirrade på den. Plötsligt kunde han inte bara ge den till den hjälpsamma hittaren. Han höll hårdare i skruvmackapären. Nu började Hilma bli otålig.";
+	std::string level1EndTeller3 = "Han blev alldeles tyst och stirrade på den. Plötsligt kunde han inte bara ge den till den hjälpsamma hittaren. Han höll hårdare i skruvmackapären. Nu började Hilma bli lite otålig.";
 	std::string level1EndHilma3 = "Hallå? Thomas? Jorden anropar!";
 	std::string level1EndThomas = "F-förlåt jag... jag... Det är bara det att det inte är min skruvmackapär jag ger dig.";
 	std::string level1EndHilma4 = "Jaha ja, vems är det då om man får fråga? Har du stulit den?";

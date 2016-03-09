@@ -171,7 +171,7 @@ void UI::update(float deltaTime)
 		mReset = false;
 		if (mCurrentTime >= mFrameTime)
 		{
-			if (mActiveAnimation == "HatIconGlow" || mActiveAnimation == "HatIconGlowOnce")
+			if (mActiveAnimation == "HatIconGlow" || mActiveAnimation == "HatIconGlowOnce" || mActiveAnimation == "InventoryIconGlowOnce" || mActiveAnimation == "ClueIconGlowOnce")
 			{
 				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
@@ -187,6 +187,14 @@ void UI::update(float deltaTime)
 			else if (mActiveAnimation == "ClueIconGlow")
 			{
 				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+				mClueIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "InventoryIconGlowAfterHat")
+			{
+				mInventoryIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "ClueIconGlowAfterHat")
+			{
 				mClueIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
 			if (mCurrentFrame < 49)
@@ -211,6 +219,14 @@ void UI::update(float deltaTime)
 				{
 					mActiveAnimation = "None";
 				}
+				else if (mActiveAnimation == "InventoryIconGlowOnce")
+				{
+					mActiveAnimation = "InventoryIconGlowAfterHat";
+				}
+				else if (mActiveAnimation == "ClueIconGlowOnce")
+				{
+					mActiveAnimation = "ClueIconGlowAfterHat";
+				}
 			}
 		mCurrentTime = 0;
 		}
@@ -234,11 +250,11 @@ void UI::draw(sf::RenderWindow &window)
 	{
 	case HAT:
 		window.draw(mHatMenu);
-		if (mActiveAnimation == "InventoryIconGlow")
+		if (mActiveAnimation == "InventoryIconGlow" || mActiveAnimation == "InventoryIconGlowAfterHat")
 		{
 			window.draw(mInventoryIcon);
 		}
-		if (mActiveAnimation == "ClueIconGlow")
+		if (mActiveAnimation == "ClueIconGlow" || mActiveAnimation == "ClueIconGlowAfterHat")
 		{
 			window.draw(mClueIcon);
 		}
@@ -372,7 +388,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != HAT)
 		{
 			mState = HAT;
-			if (mActiveAnimation == "HatIconGlow")
+			if (mActiveAnimation == "HatIconGlow" || mActiveAnimation == "HatIconGlowOnce")
 			{
 				setActiveAnimation("None");
 			}
@@ -388,7 +404,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != MAINUI)
 		{
 			mState = MAINUI;
-			if (mActiveAnimation == "MenuIconGlow")
+			if (mActiveAnimation == "MenuIconGlow" || mActiveAnimation == "MenuIconGlowOnce")
 			{
 				setActiveAnimation("None");
 			}
@@ -406,7 +422,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mInventoryRect.contains(point))
 		{
 			setState(INVENTORY);
-			if (mActiveAnimation == "InventoryIconGlow")
+			if (mActiveAnimation == "InventoryIconGlow" || mActiveAnimation == "InventoryIconGlowAfterHat")
 			{
 				setActiveAnimation("None");
 			}
@@ -415,7 +431,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mCluesRect.contains(point))
 		{
 			setState(CLUES);
-			if (mActiveAnimation == "ClueIconGlow")
+			if (mActiveAnimation == "ClueIconGlow" || mActiveAnimation == "ClueIconGlowAfterHat")
 			{
 				setActiveAnimation("None");
 			}

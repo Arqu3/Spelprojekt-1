@@ -209,12 +209,12 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		//Sound/music
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
 		music.setLoop(true);
-		music.setVolume(80);
+		music.setVolume(10);
 		music.play();
 
 		mAmbientSound.setBuffer(*handler.getSound("Level1_Ambience.ogg"));
 		mAmbientSound.setLoop(true);
-		mAmbientSound.setVolume(50);
+		mAmbientSound.setVolume(10);
 		mAmbientSound.play();
 
 		mAquariumSound.setBuffer(*handler.getSound("Aquarium.ogg"));
@@ -664,7 +664,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 					{
 						mClues->getClue(3)->setState2();
 						mClues->getClue(4)->setState1();
-						mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
+						mUI->setActiveAnimation("ClueIconGlowOnce");
 					}
 				}
 			}
@@ -708,6 +708,10 @@ void Level1::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 					mMenuInventorySound.play();
+					if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowAfterHat")
+					{
+						mUI->setActiveAnimation("None");
+					}
 				}
 			}
 			if (event.key.code == sf::Keyboard::P)
@@ -753,7 +757,7 @@ void Level1::mouseClick(sf::Event &event)
 	{
 		mCursor->setMode(Cursor::MENU);
 		mUI->setState(UI::MAINUI);
-		if (mUI->getActiveAnimation() == "MenuIconGlow")
+		if (mUI->getActiveAnimation() == "MenuIconGlow" || mUI->getActiveAnimation() == "MenuIconGlowOnce")
 		{
 			mUI->setActiveAnimation("None");
 		}
@@ -764,7 +768,7 @@ void Level1::mouseClick(sf::Event &event)
 	{
 		mCursor->setMode(Cursor::MENU);
 		mUI->setState(UI::HAT);
-		if (mUI->getActiveAnimation() == "HatIconGlow")
+		if (mUI->getActiveAnimation() == "HatIconGlow" || mUI->getActiveAnimation() == "HatIconGlowOnce")
 		{
 			mUI->setActiveAnimation("None");
 		}
@@ -776,11 +780,6 @@ void Level1::mouseClick(sf::Event &event)
 		mPlayer->moveToPosition(point.x, point.y);
 		mItemInteraction = false;
 	}
-	/*else if (checkCollision(getPlayRects(), point))
-	{
-		mPlayer->setActiveAnimation("Fishing");
-		mItemInteraction = false;
-	}*/
 
 	//Check Item collision
 	mouseClickCheckItemCollision(point);
@@ -1017,6 +1016,8 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	{
 		if (!mReadyToLeave)
 		{
+			music.setVolume(10);
+			mAmbientSound.setVolume(10);
 			mDialogueSystem->setLevel1End();
 			mCursor->setMode(Cursor::DIALOGUE);
 			mUI->setState(UI::INGAME);
@@ -1040,6 +1041,13 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	//Make sure UI is in correct position at all times
 	mUI->setUIPosition(mView.getCenter());
 	mInventory->setGridPosition(mView.getCenter());
+
+	//Reset volume Of music and ambient sounds after start dialogue
+	if (!mDialogueSystem->getLevel1Start() && !mDialogueSystem->getLevel1End() && music.getVolume() < 70)
+	{
+		music.setVolume(80);
+		mAmbientSound.setVolume(50);
+	}
 
 	//Make Roger Swim, forever, and further once the Astronaut is gone
 	mRoger->update(deltaTime);
@@ -1149,7 +1157,7 @@ void Level1::updateTargetItem(float deltaTime)
 				mFishing = false;
 				mTargetItem->toggleActive();
 				mInventory->addItem(mTargetItem);
-				mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
+				mUI->setActiveAnimation("InventoryIconGlowOnce");
 				mPlayer->setFrameTime(0.03f);
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
@@ -1224,7 +1232,7 @@ void Level1::pickupTargetItem()
 	if (mTargetItem->getId() == "Magnet")
 	{
 		mInventory->addItem(mTargetItem);
-		mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
 		std::cout << "Plockade upp magnet";
 		mRegularItemSound.play();
 		mPickedUpMagnet = true;
@@ -1236,7 +1244,7 @@ void Level1::pickupTargetItem()
 	if (mTargetItem->getId() == "String")
 	{
 		mInventory->addItem(mTargetItem);
-		mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
 		std::cout << "Plockade upp fiskespo";
 		mRegularItemSound.play();
 		mPickedUpFishingRod = true;
@@ -1295,7 +1303,7 @@ void Level1::interactTargetItem()
 			mMovedStar = true;
 			mClues->getClue(1)->setState2();
 			mClues->getClue(2)->setState1();
-			mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "ClueIconGlowOnce"
+			mUI->setActiveAnimation("ClueIconGlowOnce");
 			std::cout << "Satte stjärnan på väggen";
 		}
 	}
@@ -1373,14 +1381,14 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 					//Clues
 					mClues->getClue(2)->setState2();
 					mClues->getClue(3)->setState1();
-					mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
+					mUI->setActiveAnimation("ClueIconGlowOnce");
 
 					//Set correct clue depending on crafted item
 					if (mHasCraftedFishingRod)
 					{
 						mClues->getClue(3)->setState2();
 						mClues->getClue(4)->setState1();
-						mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
+						mUI->setActiveAnimation("ClueIconGlowOnce");
 					}
 				}
 				if (getItems()[i]->getId() == "String")
@@ -1500,7 +1508,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 							{
 								mCriticalItemSound.play();
 								mInventory->addItem(getItems()[i]);
-								mUI->setActiveAnimation("HatIconGlowOnce"); //TODO - Replace with "InventoryIconGlowOnce"
+								mUI->setActiveAnimation("InventoryIconGlowOnce");
 								getItems()[i]->toggleActive();
 								mPickedUpScrewdevice = true;
 								mClues->getClue(5)->setState2();
