@@ -219,7 +219,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 		mAquariumSound.setBuffer(*handler.getSound("Aquarium.ogg"));
 		mAquariumSound.setLoop(true);
-		mAquariumSound.setVolume(5);
+		mAquariumSound.setVolume(0);
 		mAquariumSound.play();
 
 		mCriticalItemSound.setBuffer(*handler.getSound("Critical_Item.ogg"));
@@ -258,29 +258,25 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 		//Clues
 		mClues = new Clue(handler, "ClueBackground1.png");
-		mClues->add(handler, "Clue1First.png", sf::Vector2f(75, 60));
+		mClues->add(handler, "Clue1First.png", sf::Vector2f(58, 31));
 		mClues->getClue(0)->setStrings("Jag måste hitta en stjärna, en \nastronaut, och en skruvmakapär.", "");
 		mClues->getClue(0)->setState1();
 
-		mClues->add(handler, "thomasstar.png", sf::Vector2f(220, 200));
+		mClues->add(handler, "thomasstar.png", sf::Vector2f(210, 185));
 		mClues->getClue(1)->setStrings("Först måste jag hitta stjärnan.", "Jag hittade stjärnan på golvet!");
 		mClues->getClue(1)->setState1();
 
-		mClues->add(handler, "AstronautINV.png", sf::Vector2f(425, 115));
+		mClues->add(handler, "thomasastronaut.png", sf::Vector2f(405, 80));
 		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet \nmen jag måste fiska upp den!");
 
-		mClues->add(handler, "Clue1Aqua.png", sf::Vector2f(630, 60));
+		mClues->add(handler, "Clue1Aqua.png", sf::Vector2f(610, 70));
 		mClues->getClue(3)->setStrings("Jag måste hitta något att fiska \nupp astronauten med.", "Med magnetfiskaren kan jag få \ntag i astronauten!");
 
-		mClues->add(handler, "FishingRodMagnet.png", sf::Vector2f(685, 240));
+		mClues->add(handler, "FishingRodMagnet.png", sf::Vector2f(710, 260));
 		mClues->getClue(4)->setStrings("Nu måste jag bara fiska upp \nastronauten också.", "Astronauten har blivit hittad!");
 
 		mClues->add(handler, "ScrewDeviceINV.png", sf::Vector2f(800, 400));
 		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
-
-		mClues->add(handler, "InfoIcon.png", sf::Vector2f(280, 450));
-		mClues->getClue(6)->setStrings("Detta är ledtrådskartan. \nHär kan du läsa vad du har gjort \nhittills och vad du bör göra \nhärnäst. Bara håll musen över \nen ledtråd för att läsa den. \nPilarna låter dig se ledtrådar \nför banor du tidigare klarat.", "");
-		mClues->getClue(6)->setState1();
 
 		//Spooky scary spider
 		mSpider = new RiddleSpider(handler, sf::Vector2f(750, -500));
@@ -899,30 +895,11 @@ void Level1::mouseReleased(sf::Event & event)
 		&& mAstronaut->getRectangle().contains(mWorldPos)
 		&& mActiveScene == 1)
 	{
-		//Place Rubics Cube in front of Block
-		//TODO - Add Dialogue for the placing of the Cube
-		addItem(mCube);
-		mCube->setScale(-1.0f, 1.0f);
-		mCube->setPosition(645.0f, 450.0f);
-		mCubePlaced = true;
-		//TODO - Add Hilma Jump
-		mPlayer->setPosition(570, 268);
-		mPlayer->moveToPosition(570, 268);
-		if (!mPlayer->isFacingLeft())
-		{
-			mPlayer->flipPlayer();
-		}
-		mPlayer->setActiveAnimation("Fishing");
-		mPlayer->setScale(sf::Vector2f(0.54f, 0.54f));
-		mFishing = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(490, 500);
+		mTargetItem = mAstronaut;
 		mCursor->setMode(Cursor::DISABLED);
-		mTargetItem->toggleActive();
-
-		//Clues
-		mClues->getClue(4)->setState2();
-		mClues->getClue(5)->setState1();
-
-		mAstronaut->toggleActive();
+		mInventory->deSelectCheck();
 	}
 	else
 	{
@@ -1047,6 +1024,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	{
 		music.setVolume(80);
 		mAmbientSound.setVolume(50);
+		mAquariumSound.setVolume(5);
 	}
 
 	//Make Roger Swim, forever, and further once the Astronaut is gone
@@ -1165,7 +1143,6 @@ void Level1::updateTargetItem(float deltaTime)
 				mPlayer->moveToPosition(490, 500);
 				mCursor->setMode(Cursor::NORMAL);
 				mReadyForScrewdevice = true;
-				mInventory->deSelectCheck();
 			}
 		}
 	}
@@ -1253,8 +1230,29 @@ void Level1::pickupTargetItem()
 			mUI->setActiveAnimation("InventoryIconGlow");
 		}
 	}
-	if (mTargetItem->getId() == "Astronaut")
+	if (mTargetItem->getId() == "Astronaut" && mPlayer->getIsOnPosition())
 	{
+		//Place Rubics Cube in front of Block
+		//TODO - Add Dialogue for the placing of the Cube
+		addItem(mCube);
+		mCube->setScale(-1.0f, 1.0f);
+		mCube->setPosition(645.0f, 450.0f);
+		mCubePlaced = true;
+		//TODO - Add Hilma Jump
+		mPlayer->setPosition(570, 268);
+		mPlayer->moveToPosition(570, 268);
+		if (!mPlayer->isFacingLeft())
+		{
+			mPlayer->flipPlayer();
+		}
+		mPlayer->setActiveAnimation("Fishing");
+		mPlayer->setScale(sf::Vector2f(0.54f, 0.54f));
+		mFishing = true;
+
+		//Clues
+		mClues->getClue(4)->setState2();
+		mClues->getClue(5)->setState1();
+
 		mTargetItem->toggleActive();
 	}
 }

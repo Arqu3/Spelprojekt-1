@@ -16,7 +16,7 @@ mCurrentFrame(0),
 mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
-mFrameTime(0.03f)
+mFrameTime(0.05f)
 {
 	//Create items here
 	if (id == "Screwdevice")
