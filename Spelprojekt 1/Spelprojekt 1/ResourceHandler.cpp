@@ -19,7 +19,7 @@ musicCounter(0)
 	loadScreen.setSize(sf::Vector2f(1024, 576));
 	loadScreen.setTexture(getTexture("loadscreen.png"));
 
-	mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
 	mLoadMessage.setFont(mFont);
 	mLoadMessage.setCharacterSize(18);
 	mLoadMessage.setStyle(sf::Text::Bold);
@@ -61,24 +61,32 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "Lailar Ansiktsuttryck");
 	//Character Expressions
+	addTexture("expressionHilmaAbject.png");
 	addTexture("expressionHilmaAngry.png");
 	addTexture("expressionHilmaConfident.png");
 	addTexture("expressionHilmaDetermined.png");
 	addTexture("expressionHilmaGrumpy.png");
 	addTexture("expressionHilmaHappy.png");
+	addTexture("expressionHilmaNervous.png");
 	addTexture("expressionHilmaNeutral.png");
 	addTexture("expressionHilmaSad.png");
 	addTexture("expressionHilmaSigh.png");
 	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionHilmaThoughtful.png");
+	addTexture("expressionThomasAngry.png");
 	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasChocked.png");
 	addTexture("expressionThomasCry.png");
-	addTexture("expressionThomasGrumpy.png");
+	addTexture("expressionThomasDetermined.png");
 	addTexture("expressionThomasHappy.png");
 	addTexture("expressionThomasNeutral.png");
 	addTexture("expressionThomasSad.png");
+	addTexture("expressionThomasSceptic.png");
 	addTexture("expressionThomasSigh.png");
 	addTexture("expressionThomasSmile.png");
 	addTexture("expressionThomasSurprised.png");
+	addTexture("expressionThomasThoughtful.png");
+	addTexture("expressionThomasWorried.png");
 
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
