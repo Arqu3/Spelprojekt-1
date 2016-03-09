@@ -13,8 +13,6 @@ public:
 	DialogueSystem(ResourceHandler &handler);
 	~DialogueSystem();
 
-	typedef std::vector<sf::Text> TextVector;
-
 	//Talk functions
 	void text(std::string text, sf::Vector2f &position, float x, float y);
 	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
@@ -186,7 +184,6 @@ private:
 	bool mAdvancedIsActive;
 	bool mFinishedDialogue;
 	int mState;
-	TextVector mTexts;
 	std::string mTexture;
 	sf::Text mText;
 	sf::Text mActorText;
