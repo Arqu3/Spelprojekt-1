@@ -120,8 +120,15 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "PerHeimerar Musik");
 	//Music
-	addMusic("VoiceActingTest.ogg");
-	addMusic("VoiceActingTest2.ogg");
+	addMusic("Dialogue Narrator lvl1 part 1.ogg");
+	addMusic("Dialogue Narrator lvl1 part 2.ogg");
+	addMusic("Dialogue Narrator lvl1 part 3.ogg");
+	addMusic("Dialogue Narrator lvl1 part 4.ogg");
+	addMusic("Dialogue Narrator lvl1 part 5.ogg");
+	addMusic("Dialogue Narrator lvl1 part 6.ogg");
+	addMusic("Dialogue Narrator lvl1 part 7.ogg");
+	addMusic("Dialogue Narrator lvl1 part 8.ogg");
+	addMusic("Dialogue Narrator lvl1 part 9.ogg");
 }
 
 void ResourceHandler::loadLevel1(sf::RenderWindow &window)

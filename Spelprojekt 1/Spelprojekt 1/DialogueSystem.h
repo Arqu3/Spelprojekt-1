@@ -199,8 +199,16 @@ private:
 	bool mPutte;
 	bool mPutteFamily;
 
-	sf::Music voiceActingTest;
-	sf::Music voiceActingTest2;
+	//Voice Acting
+	sf::Music NarratorLvl1Part1;
+	sf::Music NarratorLvl1Part2;
+	sf::Music NarratorLvl1Part3;
+	sf::Music NarratorLvl1Part4;
+	sf::Music NarratorLvl1Part5;
+	sf::Music NarratorLvl1Part6;
+	sf::Music NarratorLvl1Part7;
+	sf::Music NarratorLvl1Part8;
+	sf::Music NarratorLvl1Part9;
 	bool mLineStarted;
 };
 

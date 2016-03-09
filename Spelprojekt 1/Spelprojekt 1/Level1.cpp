@@ -15,8 +15,7 @@ mPickedUpScrewdevice(false),
 mMovedStar(false),
 mReadyToLeave(false),
 mLevelComplete(false),
-mHasCraftedFishingRod(false),
-mUpdateTime(0)
+mHasCraftedFishingRod(false)
 {
 }
 
@@ -1009,13 +1008,10 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	mCursor->update(window);
 
 	//Change mouse cursor on hover
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME && mUpdateTime > 0)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME)
 	{
 		mouseHover();
-		mUpdateTime = 0;
 	}
-	else
-		mUpdateTime++; //TODO - Remove mUpdateTime
 
 	if (mMovedStar && mPickedUpScrewdevice)
 	{

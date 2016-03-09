@@ -171,7 +171,5 @@ private:
 	bool mReadyToLeave;
 	bool mLevelComplete;
 	bool mHasCraftedFishingRod;
-
-	int mUpdateTime;
 };
 #endif

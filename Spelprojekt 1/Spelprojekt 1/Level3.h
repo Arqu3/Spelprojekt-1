@@ -148,8 +148,6 @@ private:
 
 	ResourceHandler &handler;
 
-	int mUpdateTime;
-
 	};
 
 #endif
