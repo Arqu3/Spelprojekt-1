@@ -4,16 +4,12 @@
 #include <string>
 #include "Item.h"
 #include "Player.h"
-#include "RiddleSpider.h"
-#include <vector>
 
 class DialogueSystem
 {
 public:
 	DialogueSystem(ResourceHandler &handler);
 	~DialogueSystem();
-
-	typedef std::vector<sf::Text> TextVector;
 
 	//Talk functions
 	void text(std::string text, sf::Vector2f &position, float x, float y);
@@ -40,13 +36,9 @@ public:
 
 	//Sets the state value
 	void setState();
-	//void setStateManual(int state);
 
 	//Function to check in dialogue is finished
 	bool isDialogueFinished();
-
-	//Spider Dialogue
-	void displaySpiderDialogue();
 
 	//Advanced Dialogues
 	//Level 1
@@ -65,31 +57,6 @@ public:
 	void displayLevel2OpenBoxAdvancedDialogue();
 	void displayLevel2MagpieStealsAdvancedDialogue();
 	void displayLevel2GrandmasClothAdvancedDialogue();
-
-	//Level 3
-	void displayLevel3StartAdvancedDialogue();
-	void displayLevel3EndAdvancedDialogue();
-	void displayLevel3ShedAdvancedDialogue();
-	void displayLevel3Skatmaran1AdvancedDialogue();
-	void displayLevel3Skatmaran2AdvancedDialogue();
-	void displayLevel3Skatmaran3AdvancedDialogue();
-	void displayLevel3ReturnAdvancedDialogue();
-
-	//Level 4
-
-	//Level 5
-	void displayLevel5StartAdvancedDialogue();
-	void displayLevel5EndAdvancedDialogue();
-	void displayLevel5BalconyDoorAdvancedDialogue();
-	void displayLevel5Putte2AdvancedDialogue();
-	void displayLevel5SolarSystemAdvancedDialogue();
-	void displayLevel5MouseHoleAdvancedDialogue();
-	void displayLevel5VictoryAdvancedDialogue();
-	void displayLevel5TogetherAdvancedDialogue();
-	void displayLevel5SolutionAdvancedDialogue();
-	void displayLevel5PaintingAdvancedDialogue();
-	void displayLevel5RecordsAdvancedDialogue();
-	void displayLevel5DrawingsAdvancedDialogue();
 
 	//Dialogues (functions with strings)
 	//Thomas' room
@@ -165,19 +132,6 @@ public:
 	bool getLevel2Start();
 	bool getLevel2End();
 
-	//Level3
-
-	void setLevel3Start();
-	void setLevel3End();
-	bool getLevel3Start();
-	bool getLevel3End();
-
-	//Level5
-	void setLevel5Start();
-	void setLevel5End();
-	bool getLevel5Start();
-	bool getLevel5End();
-
 private:
 	std::string mDialogue;
 	float mTime;
@@ -186,7 +140,6 @@ private:
 	bool mAdvancedIsActive;
 	bool mFinishedDialogue;
 	int mState;
-	TextVector mTexts;
 	std::string mTexture;
 	sf::Text mText;
 	sf::Text mActorText;
@@ -197,19 +150,13 @@ private:
 	sf::Sprite mFirstCharacter;
 	sf::Sprite mSecondCharacter;
 	sf::RectangleShape mSepia;
-	RiddleSpider *mSpider;
 	Player *mPlayer;
 	ResourceHandler &mHandler;
 
-	//Spider Dialogue
-	bool mDialogueSpider;
-
 	//Advanced Dialogue
-	//Level 1
 	bool mLevel1Start;
 	bool mLevel1End;
 
-	//Level 2
 	bool mLevel2Start;
 	bool mLevel2End;
 	bool mLevel2MissingRocket;
@@ -221,30 +168,6 @@ private:
 	bool mLevel2OpenBox;
 	bool mLevel2MapieSteals;
 	bool mLevel2GrandmasCloth;
-
-	//Level 3
-	bool mLevel3Start;
-	bool mLevel3End;
-	bool mLevel3Shed;
-	bool mLevel3Skatmaran1;
-	bool mLevel3Skatmaran2;
-	bool mLevel3Skatmaran3;
-	bool mLevel3Return;
-
-	//Level 4
-
-	//Level 5
-	bool mLevel5Start;
-	bool mLevel5End;
-	bool mLevel5BalconyDoor;
-	bool mLevel5Putte2;
-	bool mLevel5SolarSystem;
-	bool mLevel5MouseHole;
-	bool mLevel5Victory;
-	bool mLevel5Together;
-	bool mLevel5Painting;
-	bool mLevel5Records;
-	bool mLevel5Drawings;
 
 	//Item bools (Thomas' Room)
 	bool mBooks;
@@ -306,18 +229,6 @@ private:
 	bool mDollHouse;
 	bool mPutte;
 	bool mPutteFamily;
-
-	//Voice Acting
-	sf::Music NarratorLvl1Part1;
-	sf::Music NarratorLvl1Part2;
-	sf::Music NarratorLvl1Part3;
-	sf::Music NarratorLvl1Part4;
-	sf::Music NarratorLvl1Part5;
-	sf::Music NarratorLvl1Part6;
-	sf::Music NarratorLvl1Part7;
-	sf::Music NarratorLvl1Part8;
-	sf::Music NarratorLvl1Part9;
-	bool mLineStarted;
 };
 
 #endif

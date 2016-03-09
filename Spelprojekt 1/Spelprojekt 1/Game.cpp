@@ -16,6 +16,8 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
+	window.setVerticalSyncEnabled(true);
+
 	window.setMouseCursorVisible(false);
 	window.setVerticalSyncEnabled(true);
 	mRHandler.loadGeneral(window);
