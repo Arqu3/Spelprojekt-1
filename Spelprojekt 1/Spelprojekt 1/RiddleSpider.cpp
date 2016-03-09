@@ -39,10 +39,10 @@ void RiddleSpider::update(float deltaTime)
 	case INACTIVE:
 		activeTimerTick();
 
-		if (mActiveTimer >= 800)
-		{
-			setState(ENTERING);
-		}
+		//if (mActiveTimer >= 800)
+		//{
+		//	setState(ENTERING);
+		//}
 
 		break;
 	}

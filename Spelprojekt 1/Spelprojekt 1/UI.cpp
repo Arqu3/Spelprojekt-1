@@ -96,7 +96,7 @@ mLevelStart(false)
 
 	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
 	{
-		mMainButtons[i]->setPosition(240.0f - (mMainButtons[0]->getRect().width / 2), 80.0f + (115.0f * i));
+		mMainButtons[i]->setPosition(240.0f - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
 	}
 
 	//Sounds

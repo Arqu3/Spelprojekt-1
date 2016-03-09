@@ -150,6 +150,9 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("FishingRodINV.png");
 	addTexture("MagnetINV.png");
 	addTexture("ScrewDeviceINV.png");
+	//Custom clue icons
+	addTexture("Clue1Aqua.png");
+	addTexture("Clue1First.png");
 
 	// Level1
 	drawLoadScreen(window, "Maxar Objekt");
