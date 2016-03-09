@@ -8,16 +8,20 @@ isOnPosition(true),
 moveTo(position),
 mActiveAnimation("Walk"),
 mWalk(false),
-mFrameTime(0.03f),
+mFrameTime(0.03f), //Lägre värde = Snabbare animation
 mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mSpeed(1000.0f),
-mFacingLeft(true)
+mSpeed(500.0f),
+mFacingLeft(true),
+mStepCooldown(0),
+mThomasActive(true)
+
 {
 	//Sounds
-	mWalkingSound.setBuffer(*handler.getSound("FootSteps.ogg"));
+	/*mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
+	mWalkingSound.setVolume(25);*/
 
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
@@ -26,7 +30,7 @@ mFacingLeft(true)
 	mThomasTexture = *handler.getTexture("ThomasWalk.png");
 	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
 	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
-	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
+	/*mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");*/
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
@@ -96,10 +100,6 @@ void Player::update(float deltaTime)
 	// Walk Animations
 	if (mActiveAnimation == "Walk" && mWalk)
 	{
-		if (mWalkingSound.getStatus() != 2)
-		{
-			mWalkingSound.play();
-		}
 		if (mThomasActive)
 		{
 			if (mCurrentTime >= mFrameTime)
@@ -107,6 +107,11 @@ void Player::update(float deltaTime)
 				mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
 				if (mCurrentFrame < 27)
 				{
+					if ((mCurrentFrame == 13 || mCurrentFrame == 26) && mWalkingSound.getStatus() != 2)
+					{
+						mWalkingSound.play();
+					}
+
 					mFrameXOffset += 1;
 					if (mFrameXOffset % 11 == 10)
 					{
@@ -134,6 +139,11 @@ void Player::update(float deltaTime)
 				mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 600, mFrameYOffset * 600, 600, 600));
 				if (mCurrentFrame < 27)
 				{
+					if ((mCurrentFrame == 3 || mCurrentFrame == 15) && mWalkingSound.getStatus() != 2)
+					{
+						mWalkingSound.play();
+					}
+
 					mFrameXOffset += 1;
 					if (mFrameXOffset % 8 == 7)
 					{
@@ -160,7 +170,6 @@ void Player::update(float deltaTime)
 		mWalkingSound.pause();
 	}
 
-	//Push Animation
 	if (mActiveAnimation == "Push")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -195,14 +204,14 @@ void Player::update(float deltaTime)
 		if (mCurrentTime >= mFrameTime)
 		{
 			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
-			if (mCurrentFrame < 34)
+			if (mCurrentFrame < 27)
 			{
 				mFrameXOffset += 1;
-				if (mFrameXOffset % 8 == 7)
+				if (mFrameXOffset % 7 == 6)
 				{
 					mFrameYOffset++;
 				}
-				if (mFrameXOffset >= 7)
+				if (mFrameXOffset >= 6)
 				{
 					mFrameXOffset = 0;
 				}
@@ -210,8 +219,37 @@ void Player::update(float deltaTime)
 			}
 			else
 			{
-				mCurrentFrame = 34;
-				mFrameXOffset = 6;
+				mCurrentFrame = 27;
+				mFrameXOffset = 3;
+				mFrameYOffset = 4;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+	//Fishing Pull Animation
+	if (mActiveAnimation == "FishingPull")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 11)
+			{
+				mFrameXOffset -= 1;
+				if (mFrameXOffset % 7 == 0)
+				{
+					mFrameYOffset--;
+				}
+				if (mFrameXOffset <= 0)
+				{
+					mFrameXOffset = 5;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 11;
+				mFrameXOffset = 3;
 				mFrameYOffset = 4;
 			}
 			mCurrentTime = 0;
@@ -338,6 +376,14 @@ void Player::setActiveAnimation(std::string animation)
 		mSprite.setTexture(mHilmaFishingTexture);
 		mWalk = false;
 	}
+	else if (animation == "FishingPull")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 3;
+		mFrameYOffset = 4;
+		mSprite.setTexture(mHilmaFishingTexture);
+		mWalk = false;
+	}
 	else if (animation == "Idle")
 	{
 		if (mThomasActive)
@@ -411,4 +457,14 @@ bool Player::getIsOnPosition()
 void Player::setScale(sf::Vector2f scale)
 {
 	mSprite.setScale(scale);
+}
+
+int Player::getCurrentFrame()
+{
+	return mCurrentFrame;
+}
+
+void Player::setFrameTime(float frametime)
+{
+	mFrameTime = frametime;
 }

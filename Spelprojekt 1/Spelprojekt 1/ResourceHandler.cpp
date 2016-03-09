@@ -12,8 +12,20 @@ textureCounter(0),
 soundCounter(0),
 musicCounter(0)
 {
-	addTexture("loadscreen.jpg");
+	addTexture("loadscreen.png");
 	addTexture("MainMenuBackground.png");
+	addTexture("Test1.png");
+
+	loadScreen.setSize(sf::Vector2f(1024, 576));
+	loadScreen.setTexture(getTexture("loadscreen.png"));
+
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
+	mLoadMessage.setFont(mFont);
+	mLoadMessage.setCharacterSize(18);
+	mLoadMessage.setStyle(sf::Text::Bold);
+	mLoadMessage.setColor(sf::Color::White);
+	mLoadMessage.setPosition(430, 490);
+	mLoadMessage.setString("Laddar...");
 }
 
 ResourceHandler::~ResourceHandler()
@@ -35,62 +47,19 @@ void ResourceHandler::internalClear()
 	mMusicNames.clear();
 }
 
-void ResourceHandler::loadLevel1()
+void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 {
-	//internalClear();
-
+	drawLoadScreen(window, "Teklar Karaktärer");
 	//Thomas
 	addTexture("ThomasWalk.png");
 	//Hilma
 	addTexture("HilmaWalk.png");
 	addTexture("HilmaPush.png");
 	addTexture("HilmaFishing.png");
+	//Mr. RiddleSpider
+	addTexture("RiddleSpider.png");
 
-	//In-game UI
-	addTexture("haticon.png");
-	addTexture("menuicon.png");
-	addTexture("hatmenu.png");
-	addTexture("menu.png");
-	addTexture("inventory.png");
-
-	//Inventory icons
-	addTexture("AstronautINV.png");
-	addTexture("FishingRodINV.png");
-	addTexture("MagnetINV.png");
-	addTexture("ScrewDeviceINV.png");
-
-	//Cursors
-	addTexture("mousecursor.png");
-	addTexture("openhand.png");
-	addTexture("closedhand.png");
-	addTexture("speechbubble.png");
-	addTexture("eyecursor.png");
-
-	// Level1
-	//Textures
-	//Thomas rum items
-	addTexture("thomasstar.png");
-	addTexture("thomasblock.png");
-	addTexture("thomasstring.png");
-	addTexture("thomasmagnet.png");
-	addTexture("thomasastronaut.png");
-	addTexture("thomasbowl.png");
-	addTexture("thomascube.png");
-	addTexture("FishingRod.png");
-	addTexture("FishingRodMagnet.png");
-
-	//Thomas room background, playground, foreground
-	addTexture("thomasbg.png");
-	addTexture("thomaspg.png");
-	addTexture("thomasfg.png");
-
-	//Thomas zoom background, playground, foreground
-	addTexture("thomaszoombg.png");
-	addTexture("thomaszoompg.png");
-	addTexture("thomaszoomfg.png");
-	//Textbubble
-	addTexture("textbubble.png");
-	addTexture("textbox.png");
+	drawLoadScreen(window, "Lailar Ansiktsuttryck");
 	//Character Expressions
 	addTexture("expressionHilmaAbject.png");
 	addTexture("expressionHilmaAngry.png");
@@ -103,8 +72,10 @@ void ResourceHandler::loadLevel1()
 	addTexture("expressionHilmaSad.png");
 	addTexture("expressionHilmaSigh.png");
 	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionHilmaThoughtful.png");
 	addTexture("expressionThomasAngry.png");
 	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasChocked.png");
 	addTexture("expressionThomasCry.png");
 	addTexture("expressionThomasDetermined.png");
 	addTexture("expressionThomasHappy.png");
@@ -116,47 +87,113 @@ void ResourceHandler::loadLevel1()
 	addTexture("expressionThomasSurprised.png");
 	addTexture("expressionThomasThoughtful.png");
 	addTexture("expressionThomasWorried.png");
-	//Sepia
-	addTexture("sepia.png");
 
-	//Music
-	addMusic("Level1Music.ogg");
+	drawLoadScreen(window, "Davidar UI");
+	//In-game UI
+	addTexture("HatIconGlow.png");
+	addTexture("MenuIconGlow.png");
+	addTexture("InventoryIconGlow.png");
+	addTexture("ClueIconGlow.png");
+	addTexture("hatmenu.png");
+	addTexture("menu.png");
+	addTexture("inventory.png");
+	addTexture("ClueBackground1.png");
 
+	drawLoadScreen(window, "Davidar Muspekare");
+	//Cursors
+	addTexture("mousecursor.png");
+	addTexture("openhand.png");
+	addTexture("closedhand.png");
+	addTexture("speechbubble.png");
+	addTexture("eyecursor.png");
+	addTexture("scenechangecursor.png");
+
+	drawLoadScreen(window, "Davidar Pratbubblor");
+	//Textbubble
+	addTexture("textbubble.png");
+	addTexture("textbox.png");
+
+	drawLoadScreen(window, "Matatasar Ljud");
 	//Sound
-	addSound("FootSteps.ogg");
-	addSound("Level1Ambience.ogg");
+	addSound("Footsteps_Thomas.ogg");
+	addSound("Regular_Item_Pickup.ogg");
+	addSound("Menu_Hat.ogg");
+	addSound("Menu_Inventory.ogg");
+	addSound("Menu_MainUI.ogg");
+	addSound("Critical_Item.ogg");
+	addSound("Inventory_Move.ogg");
+	addSound("Crafting.ogg");
+
+	drawLoadScreen(window, "PerHeimerar Musik");
+	//Music
+	addMusic("VoiceActingTest.ogg");
+	addMusic("VoiceActingTest2.ogg");
 }
 
-void ResourceHandler::loadLastLevel()
+void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 {
 	//internalClear();
 
-    //LastLevel
-	addTexture("ARBETSRUMbakgrund.png");
-	addTexture("ARBETSRUMmellangrund.png");
-	addTexture("ARBETSRUMförgrund.png");
+	drawLoadScreen(window, "Davidar Inventoryikoner");
+	//Inventory icons
+	addTexture("AstronautINV.png");
+	addTexture("FishingRodINV.png");
+	addTexture("MagnetINV.png");
+	addTexture("ScrewDeviceINV.png");
 
-	addTexture("VARDAGSRUMbakgrund.png");
-	addTexture("VARDAGSRUMmellangrund.png");
-	addTexture("VARDAGSRUMförgrund.png");
-	addTexture("Fisk2.png");
-	addTexture("Jordglob.png");
+	// Level1
+	drawLoadScreen(window, "Maxar Objekt");
+	//Thomas rum items
+	addTexture("thomasstar.png");
+	addTexture("thomasblock.png");
+	addTexture("thomasmagnet.png");
+	addTexture("thomasastronaut.png");
+	addTexture("thomasbowl.png");
+	addTexture("thomascube.png");
+	addTexture("FishingRod.png");
+	addTexture("FishingRodMagnet.png");
+	addTexture("thomaswallstar.png");
+	addTexture("RogerSwim.png");
 
-	addTexture("KÖKbakgrund.png");
-	addTexture("KÖKmellangrund.png");
-	addTexture("KÖKförgrund.png");
-	addTexture("Apelsin.png");
-	addTexture("Tavlan.png");
+	drawLoadScreen(window, "Maxar Bakgrunder");
+	//Thomas room background, playground, foreground
+	addTexture("thomasbg.png");
+	addTexture("thomaspg.png");
+	addTexture("thomasfg.png");
+	//Thomas zoom background, playground, foreground
+	addTexture("thomaszoombg.png");
+	addTexture("thomaszoompg.png");
+	addTexture("thomaszoomfg.png");
 
-	addTexture("transparent.png");
-	addTexture("LastLevel_ItemTest1.png");
-	addTexture("LastLevel_ItemTest2.png");
+	drawLoadScreen(window, "Laddar Sepia");
+	//Sepia
+	addTexture("sepia.png");
 
-    //Karaktärer
-	addTexture("Katten.png");
-	addTexture("Lisa.png");
-	addTexture("PutteSad.png");
+	drawLoadScreen(window, "PerHeimerar Musik");
+	//Music
+	addMusic("Level1Music.ogg");
 
+	drawLoadScreen(window, "Matatasar Ljud");
+	//Sound
+	addSound("Footsteps_Thomas.ogg");
+	addSound("Level1_Ambience.ogg");
+	addSound("Aquarium.ogg");
+	addSound("Magnet_Catch.ogg");
+	addSound("Magnet_Drop.ogg");
+	addSound("Pushing_Object.ogg");
+	addSound("Radio_Noise.ogg");
+}
+
+void ResourceHandler::loadLevel3(sf::RenderWindow &window)
+{
+	drawLoadScreen(window, "Gör Saker Med Blommor");
+	//Level 3
+	addTexture("Garden.png");
+	addTexture("GardenForeground.png");
+
+	//Karaktärer
+	addTexture("DogRunning.png");
+	addTexture("GardenLady.png");
 
 	//Props
 	addTexture("thomasbowl.png");
@@ -164,6 +201,92 @@ void ResourceHandler::loadLastLevel()
 	addTexture("Venus.png");
 	addTexture("Pluto.png");
 	addTexture("Fisk1.png");
+	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
+	addTexture("transparent.png");
+	addTexture("Stick.png");
+	addTexture("StickIcon.png");
+	addTexture("Trimmer.png");
+	addTexture("TrimmerIcon.png");
+
+	//Remove this later
+	addTexture("saturnusINV.png");
+}
+
+void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
+{
+	//internalClear();
+
+	drawLoadScreen(window, "Matatasar Ljud");
+	//Sound
+	addSound("Fish_Hit_Floor.ogg");
+	addSound("Cat_Hissing.ogg");
+	addSound("Cat.ogg");
+	addSound("Planet_Puzzle.ogg");
+	addSound("Gramophone.ogg");
+	addSound("Running_Water.ogg");
+	addSound("Screw_Globe.ogg");
+	addSound("Jewelry_Box.ogg");
+
+	drawLoadScreen(window, "Lailar Karaktärer");
+	//Static Characters
+	addTexture("LisaTotte.png");
+	addTexture("PutteSad.png");
+	addTexture("PutteLillemor.png");
+
+	drawLoadScreen(window, "Davidar Inventoryikoner");
+	//Inventory icons
+	addTexture("beigeballINV.png");
+	addTexture("needleINV.png");
+	addTexture("marsINV.png");
+	addTexture("pocketwatchINV.png");
+	addTexture("saturnusringINV.png");
+	addTexture("earthINV.png");
+	addTexture("fishINV.png");
+	addTexture("saturnusINV.png");
+	addTexture("ScrewDeviceINV.png");
+	addTexture("plutoINV.png");
+	addTexture("clamINV.png");
+	addTexture("MagnetINV.png"); //TODO - Replace with Pump INV Texture
+
+	drawLoadScreen(window, "PerHeimerar Musik");
+	//Music
+	addMusic("LastLevelMusic.ogg");
+
+	drawLoadScreen(window, "Maxar Bakgrunder");
+	//Backgrounds
+	addTexture("ARBETSRUMbakgrund.png");
+	addTexture("ARBETSRUMmellangrund.png");
+	addTexture("ARBETSRUMförgrund.png");
+	addTexture("VARDAGSRUMbakgrund.png");
+	addTexture("VARDAGSRUMmellangrund.png");
+	addTexture("VARDAGSRUMförgrund.png");
+	addTexture("KÖKbakgrund.png");
+	addTexture("KÖKmellangrund.png");
+	addTexture("KÖKförgrund.png");
+	addTexture("Tavlan.png");
+
+	drawLoadScreen(window, "Maxar Objekt");
+	//Items
+	addTexture("Fisk2.png");
+	addTexture("Jordglob.png");
+	addTexture("Apelsin.png");
+	addTexture("thomasbowl.png");
+	addTexture("Saturnus.png");
+	addTexture("Venus.png");
+	addTexture("Pluto.png");
+	addTexture("Fisk1.png");
+	addTexture("transparent.png");
+
+	drawLoadScreen(window, "Beccar Testsaker");
+	//Test Textures
+	addTexture("LastLevel_ItemTest1.png");
+	addTexture("LastLevel_ItemTest2.png");
+
+	drawLoadScreen(window, "Teklar Katten");
+	//Animations
+	addTexture("CatWalking.png");
+	addTexture("CatEating.png");
 }
 
 //Adds a texture to the texture vector
@@ -265,4 +388,13 @@ string ResourceHandler::getMusic(string name)
 		}
 	}
 	return NULL;
+}
+
+void ResourceHandler::drawLoadScreen(sf::RenderWindow &window, string loadMessage)
+{
+	mLoadMessage.setString(loadMessage);
+	window.clear(sf::Color::Black);
+	window.draw(loadScreen);
+	window.draw(mLoadMessage);
+	window.display();
 }

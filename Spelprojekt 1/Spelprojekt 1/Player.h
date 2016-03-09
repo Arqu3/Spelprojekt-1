@@ -27,6 +27,8 @@ public:
 	void setSpeed(float speed);
 	bool getIsOnPosition();
 	void setScale(sf::Vector2f scale);
+	int getCurrentFrame();
+	void setFrameTime(float frametime);
 
 private:
 	void move(float deltaTime);
@@ -58,6 +60,7 @@ private:
 
 	//Sounds
 	sf::Sound mWalkingSound;
+	int mStepCooldown;
 	
 	//Animation Textures
 	sf::Texture mThomasTexture;

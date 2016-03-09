@@ -4,23 +4,32 @@ using namespace std;
 
 UI::UI(ResourceHandler &handler) :
 mState(MAINMENU),
-mLoad(false)
+mLoad(false),
+mCurrentFrame(0),
+mCurrentTime(0),
+mFrameTime(0.03f),
+mFrameXOffset(0),
+mFrameYOffset(0),
+mActiveAnimation("None"),
+mLevelStart(false)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
 
 	//UI Icons
 	//HatIcon
-	handler.getTexture("haticon.png")->setSmooth(true);
-	mHatIcon.setTexture(*handler.getTexture("haticon.png"));
+	handler.getTexture("HatIconGlow.png")->setSmooth(true);
+	mHatIcon.setTexture(*handler.getTexture("HatIconGlow.png"));
+	mHatIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
 	mHatIcon.setPosition(sf::Vector2f(10, 470));
-	mHatIcon.setScale(sf::Vector2f(0.3f, 0.3f));
+	mHatIcon.setScale(sf::Vector2f(0.65f, 0.65f));
 
 	//MenuIcon
-	handler.getTexture("menuicon.png")->setSmooth(true);
-	mMenuIcon.setTexture(*handler.getTexture("menuicon.png"));
+	handler.getTexture("MenuIconGlow.png")->setSmooth(true);
+	mMenuIcon.setTexture(*handler.getTexture("MenuIconGlow.png"));
+	mMenuIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
 	mMenuIcon.setPosition(sf::Vector2f(90, 510));
-	mMenuIcon.setScale(sf::Vector2f(0.3f, 0.3f));
+	mMenuIcon.setScale(sf::Vector2f(0.60f, 0.60f));
 
 	//UI Menus
 	//HatMenu
@@ -30,16 +39,32 @@ mLoad(false)
 	mHatMenu.setScale(sf::Vector2f(0.3f, 0.3f));
 	//Menu
 	handler.getTexture("menu.png")->setSmooth(true);
-	mMainMenu.setTexture(*handler.getTexture("menu.png"));
-	mMainMenu.setPosition(sf::Vector2f(0, 300));
-	mMainMenu.setScale(sf::Vector2f(0.3f, 0.3f));
+	mMainUI.setTexture(*handler.getTexture("menu.png"));
+	mMainUI.setPosition(sf::Vector2f(0, 300));
+	mMainUI.setScale(sf::Vector2f(0.3f, 0.3f));
 	//Inventory Menu
 	handler.getTexture("inventory.png")->setSmooth(true);
 	mInventoryMenu.setTexture(*handler.getTexture("inventory.png"));
 	mInventoryMenu.setPosition(sf::Vector2f(250, 50));
 	mInventoryMenu.setScale(sf::Vector2f(0.6f, 0.6f));
 
+	//InventoryGlow
+	handler.getTexture("InventoryIconGlow.png")->setSmooth(true);
+	mInventoryGlow = *handler.getTexture("InventoryIconGlow.png");
+	mInventoryIcon.setTexture(mInventoryGlow);
+	mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+	mInventoryIcon.setScale(sf::Vector2f(0.6f, 0.6f));
+
+	//ClueGlow
+	handler.getTexture("ClueIconGlow.png")->setSmooth(true);
+	mClueGlow = *handler.getTexture("ClueIconGlow.png");
+	mClueIcon.setTexture(mClueGlow);
+	mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+	mClueIcon.setScale(sf::Vector2f(0.6f, 0.6f));
+
 	//UI Rects
+	mHatRect = sf::FloatRect(sf::Vector2f(10, 470), sf::Vector2f(80, 85));
+	mMenuRect = sf::FloatRect(sf::Vector2f(90, 510), sf::Vector2f(75, 80));
 	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
 	mCluesRect = sf::FloatRect(sf::Vector2f(155, 365), sf::Vector2f(75, 80));
 	mMemoriesRect = sf::FloatRect(sf::Vector2f(195, 475), sf::Vector2f(75, 80));
@@ -72,13 +97,18 @@ mLoad(false)
 	{
 		mMainButtons[i]->setPosition(512.0f - (mMainButtons[0]->getRect().width / 2), 100.0f + (160.0f * i));
 	}
+
+	//Sounds
+	mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
+	mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
+	mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
 }
 
 UI::~UI()
 {
 }
 
-void UI::update()
+void UI::update(float deltaTime)
 {
 	switch (mState){
 	case HAT:
@@ -111,6 +141,60 @@ void UI::update()
 	default:
 		break;
 	}
+
+	mCurrentTime += deltaTime;
+
+	//Glow Animations
+	if (mActiveAnimation != "None")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			if (mActiveAnimation == "HatIconGlow")
+			{
+				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "MenuIconGlow")
+			{
+				mMenuIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "InventoryIconGlow")
+			{
+				mInventoryIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "ClueIconGlow")
+			{
+				mClueIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			if (mCurrentFrame < 49)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 12 == 11)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 11)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+		mCurrentTime = 0;
+		}
+	}
+	else
+	{
+		//TODO - Add bool so that this isn't done over and over again
+		mHatIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		mMenuIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+	}
 }
 
 void UI::draw(sf::RenderWindow &window)
@@ -119,10 +203,18 @@ void UI::draw(sf::RenderWindow &window)
 	{
 	case HAT:
 		window.draw(mHatMenu);
+		if (mActiveAnimation == "InventoryIconGlow")
+		{
+			window.draw(mInventoryIcon);
+		}
+		if (mActiveAnimation == "ClueIconGlow")
+		{
+			window.draw(mClueIcon);
+		}
 		break;
 
 	case MAINUI:
-		window.draw(mMainMenu);
+		window.draw(mMainUI);
 		break;
 
 	case MAINMENU:
@@ -153,8 +245,9 @@ void UI::draw(sf::RenderWindow &window)
 		break;
 	}
 
-	window.draw(mHatIcon);
+	//window.draw(mHelpRectangle);
 	window.draw(mMenuIcon);
+	window.draw(mHatIcon);
 }
 
 void UI::drawMainMenu(sf::RenderWindow &window)
@@ -209,6 +302,7 @@ void UI::eventListen(sf::RenderWindow &window)
 					if (mMainButtons[0]->isPressed(window))
 					{
 						mLoad = true;
+						mLevelStart = true;
 						setState(INGAME);
 					}
 					else
@@ -247,6 +341,11 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != HAT)
 		{
 			mState = HAT;
+			if (mActiveAnimation == "HatIconGlow")
+			{
+				setActiveAnimation("None");
+			}
+			mMenuHatSound.play();
 		}
 		else
 		{
@@ -258,6 +357,11 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != MAINUI)
 		{
 			mState = MAINUI;
+			if (mActiveAnimation == "MenuIconGlow")
+			{
+				setActiveAnimation("None");
+			}
+			mMenuMainUISound.play();
 		}
 		else
 		{
@@ -271,10 +375,19 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mInventoryRect.contains(point))
 		{
 			setState(INVENTORY);
+			if (mActiveAnimation == "InventoryIconGlow")
+			{
+				setActiveAnimation("None");
+			}
+			mMenuInventorySound.play();
 		}
 		if (mCluesRect.contains(point))
 		{
 			setState(CLUES);
+			if (mActiveAnimation == "ClueIconGlow")
+			{
+				setActiveAnimation("None");
+			}
 			cout << "CLUES MENU ENGAGED" << endl;
 		}
 		if (mMemoriesRect.contains(point))
@@ -284,7 +397,7 @@ void UI::checkCollision(sf::Vector2f point)
 		}
 	}
 
-	//Check appropriate Rect collisions when "Main" Menu is open
+	//Check appropriate Rect collisions when "MainUI" Menu is open
 	if (mState == MAINUI)
 	{
 		if (mSettingsRect.contains(point))
@@ -312,15 +425,101 @@ UI::State UI::getState()
 
 sf::FloatRect UI::getHatIconRect()
 {
-	return mHatIcon.getGlobalBounds();
+	return mHatRect;
 }
 
 sf::FloatRect UI::getMenuIconRect()
 {
-	return mMenuIcon.getGlobalBounds();
+	return mMenuRect;
 }
 
 bool UI::load()
 {
 	return mLoad;
+}
+
+void UI::setUIPosition(sf::Vector2f viewCenter)
+{
+	//viewCenter.x - (512 - distance from left edge of screen)
+	mHatIcon.setPosition(sf::Vector2f(viewCenter.x - 565, 400));
+	mMenuIcon.setPosition(sf::Vector2f(viewCenter.x - 500, 430));
+	mHatMenu.setPosition(sf::Vector2f(viewCenter.x - 512, 285));
+	mMainUI.setPosition(sf::Vector2f(viewCenter.x - 512, 300));
+	mInventoryMenu.setPosition(sf::Vector2f(viewCenter.x - 262, 50));
+
+	mHatRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 490, 480), sf::Vector2f(70, 70));
+	mMenuRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 416, 513), sf::Vector2f(40, 40));
+	mInventoryRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 482, 305), sf::Vector2f(80, 85));
+	mCluesRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 357, 365), sf::Vector2f(75, 80));
+	mMemoriesRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 317, 475), sf::Vector2f(75, 80));
+	mSettingsRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 432, 320), sf::Vector2f(90, 90));
+	mExitRect = sf::FloatRect(sf::Vector2f(viewCenter.x - 332, 430), sf::Vector2f(85, 80));
+
+	mInventoryIcon.setPosition(sf::Vector2f(viewCenter.x - 544.5f, 245));
+	mClueIcon.setPosition(sf::Vector2f(viewCenter.x - 423, 299.5f));
+
+	//mHelpRectangle.setPosition(sf::Vector2f(viewCenter.x - 416, 513));
+	//mHelpRectangle.setSize(sf::Vector2f(40, 40));
+
+	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
+	{
+		mExitButtons[i]->setPosition(viewCenter.x - mExitButtons[0]->getRect().width + (260.0f * i) - 45, 288 - mExitButtons[0]->getRect().height);
+	}
+
+	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	{
+		mMainButtons[i]->setPosition(viewCenter.x - (mMainButtons[0]->getRect().width / 2), 100.0f + (160.0f * i));
+	}
+
+	mBackground.setPosition(viewCenter.x - 512, 0);
+}
+
+void UI::setActiveAnimation(std::string animation)
+{
+	if (animation == "HatIconGlow")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+	}
+	if (animation == "MenuIconGlow")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+	}
+	if (animation == "InventoryIconGlow")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+	}
+	if (animation == "ClueIconGlow")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+	}
+	else
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+	}
+	mActiveAnimation = animation;
+}
+
+std::string UI::getActiveAnimation()
+{
+	return mActiveAnimation;
+}
+
+bool UI::getLevelStart()
+{
+	return mLevelStart;
+}
+
+void UI::setLevelStart()
+{
+	mLevelStart = false;
 }

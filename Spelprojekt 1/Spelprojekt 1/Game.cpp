@@ -6,7 +6,6 @@ Game::Game():
 mRHandler(),
 mLHandler(mRHandler)
 {
-	loadScreen.setTexture(*mRHandler.getTexture("loadscreen.jpg"));
 }
 
 Game::~Game()
@@ -17,14 +16,11 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
-	window.clear(sf::Color::Black);
-	window.draw(loadScreen);
-	window.display();
+	window.setVerticalSyncEnabled(true);
 
 	window.setMouseCursorVisible(false);
-
-	mLHandler.setActiveLevel(0, mRHandler, true);
-
+	mRHandler.loadGeneral(window);
+	mUI = new UI(mRHandler);
 
 	while (window.isOpen())
 	{
@@ -33,21 +29,26 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		if (mLHandler.getActiveLevel()->getUI()->getState() == UI::MAINMENU)
+		if (mUI->getState() == UI::MAINMENU)
 		{
-			mLHandler.getActiveLevel()->getUI()->eventListen(window);
-			mLHandler.getActiveLevel()->getUI()->drawMainMenu(window);
+			mUI->eventListen(window);
+			mUI->drawMainMenu(window);
+			if (mUI->getLevelStart())
+			{
+				mLHandler.setActiveLevel(0, mRHandler, true, window, mUI);
+				mUI->setLevelStart();
+			}
 		}
-		else if (mLHandler.getActiveLevel()->getUI()->getState() != UI::MAINMENU)
+		else if (mUI->getState() != UI::MAINMENU)
 		{
-			mLHandler.update(deltaTime, window, mRHandler);
-			if (mLHandler.getActiveLevel()->getUI()->getState() != UI::EXIT)
+			mLHandler.update(deltaTime, window, mRHandler, mUI);
+			if (mUI->getState() != UI::EXIT)
 			{
 				mLHandler.getActiveLevel()->eventListen(window);
 			}
 			else
 			{
-				mLHandler.getActiveLevel()->getUI()->eventListen(window);
+				mUI->eventListen(window);
 			}
 			mLHandler.draw(window);
 		}

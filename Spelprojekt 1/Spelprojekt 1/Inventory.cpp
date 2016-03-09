@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Inventory::Inventory():
+Inventory::Inventory(ResourceHandler &handler):
 mRow(0),
 mCol(-1),
 mColNum(3),
@@ -19,7 +19,9 @@ mCraftSelect1(-1),
 mCraftSelect2(-1),
 mIsCraftable(false),
 mHasCraft1(false),
-mHasCraft2(false)
+mHasCraft2(false),
+mCircle1Mid(487, 276),
+mCircle2Mid(725, 175)
 {
 	//Size check
 	cout << mItems.size() << endl;
@@ -61,6 +63,28 @@ mHasCraft2(false)
 	mInventoryRect = sf::FloatRect(sf::Vector2f(30, 305), sf::Vector2f(80, 85));
 	mCluesRect = sf::FloatRect(sf::Vector2f(155, 365), sf::Vector2f(75, 80));
 	mMemoriesRect = sf::FloatRect(sf::Vector2f(195, 475), sf::Vector2f(75, 80));
+
+	//Sounds
+	mCraftingSound.setBuffer(*handler.getSound("Crafting.ogg"));
+	mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
+	mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
+	mInventoryMoveSound.setBuffer(*handler.getSound("Inventory_Move.ogg"));
+
+	mCraftingSound.setVolume(50);
+
+	//Font / Text
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
+	mDescription.setFont(mFont);
+	mDescription.setCharacterSize(18);
+	mDescription.setStyle(sf::Text::Bold);
+	mDescription.setColor(sf::Color::Black);
+	mDescription.setPosition(400, 420);
+	mCraftable.setFont(mFont);
+	mCraftable.setCharacterSize(14);
+	mCraftable.setStyle(sf::Text::Bold);
+	mCraftable.setStyle(sf::Text::Italic);
+	mCraftable.setColor(sf::Color::Black);
+	mCraftable.setPosition(430, 450);
 }
 
 Inventory::~Inventory()
@@ -81,26 +105,16 @@ void Inventory::update(sf::RenderWindow &window)
 	//Set select rectangle position
 	if (mSelectedItem1 != -1)
 	{
+		mCursorSprite.setPosition(sf::Vector2f(mWorldPos.x - mCursorSprite.getGlobalBounds().width / 2, mWorldPos.y - mCursorSprite.getGlobalBounds().height / 2));
 		mSelectRect.setPosition(sf::Vector2f(mItems[mSelectedItem1]->getINVPosition().x - 3, mItems[mSelectedItem1]->getINVPosition().y - 3));
-	}
-
-	//Swap selected items
-	if (mSelectedItem1 != -1 && mSelectedItem2 != -1)
-	{
-		swapItems(mItems, mSelectedItem1, mSelectedItem2);
-		deSelect();
 	}
 }
 
 void Inventory::draw(sf::RenderWindow &window)
 {
-	if (mSelectedItem1 != -1)
-	{
-		window.draw(mSelectRect);
-	}
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
-		//THIS DOESN'T WORK, NEEDS FIX
+		//TODO - THIS DOESN'T WORK, NEEDS FIX
 		//Set opacity to 50% if item is selected
 		//if (mCraftSelect1 != -1)
 		//{
@@ -137,6 +151,15 @@ void Inventory::draw(sf::RenderWindow &window)
 		mResultItem->setINVPosition(mResultRect.getPosition().x, mResultRect.getPosition().y);
 		window.draw(mResultItem->getINVSprite());
 	}
+
+	//Draw Item Description
+	window.draw(mDescription);
+	window.draw(mCraftable);
+}
+
+void Inventory::drawCursorSprite(sf::RenderWindow &window)
+{
+	window.draw(mCursorSprite);
 }
 
 void Inventory::addItem(Item* item)
@@ -256,13 +279,24 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			if (mSelectedItem1 == -1)
 			{
 				mSelectedItem1 = i;
+				mCursorSprite = mItems[mSelectedItem1]->getINVSprite();
 				cout << "First selected item is: " << mSelectedItem1 << endl;
+				mDescription.setString(mItems[mSelectedItem1]->getDescription());
+				if (mItems[mSelectedItem1]->getCraftIndex() != -1)
+				{
+					mCraftable.setString("Kan Kombineras");
+				}
+				else
+				{
+					mCraftable.setString("Kan Ej Kombineras");
+				}
 			}
 
 			//Select second item if has selected first item and no second is selected, also avoid selecting same item twice
 			if (mSelectedItem1 != -1 && mSelectedItem2 == -1 && mSelectedItem1 != i)
 			{
 				mSelectedItem2 = i;
+				mCursorSprite = mItems[mSelectedItem2]->getINVSprite();
 				cout << "Second selected item is: " << mSelectedItem2 << endl;
 			}
 			return;
@@ -272,10 +306,12 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 	if (ui.getHatIconRect().contains(point))
 	{
 		ui.setState(UI::HAT);
+		mMenuHatSound.play();
 	}
 	else if (ui.getMenuIconRect().contains(point))
 	{
 		ui.setState(UI::MAINUI);
+		mMenuMainUISound.play();
 	}
 	else if (mInventoryRect.contains(point))
 	{
@@ -291,7 +327,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 	}
 	else
 	{
-		deSelect();
+		deSelectCheck();
 	}
 }
 
@@ -315,6 +351,7 @@ void Inventory::setCraftPos(int index)
 					mHasCraft1 = true;
 					mItem1 = new Item(*mItems[index]);
 					mItem1->setINVPosition(pos1.x, pos1.y);
+					mInventoryMoveSound.play();
 				}
 			}
 			mSelectedItem1 = -1;
@@ -332,13 +369,14 @@ void Inventory::setCraftPos(int index)
 					mHasCraft2 = true;
 					mItem2 = new Item(*mItems[index]);
 					mItem2->setINVPosition(pos2.x, pos2.y);
+					mInventoryMoveSound.play();
 				}
 			}
 			mSelectedItem1 = -1;
 		}
 		return;
 	}
-	deSelect();
+	deSelectCheck();
 }
 
 void Inventory::craftItem(int index1, int index2)
@@ -374,6 +412,7 @@ void Inventory::craftItem(int index1, int index2)
 		removeItem(index1);
 	}
 	mIsCraftable = false;
+	mCraftingSound.play();
 }
 
 //Swaps elements in given vector, passed by referens to avoid copy
@@ -389,6 +428,7 @@ void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex
 		swapPos(*inputVector[inputIndex], *inputVector[swapIndex]);
 
 		cout << "Swapped" << endl;
+		mInventoryMoveSound.play();
 	}
 }
 
@@ -399,12 +439,25 @@ void Inventory::swapPos(Item &item1, Item &item2)
 	item2.setINVPosition(tempPos.x, tempPos.y);
 }
 
-void Inventory::deSelect()
+void Inventory::deSelectCheck()
 {
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		//Deselect if you click on nothing interactable
-		if (!mItems[i]->getINVRectangle().contains(mWorldPos) && !mItem1Rect.getGlobalBounds().contains(mWorldPos) && !mItem2Rect.getGlobalBounds().contains(mWorldPos) && !mCraftButton.getGlobalBounds().contains(mWorldPos))
+		if (!mItems[i]->getINVRectangle().contains(mWorldPos) 
+			&& !mItem1Rect.getGlobalBounds().contains(mWorldPos) 
+			&& !mItem2Rect.getGlobalBounds().contains(mWorldPos) 
+			&& !mCraftButton.getGlobalBounds().contains(mWorldPos))
+		{
+			mSelectedItem1 = -1;
+			mSelectedItem2 = -1;
+			mHasCraft1 = false;
+			mHasCraft2 = false;
+			mCraftSelect1 = -1;
+			mCraftSelect2 = -1;
+		}
+		//Check if has selected item and releases on same item
+		else if (mSelectedItem1 == i && mItems[i]->getINVRectangle().contains(mWorldPos))
 		{
 			mSelectedItem1 = -1;
 			mSelectedItem2 = -1;
@@ -414,6 +467,79 @@ void Inventory::deSelect()
 			mCraftSelect2 = -1;
 		}
 	}
+
+	mDescription.setString("");
+	mCraftable.setString("");
+}
+
+void Inventory::forceDeSelect()
+{
+	mSelectedItem1 = -1;
+	mSelectedItem2 = -1;
+	mHasCraft1 = false;
+	mHasCraft2 = false;
+	mCraftSelect1 = -1;
+	mCraftSelect2 = -1;
+}
+
+void Inventory::swapCheck()
+{
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		if (mSelectedItem1 != -1)
+		{
+			if (mSelectedItem1 != i)
+			{
+				if (mCursorSprite.getGlobalBounds().intersects(mItems[i]->getINVSprite().getGlobalBounds()))
+				{
+					swapItems(mItems, mSelectedItem1, i);
+				}
+			}
+		}
+	}
+}
+
+bool Inventory::checkDistance(sf::Vector2f point)
+{
+	//Distance 1
+	sf::Vector2f delta(mCircle1Mid - point);
+
+	float deltaX = delta.x;
+	float deltaY = delta.y;
+
+	float squareX = (deltaX * deltaX);
+	float squareY = (deltaY * deltaY);
+
+	float added = (squareX + squareY);
+
+	float distance = sqrt(added);
+
+	//Distance 2
+	sf::Vector2f delta2(mCircle2Mid - point);
+
+	float deltaX2 = delta2.x;
+	float deltaY2 = delta2.y;
+
+	float squareX2 = (deltaX2 * deltaX2);
+	float squareY2 = (deltaY2 * deltaY2);
+
+	float added2 = (squareX2 + squareY2);
+
+	float distance2 = sqrt(added2);
+
+	cout << distance << endl;
+	cout << distance2 << endl;
+	
+	if (distance <= 220)
+	{
+		return true;
+	}
+	else if (distance2 <= 97)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool Inventory::craftCheck()
@@ -461,6 +587,11 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 	}
 }
 
+sf::Sprite Inventory::getCursorSprite()
+{
+	return mCursorSprite;
+}
+
 int Inventory::getSelectedItem()
 {
 	return mSelectedItem1;
@@ -485,5 +616,39 @@ Item* Inventory::selectedItem()
 	else
 	{
 		return NULL;
+	}
+}
+
+void Inventory::setGridPosition(sf::Vector2f viewCenter)
+{
+	//Item Icons
+	mInitialXOffset = viewCenter.x - 162;
+	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
+	{
+		mPosX = mInitialXOffset + (i % 3) * (mXIncrease);
+
+		mItems[i]->setINVPosition(mPosX, mItems[i]->getINVPosition().y);
+	}
+
+	if (mItem1 != NULL)
+	{
+		mItem1->setINVPosition(viewCenter.x + 131, 103);
+	}
+	if (mItem2 != NULL)
+	{
+		mItem2->setINVPosition(viewCenter.x + 236, 103);
+	}
+
+	//Craft Rects
+	mItem1Rect.setPosition(sf::Vector2f(viewCenter.x + 128, 100));
+	mItem2Rect.setPosition(sf::Vector2f(viewCenter.x + 233, 100));
+	mResultRect.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+	mCraftButton.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+
+	//Item Descriptions
+	if (mSelectedItem1 != -1)
+	{
+		mDescription.setPosition((viewCenter.x - 112) - (float)mItems[mSelectedItem1]->getDescription().length(), 420); // TODO - Make more dynamic, centered etc.
+		mCraftable.setPosition((viewCenter.x - 80), 450);
 	}
 }

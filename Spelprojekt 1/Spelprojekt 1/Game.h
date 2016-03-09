@@ -4,6 +4,7 @@
 #include "LevelHandler.h"
 #include "DialogueSystem.h"
 #include "ResourceHandler.h"
+#include "UI.h"
 #include "SFML\System.hpp"
 #include "SFML\Window.hpp"
 
@@ -22,12 +23,13 @@ private:
 
 	//Deltatime
 	sf::Clock deltaClock;
+	sf::Clock fpsClock;
 
 	//Sound
 	sf::Music music;
 
-	//Loading screen
-	sf::Sprite loadScreen;
+	//UI
+	UI *mUI;
 };
 
 #endif

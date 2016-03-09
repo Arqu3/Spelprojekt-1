@@ -37,7 +37,7 @@ public:
 	const rectVector getPlayRects();
 
 	//Active Level
-	void toggleActive(ResourceHandler &handler);
+	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui);
 	bool isActive();
 
 	//View
@@ -58,6 +58,7 @@ public:
 	int checkCollision(const std::vector<sf::FloatRect*> RectVector, sf::FloatRect &rect);
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
+	void mouseReleased(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
@@ -91,6 +92,16 @@ private:
 	//Sound
 	sf::Music music;
 	sf::Sound mAmbientSound;
+	sf::Sound mAquariumSound;
+	sf::Sound mRadioSound;
+	sf::Sound mMagnetCatchSound;
+	sf::Sound mMagnetDropSound;
+	sf::Sound mPushingObjectSound;
+	sf::Sound mRegularItemSound;
+	sf::Sound mMenuMainUISound;
+	sf::Sound mMenuHatSound;
+	sf::Sound mMenuInventorySound;
+	sf::Sound mCriticalItemSound;
 
 	//Scene
 	bool mIsActive;
@@ -109,9 +120,12 @@ private:
 	Item* mAstronaut;
 	Item* mBowl;
 	Item* mCube;
+	Item* mWallStar;
+	Item* mRoger;
 
 	//Inventory
 	Inventory *mInventory;
+	sf::Sprite mCursorSprite;
 
 	//DialogueSystem
 	DialogueSystem *mDialogueSystem;
@@ -125,6 +139,12 @@ private:
 	//Menu
 	UI *mUI;
 
+	//Clues
+	Clue *mClues;
+
+	//Riddlespider
+	RiddleSpider *mSpider;
+
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
@@ -136,14 +156,20 @@ private:
 	sf::Vector2f mSceneChangePlayerPos;
 	int mNewScene;
 
+	bool mRogerOnPoint;
+
 	bool mPlayerToggle;
 	bool mLookedAtAquarium;
 	bool mPushingBlock;
+	bool mCubePlaced;
 	bool mFishing;
 	bool mReadyForScrewdevice;
 	bool mPickedUpScrewdevice;
 	bool mMovedStar;
 	bool mReadyToLeave;
 	bool mLevelComplete;
+	bool mHasCraftedFishingRod;
+
+	int mUpdateTime;
 };
 #endif
