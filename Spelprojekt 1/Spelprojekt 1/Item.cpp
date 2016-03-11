@@ -16,7 +16,7 @@ mCurrentFrame(0),
 mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
-mFrameTime(0.03f)
+mFrameTime(0.05f)
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -332,7 +332,7 @@ mFrameTime(0.03f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.07f, 0.07f));
-		/*mRogerSwim = *handler.getTexture("RogerSwim.png");*/
+		mRogerSwim = *handler.getTexture("RogerSwim.png");
 		mSprite.setTexture(mRogerSwim);
 		mSprite.setOrigin(350, 0);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));

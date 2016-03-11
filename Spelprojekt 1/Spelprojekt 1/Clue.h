@@ -20,10 +20,14 @@ public:
 		{
 			mSprite.setTexture(*handler.getTexture(textureName));
 			mSprite.setPosition(position);
-			mText.setPosition(sf::Vector2f(350, 350)); //Add proper position
-			mFont.loadFromFile("Resources/Fonts/ShadowsIntoLight.ttf");
+			//TODO - Add sf::Vector2f scale parameter and use that to set the proper scale for mSprite?
+			if (textureName == "InfoIcon.png")
+			{
+				mSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+			}
+			mText.setPosition(sf::Vector2f(343, 315)); //Add proper position
+			mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
 			mText.setCharacterSize(18);
-			mText.setStyle(sf::Text::Bold);
 			mText.setColor(sf::Color::Black);
 			mText.setFont(mFont);
 		}
@@ -43,12 +47,19 @@ public:
 			{
 				mState1 = true;
 				mText.setString(mText1);
+
+				if (mText2 != "")
+				{
+					mSprite.setColor(sf::Color(255, 255, 255, 128));
+				}
 			}
 		}
 		void setState2()
 		{
 			mState2 = true;
 			mText.setString(mText2);
+
+			mSprite.setColor(sf::Color(255, 255, 255, 255));
 		}
 
 		bool getState1()

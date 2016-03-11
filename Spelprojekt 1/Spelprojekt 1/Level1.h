@@ -157,8 +157,11 @@ private:
 	int mNewScene;
 
 	bool mRogerOnPoint;
+	bool mMouseReleased;
 
 	bool mPlayerToggle;
+	bool mPickedUpFishingRod;
+	bool mPickedUpMagnet;
 	bool mLookedAtAquarium;
 	bool mPushingBlock;
 	bool mCubePlaced;
@@ -169,7 +172,5 @@ private:
 	bool mReadyToLeave;
 	bool mLevelComplete;
 	bool mHasCraftedFishingRod;
-
-	int mUpdateTime;
 };
 #endif

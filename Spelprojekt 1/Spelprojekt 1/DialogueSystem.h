@@ -309,8 +309,25 @@ private:
 	bool mPutte;
 	bool mPutteFamily;
 
-	sf::Music voiceActingTest;
-	sf::Music voiceActingTest2;
+	//Voice Acting
+	//Narrator
+	sf::Music NarratorLvl1Part1;
+	sf::Music NarratorLvl1Part2;
+	sf::Music NarratorLvl1Part3;
+	sf::Music NarratorLvl1Part4;
+	sf::Music NarratorLvl1Part5;
+	sf::Music NarratorLvl1Part6;
+	sf::Music NarratorLvl1Part7;
+	sf::Music NarratorLvl1Part8;
+	sf::Music NarratorLvl1Part9;
+	//Thomas
+	sf::Music ThomasLvl1Part1;
+	sf::Music ThomasLvl1Part2;
+	sf::Music ThomasLvl1Part3;
+	sf::Music ThomasLvl1Part4;
+	sf::Music ThomasLvl1Part5;
+	sf::Music ThomasLvl1Part6;
+	sf::Music ThomasLvl1Part7;
 	bool mLineStarted;
 };
 

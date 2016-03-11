@@ -325,6 +325,17 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 	{
 		ui.setState(UI::MEMORIES);
 	}
+	else if (ui.getInfoIconRect().contains(point))
+	{
+		if (ui.getInfoBoxDisplay())
+		{
+			ui.setInfoBoxDisplay(false);
+		}
+		else
+		{
+			ui.setInfoBoxDisplay(true);
+		}
+	}
 	else
 	{
 		deSelectCheck();
@@ -530,11 +541,11 @@ bool Inventory::checkDistance(sf::Vector2f point)
 	cout << distance << endl;
 	cout << distance2 << endl;
 	
-	if (distance <= 220)
+	if (distance <= 225)
 	{
 		return true;
 	}
-	else if (distance2 <= 97)
+	else if (distance2 <= 105)
 	{
 		return true;
 	}

@@ -198,8 +198,6 @@ private:
 	bool mMarsHanged;
 
 	ResourceHandler &handler;
-
-	int mUpdateTime;
 };
 
 #endif

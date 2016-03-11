@@ -27,8 +27,24 @@ mLineStarted(false)
 	mSepia.setSize(sf::Vector2f(1024, 576));
 	mSepia.setTexture(handler.getTexture("sepia.png"));
 
-	voiceActingTest.openFromFile(handler.getMusic("VoiceActingTest.ogg"));
-	voiceActingTest2.openFromFile(handler.getMusic("VoiceActingTest2.ogg"));
+	//Narrator
+	NarratorLvl1Part1.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 1.ogg"));
+	NarratorLvl1Part2.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 2.ogg"));
+	NarratorLvl1Part3.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 3.ogg"));
+	NarratorLvl1Part4.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 4.ogg"));
+	NarratorLvl1Part5.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 5.ogg"));
+	NarratorLvl1Part6.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 6.ogg"));
+	NarratorLvl1Part7.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 7.ogg"));
+	NarratorLvl1Part8.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 8.ogg"));
+	NarratorLvl1Part9.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 9.ogg"));
+	//Thomas
+	ThomasLvl1Part1.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 1.ogg"));
+	ThomasLvl1Part2.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 2.ogg"));
+	ThomasLvl1Part3.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 3.ogg"));
+	ThomasLvl1Part4.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 4.ogg"));
+	ThomasLvl1Part5.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 5.ogg"));
+	ThomasLvl1Part6.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 6.ogg"));
+	ThomasLvl1Part7.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 7.ogg"));
 }
 
 DialogueSystem::~DialogueSystem()
@@ -1162,7 +1178,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	std::string level1StartHilma3 = "Det var det bästa utbytet jag hittills har fått! Jag som hade hittat så bra...";
 	std::string level1StartThomas = "V-vad har du tappat?";
 	std::string level1StartHilma4 = "För det första, jag har inte tappat bort något. För det andra, är det en mycket ovärderlig sak som tog väldigt lång tid att få. Det var en fantastisk skruvmackapär. Med den skulle jag bygga en mycket finare flygfarkost än denna skrothög. Men nu har jag INGENTING jag kan laga skrothögen med.";
-	std::string level1StartTeller2 = "Pojken tyckte synd om den lilla varelsen och undrade om han kunde hjälpa till. Då kom han på en idé.";
+	std::string level1StartTeller2 = "Pojken tyckte det var lite synd om den lilla varelsen och undrade om han kunde hjälpa till. Då kom han på en idé.";
 	std::string level1StartThomas2 = "J-jag kanske... har en skruvmackapär-";
 	std::string level1StartHilma5 = "Jamen då så! Var har du den?";
 	std::string level1StartThomas3 = "Eh... jag vet inte...";
@@ -1172,7 +1188,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	std::string level1StartHilma8 = "Vi Hittare har funnits länge och hållit reda på er slarviga människor. Tappar ni bort något så hittar vi det åt er. Jag och min egna hittarbyrå kan hitta vad som helst, var som helst!";
 	std::string level1StartThomas4 = "O-om du verkligen är en h-hittare. Kan du... Kan du hitta tre saker åt mig-";
 	std::string level1StartHilma9 = "För att bevisa för dig att jag är en hittare? Utmaning godtagen! Vad är det du vill att jag ska hitta? Kom igen nu, vela inte så mycket!";
-	std::string level1StartThomas5 = "En självlysande stjärna... den föll från väggen, min favoritastronaut och... skruvmackapären...";
+	std::string level1StartThomas5 = "En självlysande stjärna... den föll ner från väggen, min favoritastronaut och... skruvmackapären...";
 	std::string level1StartHilma10 = "Och vad får jag i utbyte?";
 	std::string level1StartThomas6 = "Hur mycket kostar det?";
 	std::string level1StartHilma11 = "Inte pengar! Ge mig något användbart!";
@@ -1201,7 +1217,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		//Voice Acting Template
-		if (!mLineStarted && voiceActingTest.getStatus() != 2)
+		/*if (!mLineStarted && voiceActingTest.getStatus() != 2)
 		{
 			voiceActingTest.play();
 			mLineStarted = true;
@@ -1210,7 +1226,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		{
 			mLineStarted = false;
 			setState();
-		}
+		}*/
 	}
 	if (mState == 1)
 	{
@@ -1218,13 +1234,13 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 
 		//Voice Acting Template
-		voiceActingTest.stop();
-		if (!mLineStarted && voiceActingTest2.getStatus() != 2)
+		//voiceActingTest.stop();
+		if (!mLineStarted && NarratorLvl1Part1.getStatus() != 2)
 		{
-			voiceActingTest2.play();
+			NarratorLvl1Part1.play();
 			mLineStarted = true;
 		}
-		if (mLineStarted && voiceActingTest2.getStatus() == 0)
+		if (mLineStarted && NarratorLvl1Part1.getStatus() == 0)
 		{
 			mLineStarted = false;
 			setState();
@@ -1237,8 +1253,8 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		//Voice Acting Template
-		voiceActingTest2.stop();
-		if (!mLineStarted && voiceActingTest.getStatus() != 2)
+		NarratorLvl1Part1.stop();
+		/*if (!mLineStarted && voiceActingTest.getStatus() != 2)
 		{
 			voiceActingTest.play();
 			mLineStarted = true;
@@ -1247,54 +1263,106 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		{
 			mLineStarted = false;
 			setState();
-		}
+		}*/
 	}
 	if (mState == 3)
 	{
 		advancedText(level1StartHilma3, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAbject.png");
-		voiceActingTest.stop();
+
+		//voiceActingTest.stop();
 	}
 	if (mState == 4)
 	{
 		advancedText(level1StartThomas, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && ThomasLvl1Part1.getStatus() != 2)
+		{
+			ThomasLvl1Part1.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && ThomasLvl1Part1.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 5)
 	{
 		advancedText(level1StartHilma4, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		ThomasLvl1Part1.stop();
 	}
 	if (mState == 6)
 	{
 		advancedText(level1StartTeller2, 100.f, 420.f, 1.f, 1.f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && NarratorLvl1Part2.getStatus() != 2)
+		{
+			NarratorLvl1Part2.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part2.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 7)
 	{
 		advancedText(level1StartThomas2, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		NarratorLvl1Part2.stop();
+		if (!mLineStarted && ThomasLvl1Part2.getStatus() != 2)
+		{
+			ThomasLvl1Part2.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && ThomasLvl1Part2.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 8)
 	{
 		advancedText(level1StartHilma5, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		ThomasLvl1Part2.stop();
 	}
 	if (mState == 9)
 	{
 		advancedText(level1StartThomas3, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && ThomasLvl1Part3.getStatus() != 2)
+		{
+			ThomasLvl1Part3.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && ThomasLvl1Part3.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 10)
 	{
 		advancedText(level1StartHilma6, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		ThomasLvl1Part3.stop();
 	}
 	if (mState == 11)
 	{
@@ -1305,46 +1373,99 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	{
 		advancedText(level1StartTeller3, 100.f, 420.f, 1.f, 1.f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && NarratorLvl1Part3.getStatus() != 2)
+		{
+			NarratorLvl1Part3.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part3.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 13)
 	{
 		advancedText(level1StartHilma8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		NarratorLvl1Part3.stop();
 	}
 	if (mState == 14)
 	{
 		advancedText(level1StartThomas4, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && ThomasLvl1Part4.getStatus() != 2)
+		{
+			ThomasLvl1Part4.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && ThomasLvl1Part4.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 15)
 	{
 		advancedText(level1StartHilma9, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		ThomasLvl1Part4.stop();
 	}
 	if (mState == 16)
 	{
 		advancedText(level1StartThomas5, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && ThomasLvl1Part5.getStatus() != 2)
+		{
+			ThomasLvl1Part5.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && ThomasLvl1Part5.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 17)
 	{
 		advancedText(level1StartHilma10, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		ThomasLvl1Part5.stop();
 	}
 	if (mState == 18)
 	{
 		advancedText(level1StartThomas6, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && ThomasLvl1Part6.getStatus() != 2)
+		{
+			ThomasLvl1Part6.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && ThomasLvl1Part6.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 19)
 	{
 		advancedText(level1StartHilma11, 100.f, 420.f, 1.f, 1.f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		ThomasLvl1Part6.stop();
 	}
 	if (mState == 20)
 	{
@@ -1369,12 +1490,25 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 		advancedText(level1StartThomas7, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasBlush.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && ThomasLvl1Part7.getStatus() != 2)
+		{
+			ThomasLvl1Part7.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && ThomasLvl1Part7.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 24)
 	{
 		advancedText(level1StartHilma14, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		ThomasLvl1Part7.stop();
 	}
 }
 
@@ -1384,7 +1518,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	std::string level1EndTeller = "När Thomas fick syn på alla föremål kunde han inte tro sina ögon. Han som hade letat så mycket själv! Hans mamma hade sagt att när något försvann i hans stökiga rum, var det försvunnet för alltid. Tydligen inte för en hittare.";
 	std::string level1EndHilma2 = "Jag sa ju det! Jag hittar vad som helst, var som helst!";
 	std::string level1EndTeller2 = "Då fick han ett litet, litet leende på läpparna och tackade så mycket för Hilmas hjälp. Men leendet försvann snabbt när han såg på skruvmackapären.";
-	std::string level1EndTeller3 = "Han blev alldeles tyst och stirrade på den. Plötsligt kunde han inte bara ge den till den hjälpsamma hittaren. Han höll hårdare i skruvmackapären. Nu började Hilma bli otålig.";
+	std::string level1EndTeller3 = "Han blev alldeles tyst och stirrade på den. Plötsligt kunde han inte bara ge den till den hjälpsamma hittaren. Han höll hårdare i skruvmackapären. Nu började Hilma bli lite otålig.";
 	std::string level1EndHilma3 = "Hallå? Thomas? Jorden anropar!";
 	std::string level1EndThomas = "F-förlåt jag... jag... Det är bara det att det inte är min skruvmackapär jag ger dig.";
 	std::string level1EndHilma4 = "Jaha ja, vems är det då om man får fråga? Har du stulit den?";
@@ -1434,28 +1568,66 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	{
 		advancedText(level1EndTeller, 100.f, 420.f, 1.f, 1.f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && NarratorLvl1Part4.getStatus() != 2)
+		{
+			NarratorLvl1Part4.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part4.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 2)
 	{
 		advancedText(level1EndHilma2, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		NarratorLvl1Part4.stop();
 	}
 	if (mState == 3)
 	{
 		advancedText(level1EndTeller2, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && NarratorLvl1Part5.getStatus() != 2)
+		{
+			NarratorLvl1Part5.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part5.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 4)
 	{
 		advancedText(level1EndTeller3, 100.f, 420.f, 1.f, 1.f);
+
+		NarratorLvl1Part5.stop();
+		if (!mLineStarted && NarratorLvl1Part6.getStatus() != 2)
+		{
+			NarratorLvl1Part6.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part6.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 5)
 	{
 		advancedText(level1EndHilma3, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		NarratorLvl1Part6.stop();
 	}
 	if (mState == 6)
 	{
@@ -1522,12 +1694,25 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 		advancedText(level1EndTeller4, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && NarratorLvl1Part7.getStatus() != 2)
+		{
+			NarratorLvl1Part7.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part7.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 18)
 	{
 		advancedText(level1EndHilma8, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+
+		NarratorLvl1Part7.stop();
 	}
 	if (mState == 19)
 	{
@@ -1557,12 +1742,25 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	{
 		advancedText(level1EndTeller5, 100.f, 420.f, 1.f, 1.f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && NarratorLvl1Part8.getStatus() != 2)
+		{
+			NarratorLvl1Part8.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part8.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 24)
 	{
 		advancedText(level1EndThomas10, 100.f, 420.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		NarratorLvl1Part8.stop();
 	}
 	if (mState == 25)
 	{
@@ -1585,13 +1783,26 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 28)
 	{
 		advancedText(level1EndTeller6, 100.f, 420.f, 1.f, 1.f);
-		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+
+		if (!mLineStarted && NarratorLvl1Part9.getStatus() != 2)
+		{
+			NarratorLvl1Part9.play();
+			mLineStarted = true;
+		}
+		if (mLineStarted && NarratorLvl1Part9.getStatus() == 0)
+		{
+			mLineStarted = false;
+			setState();
+		}
 	}
 	if (mState == 29)
 	{
 		advancedText(level1EndThomas12, 100.f, 420.f, 1.f, 1.f);
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+
+		NarratorLvl1Part9.stop();
 	}
 }
 
