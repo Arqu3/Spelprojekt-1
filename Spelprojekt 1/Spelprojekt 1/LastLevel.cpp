@@ -889,14 +889,9 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 		mDialogueSystem->reset();
 	}
 
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME && mUpdateTime > 0)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME)
 	{
 		mouseHover();
-		mUpdateTime = 0;
-	}
-	else
-	{
-		mUpdateTime++;
 	}
 
 	//Engage walk animation when player is moving

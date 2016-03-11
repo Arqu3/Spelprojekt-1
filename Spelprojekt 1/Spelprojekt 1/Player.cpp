@@ -13,15 +13,15 @@ mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
 mFrameYOffset(0),
-mSpeed(500.0f),
+mSpeed(100.0f),
 mFacingLeft(true),
 mStepCooldown(0),
 mThomasActive(true)
 
 {
 	//Sounds
-	/*mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
-	mWalkingSound.setVolume(25);*/
+	mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
+	mWalkingSound.setVolume(25);
 
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
@@ -30,7 +30,7 @@ mThomasActive(true)
 	mThomasTexture = *handler.getTexture("ThomasWalk.png");
 	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
 	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
-	/*mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");*/
+	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
