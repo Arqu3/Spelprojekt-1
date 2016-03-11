@@ -74,6 +74,7 @@ public:
 	void displayLevel3Skatmaran1AdvancedDialogue();
 	void displayLevel3Skatmaran2AdvancedDialogue();
 	void displayLevel3Skatmaran3AdvancedDialogue();
+	void displayLevel3Skatmaran4AdvancedDialogue();
 	void displayLevel3ReturnAdvancedDialogue();
 
 	//Level 4
@@ -230,6 +231,7 @@ private:
 	bool mLevel3Skatmaran1;
 	bool mLevel3Skatmaran2;
 	bool mLevel3Skatmaran3;
+	bool mLevel3Skatmaran4;
 	bool mLevel3Return;
 
 	//Level 4

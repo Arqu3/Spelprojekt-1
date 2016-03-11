@@ -336,6 +336,30 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 		mHasClicked = true;
 	}
 
+	else if (indexName == "skatmaran1" && mHasClicked == false)
+	{
+		mLevel3Skatmaran1 = true;
+		mHasClicked = true;
+	}
+
+
+	else if (indexName == "skatmaran2" && mHasClicked == false)
+	{
+		mLevel3Skatmaran2 = true;
+		mHasClicked = true;
+	}
+
+	else if (indexName == "skatmaran3" && mHasClicked == false)
+	{
+		mLevel3Skatmaran3 = true;
+		mHasClicked = true;
+	}
+
+	else if (indexName == "skatmaran4" && mHasClicked == false)
+	{
+		mLevel3Skatmaran4 = true;
+		mHasClicked = true;
+	}
 	//Level 5
 	else if (indexName == "balconyDoor" && mHasClicked == false)
 	{
@@ -818,6 +842,26 @@ void DialogueSystem::update(float time)
 	else if (mLevel3Shed == true)
 	{
 		displayLevel3ShedAdvancedDialogue();
+	}
+
+	else if (mLevel3Skatmaran1 == true)
+	{
+		displayLevel3Skatmaran1AdvancedDialogue();
+	}
+
+	else if (mLevel3Skatmaran2 == true)
+	{
+		displayLevel3Skatmaran2AdvancedDialogue();
+	}
+
+	else if (mLevel3Skatmaran3 == true)
+	{
+		displayLevel3Skatmaran3AdvancedDialogue();
+	}
+
+	else if (mLevel3Skatmaran4 == true)
+	{
+		displayLevel3Skatmaran4AdvancedDialogue();
 	}
 
 	//Level 5
@@ -1565,7 +1609,7 @@ void DialogueSystem::displayLevel2StartAdvancedDialogue()
 	std::string level2StartHilma = "Så det var här du såg mormor senast?";
 	std::string level2StartThomas = "Ja... Det är mormors verkstad.";
 	std::string level2StartHilma2 = "Jaså verkstad säger du? Då måste väl rymdfarkosten vara här?";
-	std::string level2StartThomas2 = "Mhm… den står längst in i verkstaden.";
+	std::string level2StartThomas2 = "Mhm... den står längst in i verkstaden.";
 	std::string level2StartHilma3 = "Jaha ja! Låt mig få inspektera denna ‘Rymdfarkost.";
 	std::string level2StartThomas3 = "Ja visst! Åh nej! Cykeln fick punka... Och... styret verkar löst...";
 	std::string level2StartHilma4 = "Då får vi väl hitta på något sätt att laga den!";
@@ -1802,7 +1846,7 @@ void DialogueSystem::displayLevel3StartAdvancedDialogue()
 	std::string level3StartSurtanten = "Muttranden";
 	std::string level3StartThomas6 = "Åh nej! Hon är här!";
 	std::string level3StartHilma5 = "Ser ut som att vi får smyga förbi henne då, borde vara lätt för någon i min storlek!";
-	std::string level3StartThomas7 = "Kanske det, så länge hennes hund inte märker dig…";
+	std::string level3StartThomas7 = "Kanske det, så länge hennes hund inte märker dig...";
 	std::string level3StartHilma6 = "Hund? Det sa du inget om! Jag har inget till övers för såna stora bestar!";
 	std::string level3StartThomas8 = "Vi kanske kan hitta ett sätt att få bort den... Åh just det, det bor också bin i trädgården.";
 	std::string level3StartHilma7 = "Låt mig gissa, bina bor utanför skjulet?";
@@ -2032,6 +2076,8 @@ void DialogueSystem::displayLevel3ShedAdvancedDialogue()
 	}
 }
 
+
+//OBS! Samtliga saknar Skatmaran!
 void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 {
 	std::string level3Skatmaran1Hilma = "Hörru du din tjuv! Ge tillbaka det du stulit!";
@@ -2043,7 +2089,7 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 	std::string level3Skatmaran1Skatmaran4 = "Det stämmer väl och det stämmer att en av mina skator nyss dök upp med ett vackert fickur. Men mina skator är tränade att aldrig stjäla, det du påstår är omöjligt.";
 	std::string level3Skatmaran1Hilma4 = "Omöjligt? Jag såg det ju hända med mina egna ögon! En människa och Tapparen Putte såg det med!";
 	std::string level3Skatmaran1Skatmaran5 = "Den där tapparen kan ha sett vad som helst, hans ord är lika goda som den människans. Och du vet att vi inte lyssnar på människor.";
-	std::string level3Skatmaran1Hilma5 = "";
+	std::string level3Skatmaran1Hilma5 = "...";
 	std::string level3Skatmaran1Skatmaran6 = "Det HAR hänt att mina skator tagit saker från någon som inte tillhört dem. Var det människans fickur?";
 	std::string level3Skatmaran1Hilma6 = "Nej... det var hans mormors.";
 	std::string level3Skatmaran1Skatmaran7 = "Aha! Då är det ju knappast stulet! Och den här mormorn, letar hon efter sitt fickur?";
@@ -2084,13 +2130,13 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level3Skatmaran1Skatmaran, 100.f, 420.f, 1.f, 1.f);
-		actorText("Skatmaran", 470.f, 307.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level3Skatmaran1Skatmaran2, 100.f, 420.f, 1.f, 1.f);
-		actorText("Skatmaran", 470.f, 307.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
@@ -2100,11 +2146,23 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
+	else if (mState == 4)
+	{
+		advancedText(level3Skatmaran1Skatmaran3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
 	else if (mState == 5)
 	{
 		advancedText(level3Skatmaran1Hilma3, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 6)
+	{
+		advancedText(level3Skatmaran1Skatmaran4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 7)
@@ -2114,11 +2172,23 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
+	else if (mState == 8)
+	{
+		advancedText(level3Skatmaran1Skatmaran5, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
 	else if (mState == 9)
 	{
 		advancedText(level3Skatmaran1Hilma5, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 10)
+	{
+		advancedText(level3Skatmaran1Skatmaran6, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 11)
@@ -2128,11 +2198,23 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
+	else if (mState == 12)
+	{
+		advancedText(level3Skatmaran1Skatmaran7, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
 	else if (mState == 13)
 	{
 		advancedText(level3Skatmaran1Hilma7, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 14)
+	{
+		advancedText(level3Skatmaran1Skatmaran8, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 15)
@@ -2142,11 +2224,29 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
+	else if (mState == 16)
+	{
+		advancedText(level3Skatmaran1Skatmaran9, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 17)
+	{
+		advancedText(level3Skatmaran1Skatmaran10, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
 	else if (mState == 18)
 	{
 		advancedText(level3Skatmaran1Hilma9, 100.f, 420.f, 1.f, 1.f);
 		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 19)
+	{
+		advancedText(level3Skatmaran1Skatmaran11, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 20)
@@ -2155,16 +2255,492 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
+	else if (mState == 21)
+	{
+		advancedText(level3Skatmaran1Skatmaran12, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
 	else if (mState == 22)
 	{
 		advancedText(level3Skatmaran1Hilma11, 100.f, 420.f, 1.f, 1.f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
+	else if (mState == 23)
+	{
+		advancedText(level3Skatmaran1Skatmaran13, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
 	else if (mState == 24)
 	{
 		advancedText(level3Skatmaran1Hilma12, 100.f, 420.f, 1.f, 1.f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 25)
+	{
+		advancedText(level3Skatmaran1Skatmaran14, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayLevel3Skatmaran2AdvancedDialogue()
+{
+	std::string level3Skatmaran2Hilma = "Så, där har du din brosch! Hit med fickuret nu!";
+	std::string level3Skatmaran2Skatmaran = "Inte så fort, låt mig titta på den först.";
+	std::string level3Skatmaran2Skatmaran2 = "Som jag trodde, det var inte alls äkta guld. Nåväl, den passar fint in med de andra.";
+	std::string level3Skatmaran2Hilma2 = "Så, ge mig fickuret nu!";
+	std::string level3Skatmaran2Skatmaran3 = "Nej fickuret tror jag att jag behåller.";
+	std::string level3Skatmaran2Hilma3 = "Va! Men du lovade att ge mig det i utbyte mot broschen!";
+	std::string level3Skatmaran2Skatmaran4 = "Icke. Jag sa att jag skulle ge dig fickuret OM du gav mig något av högre värde. Den där broschen är bara skräp i jämförelse.";
+	std::string level3Skatmaran2Hilma4 = "...";
+	std::string level3Skatmaran2Skatmaran5 = "Men lugna ner dig nu Hilma, det är bara att fortsätta leta. Jag har hört att ädelstenarna här skiner som stjärnor i taket. En sån skulle kanske vara värd ett byte.";
+	std::string level3Skatmaran2Hilma5 = "Visst, men en vacker dag kommer du få sota för det här.";
+	std::string level3Skatmaran2Skatmaran6 = "Hohoho, det tror jag på när det händer!";
+
+	if (mState >= 11)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel3Skatmaran2 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level3Skatmaran2Hilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level3Skatmaran2Skatmaran, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(level3Skatmaran2Skatmaran2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 3)
+	{
+		advancedText(level3Skatmaran2Hilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 4)
+	{
+		advancedText(level3Skatmaran2Skatmaran3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 5)
+	{
+		advancedText(level3Skatmaran2Hilma3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 6)
+	{
+		advancedText(level3Skatmaran2Skatmaran4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 7)
+	{
+		advancedText(level3Skatmaran2Hilma4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 8)
+	{
+		advancedText(level3Skatmaran2Skatmaran5, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 9)
+	{
+		advancedText(level3Skatmaran2Hilma5, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 10)
+	{
+		advancedText(level3Skatmaran2Skatmaran6, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayLevel3Skatmaran3AdvancedDialogue()
+{
+	std::string level3Skatmaran3Hilma = "Här får du din grottstjärna, en prima lysande ädelsten. Den är definitivt värd mer än ett gammalt fickur eller hur?";
+	std::string level3Skatmaran3Skatmaran = "Nja det skulle jag inte vara så säker på.";
+	std::string level3Skatmaran3Hilma2 = "Men vad är det nu då? Ville du att den skulle spela musik eller nåt?";
+	std::string level3Skatmaran3Skatmaran2 = "Den skiner inte så mycket som... lyser. Det är fint men... jag och mina skator föredrar skatter som glimmar, inte glödlampor i sten.";
+	std::string level3Skatmaran3Hilma3 = "Nu får det väl ändå vara nog, det låter ju på dig som att du aldrig blir nöjd!";
+	std::string level3Skatmaran3Skatmaran3 = "Nu ska vi inte förhasta oss här. Det finns ett föremål i den här grottan som jag länge drömt om att lägga klorna på.";
+	std::string level3Skatmaran3Hilma4 = "Låt mig gissa, det glimmar?";
+	std::string level3Skatmaran3Skatmaran4 = "Nog är det sagt att det glimmar allt! Ända sen jag var barn har jag hört ryktet om en väldig skatt på botten av sjön.";
+	std::string level3Skatmaran3Skatmaran5 = "Ingen har hittills kunnat få tag i den så ingen vet säkert. Men många berättar att de har sett något som glittrar djupt där nere i vattnet.";
+	std::string level3Skatmaran3Hilma5 = "Så du vill att jag hittar något som ingen har kunnat nå på evigheter?";
+	std::string level3Skatmaran3Skatmaran6 = "Allt jag säger är att en sån skatt säkerligen skulle vara värd att byta fickuret mot.";
+	std::string level3Skatmaran3Hilma6 = "Okej, men när du berättar historien om hur du fick tag i skatten glöm inte att berätta att det var jag, hittaren Hilma, som hittade den!";
+	std::string level3Skatmaran3Skatmaran7 = "Åh jag ska försöka. Men såna detaljer glöms tyvärr lätt bort, hohoho.";
+
+
+	if (mState >= 13)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel3Skatmaran3 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level3Skatmaran3Hilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level3Skatmaran3Skatmaran, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(level3Skatmaran3Hilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 3)
+	{
+		advancedText(level3Skatmaran3Skatmaran2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 4)
+	{
+		advancedText(level3Skatmaran3Hilma3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 5)
+	{
+		advancedText(level3Skatmaran3Skatmaran3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 6)
+	{
+		advancedText(level3Skatmaran3Hilma4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 7)
+	{
+		advancedText(level3Skatmaran3Skatmaran4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 8)
+	{
+		advancedText(level3Skatmaran3Skatmaran5, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 9)
+	{
+		advancedText(level3Skatmaran3Hilma5, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 10)
+	{
+		advancedText(level3Skatmaran3Skatmaran6, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 11)
+	{
+		advancedText(level3Skatmaran3Hilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 12)
+	{
+		advancedText(level3Skatmaran3Skatmaran7, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayLevel3Skatmaran4AdvancedDialogue()
+{
+	std::string level3Skatmaran4Skatmaran = "Har du redan gett upp? Jag trodde du var mer envis än så!";
+	std::string level3Skatmaran4Hilma = "Där har du din skatt, är du nöjd nu?";
+	std::string level3Skatmaran4Skatmaran2 = "Fick du tag i den? Men... hur? Och... var är resten?";
+	std::string level3Skatmaran4Hilma2 = "Det här var allt som fanns där nere, det här lilla guldmyntet räckte för att få det att se ut som att det glimmrade nere på bottnen av sjön.";
+	std::string level3Skatmaran4Skatmaran3 = "Så det fanns aldrig en ska...";
+	std::string level3Skatmaran4Skatmaran4 = "Vänta lite, den låg på bottnen? Hur kom du ner dit?";
+	std::string level3Skatmaran4Hilma3 = "Jag använde bara mina hittarknep och verktyg, som den här magnetfiskaren till exempel.";
+	std::string level3Skatmaran4Teller = "Hilma tog fram magnetfiskaren och Skatmaran tittade på den med nyfiken min.";
+	std::string level3Skatmaran4Skatmaran5 = "Hur fungerar den?";
+	std::string level3Skatmaran4Hilma4 = "Den drar till sig saker av metall. Titta här...";
+	std::string level3Skatmaran4Teller2 = "Hilma riktade magnetfiskaren mot Skatmaran och plötsligt rörde sig alla smycken och prydnader hon bar på mot den. Ja till och med de som låg i hennes skatthög!";
+	std::string level3Skatmaran4Skatmaran6 = "Vad är det här för magi! Den drar ju till sig skatter!";
+	std::string level3Skatmaran4Hilma5 = "Ja... precis! Det är en skatthittare!";
+	std::string level3Skatmaran4Skatmaran7 = "En sån måste jag ha! Var fick du den?";
+	std::string level3Skatmaran4Hilma6 = "Lugn nu, innan jag berättar något vill jag ha något i utbyte, och jag tror du vet vad jag vill ha.";
+	std::string level3Skatmaran4Skatmaran8 = "Fickuret...";
+	std::string level3Skatmaran4Hilma7 = "Precis.";
+	std::string level3Skatmaran4Skatmaran9 = "Okej! Men då vill jag ha skatthittaren!";
+	std::string level3Skatmaran4Hilma8 = "Hm...";
+	std::string level3Skatmaran4Hilma9 = "Okej. Det går jag med på.";
+	std::string level3Skatmaran4Skatmaran10 = "Hurra! Nu kommer jag kunna hitta så många skatter att jag inte ens kommer ha nån tid kvar till att bokföra dem!";
+	std::string level3Skatmaran4Hilma10 = "Nu kan jag hitta mormor... Thomas kommer bli så glad!";
+	std::string level3Skatmaran4Skatmaran11 = "Thomas, är det människan du berättade om?";
+	std::string level3Skatmaran4Hilma11 = "Ja, och när jag hjälpt honom kommer han och hans mormor att bygga en...";
+	std::string level3Skatmaran4Hilma12 = "...vet du vad, det får bli en överraskning. Speciellt för dina skator!";
+	std::string level3Skatmaran4Skatmaran12 = "Låter som det inte är det enda som driver dig att hitta hans mormor...";
+	std::string level3Skatmaran4Hilma13 = "Vad menar du med det?";
+	std::string level3Skatmaran4Skatmaran13 = "Åh inget särskilt, jag bara leker lite med dig. Du vet hur jag är, hohoho.";
+	std::string level3Skatmaran4Hilma14 = "Tack för fickur...";
+	std::string level3Skatmaran4Hilma15 = "...eller vänta nä, inte tack alls. Hejdå Skatmara!";
+	std::string level3Skatmaran4Skatmaran14 = "På återseende, hittaren Hilma.";
+
+	if (mState >= 31)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel3Skatmaran3 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level3Skatmaran4Skatmaran, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level3Skatmaran4Hilma, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(level3Skatmaran4Skatmaran2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 3)
+	{
+		advancedText(level3Skatmaran4Hilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 4)
+	{
+		advancedText(level3Skatmaran4Skatmaran3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 5)
+	{
+		advancedText(level3Skatmaran4Skatmaran4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 6)
+	{
+		advancedText(level3Skatmaran4Hilma3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 7)
+	{
+		advancedText(level3Skatmaran4Teller, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 8)
+	{
+		advancedText(level3Skatmaran4Skatmaran5, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 9)
+	{
+		advancedText(level3Skatmaran4Hilma4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 10)
+	{
+		advancedText(level3Skatmaran4Teller2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 11)
+	{
+		advancedText(level3Skatmaran4Skatmaran6, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 12)
+	{
+		advancedText(level3Skatmaran4Hilma5, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 13)
+	{
+		advancedText(level3Skatmaran4Skatmaran7, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 14)
+	{
+		advancedText(level3Skatmaran4Hilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 15)
+	{
+		advancedText(level3Skatmaran4Skatmaran8, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 16)
+	{
+		advancedText(level3Skatmaran4Hilma7, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 17)
+	{
+		advancedText(level3Skatmaran4Skatmaran9, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 18)
+	{
+		advancedText(level3Skatmaran4Hilma8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 19)
+	{
+		advancedText(level3Skatmaran4Hilma9, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 20)
+	{
+		advancedText(level3Skatmaran4Skatmaran10, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 21)
+	{
+		advancedText(level3Skatmaran4Hilma10, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 22)
+	{
+		advancedText(level3Skatmaran4Skatmaran11, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 23)
+	{
+		advancedText(level3Skatmaran4Hilma11, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 24)
+	{
+		advancedText(level3Skatmaran4Hilma12, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 25)
+	{
+		advancedText(level3Skatmaran4Skatmaran12, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 26)
+	{
+		advancedText(level3Skatmaran4Hilma13, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 27)
+	{
+		advancedText(level3Skatmaran4Skatmaran13, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 28)
+	{
+		advancedText(level3Skatmaran4Hilma14, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 29)
+	{
+		advancedText(level3Skatmaran4Hilma15, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 30)
+	{
+		advancedText(level3Skatmaran4Skatmaran14, 100.f, 420.f, 1.f, 1.f);
+		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 }
 
@@ -2241,9 +2817,9 @@ void DialogueSystem::displayLevel5StartAdvancedDialogue()
 void DialogueSystem::displayLevel5BalconyDoorAdvancedDialogue()
 {
 	std::string level5ClosedTeller = "Gång på gång knackade Thomas på dörren i hopp om att mormor skulle höra. Men de fick inget svar.";
-	std::string level5ClosedHilma = "Hm… Detta var väldigt märkligt. Låst? Varför är det låst om hon vill träffa oss? Det här går verkligen inte ihop!";
+	std::string level5ClosedHilma = "Hm... Detta var väldigt märkligt. Låst? Varför är det låst om hon vill träffa oss? Det här går verkligen inte ihop!";
 	std::string level5ClosedThomas = "Mormor kanske stängde av hörapparaten? Hon brukade i alla fall göra det när hon inte ville bli störd eller om surtanten kom och knackade på.";
-	std::string level5ClosedHilma2 = "Hmph! gamla människor… Men det förklarar fortfarande inte varför dörren är låst!";
+	std::string level5ClosedHilma2 = "Hmph! gamla människor... Men det förklarar fortfarande inte varför dörren är låst!";
 	std::string level5ClosedThomas2 = "Jag vet inte,  ibland brukar dörrar låsas av sig själva när man stänger dem. Hon låste säkert ut sig själv och har inte märkt det. Och nu hör hon oss inte för att hörapparaten är avstängd.";
 	std::string level5ClosedThomas3 = "Vi måste hitta ett sätt att låsa upp dörren!";
 	std::string level5ClosedHilma3 = "Jag har fått nog av låsta dörrar för idag...";
@@ -2319,14 +2895,14 @@ void DialogueSystem::displayLevel5Putte2AdvancedDialogue()
 	std::string level5ReunionPutte = "Lisa! Totte! Var är ni? Åh vart har ni tagit vägen? Det här kan inte vara sant...";
 	std::string level5ReunionHilma = "Vad är det nu då Putte? Hur kommer det sig att du alltid är där vi är? Följer du efter oss eller?";
 	std::string level5ReunionThomas = "Vad har hänt Putte?";
-	std::string level5ReunionPutte2 = "Jag är så värdelös...Jag är Tapparen Putte… som inte ens kan hålla reda på sina egna barn.";
+	std::string level5ReunionPutte2 = "Jag är så värdelös...Jag är Tapparen Putte... som inte ens kan hålla reda på sina egna barn.";
 	std::string level5ReunionThomas2 = "Har du barn?";
 	std::string level5ReunionHilma2 = "Åh nej, två Putte till...";
-	std::string level5ReunionPutte3 = "Ja… Lisa och Totte heter dem. Jag vet inte hur många gånger jag har sagt åt dem att ta det försiktigt... Och nu... nu är de borta...";
+	std::string level5ReunionPutte3 = "Ja... Lisa och Totte heter dem. Jag vet inte hur många gånger jag har sagt åt dem att ta det försiktigt... Och nu... nu är de borta...";
 	std::string level5ReunionTeller = "Bakom Putte kom en annan hittare fram och la en tröstande hand på hans axel. Denna hittare hade en sjal istället för en mössa och var klädd i solens färger.";
 	std::string level5ReunionLillemor = "Såja, Puttinutten, var inte orolig! De är säkert någonstans på nedervåningen och leker. Kanske har de hittat ett nytt gömställe? Du vet ju vilka duktiga hittare de är!";
 	std::string level5ReunionHilma3 = "Puttinutten?";
-	std::string level5ReunionPutte4 = "Men tänk om katten har tagit dem! Eller om de har fastnat i råttfällan? Eller blivit tagna av fåglarna? Ack! Jag kan inte ens hålla reda på mina barn…";
+	std::string level5ReunionPutte4 = "Men tänk om katten har tagit dem! Eller om de har fastnat i råttfällan? Eller blivit tagna av fåglarna? Ack! Jag kan inte ens hålla reda på mina barn...";
 	std::string level5ReunionPutte5 = "Jag är den sämsta hittaren någonsin...";
 	std::string level5ReunionLillemor2 = "Men älskade vän. Nog kan du vara slarvig, men inte den sämsta! De kommer säkert tillbaka snart. Du måste låta dem breda ut sina vingar!";
 	std::string level5ReunionPutte6 = "";
@@ -2535,11 +3111,11 @@ void DialogueSystem::displayLevel5SolarSystemAdvancedDialogue()
 	std::string level5SolarSystemThomas3 = "När jag blir astronaut kan du få följa med och hjälpa mig! Jag vet! Du kan också bli astronaut!";
 	std::string level5SolarSystemHilma4 = "En hittare som astronaut?";
 	std::string level5SolarSystemHilma5 = "Ja du, det låter inte dumt. Men jag förstår fortfarande inte det där med planeterna. Jag förstår att man vill hitta dem för att de inte är hittade, men vad mer? Vill man samla på planeter? Vad får man i utbyte?";
-	std::string level5SolarSystemThomas4 = "Hm… Mormor sa att planeter är som olika hem. Vårt hem är planeten jorden och är den enda planeten i vårt solsystem där man kan bo. Men det är lite ensamt så vi vill hitta andra planeter som också har liv!";
+	std::string level5SolarSystemThomas4 = "Hm... Mormor sa att planeter är som olika hem. Vårt hem är planeten jorden och är den enda planeten i vårt solsystem där man kan bo. Men det är lite ensamt så vi vill hitta andra planeter som också har liv!";
 	std::string level5SolarSystemHilma6 = "Jasså jaha ja, vilken planet är jorden då?";
 	std::string level5SolarSystemThomas5 = "Där...";
 	std::string level5SolarSystemThomas6 = "Jorden är inte med? Inte Mars,Venus, Pluto, och Saturnus heller! Det här är jättekonstigt. Mormor skulle aldrig ha ett ofärdigt solsystem. Hon kan namnet på alla planeter och till och med månarna!";
-	std::string level5SolarSystemHilma7 = "Ja du, Thomas, De kanske gick sönder? Eller… har försvunnit?";
+	std::string level5SolarSystemHilma7 = "Ja du, Thomas, De kanske gick sönder? Eller... har försvunnit?";
 	std::string level5SolarSystemThomas7 = "Jag vet! Vi försöker hitta dem och sätta dem på rätt plats. Då blir mormor jätteglad!";
 	std::string level5SolarSystemHilma8 = "Se där Thomas! Det är rätta tankar! Du är en riktig snilleblixt du!";
 
@@ -2924,8 +3500,8 @@ void DialogueSystem::displayLevel5PaintingAdvancedDialogue()
 {
 	std::string level5PaintingThomas = "Wow... vilken vacker tavla.";
 	std::string level5PaintingHilma = "Har mormor målat den?";
-	std::string level5PaintingThomas2 = "Nej... mormor målar inte så fint. Mormor har berättat att man kan se i hörnet på tavlor vem som har målat. Det står… E-e-ez... Ez-i-o… Sen kan jag inte läsa mer. Det var ett jätte långt och krångligt efternamn.";
-	std::string level5PaintingHilma2 = "Suck… Människor krånglar alltid till sina namn...";
+	std::string level5PaintingThomas2 = "Nej... mormor målar inte så fint. Mormor har berättat att man kan se i hörnet på tavlor vem som har målat. Det står... E-e-ez... Ez-i-o... Sen kan jag inte läsa mer. Det var ett jätte långt och krångligt efternamn.";
+	std::string level5PaintingHilma2 = "Suck... Människor krånglar alltid till sina namn...";
 
 	if (mState >= 4)
 	{
@@ -3839,8 +4415,8 @@ void DialogueSystem::displayTextileCartDialogue()
 
 void DialogueSystem::displayEarthGlobeDialogue()
 {
-	std::string earthGlobeThomas = "En jordglob. Jag har alltid velat ha en sån…";
-	std::string earthGlobeHilma = "Vet du vad Thomas, vi kanske kan ha användning för den…";
+	std::string earthGlobeThomas = "En jordglob. Jag har alltid velat ha en sån...";
+	std::string earthGlobeHilma = "Vet du vad Thomas, vi kanske kan ha användning för den...";
 
 	if (mState == 2)
 	{
@@ -4205,7 +4781,7 @@ void DialogueSystem::displayToolsDialogue()
 //Grandma's Room
 void DialogueSystem::displayPlanetsDialogue()
 {
-	std::string planetsThomas = "Wow… alla solsystemets planeter! Men… vissa av dem saknas!";
+	std::string planetsThomas = "Wow... alla solsystemets planeter! Men... vissa av dem saknas!";
 
 	if (mState == 1)
 	{
@@ -4548,7 +5124,7 @@ void DialogueSystem::displayDrawingsDialogue()
 
 void DialogueSystem::displayBalconyDoorDialogue()
 {
-	std::string balconyDoorHilma = "Näpp! Där kommer vi inte igenom! Vi måste få upp den på något sätt…";
+	std::string balconyDoorHilma = "Näpp! Där kommer vi inte igenom! Vi måste få upp den på något sätt...";
 
 	if (mState == 1)
 	{
