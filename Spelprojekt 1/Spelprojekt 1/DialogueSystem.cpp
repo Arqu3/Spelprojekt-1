@@ -195,14 +195,6 @@ void DialogueSystem::actorText(std::string actorText, float posX, float posY, fl
 	mActorText.setString(actorText);
 }
 
-void DialogueSystem::getSpiderText(TextVector &inputVector)
-{
-	for (TextVector::iterator i = inputVector.begin(); i < inputVector.end(); i++)
-	{
-
-	}
-}
-
 //Draw function for game to use
 void DialogueSystem::drawDialogue(sf::RenderWindow &window)
 {

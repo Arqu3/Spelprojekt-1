@@ -19,7 +19,6 @@ public:
 	void text(std::string text, sf::Vector2f &position, float x, float y);
 	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
 	void actorText(std::string actorText, float posX, float posY, float offsetX, float offsetY);
-	void getSpiderText(TextVector &inputVector);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
