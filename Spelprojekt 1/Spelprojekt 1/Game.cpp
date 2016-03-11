@@ -19,7 +19,7 @@ void Game::update()
 	window.setVerticalSyncEnabled(true);
 
 	window.setMouseCursorVisible(false);
-	window.setVerticalSyncEnabled(true);
+
 	mRHandler.loadGeneral(window);
 	mUI = new UI(mRHandler);
 

@@ -15,7 +15,8 @@ mPickedUpScrewdevice(false),
 mMovedStar(false),
 mReadyToLeave(false),
 mLevelComplete(false),
-mHasCraftedFishingRod(false)
+mHasCraftedFishingRod(false),
+mMouseReleased(false)
 {
 }
 
@@ -357,7 +358,6 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 	else
 	{
 		delete mPlayer;
-		delete mUI;
 		delete mInventory;
 		delete mDialogueSystem;
 		music.stop();
@@ -503,6 +503,15 @@ void Level1::internalSwap(int num)
 	// Fishtank Zoom
 	else
 	{
+		if (!mLookedAtAquarium)
+		{
+			mDialogueSystem->reset();
+			mDialogueSystem->hasClicked("aquarium", mPlayer);
+			mUI->setState(UI::INGAME);
+			mCursor->setMode(Cursor::DIALOGUE);
+			mLookedAtAquarium = true;
+		}
+
 		mActiveScene = 1;
 		//Walkable area
 		mPlayRects.push_back(createRect(140, 490, 350, 25));
@@ -804,12 +813,12 @@ void Level1::mouseHover()
 					mCursor->setMode(Cursor::EYE);
 				}
 				//Check if Item can be picked up
-				else if (getItems()[i]->getPickupable())
+				if (getItems()[i]->getPickupable())
 				{
 					mCursor->setMode(Cursor::OPENHAND);
 				}
 				//Check if Item can be interacted with
-				else if (getItems()[i]->getInteractable())
+				if (getItems()[i]->getInteractable())
 				{
 					//Check if Item has already been interacted with
 					if (!getItems()[i]->isInteracted())
@@ -831,11 +840,7 @@ void Level1::mouseHover()
 			{
 				if (getActiveScene() == 0)
 				{
-					if (!mLookedAtAquarium)
-					{
-						mCursor->setMode(Cursor::EYE);
-					}
-					else if (mMovedStar)
+					if (mMovedStar)
 					{
 						mCursor->setMode(Cursor::SCENECHANGE);
 					}
@@ -895,6 +900,7 @@ void Level1::mouseReleased(sf::Event & event)
 		&& mAstronaut->getRectangle().contains(mWorldPos)
 		&& mActiveScene == 1)
 	{
+		mMouseReleased = true;
 		mItemInteraction = true;
 		mPlayer->moveToPosition(490, 500);
 		mTargetItem = mAstronaut;
@@ -937,12 +943,12 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				lookAtTargetItem();
 			}
 			//Check if Item can be picked up
-			else if (mTargetItem->getPickupable())
+			if (mTargetItem->getPickupable())
 			{
 				pickupTargetItem();
 			}
 			//Check if Item can be interacted with
-			else if (mTargetItem->getInteractable())
+			if (mTargetItem->getInteractable())
 			{
 				interactTargetItem();
 			}
@@ -1204,8 +1210,7 @@ void Level1::lookAtTargetItem()
 
 void Level1::pickupTargetItem()
 {
-	//Make Item inactive when it is picked up
-	mTargetItem->toggleActive();
+	
 	if (mTargetItem->getId() == "Magnet")
 	{
 		mInventory->addItem(mTargetItem);
@@ -1217,6 +1222,8 @@ void Level1::pickupTargetItem()
 		{
 			mUI->setActiveAnimation("InventoryIconGlow");
 		}
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
 	}
 	if (mTargetItem->getId() == "String")
 	{
@@ -1229,9 +1236,12 @@ void Level1::pickupTargetItem()
 		{
 			mUI->setActiveAnimation("InventoryIconGlow");
 		}
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
 	}
-	if (mTargetItem->getId() == "Astronaut" && mPlayer->getIsOnPosition())
+	if (mTargetItem->getId() == "Astronaut" && mPlayer->getIsOnPosition() && mMouseReleased)
 	{
+		mMouseReleased = false;
 		//Place Rubics Cube in front of Block
 		//TODO - Add Dialogue for the placing of the Cube
 		addItem(mCube);
@@ -1252,8 +1262,6 @@ void Level1::pickupTargetItem()
 		//Clues
 		mClues->getClue(4)->setState2();
 		mClues->getClue(5)->setState1();
-
-		mTargetItem->toggleActive();
 	}
 }
 
@@ -1265,7 +1273,7 @@ void Level1::interactTargetItem()
 		mTargetItem->toggleInteractable();
 		if (mTargetItem->getId() == "Block")
 		{
-			mCursor->setMode(Cursor::DISABLED);
+			mCursor->setMode(Cursor::DIALOGUE);
 			mPushingBlock = true;
 
 			mPlayer->setSpeed(50.0f);
@@ -1280,15 +1288,8 @@ void Level1::interactTargetItem()
 			mPushingObjectSound.setLoop(true);
 			mPushingObjectSound.play();
 
-			//Find Astronaut in ItemVector and make it active
-			for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-			{
-				if (getItems()[i]->getId() == "Astronaut")
-				{
-					getItems()[i]->toggleActive();
-					getItems()[i]->togglePickupable();
-				}
-			}
+			mAstronaut->toggleActive();
+			mAstronaut->togglePickupable();
 
 			std::cout << "Knuffade Klossen";
 		}
@@ -1417,15 +1418,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (getActiveScene() == 0)
 				{
-					if (!mLookedAtAquarium)
-					{
-						mDialogueSystem->reset();
-						mDialogueSystem->hasClicked("aquarium", mPlayer);
-						mUI->setState(UI::INGAME);
-						mCursor->setMode(Cursor::DIALOGUE);
-						mLookedAtAquarium = true;
-					}
-					else if (mMovedStar)
+					if (mMovedStar)
 					{
 						//Make Player get into position for Scene change
 						mPlayer->moveToPosition(400, 370);

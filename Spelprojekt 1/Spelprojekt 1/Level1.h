@@ -157,6 +157,7 @@ private:
 	int mNewScene;
 
 	bool mRogerOnPoint;
+	bool mMouseReleased;
 
 	bool mPlayerToggle;
 	bool mPickedUpFishingRod;
