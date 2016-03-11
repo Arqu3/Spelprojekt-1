@@ -58,6 +58,7 @@ public:
 
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
+	void mouseReleased(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
@@ -181,6 +182,8 @@ private:
 	sf::Vector2f mSceneChangePlayerPos;
 	int mNewScene;
 	int mLastScene;
+
+	bool mMouseReleased;
 
 	bool mPlayerToggle;
 	bool mInventoryMode;

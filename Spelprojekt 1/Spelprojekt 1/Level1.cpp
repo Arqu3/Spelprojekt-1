@@ -766,6 +766,8 @@ void Level1::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
+	mMouseReleased = false;
+
 	//Check if Inventory Icon is clicked
 	if (checkCollision(mUI->getInventoryIconRect(), point))
 	{

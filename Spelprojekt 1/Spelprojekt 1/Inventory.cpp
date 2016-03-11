@@ -585,6 +585,7 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 	else if (index == 1)
 	{
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Saturn"));
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "PumpedSaturn"));
 	}
 }
 
@@ -645,6 +646,10 @@ void Inventory::setGridPosition(sf::Vector2f viewCenter)
 	mItem2Rect.setPosition(sf::Vector2f(viewCenter.x + 233, 100));
 	mResultRect.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
 	mCraftButton.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+
+	//Midpoints
+	mCircle1Mid.x = viewCenter.x - 25;
+	mCircle2Mid.x = viewCenter.x + 213;
 
 	//Item Descriptions
 	if (mSelectedItem1 != -1)

@@ -499,7 +499,8 @@ void Level3::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
-				mPlayer->togglePlayer();
+				/*mPlayer->togglePlayer();*/
+				mLevelComplete = true; //TODO - Put back to normal
 			}
 			break;
 

@@ -61,11 +61,11 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 {
 	drawLoadScreen(window, "Teklar Karaktärer");
 	//Thomas
-	addTexture("ThomasWalk.png");
-	//Hilma
-	addTexture("HilmaWalk.png");
-	addTexture("HilmaPush.png");
-	addTexture("HilmaFishing.png");
+	//addTexture("ThomasWalk.png");
+	////Hilma
+	//addTexture("HilmaWalk.png");
+	//addTexture("HilmaPush.png");
+	//addTexture("HilmaFishing.png");
 	//Mr. RiddleSpider
 	addTexture("RiddleSpider.png");
 
@@ -256,7 +256,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("GardenForeground.png");
 
 	//Karaktärer
-	addTexture("DogRunning.png");
+	/*addTexture("DogRunning.png");*/
 	addTexture("GardenLady.png");
 
 	//Props
@@ -349,8 +349,8 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "Teklar Katten");
 	//Animations
-	addTexture("CatWalking.png");
-	addTexture("CatEating.png");
+	/*addTexture("CatWalking.png");
+	addTexture("CatEating.png");*/
 }
 
 //Adds a texture to the texture vector

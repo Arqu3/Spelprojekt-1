@@ -211,8 +211,10 @@ mFrameTime(0.05f)
 		mDescription = "";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.17f, 0.17f)); //Fixa
-		mCatWalking = *handler.getTexture("CatWalking.png");
-		mCatEating = *handler.getTexture("CatEating.png");
+		/*mCatWalking = *handler.getTexture("CatWalking.png");
+		mCatEating = *handler.getTexture("CatEating.png");*/
+		mCatWalking.loadFromFile("Resources/Textures/CatWalking.png");
+		mCatEating.loadFromFile("Resources/Textures/CatEating.png");
 		mSprite.setTexture(mCatWalking); 
 		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
 	}
@@ -413,7 +415,8 @@ mFrameTime(0.05f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(-0.15f, 0.15f));
 		mSprite.setOrigin(sf::Vector2f(500, 900));
-		mDog = *handler.getTexture("DogRunning.png");
+		/*mDog = *handler.getTexture("DogRunning.png");*/
+		mDog.loadFromFile("Resources/Textures/DogRunning.png");
 		mSprite.setTexture(mDog); 
 		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
 

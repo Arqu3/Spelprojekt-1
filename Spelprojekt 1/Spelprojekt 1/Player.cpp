@@ -27,10 +27,15 @@ mThomasActive(true)
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 	mSprite.setOrigin(400, 700);
 
-	mThomasTexture = *handler.getTexture("ThomasWalk.png");
+	/*mThomasTexture = *handler.getTexture("ThomasWalk.png");
 	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
 	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
-	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
+	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");*/
+
+	mThomasTexture.loadFromFile("Resources/Textures/ThomasWalk.png");
+	mHilmaTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
+	mHilmaPushTexture.loadFromFile("Resources/Textures/HilmaPush.png");
+	mHilmaFishingTexture.loadFromFile("Resources/Textures/HilmaFishing.png");
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
