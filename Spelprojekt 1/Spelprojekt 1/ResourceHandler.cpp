@@ -108,6 +108,8 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("menu.png");
 	addTexture("inventory.png");
 	addTexture("ClueBackground1.png");
+	addTexture("InfoIcon.png");
+	addTexture("InfoBox.png");
 
 	drawLoadScreen(window, "Davidar Muspekare");
 	//Cursors
@@ -133,11 +135,6 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addSound("Critical_Item.ogg");
 	addSound("Inventory_Move.ogg");
 	addSound("Crafting.ogg");
-
-	drawLoadScreen(window, "PerHeimerar Musik");
-	//Music
-	addMusic("VoiceActingTest.ogg");
-	addMusic("VoiceActingTest2.ogg");
 }
 
 void ResourceHandler::loadLevel1(sf::RenderWindow &window)
@@ -185,6 +182,24 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	drawLoadScreen(window, "PerHeimerar Musik");
 	//Music
 	addMusic("Level1Music.ogg");
+	//Narrator
+	addMusic("Dialogue Narrator lvl1 part 1.ogg");
+	addMusic("Dialogue Narrator lvl1 part 2.ogg");
+	addMusic("Dialogue Narrator lvl1 part 3.ogg");
+	addMusic("Dialogue Narrator lvl1 part 4.ogg");
+	addMusic("Dialogue Narrator lvl1 part 5.ogg");
+	addMusic("Dialogue Narrator lvl1 part 6.ogg");
+	addMusic("Dialogue Narrator lvl1 part 7.ogg");
+	addMusic("Dialogue Narrator lvl1 part 8.ogg");
+	addMusic("Dialogue Narrator lvl1 part 9.ogg");
+	//Thomas
+	addMusic("Thomas lvl 1 Beginning part 1.ogg");
+	addMusic("Thomas lvl 1 Beginning part 2.ogg");
+	addMusic("Thomas lvl 1 Beginning part 3.ogg");
+	addMusic("Thomas lvl 1 Beginning part 4.ogg");
+	addMusic("Thomas lvl 1 Beginning part 5.ogg");
+	addMusic("Thomas lvl 1 Beginning part 6.ogg");
+	addMusic("Thomas lvl 1 Beginning part 7.ogg");
 
 	drawLoadScreen(window, "Matatasar Ljud");
 	//Sound

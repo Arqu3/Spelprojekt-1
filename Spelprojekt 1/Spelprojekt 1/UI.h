@@ -37,8 +37,6 @@ public:
 	sf::FloatRect getHatIconRect();
 	sf::FloatRect getMenuIconRect();
 
-	bool load();
-
 	void setUIPosition(sf::Vector2f viewCenter);
 
 	void setActiveAnimation(std::string animation);
@@ -47,10 +45,14 @@ public:
 	bool getLevelStart();
 	void setLevelStart();
 
+	sf::FloatRect getInfoIconRect();
+	bool getInfoBoxDisplay();
+	void setInfoBoxDisplay(bool display);
+
 private:
 	State mState;
-	bool mLoad;
 	bool mLevelStart;
+	bool mInfoBoxDisplay;
 
 	//Buttons
 	typedef std::vector<Button*> ButtonVector;
@@ -67,6 +69,8 @@ private:
 	sf::Sprite mInventoryMenu;
 	sf::Sprite mInventoryIcon;
 	sf::Sprite mClueIcon;
+	sf::Sprite mInfoIcon;
+	sf::Sprite mInfoBox;
 
 	//UI Rects
 	sf::FloatRect mHatRect;
@@ -102,6 +106,12 @@ private:
 	//Spritesheets
 	sf::Texture mInventoryGlow;
 	sf::Texture mClueGlow;
+
+	//Text
+	sf::Font mFont;
+	sf::Text mInfoText;
+
+	bool mReset;
 };
 
 #endif

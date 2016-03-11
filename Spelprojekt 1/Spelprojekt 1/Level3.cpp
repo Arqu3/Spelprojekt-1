@@ -964,14 +964,9 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 	mCursor->setPosition(sf::Vector2f(mWorldPos));
 	mCursor->update(window);
 
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU && mUpdateTime > 0)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU)
 	{
 		mouseHover();
-		mUpdateTime = 0;
-	}
-	else
-	{
-		mUpdateTime++;
 	}
 }
 

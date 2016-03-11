@@ -4,14 +4,15 @@ using namespace std;
 
 UI::UI(ResourceHandler &handler) :
 mState(MAINMENU),
-mLoad(false),
 mCurrentFrame(0),
 mCurrentTime(0),
 mFrameTime(0.03f),
 mFrameXOffset(0),
 mFrameYOffset(0),
 mActiveAnimation("None"),
-mLevelStart(false)
+mLevelStart(false),
+mInfoBoxDisplay(true),
+mReset(false)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -71,6 +72,18 @@ mLevelStart(false)
 	mSettingsRect = sf::FloatRect(sf::Vector2f(80, 320), sf::Vector2f(90, 90));
 	mExitRect = sf::FloatRect(sf::Vector2f(180, 430), sf::Vector2f(85, 80));
 
+	//Tutorial Info Icon
+	handler.getTexture("InfoIcon.png")->setSmooth(true);
+	mInfoIcon.setTexture(*handler.getTexture("InfoIcon.png"));
+	mInfoIcon.setPosition(sf::Vector2f(500, 400));
+	mInfoIcon.setScale(sf::Vector2f(0.5f, 0.5f));
+
+	//Tutorial Info Box
+	handler.getTexture("InfoBox.png")->setSmooth(true);
+	mInfoBox.setTexture(*handler.getTexture("InfoBox.png"));
+	mInfoBox.setPosition(sf::Vector2f(700, 300));
+	mInfoBox.setScale(sf::Vector2f(0.7f, 0.3f));
+
 	//Help Rectangle
 	mHelpRectangle.setPosition(sf::Vector2f(180, 430));
 	mHelpRectangle.setSize(sf::Vector2f(85, 80));
@@ -103,6 +116,14 @@ mLevelStart(false)
 	mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
 	mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
 	mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
+
+	//Text
+	mFont.loadFromFile("Resources/Fonts/Lora-Regular.ttf");
+	mInfoText.setFont(mFont);
+	mInfoText.setCharacterSize(18);
+	mInfoText.setColor(sf::Color::Black);
+	mInfoText.setPosition(400, 420);
+	mInfoText.setString("Detta är din saksamling. \nHär hittar du alla föremål du \nsamlat på dig under spelet. \nOm du drar två föremål som \nkan kombineras till verkstaden \nkan du skapa nya föremål \nsom du kan använda.");
 }
 
 UI::~UI()
@@ -148,21 +169,32 @@ void UI::update(float deltaTime)
 	//Glow Animations
 	if (mActiveAnimation != "None")
 	{
+		mReset = false;
 		if (mCurrentTime >= mFrameTime)
 		{
-			if (mActiveAnimation == "HatIconGlow")
+			if (mActiveAnimation == "HatIconGlow" || mActiveAnimation == "HatIconGlowOnce" || mActiveAnimation == "InventoryIconGlowOnce" || mActiveAnimation == "ClueIconGlowOnce")
 			{
 				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
-			else if (mActiveAnimation == "MenuIconGlow")
+			else if (mActiveAnimation == "MenuIconGlow" || mActiveAnimation == "MenuIconGlowOnce")
 			{
 				mMenuIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
 			else if (mActiveAnimation == "InventoryIconGlow")
 			{
+				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 				mInventoryIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
 			else if (mActiveAnimation == "ClueIconGlow")
+			{
+				mHatIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+				mClueIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "InventoryIconGlowAfterHat")
+			{
+				mInventoryIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
+			}
+			else if (mActiveAnimation == "ClueIconGlowAfterHat")
 			{
 				mClueIcon.setTextureRect(sf::IntRect(mFrameXOffset * 346, mFrameYOffset * 346, 346, 346));
 			}
@@ -184,17 +216,32 @@ void UI::update(float deltaTime)
 				mCurrentFrame = 0;
 				mFrameXOffset = 0;
 				mFrameYOffset = 0;
+				if (mActiveAnimation == "HatIconGlowOnce" || mActiveAnimation == "MenuIconGlowOnce")
+				{
+					mActiveAnimation = "None";
+				}
+				else if (mActiveAnimation == "InventoryIconGlowOnce")
+				{
+					mActiveAnimation = "InventoryIconGlowAfterHat";
+				}
+				else if (mActiveAnimation == "ClueIconGlowOnce")
+				{
+					mActiveAnimation = "ClueIconGlowAfterHat";
+				}
 			}
 		mCurrentTime = 0;
 		}
 	}
 	else
 	{
-		//TODO - Add bool so that this isn't done over and over again
-		mHatIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
-		mMenuIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
-		mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
-		mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		if (!mReset)
+		{
+			mHatIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mMenuIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mClueIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+			mReset = true;
+		}	
 	}
 }
 
@@ -204,11 +251,11 @@ void UI::draw(sf::RenderWindow &window)
 	{
 	case HAT:
 		window.draw(mHatMenu);
-		if (mActiveAnimation == "InventoryIconGlow")
+		if (mActiveAnimation == "InventoryIconGlow" || mActiveAnimation == "InventoryIconGlowAfterHat")
 		{
 			window.draw(mInventoryIcon);
 		}
-		if (mActiveAnimation == "ClueIconGlow")
+		if (mActiveAnimation == "ClueIconGlow" || mActiveAnimation == "ClueIconGlowAfterHat")
 		{
 			window.draw(mClueIcon);
 		}
@@ -224,6 +271,12 @@ void UI::draw(sf::RenderWindow &window)
 	case INVENTORY:
 		window.draw(mHatMenu);
 		window.draw(mInventoryMenu);
+		window.draw(mInfoIcon);
+		if (mInfoBoxDisplay)
+		{
+			window.draw(mInfoBox);
+			window.draw(mInfoText);
+		}
 		break;
 
 	case CLUES:
@@ -302,13 +355,13 @@ void UI::eventListen(sf::RenderWindow &window)
 				case MAINMENU:
 					if (mMainButtons[0]->isPressed(window))
 					{
-						mLoad = true;
 						mLevelStart = true;
 						setState(INGAME);
 					}
-					else
+
+					if (mMainButtons[2]->isPressed(window))
 					{
-						mLoad = false;
+
 					}
 
 					if (mMainButtons[3]->isPressed(window))
@@ -342,7 +395,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != HAT)
 		{
 			mState = HAT;
-			if (mActiveAnimation == "HatIconGlow")
+			if (mActiveAnimation == "HatIconGlow" || mActiveAnimation == "HatIconGlowOnce")
 			{
 				setActiveAnimation("None");
 			}
@@ -358,7 +411,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mState != MAINUI)
 		{
 			mState = MAINUI;
-			if (mActiveAnimation == "MenuIconGlow")
+			if (mActiveAnimation == "MenuIconGlow" || mActiveAnimation == "MenuIconGlowOnce")
 			{
 				setActiveAnimation("None");
 			}
@@ -376,7 +429,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mInventoryRect.contains(point))
 		{
 			setState(INVENTORY);
-			if (mActiveAnimation == "InventoryIconGlow")
+			if (mActiveAnimation == "InventoryIconGlow" || mActiveAnimation == "InventoryIconGlowAfterHat")
 			{
 				setActiveAnimation("None");
 			}
@@ -385,7 +438,7 @@ void UI::checkCollision(sf::Vector2f point)
 		if (mCluesRect.contains(point))
 		{
 			setState(CLUES);
-			if (mActiveAnimation == "ClueIconGlow")
+			if (mActiveAnimation == "ClueIconGlow" || mActiveAnimation == "ClueIconGlowAfterHat")
 			{
 				setActiveAnimation("None");
 			}
@@ -434,11 +487,6 @@ sf::FloatRect UI::getMenuIconRect()
 	return mMenuRect;
 }
 
-bool UI::load()
-{
-	return mLoad;
-}
-
 void UI::setUIPosition(sf::Vector2f viewCenter)
 {
 	//viewCenter.x - (512 - distance from left edge of screen)
@@ -459,6 +507,10 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 	mInventoryIcon.setPosition(sf::Vector2f(viewCenter.x - 544.5f, 245));
 	mClueIcon.setPosition(sf::Vector2f(viewCenter.x - 423, 299.5f));
 
+	mInfoIcon.setPosition(sf::Vector2f(viewCenter.x + 160, 400));
+	mInfoBox.setPosition(sf::Vector2f(viewCenter.x + 200, 350));
+	mInfoText.setPosition(sf::Vector2f(viewCenter.x + 210, 360));
+
 	//mHelpRectangle.setPosition(sf::Vector2f(viewCenter.x - 416, 513));
 	//mHelpRectangle.setSize(sf::Vector2f(40, 40));
 
@@ -467,10 +519,11 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 		mExitButtons[i]->setPosition(viewCenter.x - mExitButtons[0]->getRect().width + (260.0f * i) - 45, 288 - mExitButtons[0]->getRect().height);
 	}
 
-	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	//TODO - Make this work with the new Main Menu Button positions
+	/*for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
 	{
 		mMainButtons[i]->setPosition(viewCenter.x - (mMainButtons[0]->getRect().width / 2), 100.0f + (160.0f * i));
-	}
+	}*/
 
 	mBackground.setPosition(viewCenter.x - 512, 0);
 }
@@ -523,4 +576,19 @@ bool UI::getLevelStart()
 void UI::setLevelStart()
 {
 	mLevelStart = false;
+}
+
+sf::FloatRect UI::getInfoIconRect()
+{
+	return mInfoIcon.getGlobalBounds();
+}
+
+bool UI::getInfoBoxDisplay()
+{
+	return mInfoBoxDisplay;
+}
+
+void UI::setInfoBoxDisplay(bool display)
+{
+	mInfoBoxDisplay = display;
 }
