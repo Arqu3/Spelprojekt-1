@@ -205,7 +205,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 		//Help rectangles
 		rectangle.setPosition(sf::Vector2f(440, 150));
-		rectangle.setSize(sf::Vector2f(125, 200));
+		rectangle.setSize(sf::Vector2f(215, 200));
 
 		//Sound/music
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
@@ -247,7 +247,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mInventory->setCraftableItems(handler, 0);
 
 		//DialogueSystem
-		mDialogueSystem = new DialogueSystem(handler);
+		mDialogueSystem = new DialogueSystem(handler, 0);
 		mDialogueSystem->setLevel1Start();
 
 		//Mouse Cursor
@@ -299,7 +299,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
-		mRects.push_back(createRect(440, 150, 125, 200));
+		mRects.push_back(createRect(440, 150, 215, 200));
 
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
@@ -413,7 +413,7 @@ void Level1::internalSwap(int num)
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
-		mRects.push_back(createRect(440, 150, 125, 200));
+		mRects.push_back(createRect(440, 150, 215, 200));
 
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
@@ -1352,7 +1352,7 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
 				}
-				if (getItems()[i]->getId() == "Block")
+				if (getItems()[i]->getId() == "Block" && mActiveScene == 1)
 				{
 					if (getActiveScene() == 0)
 					{

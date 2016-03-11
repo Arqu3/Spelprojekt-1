@@ -241,7 +241,7 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
 
 		//Add HelpRect
-		rectangle.setPosition(sf::Vector2f(285, 62));
+		/*rectangle.setPosition(sf::Vector2f(285, 62));
 		rectangle.setSize(sf::Vector2f(25, 25));
 		rectangle2.setPosition(sf::Vector2f(320, 52));
 		rectangle2.setSize(sf::Vector2f(40, 40));
@@ -259,7 +259,7 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		rectangle8.setSize(sf::Vector2f(28, 28));
 		rectangle9.setPosition(sf::Vector2f(775, 38));
 		rectangle9.setSize(sf::Vector2f(25, 25));
-		rectangle9.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
+		rectangle9.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));*/
 
 
 		//Add items
@@ -305,10 +305,10 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mCursor = new Cursor(handler);
 
 		//Dialogue System
-		mDialogueSystem = new DialogueSystem(handler);
+		mDialogueSystem = new DialogueSystem(handler, 2);
 
 		//UI
-		mUI = new UI(handler);
+		mUI = ui;
 		mUI->setState(UI::INGAME);
 
 		//Scene 2

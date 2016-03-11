@@ -10,7 +10,7 @@
 class DialogueSystem
 {
 public:
-	DialogueSystem(ResourceHandler &handler);
+	DialogueSystem(ResourceHandler &handler, int level);
 	~DialogueSystem();
 
 	typedef std::vector<sf::Text> TextVector;

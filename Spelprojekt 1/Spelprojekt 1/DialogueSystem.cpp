@@ -2,7 +2,7 @@
 #include <iostream>
 #include "SFML\System.hpp"
 
-DialogueSystem::DialogueSystem(ResourceHandler &handler) :
+DialogueSystem::DialogueSystem(ResourceHandler &handler, int level) :
 mHasClicked(false),
 mTime(0),
 mText(),
@@ -15,7 +15,7 @@ mHandler(handler),
 mFirstCharacter(),
 mSecondCharacter(),
 mState(0),
-mLevel1Start(true),
+mLevel1Start(false),
 mLevel1End(false),
 mLevel2Start(false),
 mLevel2End(false),
@@ -27,24 +27,27 @@ mLineStarted(false)
 	mSepia.setSize(sf::Vector2f(1024, 576));
 	mSepia.setTexture(handler.getTexture("sepia.png"));
 
-	//Narrator
-	NarratorLvl1Part1.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 1.ogg"));
-	NarratorLvl1Part2.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 2.ogg"));
-	NarratorLvl1Part3.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 3.ogg"));
-	NarratorLvl1Part4.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 4.ogg"));
-	NarratorLvl1Part5.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 5.ogg"));
-	NarratorLvl1Part6.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 6.ogg"));
-	NarratorLvl1Part7.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 7.ogg"));
-	NarratorLvl1Part8.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 8.ogg"));
-	NarratorLvl1Part9.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 9.ogg"));
-	//Thomas
-	ThomasLvl1Part1.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 1.ogg"));
-	ThomasLvl1Part2.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 2.ogg"));
-	ThomasLvl1Part3.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 3.ogg"));
-	ThomasLvl1Part4.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 4.ogg"));
-	ThomasLvl1Part5.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 5.ogg"));
-	ThomasLvl1Part6.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 6.ogg"));
-	ThomasLvl1Part7.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 7.ogg"));
+	if (level == 0)
+	{
+		//Narrator
+		NarratorLvl1Part1.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 1.ogg"));
+		NarratorLvl1Part2.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 2.ogg"));
+		NarratorLvl1Part3.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 3.ogg"));
+		NarratorLvl1Part4.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 4.ogg"));
+		NarratorLvl1Part5.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 5.ogg"));
+		NarratorLvl1Part6.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 6.ogg"));
+		NarratorLvl1Part7.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 7.ogg"));
+		NarratorLvl1Part8.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 8.ogg"));
+		NarratorLvl1Part9.openFromFile(handler.getMusic("Dialogue Narrator lvl1 part 9.ogg"));
+		//Thomas
+		ThomasLvl1Part1.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 1.ogg"));
+		ThomasLvl1Part2.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 2.ogg"));
+		ThomasLvl1Part3.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 3.ogg"));
+		ThomasLvl1Part4.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 4.ogg"));
+		ThomasLvl1Part5.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 5.ogg"));
+		ThomasLvl1Part6.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 6.ogg"));
+		ThomasLvl1Part7.openFromFile(handler.getMusic("Thomas lvl 1 Beginning part 7.ogg"));
+	}
 }
 
 DialogueSystem::~DialogueSystem()
