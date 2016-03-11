@@ -154,7 +154,7 @@ void Inventory::draw(sf::RenderWindow &window)
 
 	//Draw Item Description
 	window.draw(mDescription);
-	window.draw(mCraftable);
+	//window.draw(mCraftable);
 }
 
 void Inventory::drawCursorSprite(sf::RenderWindow &window)
@@ -303,27 +303,17 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 		}
 	}
 
-	if (ui.getHatIconRect().contains(point))
+	if (ui.getInventoryIconRect().contains(point))
 	{
-		ui.setState(UI::HAT);
-		mMenuHatSound.play();
+		ui.setState(UI::INGAME);
 	}
-	else if (ui.getMenuIconRect().contains(point))
+	else if (ui.getExitIconRect().contains(point))
 	{
-		ui.setState(UI::MAINUI);
-		mMenuMainUISound.play();
+		ui.setState(UI::EXIT);
 	}
-	else if (mInventoryRect.contains(point))
-	{
-		ui.setState(UI::HAT);
-	}
-	else if (mCluesRect.contains(point))
+	else if (ui.getCluesIconRect().contains(point))
 	{
 		ui.setState(UI::CLUES);
-	}
-	else if (mMemoriesRect.contains(point))
-	{
-		ui.setState(UI::MEMORIES);
 	}
 	else if (ui.getInfoIconRect().contains(point))
 	{

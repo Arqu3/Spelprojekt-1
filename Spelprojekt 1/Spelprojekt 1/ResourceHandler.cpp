@@ -100,12 +100,9 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
-	addTexture("HatIconGlow.png");
-	addTexture("MenuIconGlow.png");
 	addTexture("InventoryIconGlow.png");
-	addTexture("ClueIconGlow.png");
-	addTexture("hatmenu.png");
-	addTexture("menu.png");
+	addTexture("ExitIconGlow.png");
+	addTexture("CluesIconGlow.png");
 	addTexture("inventory.png");
 	addTexture("ClueBackground1.png");
 	addTexture("InfoIcon.png");
@@ -200,6 +197,45 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addMusic("Thomas lvl 1 Beginning part 5.ogg");
 	addMusic("Thomas lvl 1 Beginning part 6.ogg");
 	addMusic("Thomas lvl 1 Beginning part 7.ogg");
+	addMusic("Thomas lvl 1 End part 1.ogg");
+	addMusic("Thomas lvl 1 End part 2.ogg");
+	addMusic("Thomas lvl 1 End part 3.ogg");
+	addMusic("Thomas lvl 1 End part 4.ogg");
+	addMusic("Thomas lvl 1 End part 5.ogg");
+	addMusic("Thomas lvl 1 End part 6.ogg");
+	addMusic("Thomas lvl 1 End part 7.ogg");
+	addMusic("Thomas lvl 1 End part 8.ogg");
+	addMusic("Thomas lvl 1 End part 9.ogg");
+	addMusic("Thomas lvl 1 End part 10.ogg");
+	addMusic("Thomas lvl 1 End part 11.ogg");
+	addMusic("Thomas lvl 1 End part 12.ogg");
+	//Hilma
+	addMusic("Hilma lvl 1 Beginning part 1.ogg");
+	addMusic("Hilma lvl 1 Beginning part 2.ogg");
+	addMusic("Hilma lvl 1 Beginning part 3.ogg");
+	addMusic("Hilma lvl 1 Beginning part 4.ogg");
+	addMusic("Hilma lvl 1 Beginning part 5.ogg");
+	addMusic("Hilma lvl 1 Beginning part 6.ogg");
+	addMusic("Hilma lvl 1 Beginning part 7.ogg");
+	addMusic("Hilma lvl 1 Beginning part 8.ogg");
+	addMusic("Hilma lvl 1 Beginning part 9.ogg");
+	addMusic("Hilma lvl 1 Beginning part 10.ogg");
+	addMusic("Hilma lvl 1 Beginning part 11.ogg");
+	addMusic("Hilma lvl 1 Beginning part 12.ogg");
+	addMusic("Hilma lvl 1 Beginning part 13.ogg");
+	addMusic("Hilma lvl 1 Beginning part 14.ogg");
+	addMusic("Hilma lvl 1 End part 1.ogg");
+	addMusic("Hilma lvl 1 End part 2.ogg");
+	addMusic("Hilma lvl 1 End part 3.ogg");
+	addMusic("Hilma lvl 1 End part 4.ogg");
+	addMusic("Hilma lvl 1 End part 5.ogg");
+	addMusic("Hilma lvl 1 End part 6.ogg");
+	addMusic("Hilma lvl 1 End part 7.ogg");
+	addMusic("Hilma lvl 1 End part 8.ogg");
+	addMusic("Hilma lvl 1 End part 9.ogg");
+	addMusic("Hilma lvl 1 End part 10.ogg");
+	addMusic("Hilma lvl 1 End part 11.ogg");
+	addMusic("Hilma lvl 1 End part 12.ogg");
 
 	drawLoadScreen(window, "Matatasar Ljud");
 	//Sound

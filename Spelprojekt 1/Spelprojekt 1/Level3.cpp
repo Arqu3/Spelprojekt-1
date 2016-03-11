@@ -523,18 +523,27 @@ void Level3::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
-	//Check if Hat Icon is clicked
-	if (checkCollision(mUI->getHatIconRect(), point))
+	//Check if Exit Icon is clicked
+	if (checkCollision(mUI->getExitIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::HAT);
+		mUI->setState(UI::EXIT);
+		if (mUI->getActiveAnimation() == "ExitIconGlow" || mUI->getActiveAnimation() == "ExitIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
+		//mMenuMainUISound.play();
 	}
-
-	//Check if Menu Icon is clicked
-	if (checkCollision(mUI->getMenuIconRect(), point))
+	//Check if Inventory Icon is clicked
+	else if (checkCollision(mUI->getInventoryIconRect(), point))
 	{
-		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::MAINUI);
+		mCursor->setMode(Cursor::INVENTORY);
+		mUI->setState(UI::INVENTORY);
+		if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
+		//mMenuHatSound.play();
 	}
 
 

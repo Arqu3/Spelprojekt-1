@@ -326,6 +326,46 @@ private:
 	sf::Music ThomasLvl1Part5;
 	sf::Music ThomasLvl1Part6;
 	sf::Music ThomasLvl1Part7;
+	sf::Music ThomasLvl1EndPart1;
+	sf::Music ThomasLvl1EndPart2;
+	sf::Music ThomasLvl1EndPart3;
+	sf::Music ThomasLvl1EndPart4;
+	sf::Music ThomasLvl1EndPart5;
+	sf::Music ThomasLvl1EndPart6;
+	sf::Music ThomasLvl1EndPart7;
+	sf::Music ThomasLvl1EndPart8;
+	sf::Music ThomasLvl1EndPart9;
+	sf::Music ThomasLvl1EndPart10;
+	sf::Music ThomasLvl1EndPart11;
+	sf::Music ThomasLvl1EndPart12;
+	//Hilma
+	sf::Music HilmaLvl1BeginningPart1;
+	sf::Music HilmaLvl1BeginningPart2;
+	sf::Music HilmaLvl1BeginningPart3;
+	sf::Music HilmaLvl1BeginningPart4;
+	sf::Music HilmaLvl1BeginningPart5;
+	sf::Music HilmaLvl1BeginningPart6;
+	sf::Music HilmaLvl1BeginningPart7;
+	sf::Music HilmaLvl1BeginningPart8;
+	sf::Music HilmaLvl1BeginningPart9;
+	sf::Music HilmaLvl1BeginningPart10;
+	sf::Music HilmaLvl1BeginningPart11;
+	sf::Music HilmaLvl1BeginningPart12;
+	sf::Music HilmaLvl1BeginningPart13;
+	sf::Music HilmaLvl1BeginningPart14;
+	sf::Music HilmaLvl1EndPart1;
+	sf::Music HilmaLvl1EndPart2;
+	sf::Music HilmaLvl1EndPart3;
+	sf::Music HilmaLvl1EndPart4;
+	sf::Music HilmaLvl1EndPart5;
+	sf::Music HilmaLvl1EndPart6;
+	sf::Music HilmaLvl1EndPart7;
+	sf::Music HilmaLvl1EndPart8;
+	sf::Music HilmaLvl1EndPart9;
+	sf::Music HilmaLvl1EndPart10;
+	sf::Music HilmaLvl1EndPart11;
+	sf::Music HilmaLvl1EndPart12;
+
 	bool mLineStarted;
 };
 
