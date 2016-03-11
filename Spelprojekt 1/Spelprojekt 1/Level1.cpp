@@ -89,7 +89,7 @@ void Level1::drawBackground(sf::RenderWindow &window)
 		window.draw(backgroundZoom);
 		window.draw(playgroundZoom);
 	}
-	window.draw(rectangle); // Help rectangle
+	//window.draw(rectangle); // Help rectangle
 	drawItems(mItems, window);
 }
 
@@ -204,8 +204,8 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
 
 		//Help rectangles
-		rectangle.setPosition(sf::Vector2f(0, 0));
-		rectangle.setSize(sf::Vector2f(0, 0));
+		rectangle.setPosition(sf::Vector2f(440, 150));
+		rectangle.setSize(sf::Vector2f(125, 200));
 
 		//Sound/music
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
@@ -299,7 +299,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
-		mRects.push_back(createRect(440, 150, 125, 70));
+		mRects.push_back(createRect(440, 150, 125, 200));
 
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
@@ -413,7 +413,7 @@ void Level1::internalSwap(int num)
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
-		mRects.push_back(createRect(440, 150, 125, 70));
+		mRects.push_back(createRect(440, 150, 125, 200));
 
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
