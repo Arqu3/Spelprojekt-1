@@ -16,7 +16,8 @@ mMovedStar(false),
 mReadyToLeave(false),
 mLevelComplete(false),
 mHasCraftedFishingRod(false),
-mMouseReleased(false)
+mMouseReleased(false),
+mhasJumped(false)
 {
 }
 
@@ -1239,7 +1240,7 @@ void Level1::pickupTargetItem()
 		//Make Item inactive when it is picked up
 		mTargetItem->toggleActive();
 	}
-	if (mTargetItem->getId() == "Astronaut" && mPlayer->getIsOnPosition() && mMouseReleased)
+	if (mTargetItem->getId() == "Astronaut" && mhasJumped && mMouseReleased)
 	{
 		mMouseReleased = false;
 		//Place Rubics Cube in front of Block

@@ -468,3 +468,12 @@ void Player::setFrameTime(float frametime)
 {
 	mFrameTime = frametime;
 }
+
+void Player::jump(std::vector<sf::Vector2f> positions)
+{
+	for (std::vector<sf::Vector2f>::size_type i = 0; i < positions.size(); i++)
+	{
+		moveToPosition(positions[0].x, positions[0].y);
+		//Move to index + 1
+	}
+}

@@ -172,5 +172,6 @@ private:
 	bool mReadyToLeave;
 	bool mLevelComplete;
 	bool mHasCraftedFishingRod;
+	bool mhasJumped;
 };
 #endif

@@ -29,6 +29,7 @@ public:
 	void setScale(sf::Vector2f scale);
 	int getCurrentFrame();
 	void setFrameTime(float frametime);
+	void jump(std::vector<sf::Vector2f> positions);
 
 private:
 	void move(float deltaTime);
