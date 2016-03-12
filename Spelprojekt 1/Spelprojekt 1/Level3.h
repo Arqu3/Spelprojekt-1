@@ -132,6 +132,7 @@ private:
 	Item* mSawdust;
 	Item* mFjun;
 	Item *mJack;
+	Item* mCloth;
 
 
 

@@ -238,6 +238,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mFjun = new Item(handler, sf::Vector2f(1192, 52), "Fjun");
 		mFeatherball = new Item(handler, sf::Vector2f(285, 372), "Featherball");
 		mJack = new Item(handler, sf::Vector2f(1226, 157), "Jack");
+		mCloth = new Item(handler, sf::Vector2f(0, 0), "Cloth");
 
 		//View
 		mView.setSize(1024, 576);
@@ -325,10 +326,11 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		addItem(mFlagpole);
 		addItem(mSingleFlower);
 		addItem(mLady);
+		
 
 		
 		
-		changeScene(1);
+		//changeScene(1);
 	}
 
 	mIsActive = !mIsActive;
@@ -373,6 +375,9 @@ void Level3::internalSwap(int num)
 
 	else if (num == 1)
 	{
+
+		mView.setCenter(524, 288);
+	
 		mPlayer->togglePlayer();
 		mPlayer->setScale(sf::Vector2f(0.4f, 0.4f));
 		//Scene 2
@@ -408,26 +413,28 @@ void Level3::internalSwap(int num)
 		//rectangle12.setPosition(1053, 423);
 
 		//Rectangles
-		//Dörr
+
+		//Dörr till trädgård
 		mRects.push_back(createRect(72, 106, 70, 160));
-		//Fjäder 1
-		mRects.push_back(createRect(109, 325, 176, 150));
-		//Fjäder 
-		mRects.push_back(createRect(285, 372, 98, 123));
+
 		//Duk
 		mRects.push_back(createRect(150, 495, 200, 76));
+
+		// Spik 
 		mRects.push_back(createRect(285, 80, 129, 46));
-		//Sågspån
-		mRects.push_back(createRect(831, 254, 224, 49));
-		//Knekt
-		mRects.push_back(createRect(1226, 157, 100, 200));
+
+		//nästa rum
 		mRects.push_back(createRect(1432, 146, 76, 210));
+
+		//Dialogrespons Rymdraket
 		mRects.push_back(createRect(900, 67, 162, 169));
-		//Klöver
-		mRects.push_back(createRect(241, 234, 60, 53));
-		//Fjun
-		mRects.push_back(createRect(1192, 52, 115, 51));
+
+		//Dialogrespons Pensel
 		mRects.push_back(createRect(1053, 423, 215, 102));
+
+		////Knekt ?
+		//mRects.push_back(createRect(1226, 157, 100, 200));
+
 
 		if (mClover->getActive())
 		{
@@ -451,6 +458,7 @@ void Level3::internalSwap(int num)
 		}
 
 		addItem(mNail);
+		addItem(mCloth);
 
 	}
 	else if (num == 2)
@@ -758,18 +766,6 @@ void Level3::mouseClick(sf::Event &event)
 			{
 				mPlayer->setActiveAnimation("Walk");
 
-				//Check Id of that Item
-				if (getItems()[i]->getId() == "Gramophone")
-				{
-					//Move Player to the closest point that is still inside the playrect
-					mPlayer->moveToPosition(477, 366);
-					//Set the Item as "Target Item"
-					mTargetItem = getItems()[i];
-					//Enable Item interaction
-					mItemInteraction = true;
-					std::cout << "Klickade på grammofon";
-
-				}
 
 				if (getItems()[i]->getId() == "Trimmer")
 				{
@@ -940,7 +936,7 @@ void Level3::mouseClick(sf::Event &event)
 		{
 			mPlayer->setActiveAnimation("Walk");
 
-			// i == 0 is Planet 1 if ActiveScene is 0, or Door if ActiveScene is 1, or Refrigerator if ActiveScene is 2.
+			// i == 0 Bees, Door to garden, 
 
 			if (i == 0)
 			{
@@ -951,17 +947,17 @@ void Level3::mouseClick(sf::Event &event)
 				}
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Door to scene 3!";
+					std::cout << "Door to scene 1!";
 					//Make Player get into position for Scene change
 					mPlayer->moveToPosition(70, 370);
 					//Set Collision Rect to Scene change position
 					mSceneChangeRect = sf::FloatRect(sf::Vector2f(70, 370), sf::Vector2f(10, 10));
 					//Set if Player should toggle on Scene Change
-					mPlayerToggle = false;
-					//Set starting position of Player in new Scene
+					mPlayerToggle = true;
+					//Set starting position of Player in new Scene           FIXA!!!
 					mSceneChangePlayerPos = sf::Vector2f(950, 480);
 					//Set which Scene will be the new Scene
-					mNewScene = 2;
+					mNewScene = 0;
 					mLastScene = 1;
 				}
 				else
@@ -976,7 +972,46 @@ void Level3::mouseClick(sf::Event &event)
 			{
 				if (getActiveScene() == 0)
 				{
-					std::cout << "Dörr!";
+					std::cout << "Dörr!";                  //Detta ska vara en annan rektangel sedan!!! OBS
+					
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(1973, 370);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1973, 370), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = false;
+					//Set starting position of Player in new Scene           
+					mSceneChangePlayerPos = sf::Vector2f(148, 276);
+					//Set which Scene will be the new Scene
+					mNewScene = 1;
+					mLastScene = 0;
+				}
+
+				else if (getActiveScene() == 1)
+				{
+					std::cout << "Klickade på Duk!";
+
+					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
+					{
+					
+						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+						{
+							if (getItems()[i]->getId() == "Cloth")
+							{
+								if (mItemPicked == false)
+								{
+									mTargetItem = getItems()[i];
+									mInventory->addItem(mTargetItem);
+									mItemPicked = true;
+									std::cout << "Tygbit upplockad!";
+								}
+								
+
+							}
+
+						}
+
+					}
 				}
 			}
 
@@ -1070,7 +1105,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 	if (mItemInteraction)
 	{
 		//Check if any part of the Player intersects with the Item
-		if (mPlayer->getGlobalRect().intersects(mTargetItem->getRectangle()))
+		if (mPlayer->getIsOnPosition())
 		{
 			//Check if Item has already been looked at
 			if (!mTargetItem->isLookedAt())
@@ -1084,20 +1119,6 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 				//Make Item inactive when it is picked up
 				mTargetItem->toggleActive();
 
-				if (mTargetItem->getId() == "Earth")
-				{
-					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Screwdevice")
-					{
-						mInventory->addItem(mTargetItem);
-						std::cout << "Plockade upp Jordglob";
-
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
-
-				}
 
 				if (mTargetItem->getId() == "Trimmer")
 				{
@@ -1279,7 +1300,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 					{
 						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() != "Screwdevice")
 						{
-							if (mInventory->selectedItem()->getId() == "Clover" || mInventory->selectedItem()->getId() == "Nail" || mInventory->selectedItem()->getId() == "Featherball" || mInventory->selectedItem()->getId() == "Fjun" || mInventory->selectedItem()->getId() == "Sawdust")
+							if (mInventory->selectedItem()->getId() == "Clover" || mInventory->selectedItem()->getId() == "Nail" || mInventory->selectedItem()->getId() == "Featherball" || mInventory->selectedItem()->getId() == "Fjun" || mInventory->selectedItem()->getId() == "Sawdust" || mInventory->selectedItem()->getId() == "Cloth")
 							{
 								mInventory->removeItem(mInventory->getSelectedItem());
 								mItemPicked = false;
@@ -1287,6 +1308,14 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 								//OBSOBS vad mer ska hända?
 							}
+							else
+							{
+								mTargetItem->toggleInteractable();
+							}
+						}
+						else
+						{
+							mTargetItem->toggleInteractable();
 						}
 					}
 				}

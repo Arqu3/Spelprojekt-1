@@ -507,6 +507,15 @@ mFrameTime(0.08f)
 
 	}
 
+	if (id == "Cloth")
+	{
+		mIndex = 42;
+		mName = "Tyg";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+	}
+
 }
 
 
