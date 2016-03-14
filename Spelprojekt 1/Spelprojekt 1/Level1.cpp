@@ -735,7 +735,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				if (mUI->getState() == UI::EXIT)
+				if (mUI->getState() == UI::EXIT || mUI->getState() == UI::INVENTORY || mUI->getState() == UI::CLUES)
 				{
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
