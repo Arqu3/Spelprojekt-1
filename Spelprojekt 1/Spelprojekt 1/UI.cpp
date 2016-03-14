@@ -290,7 +290,7 @@ void UI::eventListen(sf::RenderWindow &window)
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				window.close();
+				setState(INGAME);
 			}
 			break;
 

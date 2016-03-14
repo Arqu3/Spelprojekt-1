@@ -735,14 +735,14 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				if (mUI->getState() == UI::MAINUI)
+				if (mUI->getState() == UI::EXIT)
 				{
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else if (mCursor->getMode() != Cursor::DIALOGUE)
 				{
-					mUI->setState(UI::MAINUI);
+					mUI->setState(UI::EXIT);
 					mCursor->setMode(Cursor::MENU);
 				}
 			}
@@ -1224,10 +1224,10 @@ void Level1::lookAtTargetItem()
 	}
 	if (mTargetItem->getId() == "Block")
 	{
-		mDialogueSystem->reset();
+		/*mDialogueSystem->reset();
 		mDialogueSystem->hasClicked("block", mPlayer);
 		mUI->setState(UI::INGAME);
-		mCursor->setMode(Cursor::DIALOGUE);
+		mCursor->setMode(Cursor::DIALOGUE);*/
 	}
 	if (mTargetItem->getId() == "Astronaut" && !mMouseReleased)
 	{
@@ -1317,7 +1317,7 @@ void Level1::interactTargetItem()
 		mTargetItem->toggleInteractable();
 		if (mTargetItem->getId() == "Block")
 		{
-			mCursor->setMode(Cursor::DIALOGUE);
+			mCursor->setMode(Cursor::DISABLED);
 			mPushingBlock = true;
 
 			mPlayer->setSpeed(50.0f);

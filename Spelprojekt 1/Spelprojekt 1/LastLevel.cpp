@@ -246,25 +246,25 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
 
 		//Add HelpRect
-		/*rectangle.setPosition(sf::Vector2f(285, 62));
-		rectangle.setSize(sf::Vector2f(25, 25));
-		rectangle2.setPosition(sf::Vector2f(320, 52));
-		rectangle2.setSize(sf::Vector2f(40, 40));
-		rectangle3.setPosition(sf::Vector2f(385, 58));
-		rectangle3.setSize(sf::Vector2f(25, 25));
-		rectangle4.setPosition(sf::Vector2f(450, 48));
-		rectangle4.setSize(sf::Vector2f(23, 23));
-		rectangle5.setPosition(sf::Vector2f(495, 34));
-		rectangle5.setSize(sf::Vector2f(70, 70));
-		rectangle6.setPosition(sf::Vector2f(606, 44));
-		rectangle6.setSize(sf::Vector2f(30, 30));
-		rectangle7.setPosition(sf::Vector2f(666, 59));
-		rectangle7.setSize(sf::Vector2f(28, 28));
-		rectangle8.setPosition(sf::Vector2f(723, 53));
-		rectangle8.setSize(sf::Vector2f(28, 28));
-		rectangle9.setPosition(sf::Vector2f(775, 38));
-		rectangle9.setSize(sf::Vector2f(25, 25));
-		rectangle9.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));*/
+		rectangle.setPosition(sf::Vector2f(285, 0));
+		rectangle.setSize(sf::Vector2f(25, 90));
+		rectangle2.setPosition(sf::Vector2f(320, 0));
+		rectangle2.setSize(sf::Vector2f(40, 100));
+		rectangle3.setPosition(sf::Vector2f(375, 0));
+		rectangle3.setSize(sf::Vector2f(40, 100));
+		rectangle4.setPosition(sf::Vector2f(450, 0));
+		rectangle4.setSize(sf::Vector2f(23, 70));
+		rectangle5.setPosition(sf::Vector2f(495, 0));
+		rectangle5.setSize(sf::Vector2f(70, 100));
+		rectangle6.setPosition(sf::Vector2f(595, 0));
+		rectangle6.setSize(sf::Vector2f(40, 85));
+		rectangle7.setPosition(sf::Vector2f(666, 0));
+		rectangle7.setSize(sf::Vector2f(33, 90));
+		rectangle8.setPosition(sf::Vector2f(723, 0));
+		rectangle8.setSize(sf::Vector2f(28, 85));
+		rectangle9.setPosition(sf::Vector2f(775, 0));
+		rectangle9.setSize(sf::Vector2f(25, 60));
+		rectangle9.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 
 
 		//Add items
@@ -443,15 +443,15 @@ void LastLevel::internalSwap(int num)
 		mPlayRects.push_back(createRect(347, 324, 370, 52));
 
 		//Planets 1-9
-		mRects.push_back(createRect(285, 62, 25, 25));
-		mRects.push_back(createRect(320, 52, 40, 40));
-		mRects.push_back(createRect(385, 58, 25, 25));
-		mRects.push_back(createRect(450, 48, 23, 23));
-		mRects.push_back(createRect(495, 34, 70, 70));
-		mRects.push_back(createRect(606, 44, 30, 30));
-		mRects.push_back(createRect(666, 59, 28, 28));
-		mRects.push_back(createRect(723, 53, 28, 28));
-		mRects.push_back(createRect(775, 38, 25, 25));
+		mRects.push_back(createRect(285, 0, 25, 90));
+		mRects.push_back(createRect(320, 0, 40, 100));
+		mRects.push_back(createRect(375, 0, 50, 100));
+		mRects.push_back(createRect(450, 0, 23, 70));
+		mRects.push_back(createRect(495, 0, 70, 100));
+		mRects.push_back(createRect(595, 0, 50, 85));
+		mRects.push_back(createRect(666, 0, 33, 90));
+		mRects.push_back(createRect(723, 0, 28, 85));
+		mRects.push_back(createRect(775, 0, 25, 60));
 	
 		//BalconyDoor
 		mRects.push_back(createRect(445, 186, 80, 50));
@@ -764,14 +764,14 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				if (mUI->getState() == UI::MAINUI)
+				if (mUI->getState() == UI::EXIT)
 				{
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else if (mCursor->getMode() != Cursor::DIALOGUE)
 				{
-					mUI->setState(UI::MAINUI);
+					mUI->setState(UI::EXIT);
 					mCursor->setMode(Cursor::MENU);
 				}
 			}
@@ -1275,7 +1275,7 @@ void LastLevel::lookAtTargetItem()
 		else
 		{
 			mDialogueSystem->reset();
-			mDialogueSystem->hasClicked("putte", mPlayer);
+			mDialogueSystem->hasClicked("putte2", mPlayer);
 			mUI->setState(UI::INGAME);
 			mCursor->setMode(Cursor::DIALOGUE);
 		}
