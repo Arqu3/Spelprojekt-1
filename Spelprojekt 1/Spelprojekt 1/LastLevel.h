@@ -155,6 +155,11 @@ private:
 	Item* mPump;
 	Item* mPumpedSaturn;
 
+	//Item Glow
+	sf::Sprite mGramophoneGlow;
+	sf::Sprite mTapGlow;
+	sf::Sprite mFoodbowlGlow;
+
 	bool mLevelComplete;
 
 	//Inventory
@@ -199,6 +204,13 @@ private:
 	bool mEarthHanged;
 	bool mSaturnHanged;
 	bool mMarsHanged;
+
+	bool mLookedAtBooks;
+	bool mLookedAtMask;
+	bool mLookedAtCrotchRocket;
+	bool mLookedAtFridge;
+	bool mLookedAtTap;
+	bool mLookedAtJewelryBox;
 
 	ResourceHandler &handler;
 };

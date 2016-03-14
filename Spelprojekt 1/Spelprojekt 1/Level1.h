@@ -123,6 +123,9 @@ private:
 	Item* mWallStar;
 	Item* mRoger;
 
+	//Item Glow
+	sf::Sprite mAstronautGlow;
+
 	//Inventory
 	Inventory *mInventory;
 	sf::Sprite mCursorSprite;

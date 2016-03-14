@@ -161,6 +161,7 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 	addTexture("FishingRodMagnet.png");
 	addTexture("thomaswallstar.png");
 	addTexture("RogerSwim.png");
+	addTexture("AstronautGlow.png");
 
 	drawLoadScreen(window, "Maxar Bakgrunder");
 	//Thomas room background, playground, foreground
@@ -341,6 +342,9 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 	addTexture("Pluto.png");
 	addTexture("Fisk1.png");
 	addTexture("transparent.png");
+	addTexture("GramophoneGlow.png");
+	addTexture("TapGlow.png");
+	addTexture("FoodbowlGlow.png");
 
 	drawLoadScreen(window, "Beccar Testsaker");
 	//Test Textures

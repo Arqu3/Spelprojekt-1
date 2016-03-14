@@ -11,7 +11,13 @@ mVenusHanged(false),
 mEarthHanged(false),
 mSaturnHanged(false),
 mMarsHanged(false),
-mMouseReleased(false)
+mMouseReleased(false),
+mLookedAtBooks(false),
+mLookedAtMask(false),
+mLookedAtCrotchRocket(false),
+mLookedAtFridge(false),
+mLookedAtTap(false),
+mLookedAtJewelryBox(false)
 {
 }
 
@@ -147,6 +153,18 @@ void LastLevel::drawUI(sf::RenderWindow &window)
 	if (mInventory->getSelectedItem() != -1)
 	{
 		mInventory->drawCursorSprite(window);
+		if (mActiveScene == 1) // && mInventory->selectedItem()->getId() == "Needle"
+		{
+			window.draw(mGramophoneGlow);
+		}
+		if (mActiveScene == 2) // && mInventory->selectedItem()->getId() == "Pearl"
+		{
+			window.draw(mTapGlow);
+		}
+		if (mActiveScene == 2) // && mInventory->selectedItem()->getId() == "Fish"
+		{
+			window.draw(mFoodbowlGlow);
+		}
 	}
 }
 
@@ -294,6 +312,17 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 
 		mPump = new Item(handler, sf::Vector2f(200, 200), "Pump");
 		mPumpedSaturn = new Item(handler, sf::Vector2f(606, 44), "PumpedSaturn");
+
+		//Item Glow
+		mGramophoneGlow.setTexture(*handler.getTexture("GramophoneGlow.png"));
+		mGramophoneGlow.setPosition(395, 75);
+		mGramophoneGlow.setScale(0.55f, 0.55f);
+		mTapGlow.setTexture(*handler.getTexture("TapGlow.png"));
+		mTapGlow.setPosition(340, 155);
+		mTapGlow.setScale(0.55f, 0.55f);
+		mFoodbowlGlow.setTexture(*handler.getTexture("FoodbowlGlow.png"));
+		mFoodbowlGlow.setPosition(690, 368);
+		mFoodbowlGlow.setScale(0.5f, 0.5f);
 
 		//View
 		mView.setSize(1024, 576);
@@ -1701,13 +1730,14 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mNewScene = 2;
 					mLastScene = 1;
 				}
-				else
+				else if (getActiveScene() == 2 && !mLookedAtFridge)
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("refridgerator", mPlayer);
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Refrigerator!";
+					mLookedAtFridge = true;
 					//mPlayer->moveToPosition(870, 349);
 				}
 			}
@@ -1734,22 +1764,24 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					std::cout << "Planet 2!";
 					mPlayer->moveToPosition(535, 437);
 				}
-				else if (getActiveScene() == 1)
+				else if (getActiveScene() == 1 && !mLookedAtBooks)
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("books2", mPlayer);
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Books!";
+					mLookedAtBooks = true;
 					//mPlayer->moveToPosition(356, 377);
 				}
-				else
+				else if (getActiveScene() == 2 && !mLookedAtTap)
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("waterTap", mPlayer);
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Tap!";
+					mLookedAtTap = true;
 				}
 
 			}
@@ -1776,7 +1808,7 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					std::cout << "Planet 3!";
 					mPlayer->moveToPosition(535, 437);
 				}
-				else if (getActiveScene() == 1)
+				else if (getActiveScene() == 1 && !mLookedAtJewelryBox)
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("jewelryCase", mPlayer);
@@ -1784,8 +1816,8 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					mCursor->setMode(Cursor::DIALOGUE);
 					//TODO - Play mJewelryBoxSound in the middle of dialogue here
 					std::cout << "Jewelry Box!";
+					mLookedAtJewelryBox = true;
 					//mPlayer->moveToPosition(591, 391);
-					
 				}
 				else
 				{
@@ -1824,13 +1856,14 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					std::cout << "Planet 4!";
 					mPlayer->moveToPosition(535, 437);
 				}
-				else if (getActiveScene() == 1)
+				else if (getActiveScene() == 1 && !mLookedAtCrotchRocket)
 				{
 					/*mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("crotchRocket", mPlayer);
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);*/
 					std::cout << "Crotch Rocket!";
+					mLookedAtCrotchRocket = true;
 					//mPlayer->moveToPosition(452, 379);
 				}
 
@@ -1848,13 +1881,14 @@ void LastLevel::mouseClickCheckRectCollision(sf::Vector2f point)
 					std::cout << "Planet 5!";
 					mPlayer->moveToPosition(535, 437);
 				}
-				else if (getActiveScene() == 1)
+				else if (getActiveScene() == 1 && !mLookedAtMask)
 				{
 					mDialogueSystem->reset();
 					mDialogueSystem->hasClicked("mask", mPlayer);
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::DIALOGUE);
 					std::cout << "Mask!";
+					mLookedAtMask = true;
 					//mPlayer->moveToPosition(1263, 458);
 				}
 

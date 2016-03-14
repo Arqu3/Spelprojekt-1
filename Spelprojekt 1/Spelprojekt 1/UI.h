@@ -50,6 +50,8 @@ public:
 	bool getInfoBoxDisplay();
 	void setInfoBoxDisplay(bool display);
 
+	sf::FloatRect getInventoryRect();
+
 private:
 	State mState;
 	bool mLevelStart;

@@ -155,6 +155,10 @@ void Level1::drawUI(sf::RenderWindow &window)
 	if (mInventory->getSelectedItem() != -1)
 	{
 		mInventory->drawCursorSprite(window);
+		if (mActiveScene == 1 && mBlockPushed && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+		{
+			window.draw(mAstronautGlow);
+		}
 	}
 }
 
@@ -303,6 +307,11 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mCube = new Item(handler, sf::Vector2f(352, 222), "Cube");
 		mWallStar = new Item(handler, sf::Vector2f(900, 190), "WallStar");
 		mRoger = new Item(handler, sf::Vector2f(530, 150), "Roger");
+
+		//Item Glow
+		mAstronautGlow.setTexture(*handler.getTexture("AstronautGlow.png"));
+		mAstronautGlow.setPosition(477, 287);
+		mAstronautGlow.setScale(0.7f, 0.7f);
 
 		//Playground rectangles
 		mPlayRects.push_back(createRect(110, 360, 610, 200));

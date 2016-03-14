@@ -326,6 +326,10 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			ui.setInfoBoxDisplay(true);
 		}
 	}
+	else if (!ui.getInventoryRect().contains(point))
+	{
+		ui.setState(UI::INGAME);
+	}
 	else
 	{
 		deSelectCheck();

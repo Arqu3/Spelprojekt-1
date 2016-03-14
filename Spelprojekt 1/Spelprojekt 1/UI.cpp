@@ -542,3 +542,8 @@ void UI::setInfoBoxDisplay(bool display)
 {
 	mInfoBoxDisplay = display;
 }
+
+sf::FloatRect UI::getInventoryRect()
+{
+	return mInventoryMenu.getGlobalBounds();
+}
