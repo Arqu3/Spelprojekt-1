@@ -36,7 +36,7 @@ void Game::update()
 			mUI->drawMainMenu(window);
 			if (mUI->getLevelStart())
 			{
-				mLHandler.setActiveLevel(2, mRHandler, true, window, mUI);
+				mLHandler.setActiveLevel(0, mRHandler, true, window, mUI);
 				mUI->setLevelStart();
 			}
 		}
@@ -50,6 +50,11 @@ void Game::update()
 			else
 			{
 				mUI->eventListen(window);
+				if (mUI->getLevelExit())
+				{
+					mLHandler.getActiveLevel()->toggleActive(mRHandler, window, mUI);
+					mUI->setLevelExit(false);
+				}
 			}
 			mLHandler.draw(window);
 		}

@@ -52,9 +52,13 @@ public:
 
 	sf::FloatRect getInventoryRect();
 
+	bool getLevelExit();
+	void setLevelExit(bool value);
+
 private:
 	State mState;
 	bool mLevelStart;
+	bool mLevelExit;
 	bool mInfoBoxDisplay;
 
 	//Buttons

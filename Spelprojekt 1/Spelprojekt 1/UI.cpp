@@ -12,7 +12,8 @@ mFrameYOffset(0),
 mActiveAnimation("None"),
 mLevelStart(false),
 mInfoBoxDisplay(true),
-mReset(false)
+mReset(false),
+mLevelExit(false)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -325,6 +326,7 @@ void UI::eventListen(sf::RenderWindow &window)
 					
 					if (mExitButtons[1]->isPressed(window))
 					{
+						mLevelExit = true;
 						setState(MAINMENU);
 					}
 					break;
@@ -546,4 +548,14 @@ void UI::setInfoBoxDisplay(bool display)
 sf::FloatRect UI::getInventoryRect()
 {
 	return mInventoryMenu.getGlobalBounds();
+}
+
+bool UI::getLevelExit()
+{
+	return mLevelExit;
+}
+
+void UI::setLevelExit(bool value)
+{
+	mLevelExit = value;
 }

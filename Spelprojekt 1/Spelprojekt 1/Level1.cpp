@@ -187,6 +187,29 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 	{
 		handler.loadLevel1(window);
 
+		//Default bool values
+		mItemInteraction = false;
+		mPickedUpFishingRod = false;
+		mPickedUpMagnet = false;
+		mLookedAtAquarium = false;
+		mPushingBlock = false;
+		mBlockPushed = false;
+		mCubePlaced = false;
+		mReadyForScrewdevice = false;
+		mPickedUpScrewdevice = false;
+		mMovedStar = false;
+		mReadyToLeave = false;
+		mLevelComplete = false;
+		mHasCraftedFishingRod = false;
+		mMouseReleased = false;
+		mLookedAtBooks = false;
+		mLookedAtLamp = false;
+		mLookedAtRadio = false;
+		mLookedAtPosters = false;
+		mLookedAtBackpack = false;
+
+		mActiveScene = 0;
+
 		//Room Textures
 		//Background texture
 		background.setSize(sf::Vector2f(1024, 576));
@@ -379,6 +402,10 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		delete mPlayer;
 		delete mInventory;
 		delete mDialogueSystem;
+		delete mClues;
+		mItems.clear();
+		mRects.clear();
+		mPlayRects.clear();
 		music.stop();
 		mAmbientSound.stop();
 		mAquariumSound.stop();

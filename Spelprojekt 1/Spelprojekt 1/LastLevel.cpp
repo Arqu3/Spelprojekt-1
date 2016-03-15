@@ -205,6 +205,21 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 	{
 		handler.loadLastLevel(window);
 
+		//Default bool values
+		mLevelComplete = false;
+		mPlutoHanged = false;
+		mVenusHanged = false;
+		mEarthHanged = false;
+		mSaturnHanged = false;
+		mMarsHanged = false;
+		mMouseReleased = false;
+		mLookedAtBooks = false;
+		mLookedAtMask = false;
+		mLookedAtCrotchRocket = false;
+		mLookedAtFridge = false;
+		mLookedAtTap = false;
+		mLookedAtJewelryBox = false;
+
 		//Background Texture scene 1
 		background.setSize(sf::Vector2f(1024, 576));
 		background.setTexture(handler.getTexture("ARBETSRUMbakgrund.png"));
@@ -432,6 +447,16 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mInventory->addItem(mScrewDevice);
 		mInventory->addItem(mVenus);
 		mInventory->addItem(mPump);
+	}
+	else
+	{
+		delete mPlayer;
+		delete mInventory;
+		delete mDialogueSystem;
+		//delete mClues;
+		mItems.clear();
+		mRects.clear();
+		mPlayRects.clear();
 	}
 
 	mIsActive = !mIsActive;
@@ -911,12 +936,7 @@ void LastLevel::mouseReleased(sf::Event & event)
 			&& mRects[1]->contains(mWorldPos))
 	{
 		mMouseReleased = true;
-		mItemInteraction = true;
 		mPlayer->moveToPosition(419, 388);
-		mRunningWaterSound.play();
-		mInventory->removeItem(mInventory->getSelectedItem());
-		mInventory->addItem(mPearl);
-		mRegularItemSound.play();
 	}
 	else if (mInventory->selectedItem() != NULL
 		&& mInventory->selectedItem()->getId() == "Venus"
@@ -1145,6 +1165,15 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	{
 		mCat->update(deltaTime);
 	}
+
+	//Code for Clam
+	if (mMouseReleased && mPlayer->getIsOnPosition() && mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Magic Clam")
+	{
+		mRunningWaterSound.play();
+		mInventory->removeItem(mInventory->getSelectedItem());
+		mInventory->addItem(mPearl);
+		mRegularItemSound.play();
+	}
 }
 
 void LastLevel::mouseHover()
@@ -1197,7 +1226,7 @@ void LastLevel::mouseHover()
 				}
 				else
 				{
-					mCursor->setMode(Cursor::EYE);
+					mCursor->setMode(Cursor::NORMAL);
 				}
 			}
 
@@ -1210,7 +1239,7 @@ void LastLevel::mouseHover()
 				}
 				else
 				{
-					mCursor->setMode(Cursor::EYE);
+					mCursor->setMode(Cursor::NORMAL);
 				}
 			}
 
@@ -1221,9 +1250,13 @@ void LastLevel::mouseHover()
 				{
 					mCursor->setMode(Cursor::SCENECHANGE);
 				}
-				else
+				else if (mActiveScene == 2 && !mLookedAtFridge)
 				{
 					mCursor->setMode(Cursor::EYE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::NORMAL);
 				}
 			}
 
@@ -1234,15 +1267,56 @@ void LastLevel::mouseHover()
 				{
 					mCursor->setMode(Cursor::SCENECHANGE);
 				}
-				else
+				else if (mActiveScene == 1 && !mLookedAtJewelryBox)
 				{
 					mCursor->setMode(Cursor::EYE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::NORMAL);
+				}
+			}
+			else if (i == 1)
+			{
+				if (mActiveScene == 1 && !mLookedAtBooks)
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				else if (mActiveScene == 2 && !mLookedAtTap)
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::NORMAL);
+				}
+			}
+			else if (i == 3)
+			{
+				if (mActiveScene == 1 && !mLookedAtCrotchRocket)
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::NORMAL);
+				}
+			}
+			else if (i == 4)
+			{
+				if (mActiveScene == 1 && !mLookedAtMask)
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::NORMAL);
 				}
 			}
 
 			else
 			{
-				mCursor->setMode(Cursor::EYE);
+				mCursor->setMode(Cursor::NORMAL);
 			}
 		}
 	}
