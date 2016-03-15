@@ -69,6 +69,7 @@ void Player::setPosition(float x, float y)
 {
 	mPosition = sf::Vector2f(x, y);
 	mDirection = sf::Vector2f(0, 0);
+	moveTo = sf::Vector2f(x, y);
 }
 
 void Player::moveToPosition(float x, float y)
@@ -469,11 +470,10 @@ void Player::setFrameTime(float frametime)
 	mFrameTime = frametime;
 }
 
-void Player::jump(std::vector<sf::Vector2f> positions)
+void Player::moveSequence(std::vector<sf::Vector2f> positions)
 {
-	for (std::vector<sf::Vector2f>::size_type i = 0; i < positions.size(); i++)
+	for (std::vector<sf::Vector2f>::size_type i = 0; i < positions.size() && getIsOnPosition(); i++)
 	{
-		moveToPosition(positions[0].x, positions[0].y);
-		//Move to index + 1
+		moveToPosition(positions[i].x, positions[i].y);
 	}
 }

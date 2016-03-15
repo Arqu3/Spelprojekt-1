@@ -29,7 +29,7 @@ public:
 	void setScale(sf::Vector2f scale);
 	int getCurrentFrame();
 	void setFrameTime(float frametime);
-	void jump(std::vector<sf::Vector2f> positions);
+	void moveSequence(std::vector<sf::Vector2f> positions);
 
 private:
 	void move(float deltaTime);
@@ -45,7 +45,7 @@ private:
 	bool isOnPosition;
 	sf::FloatRect mRect;
 	sf::FloatRect mMoveToRect;
-	void waitForClick(sf::RenderWindow &window);
+	//void waitForClick(sf::RenderWindow &window);
 	bool mThomasActive;
 
 	//Animations

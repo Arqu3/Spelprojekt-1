@@ -1250,8 +1250,19 @@ void Level1::pickupTargetItem()
 		mCube->setPosition(645.0f, 450.0f);
 		mCubePlaced = true;
 		//TODO - Add Hilma Jump
-		mPlayer->setPosition(570, 268);
-		mPlayer->moveToPosition(570, 268);
+		std::vector<sf::Vector2f> positions;
+
+		positions.push_back(sf::Vector2f(100, 100));
+		positions.push_back(sf::Vector2f(200, 200)); 
+		positions.push_back(sf::Vector2f(100, 300));
+		positions.push_back(sf::Vector2f(400, 100));
+		positions.push_back(sf::Vector2f(1000, 0));
+		positions.push_back(sf::Vector2f(100, 100));
+
+		mPlayer->moveSequence(positions);
+
+		//mPlayer->setPosition(570, 268);
+		//mPlayer->moveToPosition(570, 268);
 		if (!mPlayer->isFacingLeft())
 		{
 			mPlayer->flipPlayer();
