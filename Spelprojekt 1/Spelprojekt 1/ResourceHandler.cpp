@@ -19,16 +19,6 @@ mLastLevelLoaded(false)
 	addTexture("MainMenuBackground.png");
 	addTexture("Test1.png");
 
-	//Main menu buttons
-	addTexture("NewGame.png");
-	addTexture("NewGameGLOW.png");
-	addTexture("Continue.png");
-	addTexture("ContinueGLOW.png");
-	addTexture("Options.png");
-	addTexture("OptionsGLOW.png");
-	addTexture("Exit.png");
-	addTexture("ExitGLOW.png");
-
 	loadScreen.setSize(sf::Vector2f(1024, 576));
 	loadScreen.setTexture(getTexture("loadscreen.png"));
 
@@ -39,6 +29,9 @@ mLastLevelLoaded(false)
 	mLoadMessage.setColor(sf::Color::White);
 	mLoadMessage.setPosition(430, 490);
 	mLoadMessage.setString("Laddar...");
+
+	mView.setCenter(512, 288);
+	mView.setSize(1024, 576);
 }
 
 ResourceHandler::~ResourceHandler()
@@ -110,6 +103,22 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("ClueBackground1.png");
 	addTexture("InfoIcon.png");
 	addTexture("InfoBox.png");
+	//Main menu buttons
+	addTexture("NewGame.png");
+	addTexture("NewGameGLOW.png");
+	addTexture("Continue.png");
+	addTexture("ContinueGLOW.png");
+	addTexture("Options.png");
+	addTexture("OptionsGLOW.png");
+	addTexture("Exit.png");
+	addTexture("ExitGLOW.png");
+	//Level Select Buttons
+	addTexture("Level1.png");
+	addTexture("Level1Glow.png");
+	addTexture("Level3.png");
+	addTexture("Level3Glow.png");
+	addTexture("Level4.png");
+	addTexture("Level4Glow.png");
 
 	drawLoadScreen(window, "Davidar Muspekare");
 	//Cursors
@@ -144,6 +153,9 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 {
 	//internalClear();
+
+	mView.setCenter(512, 288);
+	window.setView(mView);
 
 	if (!mLevel1Loaded)
 	{
@@ -255,10 +267,17 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 
 		mLevel1Loaded = true;
 	}
+	else
+	{
+		drawLoadScreen(window, "Redan Laddad");
+	}
 }
 
 void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 {
+	mView.setCenter(512, 288);
+	window.setView(mView);
+
 	if (!mLevel3Loaded)
 	{
 		drawLoadScreen(window, "Gör Saker Med Blommor");
@@ -289,11 +308,18 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 
 		mLevel3Loaded = true;
 	}
+	else
+	{
+		drawLoadScreen(window, "Redan Laddad");
+	}
 }
 
 void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 {
 	//internalClear();
+
+	mView.setCenter(512, 288);
+	window.setView(mView);
 
 	if (!mLastLevelLoaded)
 	{
@@ -372,6 +398,10 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 		addTexture("CatEating.png");*/
 
 		mLastLevelLoaded = true;
+	}
+	else
+	{
+		drawLoadScreen(window, "Redan Laddad");
 	}
 }
 

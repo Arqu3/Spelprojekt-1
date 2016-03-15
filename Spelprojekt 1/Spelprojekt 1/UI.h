@@ -13,7 +13,7 @@ public:
 	enum State
 	{
 		HAT,
-		MAINUI,
+		LEVELSELECT,
 		MAINMENU,
 		INVENTORY,
 		CLUES,
@@ -26,6 +26,7 @@ public:
 	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 	void drawMainMenu(sf::RenderWindow &window);
+	void drawLevelSelect(sf::RenderWindow & window);
 	void drawExit(sf::RenderWindow &window);
 
 	void checkCollision(sf::Vector2f point);
@@ -44,7 +45,7 @@ public:
 	std::string getActiveAnimation();
 
 	bool getLevelStart();
-	void setLevelStart();
+	void setLevelStart(bool value);
 
 	sf::FloatRect getInfoIconRect();
 	bool getInfoBoxDisplay();
@@ -54,6 +55,9 @@ public:
 
 	bool getLevelExit();
 	void setLevelExit(bool value);
+
+	int getSelectedLevel();
+	void setSelectedLevel(int level);
 
 private:
 	State mState;
@@ -66,6 +70,7 @@ private:
 	ButtonVector mMainButtons;
 	ButtonVector mExitButtons;
 	ButtonVector mUIButtons;
+	ButtonVector mLevelSelectButtons;
 	sf::RectangleShape mBackground;
 
 	//UI Sprites
@@ -112,6 +117,7 @@ private:
 	sf::Text mInfoText;
 
 	bool mReset;
+	int mSelectedLevel;
 };
 
 #endif

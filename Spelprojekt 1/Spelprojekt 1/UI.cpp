@@ -13,7 +13,8 @@ mActiveAnimation("None"),
 mLevelStart(false),
 mInfoBoxDisplay(true),
 mReset(false),
-mLevelExit(false)
+mLevelExit(false),
+mSelectedLevel(0)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -69,8 +70,8 @@ mLevelExit(false)
 	mHelpRectangle.setSize(sf::Vector2f(85, 80));
 
 	//Exit buttons
-	mExitButtons.push_back(new Button(200, 100, sf::Color::Red));
-	mExitButtons.push_back(new Button(200, 100, sf::Color::Green));
+	mExitButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Continue.png", "ContinueGLOW.png"));
+	mExitButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Exit.png", "ExitGLOW.png"));
 
 	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
 	{
@@ -90,6 +91,17 @@ mLevelExit(false)
 	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
 	{
 		mMainButtons[i]->setPosition(240.0f - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
+	}
+
+	//Adds level select 
+	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Level1.png", "Level1Glow.png"));
+	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Level3.png", "Level3Glow.png"));
+	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Level4.png", "Level4Glow.png"));
+	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Exit.png", "ExitGLOW.png"));
+	
+	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	{
+		mLevelSelectButtons[i]->setPosition(240.0f - (mLevelSelectButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
 	}
 
 	//Sounds
@@ -116,7 +128,7 @@ void UI::update(float deltaTime)
 	case HAT:
 		break;
 
-	case MAINUI:
+	case LEVELSELECT:
 		break;
 
 	case MAINMENU:
@@ -209,7 +221,7 @@ void UI::draw(sf::RenderWindow &window)
 	case HAT:
 		break;
 
-	case MAINUI:
+	case LEVELSELECT:
 		break;
 
 	case MAINMENU:
@@ -264,6 +276,18 @@ void UI::drawMainMenu(sf::RenderWindow &window)
 	mCursor->draw(window);
 }
 
+void UI::drawLevelSelect(sf::RenderWindow &window)
+{
+	window.draw(mBackground);
+	for (ButtonVector::size_type i = 0; i < mLevelSelectButtons.size(); i++)
+	{
+		mLevelSelectButtons[i]->draw(window);
+	}
+
+	mCursor->update(window);
+	mCursor->draw(window);
+}
+
 void UI::drawExit(sf::RenderWindow &window)
 {
 	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
@@ -307,9 +331,9 @@ void UI::eventListen(sf::RenderWindow &window)
 						setState(INGAME);
 					}
 
-					if (mMainButtons[2]->isPressed(window))
+					if (mMainButtons[1]->isPressed(window))
 					{
-
+						setState(LEVELSELECT);
 					}
 
 					if (mMainButtons[3]->isPressed(window))
@@ -318,7 +342,47 @@ void UI::eventListen(sf::RenderWindow &window)
 					}
 					break;
 
+				case LEVELSELECT:
+					if (mLevelSelectButtons[0]->isPressed(window))
+					{
+						mSelectedLevel = 0;
+						setState(MAINMENU);
+					}
+
+					if (mLevelSelectButtons[1]->isPressed(window))
+					{
+						mSelectedLevel = 1;
+						setState(MAINMENU);
+					}
+
+					if (mLevelSelectButtons[2]->isPressed(window))
+					{
+						mSelectedLevel = 2;
+						setState(MAINMENU);
+					}
+
+					if (mLevelSelectButtons[3]->isPressed(window))
+					{
+						setState(MAINMENU);
+					}
+					break;
+
 				case EXIT:
+					if (getInventoryIconRect().contains(mWorldPos))
+					{
+						setState(INVENTORY);
+					}
+
+					if (getCluesIconRect().contains(mWorldPos))
+					{
+						setState(CLUES);
+					}
+
+					if (getExitIconRect().contains(mWorldPos))
+					{
+						setState(INGAME);
+					}
+
 					if (mExitButtons[0]->isPressed(window))
 					{
 						setState(INGAME);
@@ -349,7 +413,14 @@ void UI::checkCollision(sf::Vector2f point)
 	}
 	if (getExitIconRect().contains(point))
 	{
-		mState = EXIT;
+		if (mState == EXIT)
+		{
+			mState = INGAME;
+		}
+		else
+		{
+			mState = EXIT;
+		}
 	}
 	//if (getHatIconRect().contains(point))
 	//{
@@ -474,14 +545,18 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 
 	for (ButtonVector::size_type i = 0; i < mExitButtons.size(); i++)
 	{
-		mExitButtons[i]->setPosition(viewCenter.x - mExitButtons[0]->getRect().width + (260.0f * i) - 45, 288 - mExitButtons[0]->getRect().height);
+		mExitButtons[i]->setPosition(viewCenter.x - mExitButtons[0]->getRect().width + (350.0f * i) - 45, 288 - mExitButtons[0]->getRect().height);
 	}
 
-	//TODO - Make this work with the new Main Menu Button positions
-	/*for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
 	{
-		mMainButtons[i]->setPosition(viewCenter.x - (mMainButtons[0]->getRect().width / 2), 100.0f + (160.0f * i));
-	}*/
+		mMainButtons[i]->setPosition((viewCenter.x - 272) - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
+	}
+
+	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	{
+		mLevelSelectButtons[i]->setPosition((viewCenter.x - 272) - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
+	}
 
 	mBackground.setPosition(viewCenter.x - 512, 0);
 }
@@ -506,8 +581,11 @@ void UI::setActiveAnimation(std::string animation)
 		mFrameXOffset = 0;
 		mFrameYOffset = 0;
 	}
-	else
+	else 
 	{
+		mInventoryIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		mCluesIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
+		mExitIcon.setTextureRect(sf::IntRect(0, 0, 346, 346));
 		mCurrentFrame = 0;
 		mFrameXOffset = 0;
 		mFrameYOffset = 0;
@@ -525,9 +603,9 @@ bool UI::getLevelStart()
 	return mLevelStart;
 }
 
-void UI::setLevelStart()
+void UI::setLevelStart(bool value)
 {
-	mLevelStart = false;
+	mLevelStart = value;
 }
 
 sf::FloatRect UI::getInfoIconRect()
@@ -558,4 +636,14 @@ bool UI::getLevelExit()
 void UI::setLevelExit(bool value)
 {
 	mLevelExit = value;
+}
+
+int UI::getSelectedLevel()
+{
+	return mSelectedLevel;
+}
+
+void UI::setSelectedLevel(int level)
+{
+	mSelectedLevel = level;
 }

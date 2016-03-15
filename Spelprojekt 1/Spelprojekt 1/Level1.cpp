@@ -406,6 +406,8 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mItems.clear();
 		mRects.clear();
 		mPlayRects.clear();
+		mUI->setActiveAnimation("None");
+		//TODO - Add Volume Fadeout?
 		music.stop();
 		mAmbientSound.stop();
 		mAquariumSound.stop();

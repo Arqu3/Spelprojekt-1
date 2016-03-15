@@ -289,6 +289,18 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		
 
 	}
+	else
+	{
+		delete mPlayer;
+		delete mInventory;
+		delete mDialogueSystem;
+		//delete mClues;
+		mItems.clear();
+		mRects.clear();
+		mPlayRects.clear();
+		mUI->setActiveAnimation("None");
+		music.stop();
+	}
 
 	mIsActive = !mIsActive;
 }
@@ -480,10 +492,6 @@ void Level3::eventListen(sf::RenderWindow &window)
 			break;
 
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Escape)
-			{
-				window.close();
-			}
 			if (event.key.code == sf::Keyboard::I)
 			{
 				if (mUI->getState() == UI::INVENTORY)
@@ -491,18 +499,36 @@ void Level3::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
-				else
+				else if (mCursor->getMode() != Cursor::DIALOGUE)
 				{
 					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
+					//mMenuInventorySound.play();
+					if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+					{
+						mUI->setActiveAnimation("None");
+					}
 				}
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
 				mLevelComplete = true; //TODO - Remove this
 			}
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				if (mUI->getState() == UI::EXIT || mUI->getState() == UI::INVENTORY || mUI->getState() == UI::CLUES)
+				{
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::NORMAL);
+				}
+				else if (mCursor->getMode() != Cursor::DIALOGUE)
+				{
+					mUI->setState(UI::EXIT);
+					mCursor->setMode(Cursor::MENU);
+				}
+			}
 			break;
-
+			
 		default:
 			break;
 

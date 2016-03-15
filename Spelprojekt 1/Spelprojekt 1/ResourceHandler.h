@@ -74,6 +74,8 @@ private:
 	bool mLevel1Loaded;
 	bool mLevel3Loaded;
 	bool mLastLevelLoaded;
+
+	sf::View mView;
 };
 
 #endif
