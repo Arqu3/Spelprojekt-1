@@ -1174,7 +1174,7 @@ void Level1::lookAtTargetItem()
 	if (mTargetItem->getId() == "Bowl")
 	{
 		mDialogueSystem->reset();
-		mDialogueSystem->hasClicked("bowl", mPlayer);
+		mDialogueSystem->hasClicked("laila", mPlayer);
 		mUI->setState(UI::INGAME);
 		mCursor->setMode(Cursor::DIALOGUE);
 	}

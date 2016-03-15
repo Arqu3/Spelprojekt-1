@@ -242,6 +242,8 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		//UI
 		mUI = ui;
 
+		mDialogueSystem = new DialogueSystem(handler);
+
 		//Rectangles
 		mRects.push_back(createRect(630, 126, 66, 134));
 		mRects.push_back(createRect(1806, 96, 62, 74));
@@ -721,6 +723,12 @@ void Level3::mouseClick(sf::Event &event)
 
 void Level3::update(sf::RenderWindow &window, float deltaTime)
 {
+
+
+	mDialogueSystem->update(deltaTime);
+
+
+
 	//Only do this if the level needs moving camera
 	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
 
@@ -764,6 +772,13 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 			if (!mTargetItem->isLookedAt())
 			{
 				mTargetItem->toggleIsLookedAt(); //Fixa dialoger i funktion
+				if (mTargetItem->getId() == "Stick")
+				{
+					mDialogueSystem->reset();
+					mDialogueSystem->hasClicked("laila", mPlayer);
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::DIALOGUE);
+				}
 				mItemInteraction = false;
 			}
 			//Check if Item can be picked up
@@ -804,6 +819,7 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 
 				if (mTargetItem->getId() == "Stick")
 				{
+
 					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
 					{
 						mInventory->addItem(mTargetItem);

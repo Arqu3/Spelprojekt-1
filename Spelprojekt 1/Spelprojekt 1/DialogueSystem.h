@@ -48,6 +48,9 @@ public:
 	//Spider Dialogue
 	void displaySpiderDialogue();
 
+	//Laila
+	void displayLevel1LailaAdvancedDialogue();
+
 	//Advanced Dialogues
 	//Level 1
 	void displayLevel1StartAdvancedDialogue();
@@ -204,6 +207,9 @@ private:
 
 	//Spider Dialogue
 	bool mDialogueSpider;
+
+	//Laila
+	bool mLevel1Laila;
 
 	//Advanced Dialogue
 	//Level 1
