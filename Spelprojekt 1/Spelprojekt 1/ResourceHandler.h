@@ -70,6 +70,10 @@ private:
 
 	//Loading screen
 	sf::RectangleShape loadScreen;
+
+	bool mLevel1Loaded;
+	bool mLevel3Loaded;
+	bool mLastLevelLoaded;
 };
 
 #endif

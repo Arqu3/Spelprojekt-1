@@ -123,6 +123,9 @@ private:
 	Item* mWallStar;
 	Item* mRoger;
 
+	//Item Glow
+	sf::Sprite mAstronautGlow;
+
 	//Inventory
 	Inventory *mInventory;
 	sf::Sprite mCursorSprite;
@@ -159,11 +162,13 @@ private:
 	bool mRogerOnPoint;
 	bool mMouseReleased;
 
+	bool mSceneChange;
 	bool mPlayerToggle;
 	bool mPickedUpFishingRod;
 	bool mPickedUpMagnet;
 	bool mLookedAtAquarium;
 	bool mPushingBlock;
+	bool mBlockPushed;
 	bool mCubePlaced;
 	bool mFishing;
 	bool mReadyForScrewdevice;
@@ -172,5 +177,11 @@ private:
 	bool mReadyToLeave;
 	bool mLevelComplete;
 	bool mHasCraftedFishingRod;
+
+	bool mLookedAtBooks;
+	bool mLookedAtLamp;
+	bool mLookedAtRadio;
+	bool mLookedAtBackpack;
+	bool mLookedAtPosters;
 };
 #endif

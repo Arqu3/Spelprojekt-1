@@ -34,8 +34,9 @@ public:
 	void eventListen(sf::RenderWindow &window);
 
 	State getState();
-	sf::FloatRect getHatIconRect();
-	sf::FloatRect getMenuIconRect();
+	sf::FloatRect getInventoryIconRect();
+	sf::FloatRect getCluesIconRect();
+	sf::FloatRect getExitIconRect();
 
 	void setUIPosition(sf::Vector2f viewCenter);
 
@@ -49,9 +50,15 @@ public:
 	bool getInfoBoxDisplay();
 	void setInfoBoxDisplay(bool display);
 
+	sf::FloatRect getInventoryRect();
+
+	bool getLevelExit();
+	void setLevelExit(bool value);
+
 private:
 	State mState;
 	bool mLevelStart;
+	bool mLevelExit;
 	bool mInfoBoxDisplay;
 
 	//Buttons
@@ -62,23 +69,16 @@ private:
 	sf::RectangleShape mBackground;
 
 	//UI Sprites
-	sf::Sprite mHatIcon;
-	sf::Sprite mMenuIcon;
-	sf::Sprite mHatMenu;
-	sf::Sprite mMainUI;
-	sf::Sprite mInventoryMenu;
 	sf::Sprite mInventoryIcon;
-	sf::Sprite mClueIcon;
+	sf::Sprite mExitIcon;
+	sf::Sprite mCluesIcon;
+	sf::Sprite mInventoryMenu;
 	sf::Sprite mInfoIcon;
 	sf::Sprite mInfoBox;
 
 	//UI Rects
-	sf::FloatRect mHatRect;
-	sf::FloatRect mMenuRect;
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
-	sf::FloatRect mMemoriesRect;
-	sf::FloatRect mSettingsRect;
 	sf::FloatRect mExitRect;
 
 	//Mouse position

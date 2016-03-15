@@ -50,6 +50,11 @@ void Game::update()
 			else
 			{
 				mUI->eventListen(window);
+				if (mUI->getLevelExit())
+				{
+					mLHandler.getActiveLevel()->toggleActive(mRHandler, window, mUI);
+					mUI->setLevelExit(false);
+				}
 			}
 			mLHandler.draw(window);
 		}
