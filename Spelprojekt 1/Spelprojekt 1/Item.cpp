@@ -466,8 +466,8 @@ mFrameTime(0.08f)
 		mName = "Spik";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
-		//mSprite.setTexture(*handler.getTexture("Clover.png"));
+		mSprite.setScale(sf::Vector2f(1.1f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
 		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
 
 	}
@@ -490,7 +490,7 @@ mFrameTime(0.08f)
 		mName = "Fjäderboll";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setScale(sf::Vector2f(0.53f, 0.53f));
 		mSprite.setTexture(*handler.getTexture("Featherball.png"));
 		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
 
@@ -513,6 +513,8 @@ mFrameTime(0.08f)
 		mName = "Tyg";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.5f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
 		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
 	}
 

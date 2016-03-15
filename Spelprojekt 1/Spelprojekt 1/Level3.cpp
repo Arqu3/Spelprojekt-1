@@ -234,11 +234,11 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		mClover = new Item(handler, sf::Vector2f(241, 234), "Clover");
 		mSawdust = new Item(handler, sf::Vector2f(831, 254), "Sawdust");
-		mNail = new Item(handler, sf::Vector2f(0, 0), "Nail"); //Plockas upp
+		mNail = new Item(handler, sf::Vector2f(285, 80), "Nail"); //Plockas upp
 		mFjun = new Item(handler, sf::Vector2f(1192, 52), "Fjun");
-		mFeatherball = new Item(handler, sf::Vector2f(285, 372), "Featherball");
+		mFeatherball = new Item(handler, sf::Vector2f(200, 343), "Featherball");
 		mJack = new Item(handler, sf::Vector2f(1226, 157), "Jack");
-		mCloth = new Item(handler, sf::Vector2f(0, 0), "Cloth");
+		mCloth = new Item(handler, sf::Vector2f(169, 481), "Cloth");
 
 		//View
 		mView.setSize(1024, 576);
@@ -317,6 +317,14 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mJack->toggleLookable();
 		mJack->toggleInteractable();
 
+		mNail->toggleActive();
+		mNail->toggleLookable();
+		mNail->togglePickupable();
+
+		mCloth->toggleActive();
+		mCloth->toggleLookable();
+		mCloth->togglePickupable();
+
 		//Add to Itemvector
 		addItem(mTrimmer);
 		addItem(mStick);
@@ -330,7 +338,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		
 		
-		//changeScene(1);
+		changeScene(1);
 	}
 
 	mIsActive = !mIsActive;
@@ -380,48 +388,21 @@ void Level3::internalSwap(int num)
 	
 		mPlayer->togglePlayer();
 		mPlayer->setScale(sf::Vector2f(0.4f, 0.4f));
+
 		//Scene 2
 		mActiveScene = 1;
 
 		//Walkable Area
-		mPlayRects.push_back(createRect(0, 0, 1511, 576));
-		
-		////Help rectangle
-		//rectangle.setSize(sf::Vector2f(70, 160));
-		//rectangle.setPosition(72, 106);
-		//rectangle2.setSize(sf::Vector2f(176, 150));
-		//rectangle2.setPosition(109, 325);
-		//rectangle3.setSize(sf::Vector2f(98, 123));
-		//rectangle3.setPosition(285, 372);
-		//rectangle4.setSize(sf::Vector2f(200, 76));
-		//rectangle4.setPosition(150, 495);
-		//rectangle5.setSize(sf::Vector2f(129, 46));
-		//rectangle5.setPosition(285, 80);
-		//rectangle6.setSize(sf::Vector2f(224, 49));
-		//rectangle6.setPosition(831, 254);
-		//rectangle7.setSize(sf::Vector2f(100, 200));
-		//rectangle7.setPosition(1226, 157);
-		//rectangle8.setSize(sf::Vector2f(76, 210));
-		//rectangle8.setPosition(1432, 146);
-		//rectangle9.setSize(sf::Vector2f(162, 169));
-		//rectangle9.setPosition(900, 67);
-		//rectangle10.setSize(sf::Vector2f(60, 53));
-		//rectangle10.setPosition(241, 234);
-		//rectangle11.setSize(sf::Vector2f(115, 51));
-		//rectangle11.setPosition(1192, 52);
-		//rectangle12.setSize(sf::Vector2f(215, 102));
-		//rectangle12.setPosition(1053, 423);
+		mPlayRects.push_back(createRect(96, 287, 286, 38));
+		mPlayRects.push_back(createRect(382, 249, 418, 323));
+		mPlayRects.push_back(createRect(800, 354, 624, 77));
+
+
 
 		//Rectangles
 
 		//Dörr till trädgård
 		mRects.push_back(createRect(72, 106, 70, 160));
-
-		//Duk
-		mRects.push_back(createRect(150, 495, 200, 76));
-
-		// Spik 
-		mRects.push_back(createRect(285, 80, 129, 46));
 
 		//nästa rum
 		mRects.push_back(createRect(1432, 146, 76, 210));
@@ -456,9 +437,16 @@ void Level3::internalSwap(int num)
 		{
 			addItem(mJack);
 		}
+		if (mNail->getActive())
+		{
+			addItem(mNail);
+		}
+		if (mCloth->getActive())
+		{
+			addItem(mCloth);
+		}
 
-		addItem(mNail);
-		addItem(mCloth);
+		mInventory->addItem(mTrimmer);
 
 	}
 	else if (num == 2)
@@ -891,7 +879,7 @@ void Level3::mouseClick(sf::Event &event)
 				if (getItems()[i]->getId() == "Nail")
 				{
 					//Move Player to the closest point that is still inside the playrect
-					//mPlayer->moveToPosition(1354, 374);
+					mPlayer->moveToPosition(424, 300);
 					//Set the Item as "Target Item"
 					mTargetItem = getItems()[i];
 					//Enable Item interaction
@@ -916,6 +904,18 @@ void Level3::mouseClick(sf::Event &event)
 				{
 					//Move Player to the closest point that is still inside the playrect
 					mPlayer->moveToPosition(1250, 370);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på knekt!";
+
+				}
+
+				if (getItems()[i]->getId() == "Cloth")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(386, 543);
 					//Set the Item as "Target Item"
 					mTargetItem = getItems()[i];
 					//Enable Item interaction
@@ -967,7 +967,7 @@ void Level3::mouseClick(sf::Event &event)
 				}
 			}
 
-
+			// Door shed, magic world
 			if (i == 1)
 			{
 				if (getActiveScene() == 0)
@@ -986,62 +986,32 @@ void Level3::mouseClick(sf::Event &event)
 					mNewScene = 1;
 					mLastScene = 0;
 				}
-
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Klickade på Duk!";
 
-					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
-					{
-					
-						for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-						{
-							if (getItems()[i]->getId() == "Cloth")
-							{
-								if (mItemPicked == false)
-								{
-									mTargetItem = getItems()[i];
-									mInventory->addItem(mTargetItem);
-									mItemPicked = true;
-									std::cout << "Tygbit upplockad!";
-								}
-								
-
-							}
-
-						}
-
-					}
 				}
 			}
 
 
+			//Rocket
 			if (i == 2)
-			{
-				if (getActiveScene() == 0)
-				{
-					
-				}
-
-			if (i == 7)
 			{
 				if (getActiveScene() == 1)
 				{
-					std::cout << "Door to scene 3!";
-							//Make Player get into position for Scene change
-							mPlayer->moveToPosition(1400, 370);
-							//Set Collision Rect to Scene change position
-							mSceneChangeRect = sf::FloatRect(sf::Vector2f(1400, 370), sf::Vector2f(10, 10));
-							//Set if Player should toggle on Scene Change
-							mPlayerToggle = false;
-							//Set starting position of Player in new Scene
-							mSceneChangePlayerPos = sf::Vector2f(950, 480);
-							mNewScene = 2;
-					}
-				
 
 				}
 			}
+
+			//Brush
+			if (i == 3)
+			{
+				if (getActiveScene() == 1)
+				{
+
+				}
+			}
+
+			
 		}
 	}
 }
@@ -1201,6 +1171,34 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 						mInventory->addItem(mTargetItem);
 						mItemPicked = true;
 						std::cout << "Plockade upp fjäderboll!";
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
+				}
+
+				if (mTargetItem->getId() == "Nail")
+				{
+					if (mItemPicked == false)
+					{
+						mInventory->addItem(mTargetItem);
+						mItemPicked = true;
+						std::cout << "Plockade upp spik!";
+					}
+					else
+					{
+						mTargetItem->toggleActive();
+					}
+				}
+
+				if (mTargetItem->getId() == "Cloth")
+				{
+					if (mItemPicked == false)
+					{
+						mInventory->addItem(mTargetItem);
+						mItemPicked = true;
+						std::cout << "Plockade upp tygbit!";
 					}
 					else
 					{
