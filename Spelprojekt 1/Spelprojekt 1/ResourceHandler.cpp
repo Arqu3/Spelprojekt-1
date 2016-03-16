@@ -2,18 +2,18 @@
 
 using namespace std;
 
-ResourceHandler::ResourceHandler():
-mTextures(),
-mTextureNames(),
-mSounds(),
-mSoundNames(),
-mMusicNames(),
-textureCounter(0),
-soundCounter(0),
-musicCounter(0),
-mLevel1Loaded(false),
-mLevel3Loaded(false),
-mLastLevelLoaded(false)
+ResourceHandler::ResourceHandler() :
+	mTextures(),
+	mTextureNames(),
+	mSounds(),
+	mSoundNames(),
+	mMusicNames(),
+	textureCounter(0),
+	soundCounter(0),
+	musicCounter(0),
+	mLevel1Loaded(false),
+	mLevel3Loaded(false),
+	mLastLevelLoaded(false)
 {
 	addTexture("loadscreen.png");
 	addTexture("MainMenuBackground.png");
@@ -266,6 +266,25 @@ void ResourceHandler::loadLevel1(sf::RenderWindow &window)
 		addSound("Radio_Noise.ogg");
 
 		mLevel1Loaded = true;
+	}
+	else
+	{
+		drawLoadScreen(window, "Redan Laddad");
+	}
+}
+
+void ResourceHandler::loadLevel2(sf::RenderWindow & window)
+{
+	mView.setCenter(512, 288);
+	window.setView(mView);
+
+	if (!mLevel2Loaded)
+	{
+		drawLoadScreen(window, "Verkstad to the limits");
+		//Level 3
+		addTexture("Workshop.png");
+
+		mLevel2Loaded = true;
 	}
 	else
 	{
