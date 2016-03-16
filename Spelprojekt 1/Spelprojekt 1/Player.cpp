@@ -16,7 +16,8 @@ mFrameYOffset(0),
 mSpeed(100.0f),
 mFacingLeft(true),
 mStepCooldown(0),
-mThomasActive(true)
+mThomasActive(true),
+sequenceCounter(0)
 
 {
 	//Sounds
@@ -74,6 +75,7 @@ void Player::setPosition(float x, float y)
 {
 	mPosition = sf::Vector2f(x, y);
 	mDirection = sf::Vector2f(0, 0);
+	moveTo = sf::Vector2f(x, y);
 }
 
 void Player::moveToPosition(float x, float y)
@@ -472,4 +474,129 @@ int Player::getCurrentFrame()
 void Player::setFrameTime(float frametime)
 {
 	mFrameTime = frametime;
+}
+
+void Player::sequenceMove1()
+{
+	setSpeed(300.0f);
+
+	if (sequenceCounter == 0)
+	{
+		moveToPosition(486, 457);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 1)
+	{
+		moveToPosition(530, 407);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 2)
+	{
+		moveToPosition(584, 420);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 3)
+	{
+		moveToPosition(593, 377);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 4)
+	{
+		moveToPosition(604, 318);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 5)
+	{
+		moveToPosition(688, 321);
+		if (getIsOnPosition())
+		{
+			setPosition(688, 321);
+			sequenceCounter++;
+		}
+	}
+}
+
+void Player::sequenceMove2()
+{
+	setSpeed(300.0f);
+
+	if (sequenceCounter == 0)
+	{
+		moveToPosition(604, 318);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 1)
+	{
+		moveToPosition(593, 377);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 2)
+	{
+		moveToPosition(584, 420);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 3)
+	{
+		moveToPosition(530, 407);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 4)
+	{
+		moveToPosition(486, 457);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 5)
+	{
+		moveToPosition(490, 500);
+		if (getIsOnPosition())
+		{
+			setPosition(490, 500);
+			setSpeed(100.0f);
+		}
+	}
+}
+
+void Player::resetSequence()
+{
+	sequenceCounter = 0;
 }

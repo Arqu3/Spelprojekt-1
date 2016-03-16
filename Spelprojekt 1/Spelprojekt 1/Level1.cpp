@@ -1,5 +1,7 @@
 #include "Level1.h"
 
+using namespace std;
+
 Level1::Level1(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
@@ -18,6 +20,10 @@ mReadyToLeave(false),
 mLevelComplete(false),
 mHasCraftedFishingRod(false),
 mMouseReleased(false),
+mhasJumped(false),
+mWillJump1(false),
+mWillJump2(false),
+mHasUsedFishingRod(false),
 mLookedAtBooks(false),
 mLookedAtLamp(false),
 mLookedAtRadio(false),
@@ -972,19 +978,26 @@ void Level1::mouseReleased(sf::Event & event)
 	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
 	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
 
-	//Special
+	//Fishing interaction
 	if (mInventory->selectedItem() != NULL
 		&& mBlockPushed
 		&& mInventory->selectedItem()->getId() == "FishingRodMagnet"
 		&& mAstronaut->getRectangle().contains(mWorldPos)
 		&& mActiveScene == 1)
 	{
+		mHasUsedFishingRod = true;
+
 		mMouseReleased = true;
 		mItemInteraction = true;
 		mPlayer->moveToPosition(490, 500);
 		mTargetItem = mAstronaut;
 		mCursor->setMode(Cursor::DISABLED);
 		mInventory->deSelectCheck();
+
+		addItem(mCube);
+		mCube->setScale(-1.0f, 1.0f);
+		mCube->setPosition(645.0f, 450.0f);
+		mCubePlaced = true;
 	}
 	else
 	{
@@ -1053,6 +1066,36 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	//UI update
 	mUI->update(deltaTime);
+
+	if (mHasUsedFishingRod && mPlayer->getIsOnPosition())
+	{
+		mWillJump1 = true;
+	}
+
+	//Jump sequence update
+	if (mActiveScene == 1 && mWillJump1)
+	{
+		if (mPlayer->getPosition() == sf::Vector2f(688, 321))
+		{
+			mhasJumped = true;
+			mWillJump1 = false;
+			mHasUsedFishingRod = false;
+			mItemInteraction = true;
+			mPlayer->setPosition(570, 268);
+		}
+
+		mPlayer->sequenceMove1();
+	}
+
+	if (mActiveScene == 1 && mWillJump2)
+	{
+		mPlayer->sequenceMove2();
+
+		if (mPlayer->getPosition() == sf::Vector2f(490, 500))
+		{
+			mWillJump2 = false;
+		}
+	}
 
 	//DialogueSystem update and reset when finished
 	mDialogueSystem->update(deltaTime);
@@ -1227,8 +1270,12 @@ void Level1::updateTargetItem(float deltaTime)
 				mPlayer->setFrameTime(0.03f);
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
-				mPlayer->setPosition(490, 500);
-				mPlayer->moveToPosition(490, 500);
+
+				mWillJump2 = true;
+				mPlayer->setPosition(688, 321);
+
+				//mPlayer->setPosition(490, 500);
+				//mPlayer->moveToPosition(490, 500);
 				mCursor->setMode(Cursor::NORMAL);
 				mReadyForScrewdevice = true;
 			}
@@ -1321,18 +1368,12 @@ void Level1::pickupTargetItem()
 		//Make Item inactive when it is picked up
 		mTargetItem->toggleActive();
 	}
-	if (mTargetItem->getId() == "Astronaut" && mPlayer->getIsOnPosition() && mMouseReleased)
+	if (mTargetItem->getId() == "Astronaut" && mhasJumped)
 	{
-		mMouseReleased = false;
-		//Place Rubics Cube in front of Block
-		//TODO - Add Dialogue for the placing of the Cube
-		addItem(mCube);
-		mCube->setScale(-1.0f, 1.0f);
-		mCube->setPosition(645.0f, 450.0f);
-		mCubePlaced = true;
-		//TODO - Add Hilma Jump
-		mPlayer->setPosition(570, 268);
-		mPlayer->moveToPosition(570, 268);
+		mPlayer->resetSequence();
+
+		//mPlayer->setPosition(570, 268);
+		//mPlayer->moveToPosition(570, 268);
 		if (!mPlayer->isFacingLeft())
 		{
 			mPlayer->flipPlayer();
