@@ -86,8 +86,16 @@ private:
 	sf::RectangleShape backgroundZoom;
 	sf::RectangleShape playgroundZoom;
 	sf::RectangleShape foregroundZoom;
-	sf::RectangleShape rectangle;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
+
+	//Help Rectangles
+	sf::RectangleShape rectangleSteamMachine;
+	sf::RectangleShape rectangleVise;
+	sf::RectangleShape rectangleDrawer;
+	sf::RectangleShape rectangleBicycle;
+	sf::RectangleShape rectangleComputer;
+	sf::RectangleShape rectanglePosters;
+	sf::RectangleShape rectangleToolwall;
 
 	//Sound
 	sf::Music music;
@@ -107,7 +115,21 @@ private:
 
 	//Items
 	ItemVector mItems;
-	//Item* mScrewdevice;
+	Item* mCable;
+	Item* mAirbag;
+	Item* mBalloon;
+	Item* mFilledBalloon;
+	Item* mJuice;
+	Item* mGlove;
+	Item* mKey;
+	Item* mWorkshopStick;
+	Item* mCloth;
+	Item* mCan;
+	Item* mPutte;
+	Item* mArnold;
+	Item* mSteamMachine;
+	Item* mVise;
+	Item* mDrawer;
 
 	//Item Glow
 	//sf::Sprite mAstronautGlow;
@@ -147,5 +169,9 @@ private:
 	bool mSceneChange;
 	bool mPlayerToggle;
 	bool mLevelComplete;
+
+	bool mAutoDialogueTriggered;
+	bool mTalkedToArnold;
+	bool mSteamMachineWorking;
 };
 #endif

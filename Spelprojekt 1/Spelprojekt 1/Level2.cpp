@@ -1,12 +1,17 @@
 #include "Level2.h"
 
+using namespace std;
+
 Level2::Level2(ResourceHandler &handler) :
 	mRects(),
 	mPlayRects(),
 	mIsActive(false),
 	mItemInteraction(false),
 	mLevelComplete(false),
-	mMouseReleased(false)
+	mMouseReleased(false),
+	mAutoDialogueTriggered(false),
+	mTalkedToArnold(false),
+	mSteamMachineWorking(false)
 {
 }
 
@@ -79,7 +84,15 @@ void Level2::drawBackground(sf::RenderWindow &window)
 		window.draw(backgroundZoom);
 		window.draw(playgroundZoom);
 	}
-	//window.draw(rectangle); // Help rectangle
+	//Help Rectangles
+	window.draw(rectangleSteamMachine);
+	window.draw(rectangleVise);
+	window.draw(rectangleDrawer);
+	window.draw(rectangleBicycle);
+	window.draw(rectangleComputer);
+	window.draw(rectanglePosters);
+	window.draw(rectangleToolwall);
+
 	drawItems(mItems, window);
 }
 
@@ -202,8 +215,20 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));*/
 
 		//Help rectangles
-		rectangle.setPosition(sf::Vector2f(440, 150));
-		rectangle.setSize(sf::Vector2f(215, 200));
+		rectangleSteamMachine.setPosition(sf::Vector2f(683, 189));
+		rectangleSteamMachine.setSize(sf::Vector2f(90, 50));
+		rectangleVise.setPosition(sf::Vector2f(963, 203));
+		rectangleVise.setSize(sf::Vector2f(60, 40));
+		rectangleDrawer.setPosition(sf::Vector2f(1270, 330));
+		rectangleDrawer.setSize(sf::Vector2f(100, 100));
+		rectangleBicycle.setPosition(sf::Vector2f(150, 219));
+		rectangleBicycle.setSize(sf::Vector2f(200, 100));
+		rectangleComputer.setPosition(sf::Vector2f(1440, 275));
+		rectangleComputer.setSize(sf::Vector2f(100, 100));
+		rectanglePosters.setPosition(sf::Vector2f(1400, 95));
+		rectanglePosters.setSize(sf::Vector2f(110, 140));
+		rectangleToolwall.setPosition(sf::Vector2f(813, 47));
+		rectangleToolwall.setSize(sf::Vector2f(200, 130));
 
 		//Sound/music
 		/*music.openFromFile(handler.getMusic("Level1Music.ogg"));
@@ -229,11 +254,11 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mView.setSize(1024, 576);
 
 		//Player
-		mPlayer = new Player(handler, sf::Vector2f(705, 500));
+		mPlayer = new Player(handler, sf::Vector2f(414, 342));
 
 		//Inventory
 		mInventory = new Inventory(handler);
-		//mInventory->setCraftableItems(handler, 0);
+		mInventory->setCraftableItems(handler, 1);
 
 		//DialogueSystem
 		mDialogueSystem = new DialogueSystem(handler, 1);
@@ -271,7 +296,20 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mClues->getClue(6)->setState1();*/
 
 		//Create Items
-		//mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
+		mCable = new Item(handler, sf::Vector2f(595, 165), "Cable");
+		mAirbag = new Item(handler, sf::Vector2f(74, 321), "Airbag");
+		mFilledBalloon = new Item(handler, sf::Vector2f(74, 321), "FilledBalloon"); //Invisible/Not Active, get from Steam Machine
+		mJuice = new Item(handler, sf::Vector2f(74, 321), "Juice"); //Invisible/Not Active, get from Arnold
+		mGlove = new Item(handler, sf::Vector2f(895, 226), "Glove");
+		mKey = new Item(handler, sf::Vector2f(1170, 45), "Key"); //Invisible, get from Birdnest
+		mWorkshopStick = new Item(handler, sf::Vector2f(1058, 120), "WorkshopStick");
+		mCloth = new Item(handler, sf::Vector2f(805, 225), "Cloth");
+		mCan = new Item(handler, sf::Vector2f(1330, 112), "Can"); //Invisible/Not Active, get from Putte
+		mPutte = new Item(handler, sf::Vector2f(1330, 112), "Putte");
+		mArnold = new Item(handler, sf::Vector2f(480, 165), "Arnold");
+		mSteamMachine = new Item(handler, sf::Vector2f(683, 189), "SteamMachine");
+		mVise = new Item(handler, sf::Vector2f(963, 203), "Vise");
+		mDrawer = new Item(handler, sf::Vector2f(1270, 330), "Drawer");
 
 		//Item Glow
 		/*mAstronautGlow.setTexture(*handler.getTexture("AstronautGlow.png"));
@@ -282,14 +320,64 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mPlayRects.push_back(createRect(0, 0, 1520, 576));
 
 		//Add Rects here
-		//mRects.push_back(createRect(440, 150, 215, 200));
-
+		////Steam machine
+		//mRects.push_back(createRect(683, 189, 90, 50));
+		////Vise
+		//mRects.push_back(createRect(963, 203, 60, 40));
+		////Drawer
+		//mRects.push_back(createRect(1270, 330, 100, 100));
+		//Bicycle
+		mRects.push_back(createRect(150, 219, 200, 100));
+		//Computer
+		mRects.push_back(createRect(1440, 275, 100, 100));
+		//Posters
+		mRects.push_back(createRect(1400, 95, 110, 140));
+		//Toolwall
+		mRects.push_back(createRect(813, 47, 200, 130));
+		//Scenechange
+		//mRects.push_back(createRect(963, 203, 60, 40));
 
 		//Items - Set as Active, Pickupable, Interactable
+		mCable->toggleActive();
+		mCable->togglePickupable();
 
+		mAirbag->toggleActive();
+		mAirbag->togglePickupable();
+
+		mGlove->toggleActive();
+		mGlove->togglePickupable();
+
+		mKey->toggleActive();
+		mKey->togglePickupable();
+
+		mWorkshopStick->toggleActive();
+		mWorkshopStick->togglePickupable();
+
+		mCloth->toggleActive();
+		mCloth->togglePickupable();
+
+		mPutte->toggleActive();
+
+		mArnold->toggleActive(); //TODO - Toggle later instead?
+
+		mSteamMachine->toggleActive();
+
+		mVise->toggleActive();
+
+		mDrawer->toggleActive();
 
 		//Add to ItemVector
-
+		addItem(mCable);
+		addItem(mAirbag);
+		addItem(mGlove);
+		addItem(mKey);
+		addItem(mWorkshopStick);
+		addItem(mCloth);
+		addItem(mPutte);
+		addItem(mArnold);
+		addItem(mSteamMachine);
+		addItem(mVise);
+		addItem(mDrawer);
 	}
 	else
 	{
@@ -342,17 +430,74 @@ void Level2::internalSwap(int num)
 	{
 		mActiveScene = 0;
 		//Walkable area
+		mPlayRects.push_back(createRect(0, 0, 1520, 576));
 
 		//Add Rects here
-
+		//Scenechange
+		//mRects.push_back(createRect(963, 203, 60, 40)); //TODO - Add back in
+		mRects.push_back(createRect(-100, -100, 50, 50)); //TODO - Replace
+		//Steam machine
+		mRects.push_back(createRect(683, 189, 90, 50));
+		//Vise
+		mRects.push_back(createRect(963, 203, 60, 40));
+		//Drawer
+		mRects.push_back(createRect(1270, 330, 100, 100));
+		//Bicycle
+		mRects.push_back(createRect(150, 219, 200, 100));
+		//Computer
+		mRects.push_back(createRect(1440, 275, 100, 100));
+		//Posters
+		mRects.push_back(createRect(1400, 95, 110, 140));
+		//Toolwall
+		mRects.push_back(createRect(813, 47, 200, 130));
 
 		//Repopulate ItemVector with active items
-		/*if (mMagnet->getActive())
+		if (mCable->getActive())
 		{
-		addItem(mMagnet);
-		}*/
+			addItem(mCable);
+		}
+		if (mAirbag->getActive())
+		{
+			addItem(mAirbag);
+		}
+		if (mGlove->getActive())
+		{
+			addItem(mGlove);
+		}
+		if (mKey->getActive())
+		{
+			addItem(mKey);
+		}
+		if (mWorkshopStick->getActive())
+		{
+			addItem(mWorkshopStick);
+		}
+		if (mCloth->getActive())
+		{
+			addItem(mCloth);
+		}
+		if (mPutte->getActive())
+		{
+			addItem(mPutte);
+		}
+		if (mArnold->getActive())
+		{
+			addItem(mArnold);
+		}
+		if (mSteamMachine->getActive())
+		{
+			addItem(mSteamMachine);
+		}
+		if (mVise->getActive())
+		{
+			addItem(mVise);
+		}
+		if (mDrawer->getActive())
+		{
+			addItem(mDrawer);
+		}
 	}
-	// Zoom?
+	// Zoom
 	else
 	{
 		mActiveScene = 1;
@@ -652,45 +797,37 @@ void Level2::mouseHover()
 	{
 		if (checkCollision(getRects()[i], mCursor->getRect()))
 		{
-			// i == 0 is ___, or ___ if in zoom
+			// i == 0 is bicycle
 			if (i == 0)
 			{
-
+				mCursor->setMode(Cursor::EYE);
 			}
-			// i == 1 is 
+			// i == 1 is computer
 			else if (i == 1)
 			{
 				mCursor->setMode(Cursor::EYE);
 			}
-			// i == 2 is 
+			// i == 2 is posters
 			else if (i == 2)
 			{
 				mCursor->setMode(Cursor::EYE);
 			}
-			// i == 3 is 
+			// i == 3 is toolwall
 			else if (i == 3)
 			{
 				mCursor->setMode(Cursor::EYE);
 			}
-			// i == 4 is 
+			// i == 4 is zoom
 			else if (i == 4)
 			{
-				mCursor->setMode(Cursor::EYE);
-			}
-			// i == 5 is 
-			else if (i == 5)
-			{
-				mCursor->setMode(Cursor::EYE);
-			}
-			// i == 6 is 
-			else if (i == 6)
-			{
-				mCursor->setMode(Cursor::EYE);
-			}
-			// i == 7 is 
-			else if (i == 7)
-			{
-				mCursor->setMode(Cursor::NORMAL);
+				if (mActiveScene == 0)
+				{
+					mCursor->setMode(Cursor::SCENECHANGE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
 			}
 			else
 			{
@@ -715,7 +852,51 @@ void Level2::mouseReleased(sf::Event & event)
 	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
 
 	//Check selected item, collision etc. here
-
+	if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Can"
+		&& mArnold->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(580, 350);
+		mTargetItem = mArnold;
+	}
+	else if (mInventory->selectedItem() != NULL
+			&& mInventory->selectedItem()->getId() == "Juice"
+			&& mSteamMachine->getRectangle().contains(mWorldPos)
+			&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(727, 338);
+		mTargetItem = mSteamMachine;
+	}
+	else if (mInventory->selectedItem() != NULL
+			&& mInventory->selectedItem()->getId() == "Balloon"
+			&& mSteamMachineWorking
+			&& mSteamMachine->getRectangle().contains(mWorldPos)
+			&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(727, 338);
+		mTargetItem = mSteamMachine;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "FilledBalloon"
+		&& mVise->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1004, 338);
+		mTargetItem = mVise;
+	}
+	else
+	{
+		mInventory->deSelectCheck();
+	}
 }
 
 
@@ -814,8 +995,8 @@ void Level2::update(sf::RenderWindow &window, float deltaTime)
 		mouseHover();
 	}
 
-	//Engage walk animation when player is moving, if not pushing
-	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push")
+	//Engage walk animation when player is moving
+	if (!mPlayer->getIsOnPosition())
 	{
 		mPlayer->setActiveAnimation("Walk");
 	}
@@ -823,6 +1004,17 @@ void Level2::update(sf::RenderWindow &window, float deltaTime)
 	//Make sure UI is in correct position at all times
 	mUI->setUIPosition(mView.getCenter());
 	mInventory->setGridPosition(mView.getCenter());
+	mClues->setCluesPosition(mView.getCenter());
+
+	if (!mAutoDialogueTriggered && mPlayer->getPosition().x > 1000)
+	{
+		cout << "OUT OF NOWHERE, EN PUTTE!" << endl;
+		mAutoDialogueTriggered = true;
+		/*	mDialogueSystem->reset();
+		mDialogueSystem->hasClicked("rubicCube", mPlayer);
+		mUI->setState(UI::INGAME);
+		mCursor->setMode(Cursor::DIALOGUE);*/
+	}
 }
 
 bool Level2::isLevelComplete()
@@ -841,31 +1033,84 @@ void Level2::updateTargetItem(float deltaTime)
 void Level2::lookAtTargetItem()
 {
 	mTargetItem->toggleIsLookedAt();
-	/*if (mTargetItem->getId() == "Cube")
+	if (mTargetItem->getId() == "Arnold")
 	{
-	mDialogueSystem->reset();
-	mDialogueSystem->hasClicked("rubicCube", mPlayer);
-	mUI->setState(UI::INGAME);
-	mCursor->setMode(Cursor::DIALOGUE);
-	}*/
+	/*	mDialogueSystem->reset();
+		mDialogueSystem->hasClicked("rubicCube", mPlayer);
+		mUI->setState(UI::INGAME);
+		mCursor->setMode(Cursor::DIALOGUE);*/
+		mTalkedToArnold = true;
+	}
+	else if (mTargetItem->getId() == "Putte")
+	{
+		if (mTalkedToArnold)
+		{
+			/*	mDialogueSystem->reset();
+			mDialogueSystem->hasClicked("rubicCube", mPlayer);
+			mUI->setState(UI::INGAME);
+			mCursor->setMode(Cursor::DIALOGUE);*/
+			mInventory->addItem(mCan);
+			mArnold->toggleInteractable();
+		}
+	}
 }
 
 void Level2::pickupTargetItem()
 {
-	/*if (mTargetItem->getId() == "Magnet")
+	if (mTargetItem->getId() == "Cable")
 	{
-	mInventory->addItem(mTargetItem);
-	mUI->setActiveAnimation("InventoryIconGlowOnce");
-	std::cout << "Plockade upp magnet";
-	mRegularItemSound.play();
-	mPickedUpMagnet = true;
-	if (mPickedUpFishingRod)
-	{
-	mUI->setActiveAnimation("InventoryIconGlow");
+		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
+		std::cout << "Plockade upp kabel";
+		mRegularItemSound.play();
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
 	}
-	//Make Item inactive when it is picked up
-	mTargetItem->toggleActive();
-	}*/
+	else if (mTargetItem->getId() == "Airbag")
+	{
+		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
+		std::cout << "Plockade upp airbag";
+		mRegularItemSound.play();
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
+	}
+	else if (mTargetItem->getId() == "Cloth")
+	{
+		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
+		std::cout << "Plockade upp trasa";
+		mRegularItemSound.play();
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
+	}
+	else if (mTargetItem->getId() == "WorkshopStick")
+	{
+		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
+		std::cout << "Plockade upp pinne";
+		mRegularItemSound.play();
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
+	}
+	else if (mTargetItem->getId() == "Glove")
+	{
+		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
+		std::cout << "Plockade upp handske";
+		mRegularItemSound.play();
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
+	}
+	else if (mTargetItem->getId() == "Key")
+	{
+		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
+		std::cout << "Plockade upp nyckel";
+		mRegularItemSound.play();
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
+	}
 }
 
 void Level2::interactTargetItem()
@@ -874,18 +1119,50 @@ void Level2::interactTargetItem()
 	if (!mTargetItem->isInteracted())
 	{
 		mTargetItem->toggleInteractable();
-		/*if (mTargetItem->getId() == "Star")
+		if (mTargetItem->getId() == "Arnold")
 		{
-		mTargetItem->toggleActive();
-		mWallStar->toggleActive();
-		mCriticalItemSound.play();
-		addItem(mWallStar);
-		mMovedStar = true;
-		mClues->getClue(1)->setState2();
-		mClues->getClue(2)->setState1();
-		mUI->setActiveAnimation("CluesIconGlowOnce");
-		std::cout << "Satte stjärnan på väggen";
-		}*/
+			if (mMouseReleased)
+			{
+				/*	mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("rubicCube", mPlayer);
+				mUI->setState(UI::INGAME);
+				mCursor->setMode(Cursor::DIALOGUE);*/
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mInventory->addItem(mJuice);
+				mSteamMachine->toggleInteractable();
+			}
+		}
+		if (mTargetItem->getId() == "SteamMachine")
+		{
+			if (mMouseReleased && !mSteamMachineWorking)
+			{
+				/*	mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("rubicCube", mPlayer);
+				mUI->setState(UI::INGAME);
+				mCursor->setMode(Cursor::DIALOGUE);*/
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mSteamMachineWorking = true;
+				mSteamMachine->toggleInteractable();
+			}
+			else if (mMouseReleased && mSteamMachineWorking)
+			{
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mInventory->addItem(mFilledBalloon);
+				mVise->toggleInteractable();
+			}
+		}
+		if (mTargetItem->getId() == "Vise")
+		{
+			if (mMouseReleased)
+			{
+				/*	mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("rubicCube", mPlayer);
+				mUI->setState(UI::INGAME);
+				mCursor->setMode(Cursor::DIALOGUE);*/
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mRects.push_back(createRect(963, 203, 60, 40));
+			}
+		}
 	}
 }
 
@@ -901,12 +1178,102 @@ void Level2::mouseClickCheckItemCollision(sf::Vector2f point)
 			if (getItems()[i]->getActive())
 			{
 				//Check Id of that Item
-				/*if (getItems()[i]->getId() == "Magnet")
+				if (getItems()[i]->getId() == "Cable")
 				{
-				mPlayer->moveToPosition(340, 370);
-				mTargetItem = getItems()[i];
-				mItemInteraction = true;
-				}*/
+					mPlayer->moveToPosition(619, 333);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				else if (getItems()[i]->getId() == "Airbag")
+				{
+					mPlayer->moveToPosition(260, 523);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				else if (getItems()[i]->getId() == "Cloth")
+				{
+					mPlayer->moveToPosition(829, 341);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				else if (getItems()[i]->getId() == "WorkshopStick")
+				{
+					if (mActiveScene == 0)
+					{
+						mPlayer->moveToPosition(1072, 347);
+						/*mTargetItem = getItems()[i];
+						mItemInteraction = true;*/
+					}
+					else if (mActiveScene == 1)
+					{
+						// TODO - Fix moveTo etc.
+						mPlayer->moveToPosition(1072, 347);
+						mTargetItem = getItems()[i];
+						mItemInteraction = true;
+					}
+				}
+				else if (getItems()[i]->getId() == "Glove")
+				{
+					mPlayer->moveToPosition(926, 342);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				else if (getItems()[i]->getId() == "Key")
+				{
+					if (mActiveScene == 0)
+					{
+						mPlayer->moveToPosition(1194, 343);
+						/*mTargetItem = getItems()[i];
+						mItemInteraction = true;*/
+					}
+					else if (mActiveScene == 1)
+					{
+						// TODO - Fix moveTo etc.
+						mPlayer->moveToPosition(1194, 343);
+						mTargetItem = getItems()[i];
+						mItemInteraction = true;
+					}
+				}
+				else if (getItems()[i]->getId() == "Putte")
+				{
+					if (mActiveScene == 0)
+					{
+						mPlayer->moveToPosition(1225, 343);
+						mTargetItem = getItems()[i];
+						mItemInteraction = true;
+					}
+					else if (mActiveScene == 1)
+					{
+						// TODO - Fix moveTo etc.
+						mPlayer->moveToPosition(1225, 343);
+						mTargetItem = getItems()[i];
+						mItemInteraction = true;
+					}
+				}
+				else if (getItems()[i]->getId() == "Arnold")
+				{
+					mPlayer->moveToPosition(580, 350);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				else if (getItems()[i]->getId() == "SteamMachine")
+				{
+					mPlayer->moveToPosition(727, 338);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				else if (getItems()[i]->getId() == "Vise")
+				{
+					mPlayer->moveToPosition(1004, 338);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
+				else if (getItems()[i]->getId() == "Drawer")
+				{
+					mPlayer->moveToPosition(1325, 449);
+					mTargetItem = getItems()[i];
+					mItemInteraction = true;
+				}
 			}
 		}
 	}
@@ -918,8 +1285,28 @@ void Level2::mouseClickCheckRectCollision(sf::Vector2f point)
 	{
 		if (checkCollision(getRects()[i], point))
 		{
-			// i == 0 is ___, or ___ if in zoom
+			// i == 0 is Bicycle
 			if (i == 0)
+			{
+				cout << "BICYCLE" << endl;
+			}
+			// i == 1 is Computer
+			else if (i == 1)
+			{
+				cout << "COMPUTER" << endl;
+			}
+			// i == 2 is Posters
+			else if (i == 2)
+			{
+				cout << "POSTERS" << endl;
+			}
+			// i == 3 is Toolwall
+			else if (i == 3)
+			{
+				cout << "TOOLWALL" << endl;
+			}
+			// i == 4 is Zoom
+			if (i == 4)
 			{
 				/*if (getActiveScene() == 0)
 				{
@@ -934,60 +1321,7 @@ void Level2::mouseClickCheckRectCollision(sf::Vector2f point)
 				//Set which Scene will be the new Scene
 				mNewScene = 1;
 				mSceneChange = true;
-				}
-				else
-				{
-				//Make Player get into position for Scene change
-				mPlayer->moveToPosition(150, 480);
-				//Set Collision Rect to Scene change position
-				mSceneChangeRect = sf::FloatRect(sf::Vector2f(150, 480), sf::Vector2f(10, 10));
-				//Set if Player should toggle on Scene Change
-				mPlayerToggle = true;
-				//Set starting position of Player in new Scene
-				mSceneChangePlayerPos = sf::Vector2f(400, 370);
-				//Set which Scene will be the new Scene
-				mNewScene = 0;
-				mSceneChange = true;
 				}*/
-			}
-			// i == 1 is 
-			/*else if (i == 1 && !mLookedAtBooks)
-			{
-			mDialogueSystem->reset();
-			mDialogueSystem->hasClicked("books", mPlayer);
-			mUI->setState(UI::INGAME);
-			mCursor->setMode(Cursor::DIALOGUE);
-			mLookedAtBooks = true;
-			}*/
-			// i == 2 is 
-			else if (i == 2)
-			{
-
-			}
-			// i == 3 is 
-			else if (i == 3)
-			{
-
-			}
-			// i == 4 is 
-			else if (i == 4)
-			{
-
-			}
-			// i == 5 is 
-			else if (i == 5)
-			{
-
-			}
-			// i == 6 is 
-			else if (i == 6)
-			{
-
-			}
-			// i == 7 is 
-			else if (i == 7)
-			{
-
 			}
 		}
 	}

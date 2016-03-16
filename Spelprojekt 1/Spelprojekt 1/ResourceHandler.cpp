@@ -283,6 +283,9 @@ void ResourceHandler::loadLevel2(sf::RenderWindow & window)
 		drawLoadScreen(window, "Verkstad to the limits");
 		//Level 3
 		addTexture("Workshop.png");
+		addTexture("PutteSad.png");
+		addTexture("LastLevel_ItemTest1.png");
+		addTexture("LastLevel_ItemTest2.png");
 
 		mLevel2Loaded = true;
 	}

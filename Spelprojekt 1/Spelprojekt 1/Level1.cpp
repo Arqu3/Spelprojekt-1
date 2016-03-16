@@ -1105,6 +1105,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	//Make sure UI is in correct position at all times
 	mUI->setUIPosition(mView.getCenter());
 	mInventory->setGridPosition(mView.getCenter());
+	mClues->setCluesPosition(mView.getCenter());
 
 	//Reset volume Of music and ambient sounds after start dialogue
 	if (!mDialogueSystem->getLevel1Start() && !mDialogueSystem->getLevel1End() && music.getVolume() < 70)
