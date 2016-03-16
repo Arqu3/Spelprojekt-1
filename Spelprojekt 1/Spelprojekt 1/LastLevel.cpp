@@ -450,6 +450,7 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 	}
 	else
 	{
+		mView.setCenter(524, 288);
 		delete mPlayer;
 		delete mInventory;
 		delete mDialogueSystem;
@@ -457,6 +458,8 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mItems.clear();
 		mRects.clear();
 		mPlayRects.clear();
+		mUI->setActiveAnimation("None");
+		music.stop();
 	}
 
 	mIsActive = !mIsActive;
@@ -810,6 +813,10 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 					mMenuInventorySound.play();
+					if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+					{
+						mUI->setActiveAnimation("None");
+					}
 				}
 			}
 			if (event.key.code == sf::Keyboard::P)
@@ -818,7 +825,7 @@ void LastLevel::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				if (mUI->getState() == UI::EXIT)
+				if (mUI->getState() == UI::EXIT || mUI->getState() == UI::INVENTORY || mUI->getState() == UI::CLUES)
 				{
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
