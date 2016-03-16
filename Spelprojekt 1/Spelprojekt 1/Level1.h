@@ -178,11 +178,15 @@ private:
 	bool mLevelComplete;
 	bool mHasCraftedFishingRod;
 	bool mhasJumped;
+	bool mWillJump1;
+	bool mWillJump2;
 
 	bool mLookedAtBooks;
 	bool mLookedAtLamp;
 	bool mLookedAtRadio;
 	bool mLookedAtBackpack;
 	bool mLookedAtPosters;
+
+	bool mHasUsedFishingRod;
 };
 #endif

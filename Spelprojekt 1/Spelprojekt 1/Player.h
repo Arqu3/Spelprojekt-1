@@ -29,10 +29,14 @@ public:
 	void setScale(sf::Vector2f scale);
 	int getCurrentFrame();
 	void setFrameTime(float frametime);
-	void moveSequence(std::vector<sf::Vector2f> positions);
+	void sequenceMove1();
+	void sequenceMove2();
+	void resetSequence();
 
 private:
 	void move(float deltaTime);
+
+	int sequenceCounter;
 
 	sf::Vector2f mPosition;
 	sf::Vector2f mDirection;
