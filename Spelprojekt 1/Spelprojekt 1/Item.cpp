@@ -602,7 +602,7 @@ mFrameTime(0.05f)
 
 	if (id == "ExtensionArm")
 	{
-		mIndex = 48;
+		mIndex = 52;
 		mCraftIndex = 1;
 		mName = "Förlängningsarm";
 		mDescription = "Förlängningsarm";

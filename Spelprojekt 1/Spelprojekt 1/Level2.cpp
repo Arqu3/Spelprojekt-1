@@ -998,6 +998,7 @@ void Level2::update(sf::RenderWindow &window, float deltaTime)
 	//Engage walk animation when player is moving
 	if (!mPlayer->getIsOnPosition())
 	{
+		mPlayer->navigate(mItems, deltaTime);
 		mPlayer->setActiveAnimation("Walk");
 	}
 

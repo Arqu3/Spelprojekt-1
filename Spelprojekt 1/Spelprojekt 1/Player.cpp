@@ -16,8 +16,13 @@ mFrameYOffset(0),
 mSpeed(300.0f),
 mFacingLeft(true),
 mStepCooldown(0),
-mThomasActive(true)
-
+mThomasActive(true),
+mNextPosition(position),
+mCorrecting(false),
+mDownValid(true),
+mUpValid(true),
+mRightValid(true),
+mLeftValid(true)
 {
 	//Sounds
 	mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
@@ -55,6 +60,7 @@ void Player::move(float deltaTime)
 	if (mRect.intersects(mMoveToRect))
 	{
 		isOnPosition = true;
+		mDirectionSet = false;
 		mWalk = false;
 	}
 	else
@@ -66,7 +72,11 @@ void Player::move(float deltaTime)
 
 	if (isOnPosition == false)
 	{
-		mPosition += mDirection * mSpeed * deltaTime;
+		//mPosition += mDirection * mSpeed * deltaTime;
+		if (!mCorrecting)
+		{
+			mNextPosition += mDirection * mSpeed * deltaTime;
+		}
 	}
 }
 
@@ -472,4 +482,134 @@ int Player::getCurrentFrame()
 void Player::setFrameTime(float frametime)
 {
 	mFrameTime = frametime;
+}
+
+void Player::navigate(std::vector<Item*> items, float deltaTime)
+{
+	for (std::vector<Item*>::size_type i = 0; i < items.size(); i++)
+	{
+		//Check if any items are in the way
+		if (items[i]->getRectangle().contains(mNextPosition))
+		{	
+			//Check valid directions around item
+			if (mPosition.x - 10 > items[i]->getRectangle().left)
+			{
+				if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y + 10))
+				{
+					mDownValid = false;
+				}
+				if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y - 10))
+				{
+					mUpValid = false;
+				}
+			}
+			else if (mPosition.x - 10 > (items[i]->getRectangle().left + items[i]->getRectangle().width))
+			{
+				if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y + 10))
+				{
+					mDownValid = false;
+				}
+				if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y - 10))
+				{
+					mUpValid = false;
+				}
+			}
+			if (mPosition.y - 10 > items[i]->getRectangle().top)
+			{
+				if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y + 10))
+				{
+					mRightValid = false;
+				}
+				if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y + 10))
+				{
+					mLeftValid = false;
+				}
+			}
+			else if (mPosition.y - 10 > (items[i]->getRectangle().top + items[i]->getRectangle().height))
+			{
+				if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y - 10))
+				{
+					mRightValid = false;
+				}
+				if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y - 10))
+				{
+					mLeftValid = false;
+				}
+			}
+
+			//Choose best direction around item
+			if (!mDirectionSet)
+			{
+				if (mPosition.x >= moveTo.x)
+				{
+					mRightValid = false;
+				}
+				else
+				{
+					mLeftValid = false;
+				}
+				if (mPosition.y >= moveTo.y)
+				{
+					mDownValid = false;
+				}
+				else
+				{
+					mUpValid = false;
+				}
+				mDirectionSet = true;
+			}
+			
+			//Walk around item using best direction
+			if (mDownValid && (!mRightValid || !mLeftValid))
+			{
+				mPosition += sf::Vector2f(0, 1) * mSpeed * deltaTime;
+				mCorrecting = true;
+				if (!items[i]->getRectangle().contains(mPosition.x, mPosition.y + 1))
+				{
+					mCorrecting = false;
+					mNextPosition = mPosition;
+				}
+			}
+			else if (mUpValid && (!mRightValid || !mLeftValid))
+			{
+				mPosition += sf::Vector2f(0, -1) * mSpeed * deltaTime;
+				mCorrecting = true;
+				if (!items[i]->getRectangle().contains(mPosition.x, mPosition.y - 1))
+				{
+					mCorrecting = false;
+					mNextPosition = mPosition;
+				}
+			}
+			else if (mRightValid && (!mUpValid || !mDownValid))
+			{
+				mPosition += sf::Vector2f(1, 0) * mSpeed * deltaTime;
+				mCorrecting = true;
+				if (!items[i]->getRectangle().contains(mPosition.x + 1, mPosition.y))
+				{
+					mCorrecting = false;
+					mNextPosition = mPosition;
+				}
+			}
+			else if (mLeftValid && (!mUpValid || !mDownValid))
+			{
+				mPosition += sf::Vector2f(-1, 0) * mSpeed * deltaTime;
+				mCorrecting = true;
+				if (!items[i]->getRectangle().contains(mPosition.x - 1, mPosition.y))
+				{
+					mCorrecting = false;
+					mNextPosition = mPosition;
+				}
+			}
+		}
+		else if (!mCorrecting)
+		{
+			mDownValid = true;
+			mUpValid = true;
+			mRightValid = true;
+			mLeftValid = true;
+			mDirectionSet = false;
+			moveToPosition(moveTo.x, moveTo.y);
+			mPosition = mNextPosition;
+		}
+	}
 }
