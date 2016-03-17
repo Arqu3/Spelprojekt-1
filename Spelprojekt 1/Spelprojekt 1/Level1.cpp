@@ -1067,9 +1067,11 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	//UI update
 	mUI->update(deltaTime);
 
-	if (mHasUsedFishingRod && mPlayer->getIsOnPosition())
+	if (!mWillJump1 && mHasUsedFishingRod && mPlayer->getIsOnPosition() && mMouseReleased)
 	{
 		mWillJump1 = true;
+		mPlayer->setActiveAnimation("Jump");
+		mPlayer->setFrameTime(0.03f);
 	}
 
 	//Jump sequence update
@@ -1094,6 +1096,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		if (mPlayer->getPosition() == sf::Vector2f(490, 500))
 		{
 			mWillJump2 = false;
+			mPlayer->setActiveAnimation("Idle");
 		}
 	}
 
@@ -1140,7 +1143,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	mSpider->update(deltaTime);
 
 	//Engage walk animation when player is moving, if not pushing
-	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push")
+	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push" && mPlayer->getActiveAnimation() !=  "Jump")
 	{
 		mPlayer->setActiveAnimation("Walk");
 	}
@@ -1268,14 +1271,13 @@ void Level1::updateTargetItem(float deltaTime)
 				mInventory->addItem(mTargetItem);
 				mUI->setActiveAnimation("InventoryIconGlowOnce");
 				mPlayer->setFrameTime(0.03f);
-				mPlayer->setActiveAnimation("Idle");
+				//mPlayer->setActiveAnimation("Idle");
 				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
+				mPlayer->setActiveAnimation("Jump");
 
 				mWillJump2 = true;
 				mPlayer->setPosition(688, 321);
 
-				//mPlayer->setPosition(490, 500);
-				//mPlayer->moveToPosition(490, 500);
 				mCursor->setMode(Cursor::NORMAL);
 				mReadyForScrewdevice = true;
 			}
