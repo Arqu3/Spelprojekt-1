@@ -72,5 +72,6 @@ private:
 	sf::Texture mHilmaTexture;
 	sf::Texture mHilmaPushTexture;
 	sf::Texture mHilmaFishingTexture;
+	sf::Texture mHilmaJumpTexture;
 };
 #endif
