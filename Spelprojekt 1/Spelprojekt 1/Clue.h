@@ -20,6 +20,7 @@ public:
 		{
 			mSprite.setTexture(*handler.getTexture(textureName));
 			mSprite.setPosition(position);
+			originalX = position.x;
 			//TODO - Add sf::Vector2f scale parameter and use that to set the proper scale for mSprite?
 			if (textureName == "InfoIcon.png")
 			{
@@ -39,6 +40,7 @@ public:
 		std::string mText2;
 		sf::Text mText;
 		sf::Font mFont;
+		float originalX;
 
 		void setState1()
 		{
@@ -98,6 +100,18 @@ public:
 		{
 			window.draw(mText);
 		}
+		void setXPosition(float x)
+		{
+			mSprite.setPosition(sf::Vector2f(x, mSprite.getPosition().y));
+		}
+		void setTextPosition(float x)
+		{
+			mText.setPosition(sf::Vector2f(x, mText.getPosition().y));
+		}
+		float getXPosition()
+		{
+			return originalX;
+		}
 	};
 
 	//Get clue at specific index
@@ -107,8 +121,11 @@ public:
 		return mClues;
 	}
 
+	void setCluesPosition(sf::Vector2f viewCenter);
+
 private:
-	std::vector<InternalClue*> mClues;
+	typedef std::vector<InternalClue*> ClueVector;
+	ClueVector mClues;
 	sf::Sprite mBackground;
 };
 

@@ -265,6 +265,7 @@ void Inventory::removeItem(int index)
 	}
 
 	mSelectedItem1 = -1;
+	mDescription.setString("");
 }
 
 //Checks collision between any element in a vector and a sf::vector point
@@ -584,6 +585,11 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "FishingRodMagnet"));
 	}
 	else if (index == 1)
+	{
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Balloon"));
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "ExtensionArm"));
+	}
+	else if (index == 3)
 	{
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Saturn"));
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "PumpedSaturn"));
