@@ -154,7 +154,7 @@ void Inventory::draw(sf::RenderWindow &window)
 
 	//Draw Item Description
 	window.draw(mDescription);
-	window.draw(mCraftable);
+	//window.draw(mCraftable);
 }
 
 void Inventory::drawCursorSprite(sf::RenderWindow &window)
@@ -265,6 +265,7 @@ void Inventory::removeItem(int index)
 	}
 
 	mSelectedItem1 = -1;
+	mDescription.setString("");
 }
 
 //Checks collision between any element in a vector and a sf::vector point
@@ -303,27 +304,32 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 		}
 	}
 
-	if (ui.getHatIconRect().contains(point))
+	if (ui.getInventoryIconRect().contains(point))
 	{
-		ui.setState(UI::HAT);
-		mMenuHatSound.play();
+		ui.setState(UI::INGAME);
 	}
-	else if (ui.getMenuIconRect().contains(point))
+	else if (ui.getExitIconRect().contains(point))
 	{
-		ui.setState(UI::MAINUI);
-		mMenuMainUISound.play();
+		ui.setState(UI::EXIT);
 	}
-	else if (mInventoryRect.contains(point))
-	{
-		ui.setState(UI::HAT);
-	}
-	else if (mCluesRect.contains(point))
+	else if (ui.getCluesIconRect().contains(point))
 	{
 		ui.setState(UI::CLUES);
 	}
-	else if (mMemoriesRect.contains(point))
+	else if (ui.getInfoIconRect().contains(point))
 	{
-		ui.setState(UI::MEMORIES);
+		if (ui.getInfoBoxDisplay())
+		{
+			ui.setInfoBoxDisplay(false);
+		}
+		else
+		{
+			ui.setInfoBoxDisplay(true);
+		}
+	}
+	else if (!ui.getInventoryRect().contains(point))
+	{
+		ui.setState(UI::INGAME);
 	}
 	else
 	{
@@ -526,15 +532,12 @@ bool Inventory::checkDistance(sf::Vector2f point)
 	float added2 = (squareX2 + squareY2);
 
 	float distance2 = sqrt(added2);
-
-	cout << distance << endl;
-	cout << distance2 << endl;
 	
-	if (distance <= 220)
+	if (distance <= 225)
 	{
 		return true;
 	}
-	else if (distance2 <= 97)
+	else if (distance2 <= 105)
 	{
 		return true;
 	}
@@ -583,7 +586,13 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 	}
 	else if (index == 1)
 	{
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Balloon"));
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "ExtensionArm"));
+	}
+	else if (index == 3)
+	{
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Saturn"));
+		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "PumpedSaturn"));
 	}
 }
 
@@ -644,6 +653,10 @@ void Inventory::setGridPosition(sf::Vector2f viewCenter)
 	mItem2Rect.setPosition(sf::Vector2f(viewCenter.x + 233, 100));
 	mResultRect.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
 	mCraftButton.setPosition(sf::Vector2f(viewCenter.x + 183, 208));
+
+	//Midpoints
+	mCircle1Mid.x = viewCenter.x - 25;
+	mCircle2Mid.x = viewCenter.x + 213;
 
 	//Item Descriptions
 	if (mSelectedItem1 != -1)

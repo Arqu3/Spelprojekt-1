@@ -58,6 +58,7 @@ public:
 
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
+	void mouseReleased(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
@@ -154,6 +155,11 @@ private:
 	Item* mPump;
 	Item* mPumpedSaturn;
 
+	//Item Glow
+	sf::Sprite mGramophoneGlow;
+	sf::Sprite mTapGlow;
+	sf::Sprite mFoodbowlGlow;
+
 	bool mLevelComplete;
 
 	//Inventory
@@ -182,6 +188,8 @@ private:
 	int mNewScene;
 	int mLastScene;
 
+	bool mMouseReleased;
+
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
@@ -197,9 +205,14 @@ private:
 	bool mSaturnHanged;
 	bool mMarsHanged;
 
-	ResourceHandler &handler;
+	bool mLookedAtBooks;
+	bool mLookedAtMask;
+	bool mLookedAtCrotchRocket;
+	bool mLookedAtFridge;
+	bool mLookedAtTap;
+	bool mLookedAtJewelryBox;
 
-	int mUpdateTime;
+	ResourceHandler &handler;
 };
 
 #endif

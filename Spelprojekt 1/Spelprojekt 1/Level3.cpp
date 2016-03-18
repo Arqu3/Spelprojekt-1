@@ -289,6 +289,18 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		
 
 	}
+	else
+	{
+		delete mPlayer;
+		delete mInventory;
+		delete mDialogueSystem;
+		//delete mClues;
+		mItems.clear();
+		mRects.clear();
+		mPlayRects.clear();
+		mUI->setActiveAnimation("None");
+		music.stop();
+	}
 
 	mIsActive = !mIsActive;
 }
@@ -480,10 +492,6 @@ void Level3::eventListen(sf::RenderWindow &window)
 			break;
 
 		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Escape)
-			{
-				window.close();
-			}
 			if (event.key.code == sf::Keyboard::I)
 			{
 				if (mUI->getState() == UI::INVENTORY)
@@ -491,18 +499,36 @@ void Level3::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
-				else
+				else if (mCursor->getMode() != Cursor::DIALOGUE)
 				{
 					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
+					//mMenuInventorySound.play();
+					if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+					{
+						mUI->setActiveAnimation("None");
+					}
 				}
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
-				mPlayer->togglePlayer();
+				mLevelComplete = true; //TODO - Remove this
+			}
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				if (mUI->getState() == UI::EXIT || mUI->getState() == UI::INVENTORY || mUI->getState() == UI::CLUES)
+				{
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::NORMAL);
+				}
+				else if (mCursor->getMode() != Cursor::DIALOGUE)
+				{
+					mUI->setState(UI::EXIT);
+					mCursor->setMode(Cursor::MENU);
+				}
 			}
 			break;
-
+			
 		default:
 			break;
 
@@ -523,18 +549,27 @@ void Level3::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
-	//Check if Hat Icon is clicked
-	if (checkCollision(mUI->getHatIconRect(), point))
+	//Check if Exit Icon is clicked
+	if (checkCollision(mUI->getExitIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::HAT);
+		mUI->setState(UI::EXIT);
+		if (mUI->getActiveAnimation() == "ExitIconGlow" || mUI->getActiveAnimation() == "ExitIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
+		//mMenuMainUISound.play();
 	}
-
-	//Check if Menu Icon is clicked
-	if (checkCollision(mUI->getMenuIconRect(), point))
+	//Check if Inventory Icon is clicked
+	else if (checkCollision(mUI->getInventoryIconRect(), point))
 	{
-		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::MAINUI);
+		mCursor->setMode(Cursor::INVENTORY);
+		mUI->setState(UI::INVENTORY);
+		if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
+		//mMenuHatSound.play();
 	}
 
 
@@ -754,6 +789,12 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 		changeScene(mNewScene);
 	}
 
+	if (!mPlayer->getIsOnPosition())
+	{
+		//mPlayer->navigate(mItems, deltaTime);
+		mPlayer->setActiveAnimation("Walk");
+	}
+
 	//Check if Item interaction is enabled, which it only is when an Item is clicked
 	if (mItemInteraction)
 	{
@@ -964,14 +1005,9 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 	mCursor->setPosition(sf::Vector2f(mWorldPos));
 	mCursor->update(window);
 
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU && mUpdateTime > 0)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU)
 	{
 		mouseHover();
-		mUpdateTime = 0;
-	}
-	else
-	{
-		mUpdateTime++;
 	}
 }
 

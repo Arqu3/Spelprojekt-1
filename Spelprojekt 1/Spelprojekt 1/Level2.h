@@ -1,13 +1,13 @@
-#ifndef INCLUDED_LEVEL1
-#define INCLUDED_LEVEL1
+#ifndef INCLUDED_LEVEL2
+#define INCLUDED_LEVEL2
 
 #include "Level.h"
 #include "SFML\System.hpp"
 
-class Level1: public Level{
+class Level2 : public Level {
 public:
-	Level1(ResourceHandler &handler);
-	~Level1();
+	Level2(ResourceHandler &handler);
+	~Level2();
 
 	//Items
 	ItemVector getItems();
@@ -76,7 +76,7 @@ public:
 	void mouseClickCheckRectCollision(sf::Vector2f point);
 
 private:
-	
+
 	//Rectangles
 	rectVector mRects;
 	rectVector mPlayRects;
@@ -86,17 +86,20 @@ private:
 	sf::RectangleShape backgroundZoom;
 	sf::RectangleShape playgroundZoom;
 	sf::RectangleShape foregroundZoom;
-	sf::RectangleShape rectangle;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
+
+	//Help Rectangles
+	sf::RectangleShape rectangleSteamMachine;
+	sf::RectangleShape rectangleVise;
+	sf::RectangleShape rectangleDrawer;
+	sf::RectangleShape rectangleBicycle;
+	sf::RectangleShape rectangleComputer;
+	sf::RectangleShape rectanglePosters;
+	sf::RectangleShape rectangleToolwall;
 
 	//Sound
 	sf::Music music;
 	sf::Sound mAmbientSound;
-	sf::Sound mAquariumSound;
-	sf::Sound mRadioSound;
-	sf::Sound mMagnetCatchSound;
-	sf::Sound mMagnetDropSound;
-	sf::Sound mPushingObjectSound;
 	sf::Sound mRegularItemSound;
 	sf::Sound mMenuMainUISound;
 	sf::Sound mMenuHatSound;
@@ -112,19 +115,24 @@ private:
 
 	//Items
 	ItemVector mItems;
-	Item* mScrewdevice;
-	Item* mStar;
-	Item* mBlock;
-	Item* mString;
-	Item* mMagnet;
-	Item* mAstronaut;
-	Item* mBowl;
-	Item* mCube;
-	Item* mWallStar;
-	Item* mRoger;
+	Item* mCable;
+	Item* mAirbag;
+	Item* mBalloon;
+	Item* mFilledBalloon;
+	Item* mJuice;
+	Item* mGlove;
+	Item* mKey;
+	Item* mWorkshopStick;
+	Item* mCloth;
+	Item* mCan;
+	Item* mPutte;
+	Item* mArnold;
+	Item* mSteamMachine;
+	Item* mVise;
+	Item* mDrawer;
 
 	//Item Glow
-	sf::Sprite mAstronautGlow;
+	//sf::Sprite mAstronautGlow;
 
 	//Inventory
 	Inventory *mInventory;
@@ -145,9 +153,6 @@ private:
 	//Clues
 	Clue *mClues;
 
-	//Riddlespider
-	RiddleSpider *mSpider;
-
 	//Eventstuff
 	sf::Vector2f mWorldPos;
 	sf::Vector2i mPixelPos;
@@ -159,34 +164,14 @@ private:
 	sf::Vector2f mSceneChangePlayerPos;
 	int mNewScene;
 
-	bool mRogerOnPoint;
 	bool mMouseReleased;
 
 	bool mSceneChange;
 	bool mPlayerToggle;
-	bool mPickedUpFishingRod;
-	bool mPickedUpMagnet;
-	bool mLookedAtAquarium;
-	bool mPushingBlock;
-	bool mBlockPushed;
-	bool mCubePlaced;
-	bool mFishing;
-	bool mReadyForScrewdevice;
-	bool mPickedUpScrewdevice;
-	bool mMovedStar;
-	bool mReadyToLeave;
 	bool mLevelComplete;
-	bool mHasCraftedFishingRod;
-	bool mhasJumped;
-	bool mWillJump1;
-	bool mWillJump2;
 
-	bool mLookedAtBooks;
-	bool mLookedAtLamp;
-	bool mLookedAtRadio;
-	bool mLookedAtBackpack;
-	bool mLookedAtPosters;
-
-	bool mHasUsedFishingRod;
+	bool mAutoDialogueTriggered;
+	bool mTalkedToArnold;
+	bool mSteamMachineWorking;
 };
 #endif

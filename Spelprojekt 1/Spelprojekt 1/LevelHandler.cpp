@@ -2,16 +2,18 @@
 
 using namespace std;
 
-LevelHandler::LevelHandler(ResourceHandler &handler):
-mLevels()
+LevelHandler::LevelHandler(ResourceHandler &handler) :
+	mLevels()
 {
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
+	mLevel2 = new Level2(handler);
 	mLevel3 = new Level3(handler);
 	mLastLevel = new LastLevel(handler);
 
 	//Add levels to member list
 	mLevels.push_back(mLevel1);
+	mLevels.push_back(mLevel2);
 	mLevels.push_back(mLevel3);
 	mLevels.push_back(mLastLevel);
 }
@@ -32,6 +34,7 @@ void LevelHandler::update(float deltaTime, sf::RenderWindow &window, ResourceHan
 			mLevels[i]->update(window, deltaTime);
 			if (mLevels[i]->isLevelComplete())
 			{
+				ui->setSelectedLevel(i + 1);
 				setActiveLevel(i + 1, handler, false, window, ui); //TODO - Add safety check for last level in LevelVector
 			}
 		}
@@ -65,11 +68,11 @@ void LevelHandler::setActiveLevel(int index, ResourceHandler &handler, bool isFi
 	}
 	else
 	{
-		mLevels[index]->toggleActive(handler, window, ui);
 		if (index > 0)
 		{
 			mLevels[index - 1]->toggleActive(handler, window, ui);
 		}
+		mLevels[index]->toggleActive(handler, window, ui);
 	}
 }
 

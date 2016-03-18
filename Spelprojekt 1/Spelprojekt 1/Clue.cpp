@@ -33,3 +33,16 @@ Clue::InternalClue* Clue::getClue(int index)
 {
 	return mClues[index];
 }
+
+void Clue::setCluesPosition(sf::Vector2f viewCenter)
+{
+	//viewCenter.x - (512 - distance from left edge of screen)
+
+	for (ClueVector::size_type i = 0; i < mClues.size(); i++)
+	{
+		mClues[i]->setXPosition(viewCenter.x - (512 - mClues[i]->getXPosition()));
+		mClues[i]->setTextPosition(viewCenter.x - (512 - 343));
+	}
+
+	mBackground.setPosition(viewCenter.x - 512, 0);
+}

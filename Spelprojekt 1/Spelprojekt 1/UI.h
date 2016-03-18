@@ -13,7 +13,7 @@ public:
 	enum State
 	{
 		HAT,
-		MAINUI,
+		LEVELSELECT,
 		MAINMENU,
 		INVENTORY,
 		CLUES,
@@ -26,6 +26,7 @@ public:
 	void update(float deltaTime);
 	void draw(sf::RenderWindow &window);
 	void drawMainMenu(sf::RenderWindow &window);
+	void drawLevelSelect(sf::RenderWindow & window);
 	void drawExit(sf::RenderWindow &window);
 
 	void checkCollision(sf::Vector2f point);
@@ -34,10 +35,9 @@ public:
 	void eventListen(sf::RenderWindow &window);
 
 	State getState();
-	sf::FloatRect getHatIconRect();
-	sf::FloatRect getMenuIconRect();
-
-	bool load();
+	sf::FloatRect getInventoryIconRect();
+	sf::FloatRect getCluesIconRect();
+	sf::FloatRect getExitIconRect();
 
 	void setUIPosition(sf::Vector2f viewCenter);
 
@@ -45,36 +45,45 @@ public:
 	std::string getActiveAnimation();
 
 	bool getLevelStart();
-	void setLevelStart();
+	void setLevelStart(bool value);
+
+	sf::FloatRect getInfoIconRect();
+	bool getInfoBoxDisplay();
+	void setInfoBoxDisplay(bool display);
+
+	sf::FloatRect getInventoryRect();
+
+	bool getLevelExit();
+	void setLevelExit(bool value);
+
+	int getSelectedLevel();
+	void setSelectedLevel(int level);
 
 private:
 	State mState;
-	bool mLoad;
 	bool mLevelStart;
+	bool mLevelExit;
+	bool mInfoBoxDisplay;
 
 	//Buttons
 	typedef std::vector<Button*> ButtonVector;
 	ButtonVector mMainButtons;
 	ButtonVector mExitButtons;
 	ButtonVector mUIButtons;
+	ButtonVector mLevelSelectButtons;
 	sf::RectangleShape mBackground;
 
 	//UI Sprites
-	sf::Sprite mHatIcon;
-	sf::Sprite mMenuIcon;
-	sf::Sprite mHatMenu;
-	sf::Sprite mMainUI;
-	sf::Sprite mInventoryMenu;
 	sf::Sprite mInventoryIcon;
-	sf::Sprite mClueIcon;
+	sf::Sprite mExitIcon;
+	sf::Sprite mCluesIcon;
+	sf::Sprite mInventoryMenu;
+	sf::Sprite mInfoIcon;
+	sf::Sprite mInfoBox;
 
 	//UI Rects
-	sf::FloatRect mHatRect;
-	sf::FloatRect mMenuRect;
 	sf::FloatRect mInventoryRect;
 	sf::FloatRect mCluesRect;
-	sf::FloatRect mMemoriesRect;
-	sf::FloatRect mSettingsRect;
 	sf::FloatRect mExitRect;
 
 	//Mouse position
@@ -102,6 +111,13 @@ private:
 	//Spritesheets
 	sf::Texture mInventoryGlow;
 	sf::Texture mClueGlow;
+
+	//Text
+	sf::Font mFont;
+	sf::Text mInfoText;
+
+	bool mReset;
+	int mSelectedLevel;
 };
 
 #endif
