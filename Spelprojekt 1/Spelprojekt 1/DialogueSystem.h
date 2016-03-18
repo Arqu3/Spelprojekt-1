@@ -14,18 +14,18 @@ public:
 	~DialogueSystem();
 
 	//Talk functions
-	void text(std::string text, sf::Vector2f &position, float x, float y);
+	void text(std::string text, float posX, float posY, float offsetX, float offsetY);
 	void advancedText(std::string advancedText, float posX, float posY, float offsetX, float offsetY/*, std::string sound*/);
 	void actorText(std::string actorText, float posX, float posY, float offsetX, float offsetY);
 
 	//Talk Bubble
 	void drawDialogue(sf::RenderWindow &window);
-	void createTalkBubble(sf::Vector2f &position, float offsetX, float offsetY, float scaleX, float scaleY);
-	void createTextBox(float x, float y, float offsetX, float offsetY, float scaleX, float scaleY);
+	void createTalkBubble(float posX, float posY, float offsetX, float offsetY, float scaleX, float scaleY);
+	void createTextBox(float posX, float posY, float offsetX, float offsetY, float scaleX, float scaleY);
 
 	//Character Draw
-	void drawFirstCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
-	void drawSecondCharacter(ResourceHandler &handler, float x, float y, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
+	void drawFirstCharacter(ResourceHandler &handler, float posX, float posY, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
+	void drawSecondCharacter(ResourceHandler &handler, float posX, float posY, float offsetX, float offsetY, float scaleX, float scaleY, std::string character);
 
 	//Function that checks if an object has been clicked on
 	void hasClicked(std::string indexName, Player *player);
@@ -150,6 +150,38 @@ public:
 	void displayDollHouseDialogue();
 	void displayPutteDialogue();
 	void displayPutteFamilyDialogue();
+
+	//Garden
+	void displayShearsDialogue();
+	void displayBushDialogue();
+	void displayRopeDialogue();
+	void displayDogDialogue();
+	void displayGardenFlowersDialogue();
+	void displayFlagpoleDialogue();
+	void displayBeeDialogue();
+	void displayTracksDialogue();
+
+	//Shack
+	void displayRocketDialogue();
+	void displayWayInDialogue();
+	void displayEntryFindersWorldDialogue();
+	void displayCloverDialogue();
+	void displayNailsDialogue();
+	void displayHorseShoeDialogue();
+	void displayClothDialogue();
+	void displayBadmintonBallDialogue();
+	void displaySawdustDialogue();
+	void displayKnightDialogue();
+	void displayKnightFirstDialogue();
+	void displayKnightSecondDialogue();
+	void displayKnightAllDialogue();
+
+	//Finders' World
+	void displayExitFindersWorld();
+	void displayStatueDialogue();
+	void displayJewelsDialogue();
+	void displayBubblesDialogue();
+	void displayParentDialogue();
 
 	//Level1 start and end
 	void setLevel1Start();
@@ -303,6 +335,38 @@ private:
 	bool mDollHouse;
 	bool mPutte;
 	bool mPutteFamily;
+
+	//Item bools (Garden)
+	bool mShears;
+	bool mBush;
+	bool mRope;
+	bool mDog;
+	bool mGardenFlowers;
+	bool mFlagpole;
+	bool mBee;
+	bool mTracks;
+
+	//Item bools (Shack)
+	bool mRocket;
+	bool mWayIn;
+	bool mEntryFindersWorld;
+	bool mClover;
+	bool mNails;
+	bool mHorseShoe;
+	bool mCloth;
+	bool mBadmintonBall;
+	bool mSawdust;
+	bool mKnight;
+	bool mKnightFirst;
+	bool mKnightSecond;
+	bool mKnightAll;
+
+	//Item bools (Finders' World)
+	bool mExitFindersWorld;
+	bool mStatue;
+	bool mJewels;
+	bool mBubbles;
+	bool mParent;
 
 	sf::Music voiceActingTest;
 	sf::Music voiceActingTest2;
