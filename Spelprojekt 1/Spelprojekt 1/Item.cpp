@@ -502,7 +502,7 @@ mFrameTime(0.08f)
 		mName = "Knekt";
 		mDescription = "";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setScale(sf::Vector2f(0.5f, 0.5f));
 		mSprite.setTexture(*handler.getTexture("KNEKT.png"));
 
 	}
@@ -515,6 +515,155 @@ mFrameTime(0.08f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.5f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("transparent.png"));
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+	}
+
+	if (id == "Pond")
+	{
+		mIndex = 43;
+		mName = "Damm";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+		
+	}
+
+	if (id == "Statue")
+	{
+		mIndex = 44;
+		mName = "Staty";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("Statue.png"));
+
+	}
+
+	if (id == "BlueStone")
+	{
+		mIndex = 45;
+		mName = "Blå Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "RedStone")
+	{
+		mIndex = 46;
+		mName = "Röd Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "GreenStone")
+	{
+		mIndex = 47;
+		mName = "Grön Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "YellowStone")
+	{
+		mIndex = 48;
+		mName = "Gul Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "Hideout 1")
+	{
+		mIndex = 49;
+		mName = "Gömställe 1";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Hideout 2")
+	{
+		mIndex = 50;
+		mName = "Gömställe 2";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.8f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Hideout 3")
+	{
+		mIndex = 51;
+		mName = "Gömställe 3";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.8f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Hideout 4")
+	{
+		mIndex = 52;
+		mName = "Gömställe 4";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.15f, 0.8f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Parent")
+	{
+		mIndex = 53;
+		mName = "Förälder";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+
+	if (id == "Skatmara")
+	{
+		mIndex = 54;
+		mName = "Skatmara";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+
+	if (id == "Coin")
+	{
+		mIndex = 55;
+		mName = "Mynt";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
 		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
 	}
 

@@ -87,10 +87,10 @@ void Level3::drawBackground(sf::RenderWindow &window)
 	else if (mActiveScene == 2)
 	{
 		window.draw(background3);
-		window.draw(playground3);
+		
 	}
 
-	window.draw(rectangle);
+	/*window.draw(rectangle);
 	window.draw(rectangle2);
 	window.draw(rectangle3);
 	window.draw(rectangle4);
@@ -107,7 +107,7 @@ void Level3::drawBackground(sf::RenderWindow &window)
 	window.draw(rectangle14);
 	window.draw(rectangle15);
 	window.draw(rectangle16);
-	window.draw(rectangle17);
+	window.draw(rectangle17);*/ //ta bort
 
 	drawItems(mItems, window);
 
@@ -211,7 +211,11 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 
 		//Background 3
 		background3.setSize(sf::Vector2f(2560, 576));
-		background3.setTexture(handler.getTexture("MagicWorld.png"));
+		background3.setTexture(handler.getTexture("magicworld_background.png"));
+
+		//Foreground 3
+		foreground3.setSize(sf::Vector2f(2560, 576));
+		foreground3.setTexture(handler.getTexture("magicworld_foreground.png"));
 
 
 		//Add sound
@@ -237,8 +241,23 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mNail = new Item(handler, sf::Vector2f(285, 80), "Nail"); //Plockas upp
 		mFjun = new Item(handler, sf::Vector2f(1192, 52), "Fjun");
 		mFeatherball = new Item(handler, sf::Vector2f(200, 343), "Featherball");
-		mJack = new Item(handler, sf::Vector2f(1226, 157), "Jack");
+		mJack = new Item(handler, sf::Vector2f(1190, 140), "Jack");
 		mCloth = new Item(handler, sf::Vector2f(169, 481), "Cloth");
+
+		mPond = new Item(handler, sf::Vector2f(133, 416), "Pond");
+		mStatue = new Item(handler, sf::Vector2f(685, 120), "Statue");
+		mBlueStone = new Item(handler, sf::Vector2f(709, 56), "BlueStone");
+		mRedStone = new Item(handler, sf::Vector2f(758, 30), "RedStone");
+		mYellowStone = new Item(handler, sf::Vector2f(804, 57), "YellowStone");
+		mGreenStone = new Item(handler, sf::Vector2f(759, 97), "GreenStone");
+		mHideout1 = new Item(handler, sf::Vector2f(1067, 297), "Hideout 1");
+		mHideout2 = new Item(handler, sf::Vector2f(1604, 194), "Hideout 2");
+		mHideout3 = new Item(handler, sf::Vector2f(1831, 257), "Hideout 3");
+		mHideout4 = new Item(handler, sf::Vector2f(2059, 216), "Hideout 4");
+		mParent = new Item(handler, sf::Vector2f(1495, 333), "Parent");
+		mSkatmara = new Item(handler, sf::Vector2f(2423, 232), "Skatmara");
+		mCoin = new Item(handler, sf::Vector2f(0, 0), "Coin");
+		
 
 		//View
 		mView.setSize(1024, 576);
@@ -325,6 +344,55 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mCloth->toggleLookable();
 		mCloth->togglePickupable();
 
+		mPond->toggleActive();
+		mPond->toggleLookable();
+		mPond->toggleInteractable();
+
+		mStatue->toggleActive();
+		mStatue->toggleLookable();
+		mStatue->toggleInteractable();
+
+		mBlueStone->toggleActive();
+		mBlueStone->toggleLookable();
+		mBlueStone->toggleInteractable();
+
+		mRedStone->toggleActive();
+		mRedStone->toggleLookable();
+		mRedStone->toggleInteractable();
+
+		mGreenStone->toggleActive();
+		mGreenStone->toggleLookable();
+		mGreenStone->toggleInteractable();
+
+		mYellowStone->toggleActive();
+		mYellowStone->toggleLookable();
+		mYellowStone->toggleInteractable();
+
+		mHideout1->toggleActive();
+		mHideout1->toggleLookable();
+		mHideout1->toggleInteractable();
+
+		mHideout2->toggleActive();
+		mHideout2->toggleLookable();
+		mHideout2->toggleInteractable();
+
+		mHideout3->toggleActive();
+		mHideout3->toggleLookable();
+		mHideout3->toggleInteractable();
+
+		mHideout4->toggleActive();
+		mHideout4->toggleLookable();
+		mHideout4->toggleInteractable();
+
+		mParent->toggleActive();
+		mParent->toggleLookable();
+		mParent->toggleInteractable();
+
+		mSkatmara->toggleActive();
+		mSkatmara->toggleLookable();
+		mSkatmara->toggleInteractable();
+
+
 		//Add to Itemvector
 		addItem(mTrimmer);
 		addItem(mStick);
@@ -335,10 +403,11 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		addItem(mSingleFlower);
 		addItem(mLady);
 		
+		
 
 		
 		
-		changeScene(1);
+		changeScene(2);
 	}
 
 	mIsActive = !mIsActive;
@@ -453,21 +522,28 @@ void Level3::internalSwap(int num)
 	{
 		//Scene 3
 		mActiveScene = 2;
+		mView.setCenter(524, 288);
 
 		//Walkable Area
-		mPlayRects.push_back(createRect(0,0, 2048, 576));
+		mPlayRects.push_back(createRect(277, 387, 151, 79));
+		mPlayRects.push_back(createRect(428, 294, 503, 201));
+		mPlayRects.push_back(createRect(931, 412, 727, 83));
+		mPlayRects.push_back(createRect(1658, 255, 73, 240));
+		mPlayRects.push_back(createRect(1731, 355, 498, 140));
+		mPlayRects.push_back(createRect(2229, 306, 150, 90));
+
 		
 		//Rectangles - (om inget annat anges: dialogrespons på alla rektanglar)
 
-		//Använd magnetfiskare. Lägger "guldmynt" i inventory
+		//Använd magnetfiskare. Lägger "guldmynt" i inventory ITEM!!
 		rectangle.setSize(sf::Vector2f(156, 78));
 		rectangle.setPosition(133, 416);
 
-		//Spelar melodi och ändrar sprite. (se: musikpussel)
+		//Spelar melodi och ändrar sprite. (se: musikpussel)  ITEM!!
 		rectangle2.setSize(sf::Vector2f(73, 85));
 		rectangle2.setPosition(740, 158);
 
-		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)
+		//Spelar melodi och ändrar sprite. Ingen dialogrespons (se: musikpussel)  ITEM!!
 		rectangle3.setSize(sf::Vector2f(47, 37));
 		rectangle3.setPosition(709, 56);
 
@@ -528,7 +604,7 @@ void Level3::internalSwap(int num)
 		rectangle17.setPosition(2337, 474);
 
 		//Real rects
-		mRects.push_back(createRect(133, 416, 156, 78));
+		/*mRects.push_back(createRect(133, 416, 156, 78));
 		mRects.push_back(createRect(745, 160, 73, 85));
 		mRects.push_back(createRect(709, 56, 47, 37));
 		mRects.push_back(createRect(753, 30, 41, 31));
@@ -537,14 +613,69 @@ void Level3::internalSwap(int num)
 		mRects.push_back(createRect(1067, 297, 82, 42));
 		mRects.push_back(createRect(1831, 257, 115, 31));
 		mRects.push_back(createRect(2059, 216, 141, 60));
-		mRects.push_back(createRect(1604, 194, 108, 24));
+		mRects.push_back(createRect(1604, 194, 108, 24));*/
 		mRects.push_back(createRect(322, 102, 122, 168));
-		mRects.push_back(createRect(2423, 232, 47, 96));
+		/*mRects.push_back(createRect(2423, 232, 47, 96));*/
 		mRects.push_back(createRect(611, 415, 58, 83));
-		mRects.push_back(createRect(1495, 333, 63, 85));
+		/*mRects.push_back(createRect(1495, 333, 63, 85));*/
 		mRects.push_back(createRect(25, 49, 160, 232));
 		mRects.push_back(createRect(1342, 90, 129, 175));
 		mRects.push_back(createRect(2337, 474, 173, 92));
+
+		if (mPond->getActive())
+		{
+			addItem(mPond);
+		}
+		if (mStatue->getActive())
+		{
+			addItem(mStatue);
+		}
+		if (mBlueStone->getActive())
+		{
+			addItem(mBlueStone);
+		}
+		if (mRedStone->getActive())
+		{
+			addItem(mRedStone);
+		}
+		if (mGreenStone->getActive())
+		{
+			addItem(mGreenStone);
+		}
+		if (mYellowStone->getActive())
+		{
+			addItem(mYellowStone);
+		}
+		/*if (mHideout1->getActive())
+		{
+			addItem(mHideout1);
+		}
+		if (mHideout2->getActive())
+		{
+			addItem(mHideout2);
+		}
+		if (mHideout3->getActive())
+		{
+			addItem(mHideout3);
+		}
+		if (mHideout4->getActive())
+		{
+			addItem(mHideout4);
+		}*/
+		if (mParent->getActive())
+		{
+			addItem(mParent);
+		}
+		if (mSkatmara->getActive())
+		{
+			addItem(mSkatmara);
+		}
+		if (mCoin->getActive())
+		{
+			addItem(mCoin);
+		}
+
+
 	}
 }
 
@@ -924,6 +1055,149 @@ void Level3::mouseClick(sf::Event &event)
 
 				}
 
+				if (getItems()[i]->getId() == "Pond")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(305, 416);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på damm!";
+
+				}
+
+				if (getItems()[i]->getId() == "Statue")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(696, 296);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på staty!";
+
+				}
+
+				if (getItems()[i]->getId() == "BlueStone")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(696, 296);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på blå sten!";
+
+				}
+
+				if (getItems()[i]->getId() == "RedStone")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(696, 296);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på röd sten!";
+
+				}
+
+				if (getItems()[i]->getId() == "GreenStone")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(696, 296);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på grön sten!";
+
+				}
+
+				if (getItems()[i]->getId() == "YellowStone")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(696, 296);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på gul sten!";
+
+				}
+
+				if (getItems()[i]->getId() == "Hideout 1")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(1164, 381);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på gömställe 1!";
+
+				}
+
+				if (getItems()[i]->getId() == "Hideout 2")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(1719, 231);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på gömställe 2!";
+
+				}
+
+				if (getItems()[i]->getId() == "Hideout 3")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(1751, 338);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på gömställe 3!";
+
+				}
+
+				if (getItems()[i]->getId() == "Hideout 4")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(2158, 325);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på gömställe 4!";
+
+				}
+
+				if (getItems()[i]->getId() == "Parent")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(1442, 427);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på förälder!";
+
+				}
+
+				if (getItems()[i]->getId() == "Skatmara")
+				{
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(2300, 345);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på Skatmara!";
+
+				}
 			}
 		}
 	}
@@ -988,7 +1262,19 @@ void Level3::mouseClick(sf::Event &event)
 				}
 				else if (getActiveScene() == 1)
 				{
+					std::cout << "Magic World!";                 
 
+			        //Make Player get into position for Scene change
+					mPlayer->moveToPosition(1406, 362);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1406, 362), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = false;
+					//Set starting position of Player in new Scene           
+					mSceneChangePlayerPos = sf::Vector2f(444, 291);
+					//Set which Scene will be the new Scene
+					mNewScene = 2;
+					mLastScene = 1;
 				}
 			}
 
@@ -1316,6 +1602,191 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 							mTargetItem->toggleInteractable();
 						}
 					}
+
+					//Pond
+					if (mTargetItem->getId() == "Pond")
+					{
+						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+						{
+							std::cout << "Fiskade mynt!";
+							mInventory->addItem(mCoin);
+						}
+						else
+						{
+							mTargetItem->toggleInteractable();
+						}
+					}
+
+					//Statue
+					if (mTargetItem->getId() == "Statue")
+					{
+						//Play sound and blink
+
+						mTargetItem->toggleInteractable();
+
+					}
+
+					//Blue Stone
+					if (mTargetItem->getId() == "BlueStone")
+					{
+						//Play sound and blink
+
+						mTargetItem->toggleInteractable();
+					}
+
+					//Red Stone
+					if (mTargetItem->getId() == "RedStone")
+					{
+						//Play sound and blink
+
+						mTargetItem->toggleInteractable();
+					}
+
+					//Green Stone
+					if (mTargetItem->getId() == "GreenStone")
+					{
+						//Play sound and blink
+
+						mTargetItem->toggleInteractable();
+					}
+
+					//Yellow Stone
+					if (mTargetItem->getId() == "YellowStone")
+					{
+						//Play sound and blink
+
+						mTargetItem->toggleInteractable();
+					}
+
+					//Parent
+					if (mTargetItem->getId() == "Parent")
+					{
+						if (mSkatmaraTalked == true)
+						{
+							//Talk about lost child
+							mParentTalked = true;
+							mTargetItem->toggleInteractable();
+
+							addItem(mHideout1);
+							addItem(mHideout2);
+							addItem(mHideout3);
+							addItem(mHideout4);
+
+
+
+						}
+						else
+						{
+							//Welcome to Magic World
+							mTargetItem->toggleInteractable();
+						}
+					}
+
+					//Hideout 1
+					if (mTargetItem->getId() == "Hideout 1")
+					{
+						if (mHide2Looked == true && mHide3Looked == true && mHide4Looked == true)
+						{
+							//Kid found!
+						}
+						else
+						{
+							mHide1Looked = true;
+						}
+					}
+
+					//Hideout 2
+					if (mTargetItem->getId() == "Hideout 2")
+					{
+						if (mHide1Looked == true && mHide3Looked == true && mHide4Looked == true)
+						{
+							//Kid found!
+						}
+						else
+						{
+							mHide2Looked = true;
+						}
+					}
+
+					//Hideout 3
+					if (mTargetItem->getId() == "Hideout 3")
+					{
+						if (mHide1Looked == true && mHide2Looked == true && mHide4Looked == true)
+						{
+							//Kid found!
+						}
+						else
+						{
+							mHide3Looked = true;
+						}
+					}
+
+					//Hideout 4
+					if (mTargetItem->getId() == "Hideout 4")
+					{
+						if (mHide1Looked == true && mHide2Looked == true && mHide3Looked == true)
+						{
+							//Kid found!
+						}
+						else
+						{
+							mHide4Looked = true;
+						}
+					}
+
+					//Skatmara
+					if (mTargetItem->getId() == "Skatmara")
+					{
+						
+						mSkatmaraTalked = true;
+						std::cout << "mSkatmaraTalked = true";
+
+						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Coin")
+						{
+	
+							std::cout << "Ger bort mynt!";
+							mInventory->removeItem(mInventory->getSelectedItem());
+							mCoinGiven = true;
+
+							if (mStoneGiven == true && mPinGiven == true)
+							{
+								//Play dialog
+							}
+						}
+
+						else if(mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "BlueStone")
+						{
+							std::cout << "Ger bort sten";
+							mInventory->removeItem(mInventory->getSelectedItem());
+							mStoneGiven = true;
+
+							if (mCoinGiven == true && mPinGiven == true)
+							{
+								//Play dialog
+							}
+						}
+
+						else if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Pin")
+						{
+							std::cout << "Ger bort brosch";
+							mInventory->removeItem(mInventory->getSelectedItem());
+							mPinGiven = true;
+
+							if (mCoinGiven == true && mStoneGiven == true)
+							{
+								//Play dialog
+							}
+						}
+						else
+						{
+							mTargetItem->toggleInteractable();
+						}
+
+
+					}
+
+					//Next Item
+
 				}
 			}
 			//Disable Item interaction when done

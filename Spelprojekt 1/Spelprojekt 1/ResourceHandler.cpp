@@ -169,7 +169,8 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("CabinBackground.png");
 	addTexture("CabinForeground.png");
 	addTexture("CabinPlayground.png");
-	addTexture("MagicWorld.png");
+	addTexture("magicworld_background.png");
+	addTexture("magicworld_foreground.png");
 
 	//Karaktärer
 	addTexture("ThomasWalk.png");
@@ -209,6 +210,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 	addTexture("Featherball.png");
 	addTexture("Skjuletfjun.png");
 	addTexture("Clover.png");
+	addTexture("Statue.png");
 
 	//Sound
 	addSound("Footsteps_Thomas.ogg");

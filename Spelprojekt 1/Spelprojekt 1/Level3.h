@@ -133,6 +133,19 @@ private:
 	Item* mFjun;
 	Item *mJack;
 	Item* mCloth;
+	Item* mPond;
+	Item* mStatue;
+	Item* mBlueStone;
+	Item* mGreenStone;
+	Item* mRedStone;
+	Item* mYellowStone;
+	Item* mHideout1;
+	Item* mHideout2;
+	Item* mHideout3;
+	Item* mHideout4;
+	Item* mSkatmara;
+	Item* mParent;
+	Item* mCoin;
 
 
 
@@ -167,11 +180,23 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
+
 	bool mUnleashed;
 	bool mFlowerPickedUp;
 	bool mFlowersPlaced;
 	bool mDogRunning;
+
 	bool mItemPicked;
+
+	bool mParentTalked;
+	bool mSkatmaraTalked;
+	bool mHide1Looked;
+	bool mHide2Looked;
+	bool mHide3Looked;
+	bool mHide4Looked;
+	bool mCoinGiven;
+	bool mStoneGiven;
+	bool mPinGiven;
 	
 
 	ResourceHandler &handler;
