@@ -185,6 +185,9 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mItemInteraction = false;
 		mLevelComplete = false;
 		mMouseReleased = false;
+		mAutoDialogueTriggered = false;
+		mTalkedToArnold = false;
+		mSteamMachineWorking = false;
 
 		mActiveScene = 0;
 
@@ -317,7 +320,8 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mAstronautGlow.setScale(0.7f, 0.7f);*/
 
 		//Playground rectangles
-		mPlayRects.push_back(createRect(0, 0, 1520, 576));
+		mPlayRects.push_back(createRect(295, 334, 940, 224));
+		mPlayRects.push_back(createRect(1255, 430, 135, 127));
 
 		//Add Rects here
 		////Steam machine
@@ -365,6 +369,7 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mVise->toggleActive();
 
 		mDrawer->toggleActive();
+		mDrawer->toggleInteractable();
 
 		//Add to ItemVector
 		addItem(mCable);
@@ -430,18 +435,10 @@ void Level2::internalSwap(int num)
 	{
 		mActiveScene = 0;
 		//Walkable area
-		mPlayRects.push_back(createRect(0, 0, 1520, 576));
+		mPlayRects.push_back(createRect(295, 334, 940, 224));
+		mPlayRects.push_back(createRect(1255, 430, 135, 127));
 
-		//Add Rects here
-		//Scenechange
-		//mRects.push_back(createRect(963, 203, 60, 40)); //TODO - Add back in
-		mRects.push_back(createRect(-100, -100, 50, 50)); //TODO - Replace
-		//Steam machine
-		mRects.push_back(createRect(683, 189, 90, 50));
-		//Vise
-		mRects.push_back(createRect(963, 203, 60, 40));
-		//Drawer
-		mRects.push_back(createRect(1270, 330, 100, 100));
+		//Rects
 		//Bicycle
 		mRects.push_back(createRect(150, 219, 200, 100));
 		//Computer
@@ -450,6 +447,8 @@ void Level2::internalSwap(int num)
 		mRects.push_back(createRect(1400, 95, 110, 140));
 		//Toolwall
 		mRects.push_back(createRect(813, 47, 200, 130));
+		//Scenechange
+		mRects.push_back(createRect(963, 203, 60, 40));
 
 		//Repopulate ItemVector with active items
 		if (mCable->getActive())
@@ -502,13 +501,27 @@ void Level2::internalSwap(int num)
 	{
 		mActiveScene = 1;
 		//Walkable area
+		mPlayRects.push_back(createRect(295, 334, 940, 224));
+		mPlayRects.push_back(createRect(1255, 430, 135, 127));
 
-
-		//Add Rects here
+		//Rects
+		//Scenechange
+		mRects.push_back(createRect(963, 203, 60, 40));
 
 
 		//Repopulate ItemVector with active items
-
+		if (mKey->getActive())
+		{
+			addItem(mKey);
+		}
+		if (mWorkshopStick->getActive())
+		{
+			addItem(mWorkshopStick);
+		}
+		if (mPutte->getActive())
+		{
+			addItem(mPutte);
+		}
 	}
 }
 
@@ -800,7 +813,14 @@ void Level2::mouseHover()
 			// i == 0 is bicycle
 			if (i == 0)
 			{
-				mCursor->setMode(Cursor::EYE);
+				if (mActiveScene == 1)
+				{
+					mCursor->setMode(Cursor::SCENECHANGE);
+				}
+				else
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
 			}
 			// i == 1 is computer
 			else if (i == 1)
@@ -892,6 +912,26 @@ void Level2::mouseReleased(sf::Event & event)
 		mItemInteraction = true;
 		mPlayer->moveToPosition(1004, 338);
 		mTargetItem = mVise;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "ExtensionArm"
+		&& mKey->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1004, 338); //TODO - Fix this
+		mTargetItem = mKey;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Key"
+		&& mDrawer->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1325, 449);
+		mTargetItem = mDrawer;
 	}
 	else
 	{
@@ -998,7 +1038,7 @@ void Level2::update(sf::RenderWindow &window, float deltaTime)
 	//Engage walk animation when player is moving
 	if (!mPlayer->getIsOnPosition())
 	{
-		mPlayer->navigate(mItems, deltaTime);
+		//mPlayer->navigate(mItems, deltaTime);
 		mPlayer->setActiveAnimation("Walk");
 	}
 
@@ -1085,7 +1125,7 @@ void Level2::pickupTargetItem()
 		//Make Item inactive when it is picked up
 		mTargetItem->toggleActive();
 	}
-	else if (mTargetItem->getId() == "WorkshopStick")
+	else if (mTargetItem->getId() == "WorkshopStick" && mActiveScene == 1)
 	{
 		mInventory->addItem(mTargetItem);
 		mUI->setActiveAnimation("InventoryIconGlowOnce");
@@ -1103,7 +1143,7 @@ void Level2::pickupTargetItem()
 		//Make Item inactive when it is picked up
 		mTargetItem->toggleActive();
 	}
-	else if (mTargetItem->getId() == "Key")
+	else if (mTargetItem->getId() == "Key" && mPlayer->getIsOnPosition() && mMouseReleased)
 	{
 		mInventory->addItem(mTargetItem);
 		mUI->setActiveAnimation("InventoryIconGlowOnce");
@@ -1111,6 +1151,7 @@ void Level2::pickupTargetItem()
 		mRegularItemSound.play();
 		//Make Item inactive when it is picked up
 		mTargetItem->toggleActive();
+		mInventory->deSelectCheck();
 	}
 }
 
@@ -1164,6 +1205,17 @@ void Level2::interactTargetItem()
 				mRects.push_back(createRect(963, 203, 60, 40));
 			}
 		}
+		if (mTargetItem->getId() == "Drawer")
+		{
+			if (mMouseReleased)
+			{
+				/*	mDialogueSystem->reset();
+				mDialogueSystem->hasClicked("rubicCube", mPlayer);
+				mUI->setState(UI::INGAME);
+				mCursor->setMode(Cursor::DIALOGUE);*/
+				mInventory->removeItem(mInventory->getSelectedItem());
+			}
+		}
 	}
 }
 
@@ -1202,8 +1254,8 @@ void Level2::mouseClickCheckItemCollision(sf::Vector2f point)
 					if (mActiveScene == 0)
 					{
 						mPlayer->moveToPosition(1072, 347);
-						/*mTargetItem = getItems()[i];
-						mItemInteraction = true;*/
+						mTargetItem = getItems()[i];
+						mItemInteraction = true;
 					}
 					else if (mActiveScene == 1)
 					{
@@ -1224,8 +1276,8 @@ void Level2::mouseClickCheckItemCollision(sf::Vector2f point)
 					if (mActiveScene == 0)
 					{
 						mPlayer->moveToPosition(1194, 343);
-						/*mTargetItem = getItems()[i];
-						mItemInteraction = true;*/
+						mTargetItem = getItems()[i];
+						mItemInteraction = true;
 					}
 					else if (mActiveScene == 1)
 					{
@@ -1289,7 +1341,19 @@ void Level2::mouseClickCheckRectCollision(sf::Vector2f point)
 			// i == 0 is Bicycle
 			if (i == 0)
 			{
-				cout << "BICYCLE" << endl;
+				if (mActiveScene == 0)
+				{
+					cout << "BICYCLE" << endl;
+				}
+				else
+				{
+					mPlayer->moveToPosition(1004, 338); // TODO - Fix this
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1004, 338), sf::Vector2f(10, 10)); // TODO - Fix this
+					mPlayerToggle = true;
+					mSceneChangePlayerPos = sf::Vector2f(1004, 338); // TODO - Fix this
+					mNewScene = 0;
+					mSceneChange = true;
+				}
 			}
 			// i == 1 is Computer
 			else if (i == 1)
@@ -1309,20 +1373,15 @@ void Level2::mouseClickCheckRectCollision(sf::Vector2f point)
 			// i == 4 is Zoom
 			if (i == 4)
 			{
-				/*if (getActiveScene() == 0)
+				if (getActiveScene() == 0)
 				{
-				//Make Player get into position for Scene change
-				mPlayer->moveToPosition(400, 370);
-				//Set Collision Rect to Scene change position
-				mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
-				//Set if Player should toggle on Scene Change
-				mPlayerToggle = true;
-				//Set starting position of Player in new Scene
-				mSceneChangePlayerPos = sf::Vector2f(260, 490); //160, 480
-				//Set which Scene will be the new Scene
-				mNewScene = 1;
-				mSceneChange = true;
-				}*/
+					mPlayer->moveToPosition(1004, 338);
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1004, 338), sf::Vector2f(10, 10));
+					mPlayerToggle = true;
+					mSceneChangePlayerPos = sf::Vector2f(1004, 338); //TODO - Fix this
+					mNewScene = 1;
+					mSceneChange = true;
+				}
 			}
 		}
 	}

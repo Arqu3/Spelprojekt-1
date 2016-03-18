@@ -16,7 +16,8 @@ mCurrentFrame(0),
 mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
-mFrameTime(0.05f)
+mFrameTime(0.05f),
+mWalkable(true)
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -1069,5 +1070,15 @@ std::string Item::getActiveAnimation()
 void Item::setCraftIndex(int craftIndex)
 {
 	mCraftIndex = craftIndex;
+}
+
+bool Item::getWalkable()
+{
+	return mWalkable;
+}
+
+void Item::toggleWalkable()
+{
+	mWalkable = !mWalkable;
 }
 

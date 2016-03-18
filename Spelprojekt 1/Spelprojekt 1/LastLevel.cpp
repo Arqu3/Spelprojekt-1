@@ -438,6 +438,13 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mFoodBowl->toggleInteractable();
 		mHole->toggleInteractable();
 
+		//Items Not Walkable
+		mCat->toggleWalkable();
+		mFoodBowl->toggleWalkable();
+		mDollhouse->toggleWalkable();
+		mKids->toggleWalkable();
+		mPutte->toggleWalkable();
+
 		mPump->setCraftIndex(1);
 
 		mLastScene = 0;
@@ -1160,6 +1167,7 @@ void LastLevel::update(sf::RenderWindow &window, float deltaTime)
 	//Engage walk animation when player is moving
 	if (!mPlayer->getIsOnPosition())
 	{
+		//mPlayer->navigate(mItems, deltaTime);
 		mPlayer->setActiveAnimation("Walk");
 	}
 

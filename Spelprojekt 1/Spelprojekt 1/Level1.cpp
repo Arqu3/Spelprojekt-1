@@ -385,7 +385,6 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mRoger->setSpeed(10.0f);
 
 		//Add to ItemVector
-		addItem(mScrewdevice);
 		addItem(mMagnet);
 		addItem(mStar);
 		addItem(mBlock);
@@ -530,10 +529,6 @@ void Level1::internalSwap(int num)
 				mCube->setScale(0.3f, 0.3f);
 				mCube->setPosition(352, 222);
 			}
-		}
-		if (mScrewdevice->getActive())
-		{
-			addItem(mScrewdevice);
 		}
 		if (mWallStar->getActive())
 		{
@@ -1099,6 +1094,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	//Engage walk animation when player is moving, if not pushing
 	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push")
 	{
+		//mPlayer->navigate(mItems, deltaTime);
 		mPlayer->setActiveAnimation("Walk");
 	}
 
@@ -1578,20 +1574,14 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (mReadyForScrewdevice)
 				{
-					for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+					if (mScrewdevice->getActive())
 					{
-						if (getItems()[i]->getId() == "Screwdevice")
-						{
-							if (getItems()[i]->getActive())
-							{
-								mCriticalItemSound.play();
-								mInventory->addItem(getItems()[i]);
-								mUI->setActiveAnimation("InventoryIconGlowOnce");
-								getItems()[i]->toggleActive();
-								mPickedUpScrewdevice = true;
-								mClues->getClue(5)->setState2();
-							}
-						}
+						mCriticalItemSound.play();
+						mInventory->addItem(mScrewdevice);
+						mUI->setActiveAnimation("InventoryIconGlowOnce");
+						mScrewdevice->toggleActive();
+						mPickedUpScrewdevice = true;
+						mClues->getClue(5)->setState2();
 					}
 				}
 			}
