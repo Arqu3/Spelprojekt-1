@@ -532,9 +532,6 @@ bool Inventory::checkDistance(sf::Vector2f point)
 	float added2 = (squareX2 + squareY2);
 
 	float distance2 = sqrt(added2);
-
-	cout << distance << endl;
-	cout << distance2 << endl;
 	
 	if (distance <= 225)
 	{

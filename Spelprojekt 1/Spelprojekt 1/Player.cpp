@@ -17,6 +17,7 @@ mSpeed(300.0f),
 mFacingLeft(true),
 mStepCooldown(0),
 mThomasActive(true),
+sequenceCounter(0),
 mNextPosition(position),
 mCorrecting(false),
 mDownValid(true),
@@ -41,6 +42,7 @@ mLeftValid(true)
 	mHilmaTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
 	mHilmaPushTexture.loadFromFile("Resources/Textures/HilmaPush.png");
 	mHilmaFishingTexture.loadFromFile("Resources/Textures/HilmaFishing.png");
+	mHilmaJumpTexture.loadFromFile("Resources/Textures/HilmaJump.png");
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
@@ -85,6 +87,7 @@ void Player::setPosition(float x, float y)
 	mPosition = sf::Vector2f(x, y);
 	mNextPosition = sf::Vector2f(x, y);
 	mDirection = sf::Vector2f(0, 0);
+	moveTo = sf::Vector2f(x, y);
 }
 
 void Player::moveToPosition(float x, float y)
@@ -272,6 +275,35 @@ void Player::update(float deltaTime)
 		}
 	}
 
+	//Jump animation
+	if (mActiveAnimation == "Jump")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
+			if (mCurrentFrame < 40)
+			{
+				mFrameXOffset++;
+				if (mFrameXOffset % 6 == 5)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 5)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame++;
+			}
+			else
+			{
+				mCurrentFrame = 40;
+				mFrameXOffset = 4;
+				mFrameYOffset = 7;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
 	//If Player is moving to the left (getDirection.x < 0) and isn't already facing left, flip Player
 	if (getDirection().x < 0 && !isFacingLeft())
 	{
@@ -398,6 +430,14 @@ void Player::setActiveAnimation(std::string animation)
 		mFrameXOffset = 3;
 		mFrameYOffset = 4;
 		mSprite.setTexture(mHilmaFishingTexture);
+		mWalk = false;
+	}
+	else if (animation == "Jump")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+		mSprite.setTexture(mHilmaJumpTexture);
 		mWalk = false;
 	}
 	else if (animation == "Idle")
@@ -621,4 +661,120 @@ void Player::navigate(std::vector<Item*> items, float deltaTime)
 			mPosition = mNextPosition;
 		}
 	}
+}
+
+void Player::sequenceMove1()
+{
+	setSpeed(400.0f);
+
+	if (sequenceCounter == 0)
+	{
+		moveToPosition(486, 457);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 1)
+	{
+		moveToPosition(530, 407);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 2)
+	{
+		moveToPosition(584, 420);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 3)
+	{
+		moveToPosition(593, 377);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 4)
+	{
+		moveToPosition(604, 318);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 5)
+	{
+		moveToPosition(688, 321);
+		if (getIsOnPosition())
+		{
+			setPosition(688, 321);
+			sequenceCounter++;
+		}
+	}
+}
+
+void Player::sequenceMove2()
+{
+	setSpeed(400.0f);
+
+	if (sequenceCounter == 0)
+	{
+		moveToPosition(615, 255);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 1)
+	{
+		moveToPosition(550, 300);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 2)
+	{
+		moveToPosition(515, 350);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 3)
+	{
+		moveToPosition(495, 425);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 4)
+	{
+		moveToPosition(490, 500);
+		if (getIsOnPosition())
+		{
+			setPosition(490, 500);
+			setSpeed(100.0f);
+		}
+	}
+}
+
+void Player::resetSequence()
+{
+	sequenceCounter = 0;
 }
