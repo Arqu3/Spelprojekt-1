@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Level1.h"
+#include "Level2.h"
 #include "Level3.h"
 #include "LastLevel.h"
 #include "Item.h"
@@ -37,9 +38,12 @@ private:
 	Level1* mLevel1;
 
 	//2
-	Level3* mLevel3;
-	
+	Level2* mLevel2;
+
 	//3
+	Level3* mLevel3;
+
+	//4
 	LastLevel* mLastLevel;
 };
 

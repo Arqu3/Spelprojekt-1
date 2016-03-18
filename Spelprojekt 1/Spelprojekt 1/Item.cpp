@@ -16,7 +16,8 @@ mCurrentFrame(0),
 mFrameYOffset(0),
 mFrameXOffset(0),
 mCurrentTime(0),
-mFrameTime(0.05f)
+mFrameTime(0.05f),
+mWalkable(true)
 {
 	//Create items here
 	if (id == "Screwdevice")
@@ -419,8 +420,6 @@ mFrameTime(0.05f)
 		mDog.loadFromFile("Resources/Textures/DogRunning.png");
 		mSprite.setTexture(mDog); 
 		mSprite.setTextureRect(sf::IntRect(0, 0, 1000, 1000));
-
-		
 	}
 
 	if (id == "Flagpole")
@@ -441,7 +440,177 @@ mFrameTime(0.05f)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
-		
+	}
+
+	if (id == "Cable")
+	{
+		mIndex = 38;
+		mCraftIndex = 0;
+		mName = "Kabel";
+		mDescription = "Kabel";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Airbag")
+	{
+		mIndex = 39;
+		mCraftIndex = 0;
+		mName = "Airbag";
+		mDescription = "Airbag";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "FilledBalloon")
+	{
+		mIndex = 40;
+		mName = "Ångfylld ballong";
+		mDescription = "Ångfylld ballong";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Juice")
+	{
+		mIndex = 41;
+		mName = "Saft";
+		mDescription = "Saft";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Glove")
+	{
+		mIndex = 42;
+		mCraftIndex = 1;
+		mName = "Handske";
+		mDescription = "Handske";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Key")
+	{
+		mIndex = 43;
+		mName = "Nyckel";
+		mDescription = "Nyckel";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "WorkshopStick")
+	{
+		mIndex = 44;
+		mCraftIndex = 1;
+		mName = "Pinne";
+		mDescription = "Pinne";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Cloth")
+	{
+		mIndex = 45;
+		mName = "Trasa";
+		mDescription = "Trasa";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Can")
+	{
+		mIndex = 46;
+		mName = "Burk";
+		mDescription = "Burk";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Arnold")
+	{
+		mIndex = 47;
+		mName = "Arnold";
+		mDescription = "Arnold";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Balloon")
+	{
+		mIndex = 48;
+		mCraftIndex = 0;
+		mName = "Ballong";
+		mDescription = "Ballong";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "SteamMachine")
+	{
+		mIndex = 49;
+		mName = "Ångmaskin";
+		mDescription = "Ångmaskin";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Vise")
+	{
+		mIndex = 50;
+		mName = "Skruvstäd";
+		mDescription = "Skruvstäd";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "Drawer")
+	{
+		mIndex = 51;
+		mName = "Låda";
+		mDescription = "Låda";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
+	}
+
+	if (id == "ExtensionArm")
+	{
+		mIndex = 52;
+		mCraftIndex = 1;
+		mName = "Förlängningsarm";
+		mDescription = "Förlängningsarm";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
 	}
 
 	//Animations
@@ -901,5 +1070,15 @@ std::string Item::getActiveAnimation()
 void Item::setCraftIndex(int craftIndex)
 {
 	mCraftIndex = craftIndex;
+}
+
+bool Item::getWalkable()
+{
+	return mWalkable;
+}
+
+void Item::toggleWalkable()
+{
+	mWalkable = !mWalkable;
 }
 

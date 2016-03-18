@@ -94,6 +94,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LastLevel.cpp" />
     <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="Level2.cpp" />
     <ClCompile Include="Level3.cpp" />
     <ClCompile Include="LevelHandler.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="LastLevel.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="Level2.h" />
     <ClInclude Include="Level3.h" />
     <ClInclude Include="LevelHandler.h" />
     <ClInclude Include="RiddleSpider.h" />

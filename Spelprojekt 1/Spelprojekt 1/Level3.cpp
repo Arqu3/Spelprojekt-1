@@ -789,6 +789,12 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 		changeScene(mNewScene);
 	}
 
+	if (!mPlayer->getIsOnPosition())
+	{
+		//mPlayer->navigate(mItems, deltaTime);
+		mPlayer->setActiveAnimation("Walk");
+	}
+
 	//Check if Item interaction is enabled, which it only is when an Item is clicked
 	if (mItemInteraction)
 	{

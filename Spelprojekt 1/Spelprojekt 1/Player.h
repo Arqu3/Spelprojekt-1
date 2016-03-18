@@ -2,6 +2,7 @@
 #define INCLUDED_PLAYER
 
 #include "ResourceHandler.h"
+#include "Item.h"
 #include "SFML\System.hpp"
 #include <cmath>
 
@@ -33,7 +34,10 @@ public:
 	void sequenceMove2();
 	void resetSequence();
 
+	void navigate(std::vector<Item*> items, float deltaTime);
+
 private:
+
 	void move(float deltaTime);
 
 	int sequenceCounter;
@@ -73,5 +77,13 @@ private:
 	sf::Texture mHilmaPushTexture;
 	sf::Texture mHilmaFishingTexture;
 	sf::Texture mHilmaJumpTexture;
+
+	sf::Vector2f mNextPosition;
+	bool mCorrecting;
+	bool mDownValid;
+	bool mUpValid;
+	bool mRightValid;
+	bool mLeftValid;
+	bool mDirectionSet;
 };
 #endif

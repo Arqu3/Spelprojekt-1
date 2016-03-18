@@ -82,6 +82,9 @@ public:
 
 	void setCraftIndex(int craftIndex);
 
+	bool getWalkable();
+	void toggleWalkable();
+
 private:
 	bool mIsActive;
 	bool mIsLookable;
@@ -89,6 +92,7 @@ private:
 	bool mIsPickupable;
 	bool mIsLookedAt;
 	bool mInteracted;
+	bool mWalkable;
 
 	int mIndex;
 	int mCraftIndex;

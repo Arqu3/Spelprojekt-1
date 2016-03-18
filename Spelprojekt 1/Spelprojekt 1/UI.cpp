@@ -14,7 +14,7 @@ mLevelStart(false),
 mInfoBoxDisplay(true),
 mReset(false),
 mLevelExit(false),
-mSelectedLevel(0)
+mSelectedLevel(3)
 {
 	//Cursor
 	mCursor = new Cursor(handler);
@@ -346,19 +346,22 @@ void UI::eventListen(sf::RenderWindow &window)
 					if (mLevelSelectButtons[0]->isPressed(window))
 					{
 						mSelectedLevel = 0;
-						setState(MAINMENU);
+						mLevelStart = true;
+						setState(INGAME);
 					}
 
 					if (mLevelSelectButtons[1]->isPressed(window))
 					{
 						mSelectedLevel = 1;
-						setState(MAINMENU);
+						mLevelStart = true;
+						setState(INGAME);
 					}
 
 					if (mLevelSelectButtons[2]->isPressed(window))
 					{
 						mSelectedLevel = 2;
-						setState(MAINMENU);
+						mLevelStart = true;
+						setState(INGAME);
 					}
 
 					if (mLevelSelectButtons[3]->isPressed(window))
