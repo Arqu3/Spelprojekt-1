@@ -375,7 +375,6 @@ void ResourceHandler::loadLastLevel(sf::RenderWindow &window)
 		addTexture("ScrewDeviceINV.png");
 		addTexture("plutoINV.png");
 		addTexture("clamINV.png");
-		addTexture("MagnetINV.png"); //TODO - Replace with Pump INV Texture
 
 		drawLoadScreen(window, "PerHeimerar Musik");
 		//Music
