@@ -297,7 +297,7 @@ mWalkable(true)
 	if (id == "Saturn")
 	{
 		mIndex = 25;
-		mCraftIndex = 1;
+		mCraftIndex = 0;
 		mName = "Saturnus";
 		mDescription = "Saturnus";
 		mSprite.setPosition(mPosition);
@@ -339,28 +339,6 @@ mWalkable(true)
 		mSprite.setTexture(mRogerSwim);
 		mSprite.setOrigin(350, 0);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));
-	}
-
-	if (id == "Pump")
-	{
-		mIndex = 29;
-		mName = "Cykelpump";
-		mDescription = "Cykelpump";
-		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("Venus.png")); //TODO - Replace with Pump Texture
-		mINVSprite.setTexture(*handler.getTexture("MagnetINV.png")); //TODO - Replace with Pump INV Texture
-	}
-
-	if (id == "PumpedSaturn")
-	{
-		mIndex = 30;
-		mName = "Pumpad Saturnus";
-		mDescription = "Uppumpad Saturnus";
-		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.5f, 0.5f));
-		mSprite.setTexture(*handler.getTexture("Saturnus.png"));
-		mINVSprite.setTexture(*handler.getTexture("saturnusINV.png")); //TODO - Use correct (pumped) saturnus INV texture
 	}
 
 	//Level 3

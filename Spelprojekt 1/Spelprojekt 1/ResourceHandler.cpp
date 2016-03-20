@@ -326,7 +326,7 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 		addTexture("TrimmerIcon.png");
 
 		//Remove this later
-		addTexture("saturnusINV.png");
+		//addTexture("saturnusINV.png");
 
 		mLevel3Loaded = true;
 	}

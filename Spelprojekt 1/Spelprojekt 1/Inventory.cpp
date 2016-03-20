@@ -592,7 +592,6 @@ void Inventory::setCraftableItems(ResourceHandler &handler, int index)
 	else if (index == 3)
 	{
 		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "Saturn"));
-		mCraftableItems.push_back(new Item(handler, sf::Vector2f(0, 0), "PumpedSaturn"));
 	}
 }
 

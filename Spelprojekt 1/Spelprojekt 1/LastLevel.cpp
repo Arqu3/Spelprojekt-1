@@ -325,9 +325,6 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mRedApple = new Item(handler, sf::Vector2f(454, 50), "Red Apple");
 		mVenus = new Item(handler, sf::Vector2f(330, 56), "Venus");
 
-		mPump = new Item(handler, sf::Vector2f(200, 200), "Pump");
-		mPumpedSaturn = new Item(handler, sf::Vector2f(606, 44), "PumpedSaturn");
-
 		//Item Glow
 		mGramophoneGlow.setTexture(*handler.getTexture("GramophoneGlow.png"));
 		mGramophoneGlow.setPosition(395, 75);
@@ -348,7 +345,7 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 
 		//Inventory
 		mInventory = new Inventory(handler);
-		mInventory->setCraftableItems(handler, 1);
+		mInventory->setCraftableItems(handler, 3);
 
 		//Cursor
 		mCursor = new Cursor(handler);
@@ -445,15 +442,12 @@ void LastLevel::toggleActive(ResourceHandler &handler, sf::RenderWindow &window,
 		mKids->toggleWalkable();
 		mPutte->toggleWalkable();
 
-		mPump->setCraftIndex(1);
-
 		mLastScene = 0;
 
 		//Add Screwdevice and Venus to inventory
 		mScrewDevice->setScale(0.3f, 0.3f);
 		mInventory->addItem(mScrewDevice);
 		mInventory->addItem(mVenus);
-		mInventory->addItem(mPump);
 	}
 	else
 	{
@@ -559,9 +553,9 @@ void LastLevel::internalSwap(int num)
 			addItem(mKids);
 		}
 
-		if (mPumpedSaturn->getActive() && mSaturnHanged == true)
+		if (mSaturn->getActive() && mSaturnHanged == true)
 		{
-			addItem(mPumpedSaturn);
+			addItem(mSaturn);
 		}
 
 		addItem(mMagicClam);
@@ -1017,16 +1011,16 @@ void LastLevel::mouseReleased(sf::Event & event)
 		}
 	}
 	else if (mInventory->selectedItem() != NULL
-		&& mInventory->selectedItem()->getId() == "PumpedSaturn"
+		&& mInventory->selectedItem()->getId() == "Saturn"
 		&& mActiveScene == 0
 		&& mRects[5]->contains(mWorldPos))
 	{
 		mMouseReleased = true;
 		mPlayer->moveToPosition(535, 437);
-		mPumpedSaturn->toggleActive();
-		mPumpedSaturn->setScale(0.7f, 0.7f);
-		mPumpedSaturn->setPosition(592, 38);
-		addItem(mPumpedSaturn);
+		mSaturn->toggleActive();
+		mSaturn->setScale(0.7f, 0.7f);
+		mSaturn->setPosition(592, 38);
+		addItem(mSaturn);
 		mInventory->removeItem(mInventory->getSelectedItem());
 		mSaturnHanged = true;
 		if (mMarsHanged && mPlutoHanged && mEarthHanged && mVenusHanged)

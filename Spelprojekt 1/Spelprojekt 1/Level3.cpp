@@ -234,7 +234,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 		//Inventory
 		mInventory = new Inventory(handler);
-		mInventory->setCraftableItems(handler, 1);
+		//mInventory->setCraftableItems(handler, 2);
 
 		//Cursor
 		mCursor = new Cursor(handler);
