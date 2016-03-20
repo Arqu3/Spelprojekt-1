@@ -565,6 +565,7 @@ void Level1::internalSwap(int num)
 		//Walkable area
 		mPlayRects.push_back(createRect(140, 490, 350, 25));
 		//Back to room, left side of screen
+
 		mRects.push_back(createRect(0, 30, 120, 440));
 
 		mAquariumSound.setVolume(20);
@@ -718,6 +719,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 					{
 						mClues->getClue(3)->setState2();
 						mClues->getClue(4)->setState1();
+
 						mUI->setActiveAnimation("CluesIconGlowOnce");
 					}
 				}
@@ -762,6 +764,7 @@ void Level1::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 					mMenuInventorySound.play();
+
 					if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
 					{
 						mUI->setActiveAnimation("None");
@@ -875,11 +878,13 @@ void Level1::mouseHover()
 					mCursor->setMode(Cursor::EYE);
 				}
 				//Check if Item can be picked up
+
 				if (getItems()[i]->getPickupable())
 				{
 					mCursor->setMode(Cursor::OPENHAND);
 				}
 				//Check if Item can be interacted with
+
 				if (getItems()[i]->getInteractable())
 				{
 					//Check if Item has already been interacted with
@@ -988,7 +993,6 @@ void Level1::mouseReleased(sf::Event & event)
 		mTargetItem = mAstronaut;
 		mCursor->setMode(Cursor::DISABLED);
 		mInventory->deSelectCheck();
-
 		addItem(mCube);
 		mCube->setScale(-1.0f, 1.0f);
 		mCube->setPosition(645.0f, 450.0f);
@@ -1338,7 +1342,6 @@ void Level1::lookAtTargetItem()
 
 void Level1::pickupTargetItem()
 {
-	
 	if (mTargetItem->getId() == "Magnet")
 	{
 		mInventory->addItem(mTargetItem);
@@ -1564,6 +1567,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 					mSceneChangePlayerPos = sf::Vector2f(400, 370);
 					//Set which Scene will be the new Scene
 					mNewScene = 0;
+
 					mSceneChange = true;
 				}
 			}

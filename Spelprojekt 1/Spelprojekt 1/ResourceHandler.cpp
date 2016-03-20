@@ -131,7 +131,7 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 
 	drawLoadScreen(window, "Davidar Pratbubblor");
 	//Textbubble
-	addTexture("textbubble.png");
+	addTexture("textboxSmall.png");
 	addTexture("textbox.png");
 
 	drawLoadScreen(window, "Laddar Sepia");
