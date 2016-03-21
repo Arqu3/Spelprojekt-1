@@ -1,12 +1,17 @@
 #include "Level1.h"
 
+using namespace std;
+
 Level1::Level1(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
 mIsActive(false),
 mItemInteraction(false),
+mPickedUpFishingRod(false),
+mPickedUpMagnet(false),
 mLookedAtAquarium(false),
 mPushingBlock(false),
+mBlockPushed(false),
 mCubePlaced(false),
 mReadyForScrewdevice(false),
 mPickedUpScrewdevice(false),
@@ -14,7 +19,16 @@ mMovedStar(false),
 mReadyToLeave(false),
 mLevelComplete(false),
 mHasCraftedFishingRod(false),
-mUpdateTime(0)
+mMouseReleased(false),
+mhasJumped(false),
+mWillJump1(false),
+mWillJump2(false),
+mHasUsedFishingRod(false),
+mLookedAtBooks(false),
+mLookedAtLamp(false),
+mLookedAtRadio(false),
+mLookedAtPosters(false),
+mLookedAtBackpack(false)
 {
 }
 
@@ -87,7 +101,7 @@ void Level1::drawBackground(sf::RenderWindow &window)
 		window.draw(backgroundZoom);
 		window.draw(playgroundZoom);
 	}
-	window.draw(rectangle); // Help rectangle
+	//window.draw(rectangle); // Help rectangle
 	drawItems(mItems, window);
 }
 
@@ -107,6 +121,9 @@ void Level1::drawForeground(sf::RenderWindow &window)
 
 void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 {
+	//Spooky scary spider draw
+	mSpider->draw(window);
+
 	for (ItemVector::size_type i = 0; i < mItems.size(); i++)
 	{
 		if (mItems[i]->getActive() && mItems[i]->getId() != "Screwdevice")
@@ -141,6 +158,14 @@ void Level1::drawUI(sf::RenderWindow &window)
 	}
 
 	mCursor->draw(window);
+	if (mInventory->getSelectedItem() != -1)
+	{
+		mInventory->drawCursorSprite(window);
+		if (mActiveScene == 1 && mBlockPushed && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+		{
+			window.draw(mAstronautGlow);
+		}
+	}
 }
 
 
@@ -162,11 +187,34 @@ const Level::rectVector Level1::getPlayRects()
 }
 
 
-void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
+void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui)
 {
 	if (!mIsActive)
 	{
 		handler.loadLevel1(window);
+
+		//Default bool values
+		mItemInteraction = false;
+		mPickedUpFishingRod = false;
+		mPickedUpMagnet = false;
+		mLookedAtAquarium = false;
+		mPushingBlock = false;
+		mBlockPushed = false;
+		mCubePlaced = false;
+		mReadyForScrewdevice = false;
+		mPickedUpScrewdevice = false;
+		mMovedStar = false;
+		mReadyToLeave = false;
+		mLevelComplete = false;
+		mHasCraftedFishingRod = false;
+		mMouseReleased = false;
+		mLookedAtBooks = false;
+		mLookedAtLamp = false;
+		mLookedAtRadio = false;
+		mLookedAtPosters = false;
+		mLookedAtBackpack = false;
+
+		mActiveScene = 0;
 
 		//Room Textures
 		//Background texture
@@ -195,23 +243,23 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		foregroundZoom.setTexture(handler.getTexture("thomaszoomfg.png"));
 
 		//Help rectangles
-		rectangle.setPosition(sf::Vector2f(0, 0));
-		rectangle.setSize(sf::Vector2f(0, 0));
+		rectangle.setPosition(sf::Vector2f(440, 150));
+		rectangle.setSize(sf::Vector2f(215, 200));
 
 		//Sound/music
 		music.openFromFile(handler.getMusic("Level1Music.ogg"));
 		music.setLoop(true);
-		music.setVolume(80);
+		music.setVolume(10);
 		music.play();
 
 		mAmbientSound.setBuffer(*handler.getSound("Level1_Ambience.ogg"));
 		mAmbientSound.setLoop(true);
-		mAmbientSound.setVolume(50);
+		mAmbientSound.setVolume(10);
 		mAmbientSound.play();
 
 		mAquariumSound.setBuffer(*handler.getSound("Aquarium.ogg"));
 		mAquariumSound.setLoop(true);
-		mAquariumSound.setVolume(5);
+		mAquariumSound.setVolume(0);
 		mAquariumSound.play();
 
 		mCriticalItemSound.setBuffer(*handler.getSound("Critical_Item.ogg"));
@@ -225,7 +273,6 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mMenuMainUISound.setBuffer(*handler.getSound("Menu_MainUI.ogg"));
 		mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
 		mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
-		mCraftingSound.setBuffer(*handler.getSound("Crafting.ogg"));
 
 		//View
 		mView.setCenter(512, 288);
@@ -239,7 +286,7 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mInventory->setCraftableItems(handler, 0);
 
 		//DialogueSystem
-		mDialogueSystem = new DialogueSystem(handler);
+		mDialogueSystem = new DialogueSystem(handler, 0);
 		mDialogueSystem->setLevel1Start();
 
 		//Mouse Cursor
@@ -247,29 +294,36 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mCursor->setMode(Cursor::DIALOGUE);
 
 		//Menu
-		mUI = new UI(handler);
+		mUI = ui; //TODO - Test mUI** and &ui if not working
 
 		//Clues
 		mClues = new Clue(handler, "ClueBackground1.png");
-		mClues->add(handler, "Test1.png", sf::Vector2f(75, 60));
+		mClues->add(handler, "Clue1First.png", sf::Vector2f(58, 31));
 		mClues->getClue(0)->setStrings("Jag måste hitta en stjärna, en \nastronaut, och en skruvmakapär.", "");
 		mClues->getClue(0)->setState1();
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(220, 200));
+		mClues->add(handler, "thomasstar.png", sf::Vector2f(210, 185));
 		mClues->getClue(1)->setStrings("Först måste jag hitta stjärnan.", "Jag hittade stjärnan på golvet!");
 		mClues->getClue(1)->setState1();
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(425, 115));
-		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet men \njag måste fiska upp den!");
+		mClues->add(handler, "thomasastronaut.png", sf::Vector2f(405, 80));
+		mClues->getClue(2)->setStrings("Nu måste jag hitta astronauten.", "Astronauten är i akvariumet \nmen jag måste fiska upp den!");
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(630, 60));
+		mClues->add(handler, "Clue1Aqua.png", sf::Vector2f(610, 70));
 		mClues->getClue(3)->setStrings("Jag måste hitta något att fiska \nupp astronauten med.", "Med magnetfiskaren kan jag få \ntag i astronauten!");
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(685, 240));
+		mClues->add(handler, "FishingRodMagnet.png", sf::Vector2f(710, 260));
 		mClues->getClue(4)->setStrings("Nu måste jag bara fiska upp \nastronauten också.", "Astronauten har blivit hittad!");
 
-		mClues->add(handler, "Test1.png", sf::Vector2f(800, 400));
-		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är hittad!");
+		mClues->add(handler, "ScrewDeviceINV.png", sf::Vector2f(800, 400));
+		mClues->getClue(5)->setStrings("Var kan nu skruvmakapären \nvara?", "Äntligen! Skruvmakapären är \nhittad!");
+
+		mClues->add(handler, "InfoIcon.png", sf::Vector2f(280, 450));
+		mClues->getClue(6)->setStrings("Detta är ledtrådskartan. \nHär kan du läsa vad du har gjort \nhittills och vad du bör göra \nhärnäst. Bara håll musen över \nen ledtråd för att läsa den. \nPilarna låter dig se ledtrådar \nför banor du tidigare klarat.", "");
+		mClues->getClue(6)->setState1();
+
+		//Spooky scary spider
+		mSpider = new RiddleSpider(handler, sf::Vector2f(750, -500));
 
 		//Create Items
 		mScrewdevice = new Item(handler, sf::Vector2f(380, 400), "Screwdevice");
@@ -283,12 +337,17 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mWallStar = new Item(handler, sf::Vector2f(900, 190), "WallStar");
 		mRoger = new Item(handler, sf::Vector2f(530, 150), "Roger");
 
+		//Item Glow
+		mAstronautGlow.setTexture(*handler.getTexture("AstronautGlow.png"));
+		mAstronautGlow.setPosition(477, 287);
+		mAstronautGlow.setScale(0.7f, 0.7f);
+
 		//Playground rectangles
 		mPlayRects.push_back(createRect(110, 360, 610, 200));
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
-		mRects.push_back(createRect(440, 150, 125, 70));
+		mRects.push_back(createRect(440, 150, 215, 200));
 
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
@@ -332,7 +391,6 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mRoger->setSpeed(10.0f);
 
 		//Add to ItemVector
-		addItem(mScrewdevice);
 		addItem(mMagnet);
 		addItem(mStar);
 		addItem(mBlock);
@@ -341,10 +399,23 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		addItem(mBowl);
 		addItem(mCube);
 		addItem(mRoger);
+
+		mUI->setActiveAnimation("CluesIconGlow");
 	}
 	else
 	{
 		delete mPlayer;
+		delete mInventory;
+		delete mDialogueSystem;
+		delete mClues;
+		mItems.clear();
+		mRects.clear();
+		mPlayRects.clear();
+		mUI->setActiveAnimation("None");
+		//TODO - Add Volume Fadeout?
+		music.stop();
+		mAmbientSound.stop();
+		mAquariumSound.stop();
 	}
 	mIsActive = !mIsActive;
 }
@@ -395,7 +466,7 @@ void Level1::internalSwap(int num)
 		mPlayRects.push_back(createRect(670, 330, 160, 80));
 
 		//Fishtank, Zoom
-		mRects.push_back(createRect(440, 150, 125, 70));
+		mRects.push_back(createRect(440, 150, 215, 200));
 
 		//Books in bookcase
 		mRects.push_back(createRect(200, 50, 100, 200));
@@ -465,10 +536,6 @@ void Level1::internalSwap(int num)
 				mCube->setPosition(352, 222);
 			}
 		}
-		if (mScrewdevice->getActive())
-		{
-			addItem(mScrewdevice);
-		}
 		if (mWallStar->getActive())
 		{
 			addItem(mWallStar);
@@ -485,13 +552,23 @@ void Level1::internalSwap(int num)
 	// Fishtank Zoom
 	else
 	{
+		if (!mLookedAtAquarium)
+		{
+			mDialogueSystem->reset();
+			mDialogueSystem->hasClicked("aquarium", mPlayer);
+			mUI->setState(UI::INGAME);
+			mCursor->setMode(Cursor::DIALOGUE);
+			mLookedAtAquarium = true;
+		}
+
 		mActiveScene = 1;
 		//Walkable area
 		mPlayRects.push_back(createRect(140, 490, 350, 25));
 		//Back to room, left side of screen
-		mRects.push_back(createRect(0, 30, 120, 470));
 
-		mAquariumSound.setVolume(30);
+		mRects.push_back(createRect(0, 30, 120, 440));
+
+		mAquariumSound.setVolume(20);
 
 		//Repopulate ItemVector with active items
 		if (mBlock->getActive())
@@ -642,6 +719,8 @@ void Level1::eventListen(sf::RenderWindow &window)
 					{
 						mClues->getClue(3)->setState2();
 						mClues->getClue(4)->setState1();
+
+						mUI->setActiveAnimation("CluesIconGlowOnce");
 					}
 				}
 			}
@@ -653,9 +732,22 @@ void Level1::eventListen(sf::RenderWindow &window)
 			{
 				mUI->checkCollision(mWorldPos);
 			}
-			else if (mCursor->getMode() != Cursor::DISABLED && !mPushingBlock)
+			else if (mCursor->getMode() != Cursor::DISABLED && !mPushingBlock && !mFishing)
 			{
 				mouseClick(event);
+			}
+			break;
+
+		case sf::Event::MouseButtonReleased:
+			if (mUI->getState() == UI::INVENTORY)
+			{
+				mInventory->swapCheck();
+				mInventory->deSelectCheck();
+				mInventory->setCraftPos(mInventory->getSelectedItem());
+			}
+			else if (mCursor->getMode() != Cursor::DISABLED && !mPushingBlock && !mFishing)
+			{
+				mouseReleased(event);
 			}
 			break;
 
@@ -672,6 +764,11 @@ void Level1::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
 					mMenuInventorySound.play();
+
+					if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+					{
+						mUI->setActiveAnimation("None");
+					}
 				}
 			}
 			if (event.key.code == sf::Keyboard::P)
@@ -680,14 +777,14 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
-				if (mUI->getState() == UI::MAINUI)
+				if (mUI->getState() == UI::EXIT || mUI->getState() == UI::INVENTORY || mUI->getState() == UI::CLUES)
 				{
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
 				else if (mCursor->getMode() != Cursor::DIALOGUE)
 				{
-					mUI->setState(UI::MAINUI);
+					mUI->setState(UI::EXIT);
 					mCursor->setMode(Cursor::MENU);
 				}
 			}
@@ -711,27 +808,47 @@ void Level1::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
-	//Check if Hat Icon is clicked
-	if (checkCollision(mUI->getHatIconRect(), point))
+	mMouseReleased = false;
+
+	//Check if Inventory Icon is clicked
+	if (checkCollision(mUI->getInventoryIconRect(), point))
 	{
-		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::HAT);
+		mCursor->setMode(Cursor::INVENTORY);
+		mUI->setState(UI::INVENTORY);
+		if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
 		mMenuHatSound.play();
 	}
-
-	//Check if Menu Icon is clicked
-	else if (checkCollision(mUI->getMenuIconRect(), point))
+	//Check if Clues Icon is clicked
+	else if (checkCollision(mUI->getCluesIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::MAINUI);
+		mUI->setState(UI::CLUES);
+		if (mUI->getActiveAnimation() == "CluesIconGlow" || mUI->getActiveAnimation() == "CluesIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
 		mMenuMainUISound.play();
 	}
-
+	//Check if Exit Icon is clicked
+	else if (checkCollision(mUI->getExitIconRect(), point))
+	{
+		mCursor->setMode(Cursor::MENU);
+		mUI->setState(UI::EXIT);
+		if (mUI->getActiveAnimation() == "ExitIconGlow" || mUI->getActiveAnimation() == "ExitIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
+		mMenuMainUISound.play();
+	}
 	//Check if playrect collision
 	else if (checkCollision(getPlayRects(), point))
 	{
 		mPlayer->moveToPosition(point.x, point.y);
 		mItemInteraction = false;
+		mSceneChange = false;
 	}
 
 	//Check Item collision
@@ -761,12 +878,14 @@ void Level1::mouseHover()
 					mCursor->setMode(Cursor::EYE);
 				}
 				//Check if Item can be picked up
-				else if (getItems()[i]->getPickupable())
+
+				if (getItems()[i]->getPickupable())
 				{
 					mCursor->setMode(Cursor::OPENHAND);
 				}
 				//Check if Item can be interacted with
-				else if (getItems()[i]->getInteractable())
+
+				if (getItems()[i]->getInteractable())
 				{
 					//Check if Item has already been interacted with
 					if (!getItems()[i]->isInteracted())
@@ -788,19 +907,37 @@ void Level1::mouseHover()
 			{
 				if (getActiveScene() == 0)
 				{
-					if (!mLookedAtAquarium)
-					{
-						mCursor->setMode(Cursor::EYE);
-					}
-					else
-					{
-						mCursor->setMode(Cursor::SCENECHANGE);
-					}
+					mCursor->setMode(Cursor::SCENECHANGE);
 				}
 				else
 				{
 					mCursor->setMode(Cursor::SCENECHANGE);
 				}
+			}
+			// i == 1 is books in the bookcase
+			else if (i == 1 && !mLookedAtBooks)
+			{
+				mCursor->setMode(Cursor::EYE);
+			}
+			// i == 2 is lamp on table
+			else if (i == 2 && !mLookedAtLamp)
+			{
+				mCursor->setMode(Cursor::EYE);
+			}
+			// i == 3 is radio on table
+			else if (i == 3 && !mLookedAtRadio)
+			{
+				mCursor->setMode(Cursor::EYE);
+			}
+			// i == 4 is posters on wall
+			else if (i == 4 && !mLookedAtPosters)
+			{
+				mCursor->setMode(Cursor::EYE);
+			}
+			// i == 5 is backpack near bed
+			else if (i == 5 && !mLookedAtBackpack)
+			{
+				mCursor->setMode(Cursor::EYE);
 			}
 			// i == 6 is bump in the rug
 			else if (i == 6)
@@ -817,18 +954,11 @@ void Level1::mouseHover()
 			// i == 7 is door
 			else if (i == 7)
 			{
-				if (mPickedUpScrewdevice && mMovedStar)
-				{
-					mCursor->setMode(Cursor::SCENECHANGE);
-				}
-				else
-				{
-					mCursor->setMode(Cursor::NORMAL);
-				}
+				mCursor->setMode(Cursor::NORMAL);
 			}
 			else
 			{
-				mCursor->setMode(Cursor::EYE);
+				mCursor->setMode(Cursor::NORMAL);
 			}
 		}
 	}
@@ -839,10 +969,46 @@ void Level1::mouseHover()
 	}
 }
 
+void Level1::mouseReleased(sf::Event & event)
+{
+	std::cout << "Mouse Released" << std::endl;
+	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+
+	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+
+	//Fishing interaction
+	if (mInventory->selectedItem() != NULL
+		&& mBlockPushed
+		&& mInventory->selectedItem()->getId() == "FishingRodMagnet"
+		&& mAstronaut->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mHasUsedFishingRod = true;
+
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(490, 500);
+		mTargetItem = mAstronaut;
+		mCursor->setMode(Cursor::DISABLED);
+		mInventory->deSelectCheck();
+		addItem(mCube);
+		mCube->setScale(-1.0f, 1.0f);
+		mCube->setPosition(645.0f, 450.0f);
+		mCubePlaced = true;
+	}
+	else
+	{
+		mInventory->deSelectCheck();
+	}
+}
+
+
 void Level1::update(sf::RenderWindow &window, float deltaTime)
 {
 	//Check if Player is in position to change Scene
-	if (mPlayer->getRect().intersects(mSceneChangeRect))
+	if (mPlayer->getRect().intersects(mSceneChangeRect) && mSceneChange && !mItemInteraction)
 	{
 		//Toggle Player if the new Scene needs it
 		if (mPlayerToggle)
@@ -854,13 +1020,14 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		mPlayer->moveToPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
 		//Change to the new Scene
 		changeScene(mNewScene);
+		mSceneChange = false;
 	}
 
 	//Check if Item interaction is enabled, which it only is when an Item is clicked
 	if (mItemInteraction)
 	{
 		//Check if any part of the Player intersects with the Item
-		if (mPlayer->getGlobalRect().intersects(mTargetItem->getRectangle()) && mPlayer->getIsOnPosition())
+		if (mPlayer->getIsOnPosition())
 		{
 			//Check if Item has already been looked at
 			if (!mTargetItem->isLookedAt())
@@ -868,12 +1035,12 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 				lookAtTargetItem();
 			}
 			//Check if Item can be picked up
-			else if (mTargetItem->getPickupable())
+			if (mTargetItem->getPickupable())
 			{
 				pickupTargetItem();
 			}
 			//Check if Item can be interacted with
-			else if (mTargetItem->getInteractable())
+			if (mTargetItem->getInteractable())
 			{
 				interactTargetItem();
 			}
@@ -884,6 +1051,53 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 
 	//Inventory update
 	mInventory->update(window);
+
+	if (mUI->getState() == UI::INVENTORY)
+	{
+		if (mInventory->getSelectedItem() != -1)
+		{
+			if (!mInventory->checkDistance(mWorldPos))
+			{
+				mUI->setState(UI::INGAME);
+			}
+		}
+	}
+
+	//UI update
+	mUI->update(deltaTime);
+
+	if (!mWillJump1 && mHasUsedFishingRod && mPlayer->getIsOnPosition() && mMouseReleased)
+	{
+		mWillJump1 = true;
+		mPlayer->setActiveAnimation("Jump");
+		mPlayer->setFrameTime(0.03f);
+	}
+
+	//Jump sequence update
+	if (mActiveScene == 1 && mWillJump1)
+	{
+		if (mPlayer->getPosition() == sf::Vector2f(688, 321))
+		{
+			mhasJumped = true;
+			mWillJump1 = false;
+			mHasUsedFishingRod = false;
+			mItemInteraction = true;
+			mPlayer->setPosition(570, 268);
+		}
+
+		mPlayer->sequenceMove1();
+	}
+
+	if (mActiveScene == 1 && mWillJump2)
+	{
+		mPlayer->sequenceMove2();
+
+		if (mPlayer->getPosition() == sf::Vector2f(490, 500))
+		{
+			mWillJump2 = false;
+			mPlayer->setActiveAnimation("Idle");
+		}
+	}
 
 	//DialogueSystem update and reset when finished
 	mDialogueSystem->update(deltaTime);
@@ -901,31 +1115,51 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 	mCursor->update(window);
 
 	//Change mouse cursor on hover
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME && mUpdateTime > 60)
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::DISABLED && mUI->getState() == UI::INGAME)
 	{
 		mouseHover();
-		mUpdateTime = 0;
 	}
-	else
-		mUpdateTime++; //TODO - Remove mUpdateTime
 
 	if (mMovedStar && mPickedUpScrewdevice)
 	{
+		if (!mReadyToLeave)
+		{
+			music.setVolume(10);
+			mAmbientSound.setVolume(10);
+			mAquariumSound.setVolume(0);
+			mDialogueSystem->setLevel1End();
+			mCursor->setMode(Cursor::DIALOGUE);
+			mUI->setState(UI::INGAME);
+			mReadyToLeave = true;
+		}
 		if (mReadyToLeave && !mDialogueSystem->getLevel1End())
 		{
 			mLevelComplete = true;
 		}
 	}
 
+	//Spooky scary spider update
+	mSpider->update(deltaTime);
+
 	//Engage walk animation when player is moving, if not pushing
-	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push")
+	if (!mPlayer->getIsOnPosition() && mPlayer->getActiveAnimation() != "Push" && mPlayer->getActiveAnimation() !=  "Jump")
 	{
+		//mPlayer->navigate(mItems, deltaTime);
 		mPlayer->setActiveAnimation("Walk");
 	}
 
 	//Make sure UI is in correct position at all times
 	mUI->setUIPosition(mView.getCenter());
 	mInventory->setGridPosition(mView.getCenter());
+	mClues->setCluesPosition(mView.getCenter());
+
+	//Reset volume Of music and ambient sounds after start dialogue
+	if (!mDialogueSystem->getLevel1Start() && !mDialogueSystem->getLevel1End() && music.getVolume() < 70)
+	{
+		music.setVolume(80);
+		mAmbientSound.setVolume(50);
+		mAquariumSound.setVolume(5);
+	}
 
 	//Make Roger Swim, forever, and further once the Astronaut is gone
 	mRoger->update(deltaTime);
@@ -1004,12 +1238,17 @@ void Level1::updateTargetItem(float deltaTime)
 		{
 			mMagnetDropSound.play();
 		}
-		//Make Astronaut move after casting fishing line
-		if (mFishing && mPlayer->getCurrentFrame() == 35)
+		//Make Hilma pull up Astronaut after casting fishing line
+		if (mFishing && mPlayer->getCurrentFrame() == 27)
 		{
 			mMagnetCatchSound.play();
-			mTargetItem->setSpeed(40.0f);
-			mTargetItem->moveToPosition(500, 250);
+			mPlayer->setFrameTime(0.05f);
+			mPlayer->setActiveAnimation("FishingPull");
+		}
+		if (mPlayer->getActiveAnimation() == "FishingPull" && mPlayer->getCurrentFrame() == 4)
+		{
+			mTargetItem->setSpeed(200.0f);
+			mTargetItem->moveToPosition(500, 230);
 		}
 		if (mTargetItem->getIsOnPosition())
 		{
@@ -1018,6 +1257,7 @@ void Level1::updateTargetItem(float deltaTime)
 			{
 				mPushingObjectSound.stop();
 				mPushingBlock = false;
+				mBlockPushed = true;
 				mCursor->setMode(Cursor::NORMAL);
 				mPlayer->setActiveAnimation("Idle");
 				mPlayer->setSpeed(100.0f);
@@ -1030,13 +1270,17 @@ void Level1::updateTargetItem(float deltaTime)
 				mFishing = false;
 				mTargetItem->toggleActive();
 				mInventory->addItem(mTargetItem);
-				mPlayer->setActiveAnimation("Idle");
+				mUI->setActiveAnimation("InventoryIconGlowOnce");
+				mPlayer->setFrameTime(0.03f);
+				//mPlayer->setActiveAnimation("Idle");
 				mPlayer->setScale(sf::Vector2f(0.25f, 0.25f));
-				mPlayer->setPosition(490, 500);
-				mPlayer->moveToPosition(490, 500);
+				mPlayer->setActiveAnimation("Jump");
+
+				mWillJump2 = true;
+				mPlayer->setPosition(688, 321);
+
 				mCursor->setMode(Cursor::NORMAL);
 				mReadyForScrewdevice = true;
-				mInventory->deSelect();
 			}
 		}
 	}
@@ -1068,12 +1312,12 @@ void Level1::lookAtTargetItem()
 	}
 	if (mTargetItem->getId() == "Block")
 	{
-		mDialogueSystem->reset();
+		/*mDialogueSystem->reset();
 		mDialogueSystem->hasClicked("block", mPlayer);
 		mUI->setState(UI::INGAME);
-		mCursor->setMode(Cursor::DIALOGUE);
+		mCursor->setMode(Cursor::DIALOGUE);*/
 	}
-	if (mTargetItem->getId() == "Astronaut")
+	if (mTargetItem->getId() == "Astronaut" && !mMouseReleased)
 	{
 		mDialogueSystem->reset();
 		mDialogueSystem->hasClicked("astronaut", mPlayer);
@@ -1098,53 +1342,51 @@ void Level1::lookAtTargetItem()
 
 void Level1::pickupTargetItem()
 {
-	//Make Item inactive when it is picked up
-	mTargetItem->toggleActive();
 	if (mTargetItem->getId() == "Magnet")
 	{
 		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
 		std::cout << "Plockade upp magnet";
 		mRegularItemSound.play();
+		mPickedUpMagnet = true;
+		if (mPickedUpFishingRod)
+		{
+			mUI->setActiveAnimation("InventoryIconGlow");
+		}
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
 	}
 	if (mTargetItem->getId() == "String")
 	{
 		mInventory->addItem(mTargetItem);
+		mUI->setActiveAnimation("InventoryIconGlowOnce");
 		std::cout << "Plockade upp fiskespo";
 		mRegularItemSound.play();
+		mPickedUpFishingRod = true;
+		if (mPickedUpMagnet)
+		{
+			mUI->setActiveAnimation("InventoryIconGlow");
+		}
+		//Make Item inactive when it is picked up
+		mTargetItem->toggleActive();
 	}
-	if (mTargetItem->getId() == "Astronaut")
+	if (mTargetItem->getId() == "Astronaut" && mhasJumped)
 	{
-		if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
-		{
-			//Place Rubics Cube in front of Block
-			//TODO - Add Dialogue for the placing of the Cube
-			addItem(mCube);
-			mCube->setScale(-1.0f, 1.0f);
-			mCube->setPosition(645.0f, 450.0f);
-			mCubePlaced = true;
-			//TODO - Add Hilma Jump
-			mPlayer->setPosition(700, 450);
-			mPlayer->moveToPosition(700, 450);
-			if (!mPlayer->isFacingLeft())
-			{
-				mPlayer->flipPlayer();
-			}
-			mPlayer->setActiveAnimation("Fishing");
-			mPlayer->setScale(sf::Vector2f(0.9f, 0.9f));
-			mFishing = true;
-			mCursor->setMode(Cursor::DISABLED);
-			mTargetItem->toggleActive();
-			mTargetItem->setSpeed(20.0f);
-			mTargetItem->moveToPosition(500, 250);
+		mPlayer->resetSequence();
 
-			//Clues
-			mClues->getClue(4)->setState2();
-			mClues->getClue(5)->setState1();
-		}
-		else
+		//mPlayer->setPosition(570, 268);
+		//mPlayer->moveToPosition(570, 268);
+		if (!mPlayer->isFacingLeft())
 		{
-			mTargetItem->toggleActive();
+			mPlayer->flipPlayer();
 		}
+		mPlayer->setActiveAnimation("Fishing");
+		mPlayer->setScale(sf::Vector2f(0.54f, 0.54f));
+		mFishing = true;
+
+		//Clues
+		mClues->getClue(4)->setState2();
+		mClues->getClue(5)->setState1();
 	}
 }
 
@@ -1171,15 +1413,8 @@ void Level1::interactTargetItem()
 			mPushingObjectSound.setLoop(true);
 			mPushingObjectSound.play();
 
-			//Find Astronaut in ItemVector and make it active
-			for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-			{
-				if (getItems()[i]->getId() == "Astronaut")
-				{
-					getItems()[i]->toggleActive();
-					getItems()[i]->togglePickupable();
-				}
-			}
+			mAstronaut->toggleActive();
+			mAstronaut->togglePickupable();
 
 			std::cout << "Knuffade Klossen";
 		}
@@ -1192,6 +1427,7 @@ void Level1::interactTargetItem()
 			mMovedStar = true;
 			mClues->getClue(1)->setState2();
 			mClues->getClue(2)->setState1();
+			mUI->setActiveAnimation("CluesIconGlowOnce");
 			std::cout << "Satte stjärnan på väggen";
 		}
 	}
@@ -1241,7 +1477,7 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 					mTargetItem = getItems()[i];
 					mItemInteraction = true;
 				}
-				if (getItems()[i]->getId() == "Block")
+				if (getItems()[i]->getId() == "Block" && mActiveScene == 1)
 				{
 					if (getActiveScene() == 0)
 					{
@@ -1269,12 +1505,14 @@ void Level1::mouseClickCheckItemCollision(sf::Vector2f point)
 					//Clues
 					mClues->getClue(2)->setState2();
 					mClues->getClue(3)->setState1();
+					mUI->setActiveAnimation("CluesIconGlowOnce");
 
 					//Set correct clue depending on crafted item
 					if (mHasCraftedFishingRod)
 					{
 						mClues->getClue(3)->setState2();
 						mClues->getClue(4)->setState1();
+						mUI->setActiveAnimation("CluesIconGlowOnce");
 					}
 				}
 				if (getItems()[i]->getId() == "String")
@@ -1305,27 +1543,17 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 			{
 				if (getActiveScene() == 0)
 				{
-					if (!mLookedAtAquarium)
-					{
-						mDialogueSystem->reset();
-						mDialogueSystem->hasClicked("aquarium", mPlayer);
-						mUI->setState(UI::INGAME);
-						mCursor->setMode(Cursor::DIALOGUE);
-						mLookedAtAquarium = true;
-					}
-					else
-					{
-						//Make Player get into position for Scene change
-						mPlayer->moveToPosition(400, 370);
-						//Set Collision Rect to Scene change position
-						mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
-						//Set if Player should toggle on Scene Change
-						mPlayerToggle = true;
-						//Set starting position of Player in new Scene
-						mSceneChangePlayerPos = sf::Vector2f(160, 480);
-						//Set which Scene will be the new Scene
-						mNewScene = 1;
-					}
+					//Make Player get into position for Scene change
+					mPlayer->moveToPosition(400, 370);
+					//Set Collision Rect to Scene change position
+					mSceneChangeRect = sf::FloatRect(sf::Vector2f(400, 370), sf::Vector2f(10, 10));
+					//Set if Player should toggle on Scene Change
+					mPlayerToggle = true;
+					//Set starting position of Player in new Scene
+					mSceneChangePlayerPos = sf::Vector2f(260, 490); //160, 480
+					//Set which Scene will be the new Scene
+					mNewScene = 1;
+					mSceneChange = true;
 				}
 				else
 				{
@@ -1339,86 +1567,75 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 					mSceneChangePlayerPos = sf::Vector2f(400, 370);
 					//Set which Scene will be the new Scene
 					mNewScene = 0;
+
+					mSceneChange = true;
 				}
 			}
 			// i == 1 is books in the bookcase
-			else if (i == 1)
+			else if (i == 1 && !mLookedAtBooks)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("books", mPlayer);
 				mUI->setState(UI::INGAME);
 				mCursor->setMode(Cursor::DIALOGUE);
+				mLookedAtBooks = true;
 			}
 			// i == 2 is lamp on table
-			else if (i == 2)
+			else if (i == 2 && !mLookedAtLamp)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("lamp", mPlayer);
 				mUI->setState(UI::INGAME);
 				mCursor->setMode(Cursor::DIALOGUE);
+				mLookedAtLamp = true;
 			}
 			// i == 3 is radio on table
-			else if (i == 3)
+			else if (i == 3 && !mLookedAtRadio)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("radio", mPlayer);
 				mUI->setState(UI::INGAME);
 				mCursor->setMode(Cursor::DIALOGUE);
+				mLookedAtRadio = true;
 			}
 			// i == 4 is posters on wall
-			else if (i == 4)
+			else if (i == 4 && !mLookedAtPosters)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("poster", mPlayer);
 				mUI->setState(UI::INGAME);
 				mCursor->setMode(Cursor::DIALOGUE);
+				mLookedAtPosters = true;
 			}
 			// i == 5 is backpack near bed
-			else if (i == 5)
+			else if (i == 5 && !mLookedAtBackpack)
 			{
 				mDialogueSystem->reset();
 				mDialogueSystem->hasClicked("backpack", mPlayer);
 				mUI->setState(UI::INGAME);
 				mCursor->setMode(Cursor::DIALOGUE);
+				mLookedAtBackpack = true;
 			}
 			// i == 6 is bump in the rug
 			else if (i == 6)
 			{
 				if (mReadyForScrewdevice)
 				{
-					for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+					if (mScrewdevice->getActive())
 					{
-						if (getItems()[i]->getId() == "Screwdevice")
-						{
-							if (getItems()[i]->getActive())
-							{
-								mCriticalItemSound.play();
-								mInventory->addItem(getItems()[i]);
-								getItems()[i]->toggleActive();
-								mPickedUpScrewdevice = true;
-								mClues->getClue(5)->setState2();
-								//mDialogueSystem->hasClicked("ScrewDevice", mPlayer);
-								//mCursor->setMode(Cursor::DIALOGUE);
-							}
-						}
+						mCriticalItemSound.play();
+						mInventory->addItem(mScrewdevice);
+						mUI->setActiveAnimation("InventoryIconGlowOnce");
+						mScrewdevice->toggleActive();
+						mPickedUpScrewdevice = true;
+						mClues->getClue(5)->setState2();
 					}
 				}
 			}
 			// i == 7 is the door
 			else if (i == 7)
 			{
-				if (mMovedStar && mPickedUpScrewdevice)
-				{
-					std::cout << "LEVEL COMPLETE GOOD JOB BUT IT'S STILL NOT OVER YET, NEXT TIME ON HITTAREN HILMA STUFF HAPPENS" << std::endl;
-					mDialogueSystem->setLevel1End();
-					mCursor->setMode(Cursor::DIALOGUE);
-					mUI->setState(UI::INGAME);
-					mReadyToLeave = true;
-				}
-				else
-				{
-					std::cout << "IT'S NOT OVER YET" << std::endl;
-				}
+				std::cout << "IT'S NOT OVER YET" << std::endl;
 			}
 		}
 	}

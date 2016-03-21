@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Level1.h"
+#include "Level2.h"
 #include "Level3.h"
 #include "LastLevel.h"
 #include "Item.h"
@@ -17,12 +18,12 @@ public:
 	typedef std::vector<Level*> LevelVector;
 
 	//Update
-	void update(float deltaTime, sf::RenderWindow &window, ResourceHandler &handler);
+	void update(float deltaTime, sf::RenderWindow &window, ResourceHandler &handler, UI *ui);
 
 	//Draw
 	void draw(sf::RenderWindow &window);
 
-	void setActiveLevel(int num, ResourceHandler &handler, bool isFirstLevel, sf::RenderWindow &window);
+	void setActiveLevel(int num, ResourceHandler &handler, bool isFirstLevel, sf::RenderWindow &window, UI *ui);
 
 	Level* getActiveLevel();
 	Level* getLevel(int index);
@@ -37,9 +38,12 @@ private:
 	Level1* mLevel1;
 
 	//2
-	Level3* mLevel3;
-	
+	Level2* mLevel2;
+
 	//3
+	Level3* mLevel3;
+
+	//4
 	LastLevel* mLastLevel;
 };
 

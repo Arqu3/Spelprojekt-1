@@ -2,6 +2,7 @@
 #define INCLUDED_PLAYER
 
 #include "ResourceHandler.h"
+#include "Item.h"
 #include "SFML\System.hpp"
 #include <cmath>
 
@@ -28,9 +29,18 @@ public:
 	bool getIsOnPosition();
 	void setScale(sf::Vector2f scale);
 	int getCurrentFrame();
+	void setFrameTime(float frametime);
+	void sequenceMove1();
+	void sequenceMove2();
+	void resetSequence();
+
+	void navigate(std::vector<Item*> items, float deltaTime);
 
 private:
+
 	void move(float deltaTime);
+
+	int sequenceCounter;
 
 	sf::Vector2f mPosition;
 	sf::Vector2f mDirection;
@@ -43,7 +53,7 @@ private:
 	bool isOnPosition;
 	sf::FloatRect mRect;
 	sf::FloatRect mMoveToRect;
-	void waitForClick(sf::RenderWindow &window);
+	//void waitForClick(sf::RenderWindow &window);
 	bool mThomasActive;
 
 	//Animations
@@ -66,5 +76,14 @@ private:
 	sf::Texture mHilmaTexture;
 	sf::Texture mHilmaPushTexture;
 	sf::Texture mHilmaFishingTexture;
+	sf::Texture mHilmaJumpTexture;
+
+	sf::Vector2f mNextPosition;
+	bool mCorrecting;
+	bool mDownValid;
+	bool mUpValid;
+	bool mRightValid;
+	bool mLeftValid;
+	bool mDirectionSet;
 };
 #endif

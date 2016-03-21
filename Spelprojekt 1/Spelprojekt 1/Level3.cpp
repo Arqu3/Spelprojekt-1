@@ -6,7 +6,8 @@ mRects(),
 mPlayRects(),
 mIsActive(false),
 handler(handler),
-mLevelComplete(false)
+mLevelComplete(false),
+mMouseReleased(false)
 {
 }
 
@@ -183,7 +184,7 @@ void Level3::addRect(sf::FloatRect *rect)
 }
 
 
-void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
+void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui)
 {
 	if (!mIsActive)
 	{
@@ -242,7 +243,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mFjun = new Item(handler, sf::Vector2f(1192, 52), "Fjun");
 		mFeatherball = new Item(handler, sf::Vector2f(200, 343), "Featherball");
 		mJack = new Item(handler, sf::Vector2f(1190, 140), "Jack");
-		mCloth = new Item(handler, sf::Vector2f(169, 481), "Cloth");
+		mRippedCloth = new Item(handler, sf::Vector2f(169, 481), "RippedCloth");
 
 		mPond = new Item(handler, sf::Vector2f(133, 416), "Pond");
 		mStatue = new Item(handler, sf::Vector2f(685, 120), "Statue");
@@ -274,9 +275,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mCursor = new Cursor(handler);
 
 		//UI
-		mUI = new UI(handler);
-
-
+		mUI = ui;
 
 		//Rectangles
 		mRects.push_back(createRect(1806, 96, 62, 74));
@@ -340,9 +339,9 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		mNail->toggleLookable();
 		mNail->togglePickupable();
 
-		mCloth->toggleActive();
-		mCloth->toggleLookable();
-		mCloth->togglePickupable();
+		mRippedCloth->toggleActive();
+		mRippedCloth->toggleLookable();
+		mRippedCloth->togglePickupable();
 
 		mPond->toggleActive();
 		mPond->toggleLookable();
@@ -402,12 +401,20 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window)
 		addItem(mFlagpole);
 		addItem(mSingleFlower);
 		addItem(mLady);
-		
-		
 
-		
-		
-		changeScene(2);
+		//changeScene(2);
+	}
+	else
+	{
+		delete mPlayer;
+		delete mInventory;
+		delete mDialogueSystem;
+		//delete mClues;
+		mItems.clear();
+		mRects.clear();
+		mPlayRects.clear();
+		mUI->setActiveAnimation("None");
+		music.stop();
 	}
 
 	mIsActive = !mIsActive;
@@ -510,9 +517,9 @@ void Level3::internalSwap(int num)
 		{
 			addItem(mNail);
 		}
-		if (mCloth->getActive())
+		if (mRippedCloth->getActive())
 		{
-			addItem(mCloth);
+			addItem(mRippedCloth);
 		}
 
 		mInventory->addItem(mTrimmer);
@@ -781,6 +788,7 @@ void Level3::eventListen(sf::RenderWindow &window)
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mUI->getState() == UI::INVENTORY)
 			{
+				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
 
 				mInventory->setCraftPos(mInventory->getSelectedItem());
 
@@ -788,9 +796,6 @@ void Level3::eventListen(sf::RenderWindow &window)
 				{
 					mInventory->craftItem(mInventory->getCraftSelect1(), mInventory->getCraftSelect2());
 				}
-
-				mInventory->checkCollision(mInventory->getItems(), mWorldPos, *mUI);
-
 			}
 			else if (mCursor->getMode() == Cursor::DIALOGUE)
 			{
@@ -806,11 +811,20 @@ void Level3::eventListen(sf::RenderWindow &window)
 			}
 			break;
 
-		case sf::Event::KeyPressed:
-			if (event.key.code == sf::Keyboard::Escape)
+		case sf::Event::MouseButtonReleased:
+			if (mUI->getState() == UI::INVENTORY)
 			{
-				window.close();
+				mInventory->swapCheck();
+				mInventory->deSelectCheck();
+				mInventory->setCraftPos(mInventory->getSelectedItem());
 			}
+			else if (mCursor->getMode() != Cursor::DISABLED)
+			{
+				mouseReleased(event);
+			}
+			break;
+
+		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::I)
 			{
 				if (mUI->getState() == UI::INVENTORY)
@@ -818,18 +832,36 @@ void Level3::eventListen(sf::RenderWindow &window)
 					mUI->setState(UI::INGAME);
 					mCursor->setMode(Cursor::NORMAL);
 				}
-				else
+				else if (mCursor->getMode() != Cursor::DIALOGUE)
 				{
 					mUI->setState(UI::INVENTORY);
 					mCursor->setMode(Cursor::INVENTORY);
+					//mMenuInventorySound.play();
+					if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+					{
+						mUI->setActiveAnimation("None");
+					}
 				}
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
-				mPlayer->togglePlayer();
+				mLevelComplete = true; //TODO - Remove this
+			}
+			if (event.key.code == sf::Keyboard::Escape)
+			{
+				if (mUI->getState() == UI::EXIT || mUI->getState() == UI::INVENTORY || mUI->getState() == UI::CLUES)
+				{
+					mUI->setState(UI::INGAME);
+					mCursor->setMode(Cursor::NORMAL);
+				}
+				else if (mCursor->getMode() != Cursor::DIALOGUE)
+				{
+					mUI->setState(UI::EXIT);
+					mCursor->setMode(Cursor::MENU);
+				}
 			}
 			break;
-
+			
 		default:
 			break;
 
@@ -850,18 +882,29 @@ void Level3::mouseClick(sf::Event &event)
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
-	//Check if Hat Icon is clicked
-	if (checkCollision(mUI->getHatIconRect(), point))
-	{
-		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::HAT);
-	}
+	mMouseReleased = false;
 
-	//Check if Menu Icon is clicked
-	if (checkCollision(mUI->getMenuIconRect(), point))
+	//Check if Exit Icon is clicked
+	if (checkCollision(mUI->getExitIconRect(), point))
 	{
 		mCursor->setMode(Cursor::MENU);
-		mUI->setState(UI::MAINUI);
+		mUI->setState(UI::EXIT);
+		if (mUI->getActiveAnimation() == "ExitIconGlow" || mUI->getActiveAnimation() == "ExitIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
+		//mMenuMainUISound.play();
+	}
+	//Check if Inventory Icon is clicked
+	else if (checkCollision(mUI->getInventoryIconRect(), point))
+	{
+		mCursor->setMode(Cursor::INVENTORY);
+		mUI->setState(UI::INVENTORY);
+		if (mUI->getActiveAnimation() == "InventoryIconGlow" || mUI->getActiveAnimation() == "InventoryIconGlowOnce")
+		{
+			mUI->setActiveAnimation("None");
+		}
+		//mMenuHatSound.play();
 	}
 
 
@@ -874,6 +917,716 @@ void Level3::mouseClick(sf::Event &event)
 	}
 
 	//Check Item collision
+	mouseClickCheckItemCollision(point);
+
+	//Check Rect Collisions
+	mouseClickCheckRectCollision(point);
+}
+
+void Level3::mouseReleased(sf::Event & event)
+{
+	if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Trimmer"
+		&& mStick->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(349, 346);
+		mTargetItem = mStick;
+		mInventory->deSelectCheck();
+	}
+	if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Trimmer"
+		&& mLeash->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(588, 380);
+		mTargetItem = mLeash;
+		mInventory->deSelectCheck();
+	}
+	if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Stick"
+		&& mDog->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(666, 416);
+		mTargetItem = mDog;
+		mInventory->deSelectCheck();
+	}
+	else
+	{
+		mInventory->deSelectCheck();
+	}
+}
+
+
+
+void Level3::update(sf::RenderWindow &window, float deltaTime)
+{
+	//Only do this if the level needs moving camera
+	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
+	//Scene 1 is the big, second room in LastLevel, change as necessary
+	if (getActiveScene() == 0)
+	{
+		//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
+		//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary
+		//In this case the camera scrolls while the Player is between 520 and 1000.
+		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1530)
+		{
+			//Make camera follow Player position
+			moveViewWithPlayer(mPlayer->getPosition().x);
+		}
+	}
+
+	if (getActiveScene() == 1)
+	{
+		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1000)
+		{
+			moveViewWithPlayer(mPlayer->getPosition().x);
+		}
+	}
+
+	if (getActiveScene() == 2)
+	{
+		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 2000)
+		{
+			moveViewWithPlayer(mPlayer->getPosition().x);
+		}
+	}
+
+	//Check if Player is in position to change Scene
+	if (mPlayer->getRect().intersects(mSceneChangeRect))
+	{
+		//Toggle Player if the new Scene needs it
+		if (mPlayerToggle)
+		{
+			mPlayer->togglePlayer();
+		}
+		//Set Player position to the starting position of the new Scene
+		mPlayer->setPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
+		mPlayer->moveToPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
+		//Change to the new Scene
+		changeScene(mNewScene);
+	}
+
+	//Check if Item interaction is enabled, which it only is when an Item is clicked
+	if (mItemInteraction)
+	{
+		//Check if any part of the Player intersects with the Item
+		if (mPlayer->getIsOnPosition())
+		{
+			//Check if Item has already been looked at
+			if (!mTargetItem->isLookedAt())
+			{
+				lookAtTargetItem();
+			}
+			//Check if Item can be picked up
+			if (mTargetItem->getPickupable())
+			{
+				pickupTargetItem();
+			}
+			//Check if Item can be interacted with
+			if (mTargetItem->getInteractable())
+			{
+				interactTargetItem();
+			}
+			//Disable Item interaction when done
+			mItemInteraction = false;
+		}
+	}
+
+	if (!mPlayer->getIsOnPosition())
+	{
+		//mPlayer->navigate(mItems, deltaTime);
+		mPlayer->setActiveAnimation("Walk");
+	}
+
+	//Animation updates
+	mDog->update(deltaTime);
+	mLady->update(deltaTime);
+
+	//Inventory
+	mInventory->update(window);
+
+	if (mUI->getState() == UI::INVENTORY)
+	{
+		if (mInventory->getSelectedItem() != -1)
+		{
+			if (!mInventory->checkDistance(mWorldPos))
+			{
+				mUI->setState(UI::INGAME);
+			}
+		}
+	}
+
+	updateTargetItem(deltaTime);
+
+	mCursor->setPosition(sf::Vector2f(mWorldPos));
+	mCursor->update(window);
+
+	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU)
+	{
+		mouseHover();
+	}
+
+	//Make sure UI is in correct place at all times
+	mUI->setUIPosition(mView.getCenter());
+	mInventory->setGridPosition(mView.getCenter());
+}
+
+void Level3::mouseHover()
+{
+	mCursor->setMode(Cursor::NORMAL);
+
+	//Check if playrect collision
+	if (checkCollision(getPlayRects(), mCursor->getRect()))
+	{
+		mCursor->setMode(Cursor::NORMAL); // TODO - Add walk cursor maybe?
+	}
+
+	//Check Item collision
+	//Loop through all Items in active level
+	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+	{
+		//Check if mouse collided with Item
+		if (getItems()[i]->getRectangle().intersects(mCursor->getRect()))
+		{
+			//Check if Item is Active
+			if (getItems()[i]->getActive())
+			{
+				if (!getItems()[i]->isLookedAt())
+				{
+					mCursor->setMode(Cursor::EYE);
+				}
+				//Check if Item can be picked up
+				else if (getItems()[i]->getPickupable())
+				{
+					mCursor->setMode(Cursor::OPENHAND);
+				}
+				//Check if Item can be interacted with
+				else if (getItems()[i]->getInteractable())
+				{
+					//Check if Item has already been interacted with
+					if (!getItems()[i]->isInteracted())
+					{
+						mCursor->setMode(Cursor::OPENHAND);
+					}
+				}
+			}
+		}
+	}
+
+	//Check Rect Collisions
+	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
+	{
+		if (checkCollision(getRects()[i], mCursor->getRect()))
+		{
+			//// i == 10 is stairs in scene 1
+			//if (i == 10)
+			//{
+			//	if (mActiveScene == 0)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//	else
+			//	{
+			//		mCursor->setMode(Cursor::EYE);
+			//	}
+			//}
+
+			//// i == 5 is stairs in scene 2
+			//else if (i == 5)
+			//{
+			//	if (mActiveScene == 1)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//	else
+			//	{
+			//		mCursor->setMode(Cursor::EYE);
+			//	}
+			//}
+
+			//// i == 0 is door in scene 2
+			//else if (i == 0)
+			//{
+			//	if (mActiveScene == 1)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//}
+
+			////i == 2 is door in scene 3
+			//else if (i == 2)
+			//{
+			//	if (mActiveScene == 2)
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//	else
+			//	{
+			//		mCursor->setMode(Cursor::NORMAL);
+			//	}
+			//}
+
+			//else
+			//{
+				mCursor->setMode(Cursor::EYE);
+			//}
+		}
+	}
+
+	if (mInventory->selectedItem() != NULL)
+	{
+		mCursor->setMode(Cursor::CLOSEDHAND);
+	}
+}
+
+bool Level3::isLevelComplete()
+{
+	return mLevelComplete;
+}
+
+void Level3::updateTargetItem(float deltaTime)
+{
+	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
+	if (mTargetItem != NULL)
+	{
+		mTargetItem->update(deltaTime);
+		//Put everything back to normal after the "Pushing cutscene"
+		if (mTargetItem->getIsOnPosition())
+		{
+			if (mDogRunning)
+			{
+				mDogRunning = false;
+				mCursor->setMode(Cursor::NORMAL);
+				mTargetItem->toggleActive();
+			}
+		}
+	}
+}
+
+void Level3::lookAtTargetItem()
+{
+	mTargetItem->toggleIsLookedAt(); //Fixa dialoger i funktion
+	mItemInteraction = false;
+}
+
+void Level3::pickupTargetItem()
+{
+	//Make Item inactive when it is picked up
+	mTargetItem->toggleActive();
+	if (mTargetItem->getId() == "Trimmer")
+	{
+		mInventory->addItem(mTargetItem);
+		mTargetItem->changeTexture(handler, "TrimmerIcon.png");
+		std::cout << "Plockade upp häcksax!";
+
+	}
+
+	if (mTargetItem->getId() == "Flowers")
+	{
+		mInventory->addItem(mTargetItem);
+		std::cout << "Plockade upp blomma!";
+	}
+
+	if (mTargetItem->getId() == "Stick")
+	{
+		if (mMouseReleased)
+		{
+			mInventory->addItem(mTargetItem);
+			mTargetItem->changeTexture(handler, "StickINV.png");
+			std::cout << "Plockade upp Pinne!";
+		}
+		else
+		{
+			mTargetItem->toggleActive();
+			mTargetItem->toggleInteractable();
+		}
+
+	}
+
+	if (mTargetItem->getId() == "Clover")
+	{
+		if (mItemPicked == false)
+		{
+			mInventory->addItem(mTargetItem);
+			mItemPicked = true;
+			std::cout << "Plockade upp klöver!";
+		}
+		else
+		{
+			mTargetItem->toggleActive();
+		}
+	}
+
+	if (mTargetItem->getId() == "Sawdust")
+	{
+		if (mItemPicked == false)
+		{
+			mInventory->addItem(mTargetItem);
+			mItemPicked = true;
+			std::cout << "Plockade upp sågspån!";
+		}
+		else
+		{
+			mTargetItem->toggleActive();
+		}
+	}
+
+	if (mTargetItem->getId() == "Fjun")
+	{
+		if (mItemPicked == false)
+		{
+			mInventory->addItem(mTargetItem);
+			mItemPicked = true;
+			std::cout << "Plockade upp fjun!";
+		}
+		else
+		{
+			mTargetItem->toggleActive();
+		}
+	}
+
+	if (mTargetItem->getId() == "Featherball")
+	{
+		if (mItemPicked == false)
+		{
+			mInventory->addItem(mTargetItem);
+			mItemPicked = true;
+			std::cout << "Plockade upp fjäderboll!";
+		}
+		else
+		{
+			mTargetItem->toggleActive();
+		}
+	}
+
+	if (mTargetItem->getId() == "Nail")
+	{
+		if (mItemPicked == false)
+		{
+			mInventory->addItem(mTargetItem);
+			mItemPicked = true;
+			std::cout << "Plockade upp spik!";
+		}
+		else
+		{
+			mTargetItem->toggleActive();
+		}
+	}
+
+	if (mTargetItem->getId() == "RippedCloth")
+	{
+		if (mItemPicked == false)
+		{
+			mInventory->addItem(mTargetItem);
+			mItemPicked = true;
+			std::cout << "Plockade upp tygbit!";
+		}
+		else
+		{
+			mTargetItem->toggleActive();
+		}
+	}
+
+}
+
+void Level3::interactTargetItem()
+{
+	//Check if Item has already been interacted with
+	if (!mTargetItem->isInteracted())
+	{
+		mTargetItem->toggleInteractable();
+
+		//Koppel
+		if (mTargetItem->getId() == "Leash")
+		{
+			if (mMouseReleased)
+			{
+				mTargetItem->changeTexture(handler, "transparent.png"); //Add correct texture!
+				mUnleashed = true;
+				std::cout << "Klipper kopplet!";
+			}
+			else
+			{
+				mTargetItem->toggleInteractable();
+			}
+		}
+
+		//Hund
+		if (mTargetItem->getId() == "Dog")
+		{
+			if (mMouseReleased && mUnleashed == true)
+			{
+				mInventory->removeItem(mInventory->getSelectedItem());
+
+				mTargetItem->moveToPosition(1272, 500);
+				std::cout << "Kastade pinnen!";
+				mCursor->setMode(Cursor::DISABLED);
+				mTargetItem->setActiveAnimation("Dog");
+				mDogRunning = true;
+
+				mPlayRects.push_back(createRect(683, 360, 673, 160));
+			}
+			else
+			{
+				mTargetItem->toggleInteractable();
+			}
+
+
+		}
+
+		//Flaggstång
+		if (mTargetItem->getId() == "Flagpole")
+		{
+			if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Flowers")
+			{
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mPlayRects.push_back(createRect(1356, 360, 500, 160));
+
+				for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
+				{
+					if (getItems()[i]->getId() == "Singleflower")
+					{
+						getItems()[i]->toggleActive();
+					}
+				}
+
+			}
+
+			else
+			{
+
+				mTargetItem->toggleInteractable();
+			}
+
+		}
+
+		//Knippe blommor
+		if (mTargetItem->getId() == "Singleflower")
+		{
+			mTargetItem->moveToPosition(1390, 121);
+		}
+
+		//KNEKTEN 
+		if (mTargetItem->getId() == "Jack")
+		{
+			if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() != "Screwdevice")
+			{
+				if (mInventory->selectedItem()->getId() == "Clover" || mInventory->selectedItem()->getId() == "Nail" || mInventory->selectedItem()->getId() == "Featherball" || mInventory->selectedItem()->getId() == "Fjun" || mInventory->selectedItem()->getId() == "Sawdust" || mInventory->selectedItem()->getId() == "RippedCloth")
+				{
+					mInventory->removeItem(mInventory->getSelectedItem());
+					mItemPicked = false;
+					mTargetItem->toggleInteractable();
+
+					//OBSOBS vad mer ska hända?
+				}
+				else
+				{
+					mTargetItem->toggleInteractable();
+				}
+			}
+			else
+			{
+				mTargetItem->toggleInteractable();
+			}
+		}
+
+		//Pond
+		if (mTargetItem->getId() == "Pond")
+		{
+			if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+			{
+				std::cout << "Fiskade mynt!";
+				mInventory->addItem(mCoin);
+			}
+			else
+			{
+				mTargetItem->toggleInteractable();
+			}
+		}
+
+		//Statue
+		if (mTargetItem->getId() == "Statue")
+		{
+			//Play sound and blink
+
+			mTargetItem->toggleInteractable();
+
+		}
+
+		//Blue Stone
+		if (mTargetItem->getId() == "BlueStone")
+		{
+			//Play sound and blink
+
+			mTargetItem->toggleInteractable();
+		}
+
+		//Red Stone
+		if (mTargetItem->getId() == "RedStone")
+		{
+			//Play sound and blink
+
+			mTargetItem->toggleInteractable();
+		}
+
+		//Green Stone
+		if (mTargetItem->getId() == "GreenStone")
+		{
+			//Play sound and blink
+
+			mTargetItem->toggleInteractable();
+		}
+
+		//Yellow Stone
+		if (mTargetItem->getId() == "YellowStone")
+		{
+			//Play sound and blink
+
+			mTargetItem->toggleInteractable();
+		}
+
+		//Parent
+		if (mTargetItem->getId() == "Parent")
+		{
+			if (mSkatmaraTalked == true)
+			{
+				//Talk about lost child
+				mParentTalked = true;
+				mTargetItem->toggleInteractable();
+
+				addItem(mHideout1);
+				addItem(mHideout2);
+				addItem(mHideout3);
+				addItem(mHideout4);
+
+
+
+			}
+			else
+			{
+				//Welcome to Magic World
+				mTargetItem->toggleInteractable();
+			}
+		}
+
+		//Hideout 1
+		if (mTargetItem->getId() == "Hideout 1")
+		{
+			if (mHide2Looked == true && mHide3Looked == true && mHide4Looked == true)
+			{
+				//Kid found!
+			}
+			else
+			{
+				mHide1Looked = true;
+			}
+		}
+
+		//Hideout 2
+		if (mTargetItem->getId() == "Hideout 2")
+		{
+			if (mHide1Looked == true && mHide3Looked == true && mHide4Looked == true)
+			{
+				//Kid found!
+			}
+			else
+			{
+				mHide2Looked = true;
+			}
+		}
+
+		//Hideout 3
+		if (mTargetItem->getId() == "Hideout 3")
+		{
+			if (mHide1Looked == true && mHide2Looked == true && mHide4Looked == true)
+			{
+				//Kid found!
+			}
+			else
+			{
+				mHide3Looked = true;
+			}
+		}
+
+		//Hideout 4
+		if (mTargetItem->getId() == "Hideout 4")
+		{
+			if (mHide1Looked == true && mHide2Looked == true && mHide3Looked == true)
+			{
+				//Kid found!
+			}
+			else
+			{
+				mHide4Looked = true;
+			}
+		}
+
+		//Skatmara
+		if (mTargetItem->getId() == "Skatmara")
+		{
+
+			mSkatmaraTalked = true;
+			std::cout << "mSkatmaraTalked = true";
+
+			if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Coin")
+			{
+
+				std::cout << "Ger bort mynt!";
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mCoinGiven = true;
+
+				if (mStoneGiven == true && mPinGiven == true)
+				{
+					//Play dialog
+				}
+			}
+
+			else if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "BlueStone")
+			{
+				std::cout << "Ger bort sten";
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mStoneGiven = true;
+
+				if (mCoinGiven == true && mPinGiven == true)
+				{
+					//Play dialog
+				}
+			}
+
+			else if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Pin")
+			{
+				std::cout << "Ger bort brosch";
+				mInventory->removeItem(mInventory->getSelectedItem());
+				mPinGiven = true;
+
+				if (mCoinGiven == true && mStoneGiven == true)
+				{
+					//Play dialog
+				}
+			}
+			else
+			{
+				mTargetItem->toggleInteractable();
+			}
+
+
+		}
+
+		//Next Item
+
+	}
+}
+
+void Level3::mouseClickCheckItemCollision(sf::Vector2f point)
+{
 	//Loop through all Items in active level
 	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
 	{
@@ -883,9 +1636,6 @@ void Level3::mouseClick(sf::Event &event)
 			//Check if Item is Active
 			if (getItems()[i]->getActive())
 			{
-				mPlayer->setActiveAnimation("Walk");
-
-
 				if (getItems()[i]->getId() == "Trimmer")
 				{
 					//Move Player to the closest point that is still inside the playrect
@@ -936,15 +1686,15 @@ void Level3::mouseClick(sf::Event &event)
 
 				if (getItems()[i]->getId() == "Flowers")
 				{
-					
-						//Move Player to the closest point that is still inside the playrect
-						mPlayer->moveToPosition(466, 522);
-						//Set the Item as "Target Item"
-						mTargetItem = getItems()[i];
-						//Enable Item interaction
-						mItemInteraction = true;
-						std::cout << "Klickade på blommor!";
-					
+
+					//Move Player to the closest point that is still inside the playrect
+					mPlayer->moveToPosition(466, 522);
+					//Set the Item as "Target Item"
+					mTargetItem = getItems()[i];
+					//Enable Item interaction
+					mItemInteraction = true;
+					std::cout << "Klickade på blommor!";
+
 				}
 
 				if (getItems()[i]->getId() == "Flagpole")
@@ -1028,7 +1778,6 @@ void Level3::mouseClick(sf::Event &event)
 					//Enable Item interaction
 					mItemInteraction = true;
 					std::cout << "Klickade på fjäderboll!";
-
 				}
 
 				if (getItems()[i]->getId() == "Jack")
@@ -1043,7 +1792,7 @@ void Level3::mouseClick(sf::Event &event)
 
 				}
 
-				if (getItems()[i]->getId() == "Cloth")
+				if (getItems()[i]->getId() == "RippedCloth")
 				{
 					//Move Player to the closest point that is still inside the playrect
 					mPlayer->moveToPosition(386, 543);
@@ -1196,20 +1945,18 @@ void Level3::mouseClick(sf::Event &event)
 					//Enable Item interaction
 					mItemInteraction = true;
 					std::cout << "Klickade på Skatmara!";
-
 				}
 			}
 		}
 	}
+}
 
-	//Check Rect Collisions
-
+void Level3::mouseClickCheckRectCollision(sf::Vector2f point)
+{
 	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
 	{
 		if (checkCollision(getRects()[i], point))
 		{
-			mPlayer->setActiveAnimation("Walk");
-
 			// i == 0 Bees, Door to garden, 
 
 			if (i == 0)
@@ -1217,7 +1964,7 @@ void Level3::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Bikupa! Bzzz";
-					
+
 				}
 				else if (getActiveScene() == 1)
 				{
@@ -1247,8 +1994,8 @@ void Level3::mouseClick(sf::Event &event)
 				if (getActiveScene() == 0)
 				{
 					std::cout << "Dörr!";                  //Detta ska vara en annan rektangel sedan!!! OBS
-					
-					//Make Player get into position for Scene change
+
+														   //Make Player get into position for Scene change
 					mPlayer->moveToPosition(1973, 370);
 					//Set Collision Rect to Scene change position
 					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1973, 370), sf::Vector2f(10, 10));
@@ -1262,9 +2009,9 @@ void Level3::mouseClick(sf::Event &event)
 				}
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Magic World!";                 
+					std::cout << "Magic World!";
 
-			        //Make Player get into position for Scene change
+					//Make Player get into position for Scene change
 					mPlayer->moveToPosition(1406, 362);
 					//Set Collision Rect to Scene change position
 					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1406, 362), sf::Vector2f(10, 10));
@@ -1296,659 +2043,8 @@ void Level3::mouseClick(sf::Event &event)
 
 				}
 			}
-
-			
 		}
 	}
-}
-
-
-
-void Level3::update(sf::RenderWindow &window, float deltaTime)
-{
-	//Only do this if the level needs moving camera
-	//mLHandler->getLevel(1) is currently LastLevel, change as necessary
-
-	//Make sure UI is in correct position at all times
-	mUI->setUIPosition(mView.getCenter());
-	mInventory->setGridPosition(mView.getCenter());
-
-	//Scene 1 is the big, second room in LastLevel, change as necessary
-	if (getActiveScene() == 0)
-	{
-		//520 is the distance the Player has to be from the left side of the level before the camera starts scrolling, change as necessary
-		//1000 is the distance the Player has to be from the right side of the level before the camera starts scrolling, change as necessary
-		//In this case the camera scrolls while the Player is between 520 and 1000.
-		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1530)
-		{
-			//Make camera follow Player position
-			moveViewWithPlayer(mPlayer->getPosition().x);
-		}
-	}
-
-	if (getActiveScene() == 1)
-	{
-		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 1000)
-		{
-			moveViewWithPlayer(mPlayer->getPosition().x);
-		}
-	}
-
-	if (getActiveScene() == 2)
-	{
-		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 2000)
-		{
-			moveViewWithPlayer(mPlayer->getPosition().x);
-		}
-	}
-
-	//Check if Player is in position to change Scene
-	if (mPlayer->getRect().intersects(mSceneChangeRect))
-	{
-		//Toggle Player if the new Scene needs it
-		if (mPlayerToggle)
-		{
-			mPlayer->togglePlayer();
-		}
-		//Set Player position to the starting position of the new Scene
-		mPlayer->setPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
-		mPlayer->moveToPosition(mSceneChangePlayerPos.x, mSceneChangePlayerPos.y);
-		//Change to the new Scene
-		changeScene(mNewScene);
-	}
-
-	//Check if Item interaction is enabled, which it only is when an Item is clicked
-	if (mItemInteraction)
-	{
-		//Check if any part of the Player intersects with the Item
-		if (mPlayer->getIsOnPosition())
-		{
-			//Check if Item has already been looked at
-			if (!mTargetItem->isLookedAt())
-			{
-				mTargetItem->toggleIsLookedAt(); //Fixa dialoger i funktion
-				mItemInteraction = false;
-			}
-			//Check if Item can be picked up
-			else if (mTargetItem->getPickupable())
-			{
-				//Make Item inactive when it is picked up
-				mTargetItem->toggleActive();
-
-
-				if (mTargetItem->getId() == "Trimmer")
-				{
-					mInventory->addItem(mTargetItem);
-					mTargetItem->changeTexture(handler, "TrimmerIcon.png");
-					std::cout << "Plockade upp häcksax!";
-
-				}
-
-				if (mTargetItem->getId() == "Flowers")
-				{
-					mInventory->addItem(mTargetItem);
-					std::cout << "Plockade upp blomma!";
-
-				}
-
-				if (mTargetItem->getId() == "Stick")
-				{
-					if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
-					{
-						mInventory->addItem(mTargetItem);
-						mTargetItem->changeTexture(handler, "StickIcon.png");
-						std::cout << "Plockade upp Pinne!";
-
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-						mTargetItem->toggleInteractable();
-					}
-
-				}
-
-				if (mTargetItem->getId() == "Clover")
-				{
-					if (mItemPicked == false)
-					{
-						mInventory->addItem(mTargetItem);
-						mItemPicked = true;
-						std::cout << "Plockade upp klöver!";
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
-				}
-
-				if (mTargetItem->getId() == "Sawdust")
-				{
-					if (mItemPicked == false)
-					{
-						mInventory->addItem(mTargetItem);
-						mItemPicked = true;
-						std::cout << "Plockade upp sågspån!";
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
-				}
-
-				if (mTargetItem->getId() == "Fjun")
-				{
-					if (mItemPicked == false)
-					{
-						mInventory->addItem(mTargetItem);
-						mItemPicked = true;
-						std::cout << "Plockade upp fjun!";
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
-				}
-
-				if (mTargetItem->getId() == "Featherball")
-				{
-					if (mItemPicked == false)
-					{
-						mInventory->addItem(mTargetItem);
-						mItemPicked = true;
-						std::cout << "Plockade upp fjäderboll!";
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
-				}
-
-				if (mTargetItem->getId() == "Nail")
-				{
-					if (mItemPicked == false)
-					{
-						mInventory->addItem(mTargetItem);
-						mItemPicked = true;
-						std::cout << "Plockade upp spik!";
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
-				}
-
-				if (mTargetItem->getId() == "Cloth")
-				{
-					if (mItemPicked == false)
-					{
-						mInventory->addItem(mTargetItem);
-						mItemPicked = true;
-						std::cout << "Plockade upp tygbit!";
-					}
-					else
-					{
-						mTargetItem->toggleActive();
-					}
-				}
-
-
-			}
-
-
-			//Check if Item can be interacted with
-			else if (mTargetItem->getInteractable())
-			{
-				//Check if Item has already been interacted with
-				if (!mTargetItem->isInteracted())
-				{
-					mTargetItem->toggleInteractable();
-
-					//Koppel
-					if (mTargetItem->getId() == "Leash")
-					{
-
-
-						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Trimmer")
-						{
-							mTargetItem->changeTexture(handler, "transparent.png"); //Add correct texture!
-							mUnleashed = true;
-							std::cout << "Klipper kopplet!";
-						}
-						else
-						{
-							mTargetItem->toggleInteractable();
-						}
-
-						
-					}
-
-					//Hund
-					if (mTargetItem->getId() == "Dog")
-					{
-						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Stick" && mUnleashed == true)
-						{
-							mInventory->removeItem(mInventory->getSelectedItem());
-
-							mTargetItem->moveToPosition(1272, 500);
-							std::cout << "Kastade pinnen!";
-							mCursor->setMode(Cursor::DISABLED);
-							mTargetItem->setActiveAnimation("Dog");
-							mDogRunning = true;
-
-
-							mPlayRects.push_back(createRect(683, 360, 673, 160));
-						}
-						else
-						{
-							mTargetItem->toggleInteractable();
-						}
-
-
-					}
-
-					//Flaggstång
-					if (mTargetItem->getId() == "Flagpole")
-					{
-						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Flowers")
-						{
-							mInventory->removeItem(mInventory->getSelectedItem());
-							mPlayRects.push_back(createRect(1356, 360, 500, 160));
-
-							for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-							{
-								if (getItems()[i]->getId() == "Singleflower")
-								{
-									getItems()[i]->toggleActive();
-								}
-							}
-
-						}
-
-						else
-						{
-					
-							mTargetItem->toggleInteractable();
-						}
-
-					}
-
-					//Knippe blommor
-					if (mTargetItem->getId() == "Singleflower")
-					{
-						mTargetItem->moveToPosition(1390, 121);
-					}
-
-					//KNEKTEN 
-					if (mTargetItem->getId() == "Jack")
-					{
-						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() != "Screwdevice")
-						{
-							if (mInventory->selectedItem()->getId() == "Clover" || mInventory->selectedItem()->getId() == "Nail" || mInventory->selectedItem()->getId() == "Featherball" || mInventory->selectedItem()->getId() == "Fjun" || mInventory->selectedItem()->getId() == "Sawdust" || mInventory->selectedItem()->getId() == "Cloth")
-							{
-								mInventory->removeItem(mInventory->getSelectedItem());
-								mItemPicked = false;
-								mTargetItem->toggleInteractable();
-
-								//OBSOBS vad mer ska hända?
-							}
-							else
-							{
-								mTargetItem->toggleInteractable();
-							}
-						}
-						else
-						{
-							mTargetItem->toggleInteractable();
-						}
-					}
-
-					//Pond
-					if (mTargetItem->getId() == "Pond")
-					{
-						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "FishingRodMagnet")
-						{
-							std::cout << "Fiskade mynt!";
-							mInventory->addItem(mCoin);
-						}
-						else
-						{
-							mTargetItem->toggleInteractable();
-						}
-					}
-
-					//Statue
-					if (mTargetItem->getId() == "Statue")
-					{
-						//Play sound and blink
-
-						mTargetItem->toggleInteractable();
-
-					}
-
-					//Blue Stone
-					if (mTargetItem->getId() == "BlueStone")
-					{
-						//Play sound and blink
-
-						mTargetItem->toggleInteractable();
-					}
-
-					//Red Stone
-					if (mTargetItem->getId() == "RedStone")
-					{
-						//Play sound and blink
-
-						mTargetItem->toggleInteractable();
-					}
-
-					//Green Stone
-					if (mTargetItem->getId() == "GreenStone")
-					{
-						//Play sound and blink
-
-						mTargetItem->toggleInteractable();
-					}
-
-					//Yellow Stone
-					if (mTargetItem->getId() == "YellowStone")
-					{
-						//Play sound and blink
-
-						mTargetItem->toggleInteractable();
-					}
-
-					//Parent
-					if (mTargetItem->getId() == "Parent")
-					{
-						if (mSkatmaraTalked == true)
-						{
-							//Talk about lost child
-							mParentTalked = true;
-							mTargetItem->toggleInteractable();
-
-							addItem(mHideout1);
-							addItem(mHideout2);
-							addItem(mHideout3);
-							addItem(mHideout4);
-
-
-
-						}
-						else
-						{
-							//Welcome to Magic World
-							mTargetItem->toggleInteractable();
-						}
-					}
-
-					//Hideout 1
-					if (mTargetItem->getId() == "Hideout 1")
-					{
-						if (mHide2Looked == true && mHide3Looked == true && mHide4Looked == true)
-						{
-							//Kid found!
-						}
-						else
-						{
-							mHide1Looked = true;
-						}
-					}
-
-					//Hideout 2
-					if (mTargetItem->getId() == "Hideout 2")
-					{
-						if (mHide1Looked == true && mHide3Looked == true && mHide4Looked == true)
-						{
-							//Kid found!
-						}
-						else
-						{
-							mHide2Looked = true;
-						}
-					}
-
-					//Hideout 3
-					if (mTargetItem->getId() == "Hideout 3")
-					{
-						if (mHide1Looked == true && mHide2Looked == true && mHide4Looked == true)
-						{
-							//Kid found!
-						}
-						else
-						{
-							mHide3Looked = true;
-						}
-					}
-
-					//Hideout 4
-					if (mTargetItem->getId() == "Hideout 4")
-					{
-						if (mHide1Looked == true && mHide2Looked == true && mHide3Looked == true)
-						{
-							//Kid found!
-						}
-						else
-						{
-							mHide4Looked = true;
-						}
-					}
-
-					//Skatmara
-					if (mTargetItem->getId() == "Skatmara")
-					{
-						
-						mSkatmaraTalked = true;
-						std::cout << "mSkatmaraTalked = true";
-
-						if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Coin")
-						{
-	
-							std::cout << "Ger bort mynt!";
-							mInventory->removeItem(mInventory->getSelectedItem());
-							mCoinGiven = true;
-
-							if (mStoneGiven == true && mPinGiven == true)
-							{
-								//Play dialog
-							}
-						}
-
-						else if(mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "BlueStone")
-						{
-							std::cout << "Ger bort sten";
-							mInventory->removeItem(mInventory->getSelectedItem());
-							mStoneGiven = true;
-
-							if (mCoinGiven == true && mPinGiven == true)
-							{
-								//Play dialog
-							}
-						}
-
-						else if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Pin")
-						{
-							std::cout << "Ger bort brosch";
-							mInventory->removeItem(mInventory->getSelectedItem());
-							mPinGiven = true;
-
-							if (mCoinGiven == true && mStoneGiven == true)
-							{
-								//Play dialog
-							}
-						}
-						else
-						{
-							mTargetItem->toggleInteractable();
-						}
-
-
-					}
-
-					//Next Item
-
-				}
-			}
-			//Disable Item interaction when done
-			mItemInteraction = false;
-		}
-	}
-
-	//Animation updates
-	mDog->update(deltaTime);
-	mLady->update(deltaTime);
-
-	//Inventory
-	mInventory->update(window);
-
-	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
-	if (mTargetItem != NULL)
-	{
-		mTargetItem->update(deltaTime);
-		//Put everything back to normal after the "Pushing cutscene"
-		if (mTargetItem->getIsOnPosition())
-		{
-
-			if (mDogRunning)
-			{
-				mDogRunning = false;
-				mCursor->setMode(Cursor::NORMAL);
-				mTargetItem->toggleActive();
-			}
-
-		}
-	}
-
-	mCursor->setPosition(sf::Vector2f(mWorldPos));
-	mCursor->update(window);
-
-	if (mCursor->getMode() != Cursor::DIALOGUE && mCursor->getMode() != Cursor::INVENTORY && mCursor->getMode() != Cursor::DISABLED && mCursor->getMode() != Cursor::MENU && mUpdateTime > 0)
-	{
-		mouseHover();
-		mUpdateTime = 0;
-	}
-	else
-	{
-		mUpdateTime++;
-	}
-
-	//Make sure UI is in correct place at all times
-	mUI->setUIPosition(mView.getCenter());
-	mInventory->setGridPosition(mView.getCenter());
-
-}
-
-void Level3::mouseHover()
-{
-	mCursor->setMode(Cursor::NORMAL);
-
-	//Check if playrect collision
-	if (checkCollision(getPlayRects(), mCursor->getRect()))
-	{
-		mCursor->setMode(Cursor::NORMAL); // TODO - Add walk cursor maybe?
-	}
-
-	//Check Item collision
-	//Loop through all Items in active level
-	for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-	{
-		//Check if mouse collided with Item
-		if (getItems()[i]->getRectangle().intersects(mCursor->getRect()))
-		{
-			//Check if Item is Active
-			if (getItems()[i]->getActive())
-			{
-				if (!getItems()[i]->isLookedAt())
-				{
-					mCursor->setMode(Cursor::EYE);
-				}
-				//Check if Item can be picked up
-				else if (getItems()[i]->getPickupable())
-				{
-					mCursor->setMode(Cursor::OPENHAND);
-				}
-				//Check if Item can be interacted with
-				else if (getItems()[i]->getInteractable())
-				{
-					//Check if Item has already been interacted with
-					if (!getItems()[i]->isInteracted())
-					{
-						mCursor->setMode(Cursor::OPENHAND);
-					}
-				}
-			}
-		}
-	}
-
-	//Check Rect Collisions
-	for (Level::rectVector::size_type i = 0; i < getRects().size(); i++)
-	{
-		if (checkCollision(getRects()[i], mCursor->getRect()))
-		{
-			//// i == 10 is stairs in scene 1
-			//if (i == 10)
-			//{
-			//	if (mActiveScene == 0)
-			//	{
-			//		mCursor->setMode(Cursor::NORMAL);
-			//	}
-			//	else
-			//	{
-			//		mCursor->setMode(Cursor::EYE);
-			//	}
-			//}
-
-			//// i == 5 is stairs in scene 2
-			//else if (i == 5)
-			//{
-			//	if (mActiveScene == 1)
-			//	{
-			//		mCursor->setMode(Cursor::NORMAL);
-			//	}
-			//	else
-			//	{
-			//		mCursor->setMode(Cursor::EYE);
-			//	}
-			//}
-
-			//// i == 0 is door in scene 2
-			//else if (i == 0)
-			//{
-			//	if (mActiveScene == 1)
-			//	{
-			//		mCursor->setMode(Cursor::NORMAL);
-			//	}
-			//}
-
-			////i == 2 is door in scene 3
-			//else if (i == 2)
-			//{
-			//	if (mActiveScene == 2)
-			//	{
-			//		mCursor->setMode(Cursor::NORMAL);
-			//	}
-			//	else
-			//	{
-			//		mCursor->setMode(Cursor::NORMAL);
-			//	}
-			//}
-
-			//else
-			//{
-				mCursor->setMode(Cursor::EYE);
-			//}
-		}
-	}
-
-	if (mInventory->selectedItem() != NULL)
-	{
-		mCursor->setMode(Cursor::CLOSEDHAND);
-	}
-}
-
-bool Level3::isLevelComplete()
-{
-	return mLevelComplete;
 }
 
 UI* Level3::getUI()

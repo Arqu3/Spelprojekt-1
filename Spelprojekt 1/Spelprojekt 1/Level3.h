@@ -46,7 +46,7 @@ public:
 	void internalSwap(int num);
 	void changeScene(int num);
 	int getActiveScene();
-	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window);
+	void toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI *ui);
 	bool isActive();
 
 	//Eventstuff
@@ -58,12 +58,23 @@ public:
 
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
+	void mouseReleased(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
 
 	//Level Complete
 	bool isLevelComplete();
+
+	//Update functions
+	void updateTargetItem(float deltaTime);
+	void lookAtTargetItem();
+	void pickupTargetItem();
+	void interactTargetItem();
+
+	//Mouseclick collision functions
+	void mouseClickCheckItemCollision(sf::Vector2f point);
+	void mouseClickCheckRectCollision(sf::Vector2f point);
 
 private:
 
@@ -132,7 +143,7 @@ private:
 	Item* mSawdust;
 	Item* mFjun;
 	Item *mJack;
-	Item* mCloth;
+	Item* mRippedCloth;
 	Item* mPond;
 	Item* mStatue;
 	Item* mBlueStone;
@@ -198,10 +209,9 @@ private:
 	bool mStoneGiven;
 	bool mPinGiven;
 	
+	bool mMouseReleased;
 
 	ResourceHandler &handler;
-
-	int mUpdateTime;
 
 	};
 

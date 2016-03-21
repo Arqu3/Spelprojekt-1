@@ -87,6 +87,20 @@ mMode(Texture)
 	mSprite.setPosition(pos);
 }
 
+Button::Button(ResourceHandler &handler, sf::RectangleShape &rect, std::string textureName, std::string hoverName):
+mTextureName(textureName),
+mRect(rect),
+mHoverRect(rect),
+mMoveToPosition(rect.getPosition().x, rect.getPosition().y),
+mDirection(0, 0),
+mIsOnPosition(true),
+mSpeed(100),
+mMode(RectangleShape)
+{
+	mRect.setTexture(handler.getTexture(textureName));
+	mHoverRect.setTexture(handler.getTexture(hoverName));
+}
+
 Button::~Button()
 {
 
@@ -130,6 +144,7 @@ void Button::setPosition(float x, float y)
 	{
 	case RectangleShape:
 		mRect.setPosition(x, y);
+		mHoverRect.setPosition(x, y);
 		mMoveToPosition = sf::Vector2f(x, y);
 		mDirection = sf::Vector2f(0, 0);
 		break;
@@ -147,6 +162,7 @@ void Button::setPosition(sf::Vector2f &pos)
 	{
 	case RectangleShape:
 		mRect.setPosition(pos);
+		mHoverRect.setPosition(pos);
 		mMoveToPosition = pos;
 		mDirection = sf::Vector2f(0, 0);
 		break;
@@ -161,7 +177,7 @@ void Button::setPosition(sf::Vector2f &pos)
 void Button::moveTo(float x, float y)
 {
 	float deltaX;
-    float deltaY;
+	float deltaY;
 
 	float squareX;
 	float squareY;
@@ -288,6 +304,7 @@ void Button::move(float deltaTime)
 		{
 			mSetPos += mDirection * mSpeed * deltaTime;
 			mRect.setPosition(mSetPos);
+			mHoverRect.setPosition(mSetPos);
 		}
 		break;
 
@@ -322,6 +339,10 @@ void Button::draw(sf::RenderWindow &window)
 	{
 	case RectangleShape:
 		window.draw(mRect);
+		if (isPressed(window))
+		{
+			window.draw(mHoverRect);
+		}
 		break;
 
 	case Texture:

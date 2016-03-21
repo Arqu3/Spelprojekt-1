@@ -8,7 +8,7 @@ isOnPosition(true),
 moveTo(position),
 mActiveAnimation("Walk"),
 mWalk(false),
-mFrameTime(0.03f),
+mFrameTime(0.03f), //Lägre värde = Snabbare animation
 mCurrentTime(0),
 mCurrentFrame(0),
 mFrameXOffset(0),
@@ -16,22 +16,33 @@ mFrameYOffset(0),
 mSpeed(300.0f),
 mFacingLeft(true),
 mStepCooldown(0),
-mThomasActive(true)
-
+mThomasActive(true),
+sequenceCounter(0),
+mNextPosition(position),
+mCorrecting(false),
+mDownValid(true),
+mUpValid(true),
+mRightValid(true),
+mLeftValid(true)
 {
 	//Sounds
-	/*mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
-	mWalkingSound.setVolume(25);*/
+	mWalkingSound.setBuffer(*handler.getSound("Footsteps_Thomas.ogg"));
+	mWalkingSound.setVolume(25);
 
 	//Spritesheet - Thomas
 	mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
 	mSprite.setOrigin(400, 700);
 
-	mThomasTexture = *handler.getTexture("ThomasWalk.png");
+	/*mThomasTexture = *handler.getTexture("ThomasWalk.png");
 	mHilmaTexture = *handler.getTexture("HilmaWalk.png");
 	mHilmaPushTexture = *handler.getTexture("HilmaPush.png");
-	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");
-	
+	mHilmaFishingTexture = *handler.getTexture("HilmaFishing.png");*/
+
+	mThomasTexture.loadFromFile("Resources/Textures/ThomasWalk.png");
+	mHilmaTexture.loadFromFile("Resources/Textures/HilmaWalk.png");
+	mHilmaPushTexture.loadFromFile("Resources/Textures/HilmaPush.png");
+	mHilmaFishingTexture.loadFromFile("Resources/Textures/HilmaFishing.png");
+	mHilmaJumpTexture.loadFromFile("Resources/Textures/HilmaJump.png");
 
 	mSprite.setTexture(mThomasTexture);
 	mSprite.setTextureRect(sf::IntRect(0, 0, 800, 800));
@@ -51,6 +62,7 @@ void Player::move(float deltaTime)
 	if (mRect.intersects(mMoveToRect))
 	{
 		isOnPosition = true;
+		mDirectionSet = false;
 		mWalk = false;
 	}
 	else
@@ -63,13 +75,19 @@ void Player::move(float deltaTime)
 	if (isOnPosition == false)
 	{
 		mPosition += mDirection * mSpeed * deltaTime;
+		if (!mCorrecting)
+		{
+			//mNextPosition += mDirection * mSpeed * deltaTime;
+		}
 	}
 }
 
 void Player::setPosition(float x, float y)
 {
 	mPosition = sf::Vector2f(x, y);
+	mNextPosition = sf::Vector2f(x, y);
 	mDirection = sf::Vector2f(0, 0);
+	moveTo = sf::Vector2f(x, y);
 }
 
 void Player::moveToPosition(float x, float y)
@@ -171,7 +189,6 @@ void Player::update(float deltaTime)
 		mWalkingSound.pause();
 	}
 
-	//Push Animation
 	if (mActiveAnimation == "Push")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -205,8 +222,8 @@ void Player::update(float deltaTime)
 	{
 		if (mCurrentTime >= mFrameTime)
 		{
-			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 500, mFrameYOffset * 500, 500, 500));
-			if (mCurrentFrame < 35)
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 27)
 			{
 				mFrameXOffset += 1;
 				if (mFrameXOffset % 7 == 6)
@@ -221,9 +238,67 @@ void Player::update(float deltaTime)
 			}
 			else
 			{
-				mCurrentFrame = 35;
-				mFrameXOffset = 5;
-				mFrameYOffset = 5;
+				mCurrentFrame = 27;
+				mFrameXOffset = 3;
+				mFrameYOffset = 4;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+	//Fishing Pull Animation
+	if (mActiveAnimation == "FishingPull")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 800, mFrameYOffset * 800, 800, 800));
+			if (mCurrentFrame < 11)
+			{
+				mFrameXOffset -= 1;
+				if (mFrameXOffset % 7 == 0)
+				{
+					mFrameYOffset--;
+				}
+				if (mFrameXOffset <= 0)
+				{
+					mFrameXOffset = 5;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 11;
+				mFrameXOffset = 3;
+				mFrameYOffset = 4;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+	//Jump animation
+	if (mActiveAnimation == "Jump")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 700, mFrameYOffset * 700, 700, 700));
+			if (mCurrentFrame < 40)
+			{
+				mFrameXOffset++;
+				if (mFrameXOffset % 6 == 5)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 5)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame++;
+			}
+			else
+			{
+				mCurrentFrame = 40;
+				mFrameXOffset = 4;
+				mFrameYOffset = 7;
 			}
 			mCurrentTime = 0;
 		}
@@ -349,6 +424,22 @@ void Player::setActiveAnimation(std::string animation)
 		mSprite.setTexture(mHilmaFishingTexture);
 		mWalk = false;
 	}
+	else if (animation == "FishingPull")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 3;
+		mFrameYOffset = 4;
+		mSprite.setTexture(mHilmaFishingTexture);
+		mWalk = false;
+	}
+	else if (animation == "Jump")
+	{
+		mCurrentFrame = 0;
+		mFrameXOffset = 0;
+		mFrameYOffset = 0;
+		mSprite.setTexture(mHilmaJumpTexture);
+		mWalk = false;
+	}
 	else if (animation == "Idle")
 	{
 		if (mThomasActive)
@@ -427,4 +518,263 @@ void Player::setScale(sf::Vector2f scale)
 int Player::getCurrentFrame()
 {
 	return mCurrentFrame;
+}
+
+void Player::setFrameTime(float frametime)
+{
+	mFrameTime = frametime;
+}
+
+void Player::navigate(std::vector<Item*> items, float deltaTime)
+{
+	for (std::vector<Item*>::size_type i = 0; i < items.size(); i++)
+	{
+		if (!items[i]->getWalkable())
+		{
+			//Check if any items are in the way
+			if (items[i]->getRectangle().contains(mNextPosition))
+			{
+				//Check valid directions around item
+				if (mPosition.x - 10 > items[i]->getRectangle().left)
+				{
+					if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y + 10))
+					{
+						mDownValid = false;
+					}
+					if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y - 10))
+					{
+						mUpValid = false;
+					}
+				}
+				else if (mPosition.x - 10 > (items[i]->getRectangle().left + items[i]->getRectangle().width))
+				{
+					if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y + 10))
+					{
+						mDownValid = false;
+					}
+					if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y - 10))
+					{
+						mUpValid = false;
+					}
+				}
+				if (mPosition.y - 10 > items[i]->getRectangle().top)
+				{
+					if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y + 10))
+					{
+						mRightValid = false;
+					}
+					if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y + 10))
+					{
+						mLeftValid = false;
+					}
+				}
+				else if (mPosition.y - 10 > (items[i]->getRectangle().top + items[i]->getRectangle().height))
+				{
+					if (items[i]->getRectangle().contains(mPosition.x + 10, mPosition.y - 10))
+					{
+						mRightValid = false;
+					}
+					if (items[i]->getRectangle().contains(mPosition.x - 10, mPosition.y - 10))
+					{
+						mLeftValid = false;
+					}
+				}
+
+				//Choose best direction around item
+				if (!mDirectionSet)
+				{
+					if (mPosition.x >= moveTo.x)
+					{
+						mRightValid = false;
+					}
+					else
+					{
+						mLeftValid = false;
+					}
+					if (mPosition.y >= moveTo.y)
+					{
+						mDownValid = false;
+					}
+					else
+					{
+						mUpValid = false;
+					}
+					mDirectionSet = true;
+				}
+
+				//Walk around item using best direction
+				if (mDownValid && (!mRightValid || !mLeftValid))
+				{
+					mPosition += sf::Vector2f(0, 1) * mSpeed * deltaTime;
+					mCorrecting = true;
+					if (!items[i]->getRectangle().contains(mPosition.x, mPosition.y + 1))
+					{
+						mCorrecting = false;
+						mNextPosition = mPosition;
+					}
+				}
+				else if (mUpValid && (!mRightValid || !mLeftValid))
+				{
+					mPosition += sf::Vector2f(0, -1) * mSpeed * deltaTime;
+					mCorrecting = true;
+					if (!items[i]->getRectangle().contains(mPosition.x, mPosition.y - 1))
+					{
+						mCorrecting = false;
+						mNextPosition = mPosition;
+					}
+				}
+				else if (mRightValid && (!mUpValid || !mDownValid))
+				{
+					mPosition += sf::Vector2f(1, 0) * mSpeed * deltaTime;
+					mCorrecting = true;
+					if (!items[i]->getRectangle().contains(mPosition.x + 1, mPosition.y))
+					{
+						mCorrecting = false;
+						mNextPosition = mPosition;
+					}
+				}
+				else if (mLeftValid && (!mUpValid || !mDownValid))
+				{
+					mPosition += sf::Vector2f(-1, 0) * mSpeed * deltaTime;
+					mCorrecting = true;
+					if (!items[i]->getRectangle().contains(mPosition.x - 1, mPosition.y))
+					{
+						mCorrecting = false;
+						mNextPosition = mPosition;
+					}
+				}
+			}
+			else if (!mCorrecting)
+			{
+				mDownValid = true;
+				mUpValid = true;
+				mRightValid = true;
+				mLeftValid = true;
+				mDirectionSet = false;
+				moveToPosition(moveTo.x, moveTo.y);
+				mPosition = mNextPosition;
+			}
+		}
+		else
+		{
+			moveToPosition(moveTo.x, moveTo.y);
+			mPosition = mNextPosition;
+		}
+	}
+}
+
+void Player::sequenceMove1()
+{
+	setSpeed(400.0f);
+
+	if (sequenceCounter == 0)
+	{
+		moveToPosition(486, 457);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 1)
+	{
+		moveToPosition(530, 407);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 2)
+	{
+		moveToPosition(584, 420);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 3)
+	{
+		moveToPosition(593, 377);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 4)
+	{
+		moveToPosition(604, 318);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 5)
+	{
+		moveToPosition(688, 321);
+		if (getIsOnPosition())
+		{
+			setPosition(688, 321);
+			sequenceCounter++;
+		}
+	}
+}
+
+void Player::sequenceMove2()
+{
+	setSpeed(400.0f);
+
+	if (sequenceCounter == 0)
+	{
+		moveToPosition(615, 255);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 1)
+	{
+		moveToPosition(550, 300);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 2)
+	{
+		moveToPosition(515, 350);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 3)
+	{
+		moveToPosition(495, 425);
+		if (getIsOnPosition())
+		{
+			sequenceCounter++;
+		}
+	}
+
+	else if (sequenceCounter == 4)
+	{
+		moveToPosition(490, 500);
+		if (getIsOnPosition())
+		{
+			setPosition(490, 500);
+			setSpeed(100.0f);
+		}
+	}
+}
+
+void Player::resetSequence()
+{
+	sequenceCounter = 0;
 }

@@ -24,8 +24,10 @@ public:
 	sf::SoundBuffer* getSound(std::string name);
 	std::string getMusic(std::string name);
 
+	void loadGeneral(sf::RenderWindow &window);
 
 	void loadLevel1(sf::RenderWindow &window);
+	void loadLevel2(sf::RenderWindow &window);
 	void loadLevel3(sf::RenderWindow &window);
 	void loadLastLevel(sf::RenderWindow &window);
 
@@ -52,7 +54,7 @@ private:
 
 	//Texture variables
 	typedef std::vector<sf::Texture*> TextureVector;
-        TextureVector mTextures;
+	TextureVector mTextures;
 	StringVector mTextureNames;
 
 	//Sound variables
@@ -68,7 +70,14 @@ private:
 	sf::Text mLoadMessage;
 
 	//Loading screen
-	sf::Sprite loadScreen;
+	sf::RectangleShape loadScreen;
+
+	bool mLevel1Loaded;
+	bool mLevel2Loaded;
+	bool mLevel3Loaded;
+	bool mLastLevelLoaded;
+
+	sf::View mView;
 };
 
 #endif

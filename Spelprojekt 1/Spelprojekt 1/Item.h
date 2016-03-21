@@ -80,7 +80,10 @@ public:
 	void setActiveAnimation(std::string animation);
 	std::string getActiveAnimation();
 
-	
+	void setCraftIndex(int craftIndex);
+
+	bool getWalkable();
+	void toggleWalkable();
 
 private:
 	bool mIsActive;
@@ -89,6 +92,7 @@ private:
 	bool mIsPickupable;
 	bool mIsLookedAt;
 	bool mInteracted;
+	bool mWalkable;
 
 	int mIndex;
 	int mCraftIndex;

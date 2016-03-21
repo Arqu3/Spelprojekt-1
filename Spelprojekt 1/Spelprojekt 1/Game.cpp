@@ -16,8 +16,12 @@ void Game::update()
 {
 	sf::RenderWindow window(sf::VideoMode(1024, 576), "Hittaren Hilma");
 
+	window.setVerticalSyncEnabled(true);
+
 	window.setMouseCursorVisible(false);
-	mLHandler.setActiveLevel(1, mRHandler, true, window);
+
+	mRHandler.loadGeneral(window);
+	mUI = new UI(mRHandler);
 
 	while (window.isOpen())
 	{
@@ -26,21 +30,41 @@ void Game::update()
 		sf::Time elapsed = deltaClock.getElapsedTime();
 		float deltaTime = elapsed.asSeconds();
 
-		if (mLHandler.getActiveLevel()->getUI()->getState() == UI::MAINMENU)
+		if (mUI->getState() == UI::MAINMENU)
 		{
-			mLHandler.getActiveLevel()->getUI()->eventListen(window);
-			mLHandler.getActiveLevel()->getUI()->drawMainMenu(window);
+			mUI->eventListen(window);
+			mUI->drawMainMenu(window);
+			if (mUI->getLevelStart())
+			{
+				mLHandler.setActiveLevel(mUI->getSelectedLevel(), mRHandler, true, window, mUI);
+				mUI->setLevelStart(false);
+			}
 		}
-		else if (mLHandler.getActiveLevel()->getUI()->getState() != UI::MAINMENU)
+		else if (mUI->getState() == UI::LEVELSELECT)
 		{
-			mLHandler.update(deltaTime, window, mRHandler);
-			if (mLHandler.getActiveLevel()->getUI()->getState() != UI::EXIT)
+			mUI->eventListen(window);
+			mUI->drawLevelSelect(window);
+			if (mUI->getLevelStart())
+			{
+				mLHandler.setActiveLevel(mUI->getSelectedLevel(), mRHandler, true, window, mUI);
+				mUI->setLevelStart(false);
+			}
+		}
+		else if (mUI->getState() != UI::MAINMENU)
+		{
+			mLHandler.update(deltaTime, window, mRHandler, mUI);
+			if (mUI->getState() != UI::EXIT)
 			{
 				mLHandler.getActiveLevel()->eventListen(window);
 			}
 			else
 			{
-				mLHandler.getActiveLevel()->getUI()->eventListen(window);
+				mUI->eventListen(window);
+				if (mUI->getLevelExit())
+				{
+					mLHandler.getActiveLevel()->toggleActive(mRHandler, window, mUI);
+					mUI->setLevelExit(false);
+				}
 			}
 			mLHandler.draw(window);
 		}
