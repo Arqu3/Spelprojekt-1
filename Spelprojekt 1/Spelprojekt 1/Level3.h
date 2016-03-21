@@ -129,6 +129,7 @@ private:
 
 	//Items
 	ItemVector mItems;
+	Item* mKey;
 	Item* mTrimmer;
 	Item* mStick;
 	Item* mFlowers;
@@ -210,6 +211,8 @@ private:
 	bool mPinGiven;
 	
 	bool mMouseReleased;
+
+	bool mMagicWorldOpen;
 
 	ResourceHandler &handler;
 

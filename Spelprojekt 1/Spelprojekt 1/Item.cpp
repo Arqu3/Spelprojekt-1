@@ -395,7 +395,7 @@ mWalkable(true)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(5.8f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("transparent.png")); 
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture FlowerIcon
+		mINVSprite.setTexture(*handler.getTexture("FlowersINV.png")); //Add correct texture FlowerIcon
 	}
 
 	if (id == "Leash")
@@ -439,7 +439,7 @@ mWalkable(true)
 		mDescription = "Blomma";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setTexture(*handler.getTexture("Flowers.png")); //Add correct texture
 	}
 
 	if (id == "Lady")
@@ -464,8 +464,7 @@ mWalkable(true)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
 		mSprite.setTexture(*handler.getTexture("Clover.png"));
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
-
+		mINVSprite.setTexture(*handler.getTexture("CloverINV.png"));
 	}
 
 	if (id == "Sawdust")
@@ -476,7 +475,7 @@ mWalkable(true)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("Sawdust.png"));
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("SawdustINV.png"));
 
 	}
 
@@ -488,7 +487,7 @@ mWalkable(true)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.1f, 0.6f));
 		mSprite.setTexture(*handler.getTexture("transparent.png"));
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("NailINV.png"));
 
 	}
 
@@ -500,7 +499,7 @@ mWalkable(true)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
 		mSprite.setTexture(*handler.getTexture("Skjuletfjun.png"));
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("SkjuletfjunINV.png"));
 
 	}
 
@@ -512,7 +511,7 @@ mWalkable(true)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.53f, 0.53f));
 		mSprite.setTexture(*handler.getTexture("Featherball.png"));
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("FeatherballINV.png"));
 
 	}
 
@@ -535,7 +534,7 @@ mWalkable(true)
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(1.5f, 1.0f));
 		mSprite.setTexture(*handler.getTexture("transparent.png"));
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("RippedClothINV.png"));
 	}
 
 	if (id == "Pond")

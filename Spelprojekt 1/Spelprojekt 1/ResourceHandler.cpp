@@ -330,10 +330,18 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 		addTexture("Trimmer.png");
 		addTexture("TrimmerINV.png");
 		addTexture("Leash.png");
+		addTexture("Flowers.png");
+		addTexture("FlowersINV.png");
 		addTexture("Sawdust.png");
+		addTexture("SawdustINV.png");
 		addTexture("Featherball.png");
+		addTexture("FeatherballINV.png");
 		addTexture("Skjuletfjun.png");
+		addTexture("SkjuletfjunINV.png");
 		addTexture("Clover.png");
+		addTexture("CloverINV.png");
+		addTexture("NailINV.png");
+		addTexture("RippedClothINV.png");
 		addTexture("Statue.png");
 
 		mLevel3Loaded = true;

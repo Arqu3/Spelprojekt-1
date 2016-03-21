@@ -151,6 +151,11 @@ void Level3::drawUI(sf::RenderWindow &window)
 	}
 
 	mCursor->draw(window);
+
+	if (mInventory->getSelectedItem() != -1)
+	{
+		mInventory->drawCursorSprite(window);
+	}
 }
 
 
@@ -228,6 +233,7 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		rectangle.setTexture(handler.getTexture("LastLevel_ItemTest1.png"));
 
 		//Add items
+		mKey = new Item(handler, sf::Vector2f(-100, -100), "Key");
 		mTrimmer = new Item(handler, sf::Vector2f(341, 367), "Trimmer");
 		mStick = new Item(handler, sf::Vector2f(381, 220), "Stick");
 		mFlowers = new Item(handler, sf::Vector2f(156, 525), "Flowers");
@@ -286,6 +292,8 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mPlayRects.push_back(createRect(0, 360, 683, 160));
 
 		//Item Active
+		mKey->toggleActive();
+
 		mTrimmer->toggleActive();
 		mTrimmer->toggleLookable();
 		mTrimmer->togglePickupable();
@@ -403,6 +411,9 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		addItem(mLady);
 
 		//changeScene(2);
+
+
+		mInventory->addItem(mKey);
 	}
 	else
 	{
@@ -452,9 +463,30 @@ void Level3::internalSwap(int num)
 		mActiveScene = 0;
 
 		//Walkable Area
+		mPlayRects.push_back(createRect(0, 360, 683, 160));
+		mPlayRects.push_back(createRect(683, 360, 673, 160));
+		mPlayRects.push_back(createRect(1356, 360, 500, 160));
 
 		//Rectangles
+		mRects.push_back(createRect(1806, 96, 62, 74));
+		mRects.push_back(createRect(1973, 123, 73, 278));
 
+		if (mTrimmer->getActive())
+		{
+			addItem(mTrimmer);
+		}
+		if (mFlagpole->getActive())
+		{
+			addItem(mFlagpole);
+		}
+		if (mSingleFlower->getActive())
+		{
+			addItem(mSingleFlower);
+		}
+		if (mLady->getActive())
+		{
+			addItem(mLady);
+		}
 	}
 
 	else if (num == 1)
@@ -472,8 +504,6 @@ void Level3::internalSwap(int num)
 		mPlayRects.push_back(createRect(96, 287, 286, 38));
 		mPlayRects.push_back(createRect(382, 249, 418, 323));
 		mPlayRects.push_back(createRect(800, 354, 624, 77));
-
-
 
 		//Rectangles
 
@@ -521,9 +551,6 @@ void Level3::internalSwap(int num)
 		{
 			addItem(mRippedCloth);
 		}
-
-		mInventory->addItem(mTrimmer);
-
 	}
 	else if (num == 2)
 	{
@@ -934,9 +961,9 @@ void Level3::mouseReleased(sf::Event & event)
 		mItemInteraction = true;
 		mPlayer->moveToPosition(349, 346);
 		mTargetItem = mStick;
-		mInventory->deSelectCheck();
+		//mInventory->deSelectCheck();
 	}
-	if (mInventory->selectedItem() != NULL
+	else if (mInventory->selectedItem() != NULL
 		&& mInventory->selectedItem()->getId() == "Trimmer"
 		&& mLeash->getRectangle().contains(mWorldPos)
 		&& mActiveScene == 0)
@@ -945,9 +972,9 @@ void Level3::mouseReleased(sf::Event & event)
 		mItemInteraction = true;
 		mPlayer->moveToPosition(588, 380);
 		mTargetItem = mLeash;
-		mInventory->deSelectCheck();
+		//mInventory->deSelectCheck();
 	}
-	if (mInventory->selectedItem() != NULL
+	else if (mInventory->selectedItem() != NULL
 		&& mInventory->selectedItem()->getId() == "Stick"
 		&& mDog->getRectangle().contains(mWorldPos)
 		&& mActiveScene == 0)
@@ -956,7 +983,96 @@ void Level3::mouseReleased(sf::Event & event)
 		mItemInteraction = true;
 		mPlayer->moveToPosition(666, 416);
 		mTargetItem = mDog;
-		mInventory->deSelectCheck();
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Flowers"
+		&& mFlagpole->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 0)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1354, 374);
+		mTargetItem = mFlagpole;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Trimmer"
+		&& mRippedCloth->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(386, 543);
+		mTargetItem = mRippedCloth;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Clover"
+		&& mJack->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1250, 370);
+		mTargetItem = mJack;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Sawdust"
+		&& mJack->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1250, 370);
+		mTargetItem = mJack;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "RippedCloth"
+		&& mJack->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1250, 370);
+		mTargetItem = mJack;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Featherball"
+		&& mJack->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1250, 370);
+		mTargetItem = mJack;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Nail"
+		&& mJack->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1250, 370);
+		mTargetItem = mJack;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Fjun"
+		&& mJack->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1250, 370);
+		mTargetItem = mJack;
+	}
+	else if (mInventory->selectedItem() != NULL
+		&& mInventory->selectedItem()->getId() == "Key"
+		&& mJack->getRectangle().contains(mWorldPos)
+		&& mActiveScene == 1)
+	{
+		mMouseReleased = true;
+		mItemInteraction = true;
+		mPlayer->moveToPosition(1250, 370);
+		mTargetItem = mJack;
 	}
 	else
 	{
@@ -1226,7 +1342,6 @@ void Level3::pickupTargetItem()
 		mInventory->addItem(mTargetItem);
 		mTargetItem->changeTexture(handler, "TrimmerIcon.png");
 		std::cout << "Plockade upp häcksax!";
-
 	}
 
 	if (mTargetItem->getId() == "Flowers")
@@ -1242,6 +1357,7 @@ void Level3::pickupTargetItem()
 			mInventory->addItem(mTargetItem);
 			mTargetItem->changeTexture(handler, "StickINV.png");
 			std::cout << "Plockade upp Pinne!";
+			mInventory->deSelectCheck();
 		}
 		else
 		{
@@ -1323,11 +1439,19 @@ void Level3::pickupTargetItem()
 
 	if (mTargetItem->getId() == "RippedCloth")
 	{
-		if (mItemPicked == false)
+		if (mMouseReleased)
 		{
-			mInventory->addItem(mTargetItem);
-			mItemPicked = true;
-			std::cout << "Plockade upp tygbit!";
+			if (mItemPicked == false)
+			{
+				mInventory->addItem(mTargetItem);
+				mItemPicked = true;
+				std::cout << "Plockade upp tygbit!";
+				mInventory->deSelectCheck();
+			}
+			else
+			{
+				mTargetItem->toggleActive();
+			}
 		}
 		else
 		{
@@ -1352,6 +1476,7 @@ void Level3::interactTargetItem()
 				mTargetItem->changeTexture(handler, "transparent.png"); //Add correct texture!
 				mUnleashed = true;
 				std::cout << "Klipper kopplet!";
+				mInventory->deSelectCheck();
 			}
 			else
 			{
@@ -1385,21 +1510,11 @@ void Level3::interactTargetItem()
 		//Flaggstång
 		if (mTargetItem->getId() == "Flagpole")
 		{
-			if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() == "Flowers")
+			if (mMouseReleased)
 			{
 				mInventory->removeItem(mInventory->getSelectedItem());
-				mPlayRects.push_back(createRect(1356, 360, 500, 160));
-
-				for (Level::ItemVector::size_type i = 0; i < getItems().size(); i++)
-				{
-					if (getItems()[i]->getId() == "Singleflower")
-					{
-						getItems()[i]->toggleActive();
-					}
-				}
-
+				mSingleFlower->toggleActive();
 			}
-
 			else
 			{
 
@@ -1412,18 +1527,28 @@ void Level3::interactTargetItem()
 		if (mTargetItem->getId() == "Singleflower")
 		{
 			mTargetItem->moveToPosition(1390, 121);
+			mPlayRects.push_back(createRect(1356, 360, 500, 160));
 		}
 
 		//KNEKTEN 
 		if (mTargetItem->getId() == "Jack")
 		{
-			if (mInventory->selectedItem() != NULL && mInventory->selectedItem()->getId() != "Screwdevice")
+			if (mMouseReleased)
 			{
-				if (mInventory->selectedItem()->getId() == "Clover" || mInventory->selectedItem()->getId() == "Nail" || mInventory->selectedItem()->getId() == "Featherball" || mInventory->selectedItem()->getId() == "Fjun" || mInventory->selectedItem()->getId() == "Sawdust" || mInventory->selectedItem()->getId() == "RippedCloth")
+				if (mInventory->selectedItem()->getId() == "Key" || mInventory->selectedItem()->getId() == "Clover" || mInventory->selectedItem()->getId() == "Nail" || mInventory->selectedItem()->getId() == "Featherball" || mInventory->selectedItem()->getId() == "Fjun" || mInventory->selectedItem()->getId() == "Sawdust" || mInventory->selectedItem()->getId() == "RippedCloth")
 				{
+					if (mInventory->selectedItem()->getId() == "Key")
+					{
+						mKey->toggleActive();
+					}
 					mInventory->removeItem(mInventory->getSelectedItem());
 					mItemPicked = false;
 					mTargetItem->toggleInteractable();
+
+					if (!mKey->getActive() && !mClover->getActive() && !mNail->getActive() && !mFeatherball->getActive() && !mFjun->getActive() && !mSawdust->getActive() && !mRippedCloth->getActive())
+					{
+						mMagicWorldOpen = true;
+					}
 
 					//OBSOBS vad mer ska hända?
 				}
@@ -2009,19 +2134,26 @@ void Level3::mouseClickCheckRectCollision(sf::Vector2f point)
 				}
 				else if (getActiveScene() == 1)
 				{
-					std::cout << "Magic World!";
+					if (mMagicWorldOpen)
+					{
+						std::cout << "Magic World!";
 
-					//Make Player get into position for Scene change
-					mPlayer->moveToPosition(1406, 362);
-					//Set Collision Rect to Scene change position
-					mSceneChangeRect = sf::FloatRect(sf::Vector2f(1406, 362), sf::Vector2f(10, 10));
-					//Set if Player should toggle on Scene Change
-					mPlayerToggle = false;
-					//Set starting position of Player in new Scene           
-					mSceneChangePlayerPos = sf::Vector2f(444, 291);
-					//Set which Scene will be the new Scene
-					mNewScene = 2;
-					mLastScene = 1;
+						//Make Player get into position for Scene change
+						mPlayer->moveToPosition(1406, 362);
+						//Set Collision Rect to Scene change position
+						mSceneChangeRect = sf::FloatRect(sf::Vector2f(1406, 362), sf::Vector2f(10, 10));
+						//Set if Player should toggle on Scene Change
+						mPlayerToggle = false;
+						//Set starting position of Player in new Scene           
+						mSceneChangePlayerPos = sf::Vector2f(444, 291);
+						//Set which Scene will be the new Scene
+						mNewScene = 2;
+						mLastScene = 1;
+					}
+					else
+					{
+
+					}
 				}
 			}
 
