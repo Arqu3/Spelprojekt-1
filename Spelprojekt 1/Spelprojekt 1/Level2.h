@@ -171,6 +171,7 @@ private:
 	bool mLevelComplete;
 
 	bool mAutoDialogueTriggered;
+	bool mPutteDialogueTriggered;
 	bool mTalkedToArnold;
 	bool mSteamMachineWorking;
 };

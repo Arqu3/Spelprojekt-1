@@ -10,6 +10,7 @@ Level2::Level2(ResourceHandler &handler) :
 	mLevelComplete(false),
 	mMouseReleased(false),
 	mAutoDialogueTriggered(false),
+	mPutteDialogueTriggered(false),
 	mTalkedToArnold(false),
 	mSteamMachineWorking(false)
 {
@@ -186,6 +187,7 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mLevelComplete = false;
 		mMouseReleased = false;
 		mAutoDialogueTriggered = false;
+		mPutteDialogueTriggered = false;
 		mTalkedToArnold = false;
 		mSteamMachineWorking = false;
 
@@ -1020,7 +1022,7 @@ void Level2::update(sf::RenderWindow &window, float deltaTime)
 	{
 		mCursor->setMode(Cursor::NORMAL);
 		mUI->setState(UI::INGAME);
-		mDialogueSystem->reset();
+		//mDialogueSystem->reset();
 	}
 
 	//Only update currently "Targeted" Item to avoid having to loop through and update all Items
@@ -1050,12 +1052,20 @@ void Level2::update(sf::RenderWindow &window, float deltaTime)
 	if (!mAutoDialogueTriggered && mPlayer->getPosition().x > 1000)
 	{
 		cout << "OUT OF NOWHERE, EN PUTTE!" << endl;
-		mAutoDialogueTriggered = true;
-		/*	mDialogueSystem->reset();
-		mDialogueSystem->hasClicked("rubicCube", mPlayer);
+		mDialogueSystem->reset();
+		mDialogueSystem->hasClicked("missingRocket", mPlayer);
 		mUI->setState(UI::INGAME);
-		mCursor->setMode(Cursor::DIALOGUE);*/
+		mCursor->setMode(Cursor::DIALOGUE);
+		mAutoDialogueTriggered = true;
 	}
+	/*if (mDialogueSystem->isDialogueFinished() && mAutoDialogueTriggered && !mPutteDialogueTriggered)
+	{
+		mDialogueSystem->reset();
+		mDialogueSystem->hasClicked("putte", mPlayer);
+		mUI->setState(UI::INGAME);
+		mCursor->setMode(Cursor::DIALOGUE);
+		mPutteDialogueTriggered = true;
+	}*/
 }
 
 bool Level2::isLevelComplete()
