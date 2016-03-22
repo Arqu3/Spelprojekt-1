@@ -372,8 +372,8 @@ mWalkable(true)
 		mDescription = "Häcksax";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
-		mSprite.setTexture(*handler.getTexture("Trimmer.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("TrimmerIcon.png"));
+		mSprite.setTexture(*handler.getTexture("Trimmer.png")); 
+		mINVSprite.setTexture(*handler.getTexture("TrimmerINV.png")); 
 	}
 
 	if (id == "Stick")
@@ -383,8 +383,8 @@ mWalkable(true)
 		mDescription = "Pinne";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.9f, 0.9f));
-		mSprite.setTexture(*handler.getTexture("Stick.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("StickIcon.png"));
+		mSprite.setTexture(*handler.getTexture("Stick.png")); 
+		mINVSprite.setTexture(*handler.getTexture("StickINV.png")); 
 	}
 
 	if (id == "Flowers")
@@ -394,8 +394,8 @@ mWalkable(true)
 		mDescription = "Blommor";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(5.8f, 1.0f));
-		mSprite.setTexture(*handler.getTexture("transparent.png")); //Add correct texture
-		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png"));
+		mSprite.setTexture(*handler.getTexture("transparent.png")); 
+		mINVSprite.setTexture(*handler.getTexture("FlowersINV.png")); //Add correct texture FlowerIcon
 	}
 
 	if (id == "Leash")
@@ -404,8 +404,8 @@ mWalkable(true)
 		mName = "Koppel";
 		mDescription = "Koppel";
 		mSprite.setPosition(mPosition);
-		mSprite.setScale(sf::Vector2f(0.3f, 1.0f));
-		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png")); //Add correct texture
+		mSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("Leash.png")); 
 	}
 
 	if (id == "Dog")
@@ -439,12 +439,257 @@ mWalkable(true)
 		mDescription = "Blomma";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("Flowers.png")); //Add correct texture
+	}
+
+	if (id == "Lady")
+	{
+		mIndex = 35;
+		mName = "Tant";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		//mGardenLady = *handler.getTexture("GardenLady.png");
+		mGardenLady.loadFromFile("Resources/Textures/GardenLady.png");
+		mSprite.setTexture(mGardenLady); 
+		mSprite.setTextureRect(sf::IntRect(0, 0, 500, 500));
+
+	}
+
+	if (id == "Clover")
+	{
+		mIndex = 36;
+		mName = "Klöver";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.6f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("Clover.png"));
+		mINVSprite.setTexture(*handler.getTexture("CloverINV.png"));
+	}
+
+	if (id == "Sawdust")
+	{
+		mIndex = 37;
+		mName = "Sågspån";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("Sawdust.png"));
+		mINVSprite.setTexture(*handler.getTexture("SawdustINV.png"));
+
+	}
+
+	if (id == "Nail")
+	{
+		mIndex = 38;
+		mName = "Spik";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.1f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+		mINVSprite.setTexture(*handler.getTexture("NailINV.png"));
+
+	}
+
+	if (id == "Fjun")
+	{
+		mIndex = 39;
+		mName = "Fjun";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("Skjuletfjun.png"));
+		mINVSprite.setTexture(*handler.getTexture("SkjuletfjunINV.png"));
+
+	}
+
+	if (id == "Featherball")
+	{
+		mIndex = 40;
+		mName = "Fjäderboll";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.53f, 0.53f));
+		mSprite.setTexture(*handler.getTexture("Featherball.png"));
+		mINVSprite.setTexture(*handler.getTexture("FeatherballINV.png"));
+
+	}
+
+	if (id == "Jack")
+	{
+		mIndex = 41;
+		mName = "Knekt";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.5f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("KNEKT.png"));
+
+	}
+
+	if (id == "RippedCloth")
+	{
+		mIndex = 42;
+		mName = "Tyg";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.5f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+		mINVSprite.setTexture(*handler.getTexture("RippedClothINV.png"));
+	}
+
+	if (id == "Pond")
+	{
+		mIndex = 43;
+		mName = "Damm";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.0f, 1.0f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+		
+	}
+
+	if (id == "Statue")
+	{
+		mIndex = 44;
+		mName = "Staty";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.3f, 0.3f));
+		mSprite.setTexture(*handler.getTexture("Statue.png"));
+
+	}
+
+	if (id == "BlueStone")
+	{
+		mIndex = 45;
+		mName = "Blå Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "RedStone")
+	{
+		mIndex = 46;
+		mName = "Röd Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "GreenStone")
+	{
+		mIndex = 47;
+		mName = "Grön Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "YellowStone")
+	{
+		mIndex = 48;
+		mName = "Gul Sten";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+	if (id == "Hideout 1")
+	{
+		mIndex = 49;
+		mName = "Gömställe 1";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.6f, 0.5f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Hideout 2")
+	{
+		mIndex = 50;
+		mName = "Gömställe 2";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.8f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Hideout 3")
+	{
+		mIndex = 51;
+		mName = "Gömställe 3";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.8f, 0.6f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Hideout 4")
+	{
+		mIndex = 52;
+		mName = "Gömställe 4";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(1.15f, 0.8f));
+		mSprite.setTexture(*handler.getTexture("transparent.png"));
+
+	}
+
+
+	if (id == "Parent")
+	{
+		mIndex = 53;
+		mName = "Förälder";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+
+	if (id == "Skatmara")
+	{
+		mIndex = 54;
+		mName = "Skatmara";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+
+	}
+
+
+	if (id == "Coin")
+	{
+		mIndex = 55;
+		mName = "Mynt";
+		mDescription = "";
+		mSprite.setPosition(mPosition);
+		mSprite.setScale(sf::Vector2f(0.4f, 0.4f));
+		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
+		mINVSprite.setTexture(*handler.getTexture("LastLevel_ItemTest1.png"));
 		mSprite.setTexture(*handler.getTexture("LastLevel_ItemTest2.png")); //Add correct texture
 	}
 
 	if (id == "Cable")
 	{
-		mIndex = 38;
+		mIndex = 55;
 		mCraftIndex = 0;
 		mName = "Kabel";
 		mDescription = "Kabel";
@@ -456,7 +701,7 @@ mWalkable(true)
 
 	if (id == "Airbag")
 	{
-		mIndex = 39;
+		mIndex = 56;
 		mCraftIndex = 0;
 		mName = "Airbag";
 		mDescription = "Airbag";
@@ -468,7 +713,7 @@ mWalkable(true)
 
 	if (id == "FilledBalloon")
 	{
-		mIndex = 40;
+		mIndex = 57;
 		mName = "Ångfylld ballong";
 		mDescription = "Ångfylld ballong";
 		mSprite.setPosition(mPosition);
@@ -479,7 +724,7 @@ mWalkable(true)
 
 	if (id == "Juice")
 	{
-		mIndex = 41;
+		mIndex = 58;
 		mName = "Saft";
 		mDescription = "Saft";
 		mSprite.setPosition(mPosition);
@@ -490,7 +735,7 @@ mWalkable(true)
 
 	if (id == "Glove")
 	{
-		mIndex = 42;
+		mIndex = 59;
 		mCraftIndex = 1;
 		mName = "Handske";
 		mDescription = "Handske";
@@ -502,7 +747,7 @@ mWalkable(true)
 
 	if (id == "Key")
 	{
-		mIndex = 43;
+		mIndex = 60;
 		mName = "Nyckel";
 		mDescription = "Nyckel";
 		mSprite.setPosition(mPosition);
@@ -513,7 +758,7 @@ mWalkable(true)
 
 	if (id == "WorkshopStick")
 	{
-		mIndex = 44;
+		mIndex = 61;
 		mCraftIndex = 1;
 		mName = "Pinne";
 		mDescription = "Pinne";
@@ -525,7 +770,7 @@ mWalkable(true)
 
 	if (id == "Cloth")
 	{
-		mIndex = 45;
+		mIndex = 62;
 		mName = "Trasa";
 		mDescription = "Trasa";
 		mSprite.setPosition(mPosition);
@@ -536,7 +781,7 @@ mWalkable(true)
 
 	if (id == "Can")
 	{
-		mIndex = 46;
+		mIndex = 63;
 		mName = "Burk";
 		mDescription = "Burk";
 		mSprite.setPosition(mPosition);
@@ -547,7 +792,7 @@ mWalkable(true)
 
 	if (id == "Arnold")
 	{
-		mIndex = 47;
+		mIndex = 64;
 		mName = "Arnold";
 		mDescription = "Arnold";
 		mSprite.setPosition(mPosition);
@@ -558,7 +803,7 @@ mWalkable(true)
 
 	if (id == "Balloon")
 	{
-		mIndex = 48;
+		mIndex = 65;
 		mCraftIndex = 0;
 		mName = "Ballong";
 		mDescription = "Ballong";
@@ -570,7 +815,7 @@ mWalkable(true)
 
 	if (id == "SteamMachine")
 	{
-		mIndex = 49;
+		mIndex = 66;
 		mName = "Ångmaskin";
 		mDescription = "Ångmaskin";
 		mSprite.setPosition(mPosition);
@@ -581,7 +826,7 @@ mWalkable(true)
 
 	if (id == "Vise")
 	{
-		mIndex = 50;
+		mIndex = 67;
 		mName = "Skruvstäd";
 		mDescription = "Skruvstäd";
 		mSprite.setPosition(mPosition);
@@ -592,7 +837,7 @@ mWalkable(true)
 
 	if (id == "Drawer")
 	{
-		mIndex = 51;
+		mIndex = 68;
 		mName = "Låda";
 		mDescription = "Låda";
 		mSprite.setPosition(mPosition);
@@ -603,7 +848,7 @@ mWalkable(true)
 
 	if (id == "ExtensionArm")
 	{
-		mIndex = 52;
+		mIndex = 69;
 		mCraftIndex = 1;
 		mName = "Förlängningsarm";
 		mDescription = "Förlängningsarm";
@@ -939,10 +1184,7 @@ void Item::update(float deltaTime)
 	}
 
 
-	move(deltaTime);
-	mCurrentTime += deltaTime;
-
-	//Push Animation
+	//Dog Running
 	if (mActiveAnimation == "Dog")
 	{
 		if (mCurrentTime >= mFrameTime)
@@ -971,6 +1213,37 @@ void Item::update(float deltaTime)
 		}
 	}
 
+
+	if (mActiveAnimation == "GardenLady")
+	{
+		if (mCurrentTime >= mFrameTime)
+		{
+			mSprite.setTextureRect(sf::IntRect(mFrameXOffset * 500, mFrameYOffset * 500, 500, 500));
+			if (mCurrentFrame < 16)
+			{
+				mFrameXOffset += 1;
+				if (mFrameXOffset % 7 == 6)
+				{
+					mFrameYOffset++;
+				}
+				if (mFrameXOffset >= 6)
+				{
+					mFrameXOffset = 0;
+				}
+				mCurrentFrame += 1;
+			}
+			else
+			{
+				mCurrentFrame = 0;
+				mFrameXOffset = 0;
+				mFrameYOffset = 0;
+			}
+			mCurrentTime = 0;
+		}
+	}
+
+	move(deltaTime);
+	mCurrentTime += deltaTime;
 }
 		
 	
@@ -1015,17 +1288,6 @@ void Item::setActiveAnimation(std::string animation)
 		
 	}
 
-	else if (animation == "GardenLady")
-	{
-		if (mActiveAnimation != "GardenLady")
-		{
-			mCurrentFrame = 0;
-			mFrameXOffset = 0;
-			mFrameYOffset = 0;
-			mSprite.setTexture(mGardenLady);
-		}
-	}
-
 	else if (animation == "RogerSwim")
 	{
 		mSprite.setTexture(mRogerSwim);
@@ -1059,6 +1321,17 @@ void Item::setActiveAnimation(std::string animation)
 		mSprite.setTexture(mRogerSwim);
 	}
 	
+	else if (animation == "GardenLady")
+	{
+		if (mActiveAnimation != "GardenLady")
+		{
+			mCurrentFrame = 0;
+			mFrameXOffset = 0;
+			mFrameYOffset = 0;
+			mSprite.setTexture(mGardenLady);
+		}
+	}
+
 	mActiveAnimation = animation;
 }
 

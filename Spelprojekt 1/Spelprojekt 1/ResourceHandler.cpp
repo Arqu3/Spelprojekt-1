@@ -65,35 +65,6 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	//Mr. RiddleSpider
 	addTexture("RiddleSpider.png");
 
-	drawLoadScreen(window, "Lailar Ansiktsuttryck");
-	//Character Expressions
-	addTexture("expressionHilmaAbject.png");
-	addTexture("expressionHilmaAngry.png");
-	addTexture("expressionHilmaConfident.png");
-	addTexture("expressionHilmaDetermined.png");
-	addTexture("expressionHilmaGrumpy.png");
-	addTexture("expressionHilmaHappy.png");
-	addTexture("expressionHilmaNervous.png");
-	addTexture("expressionHilmaNeutral.png");
-	addTexture("expressionHilmaSad.png");
-	addTexture("expressionHilmaSigh.png");
-	addTexture("expressionHilmaSurprised.png");
-	addTexture("expressionHilmaThoughtful.png");
-	addTexture("expressionThomasAngry.png");
-	addTexture("expressionThomasBlush.png");
-	addTexture("expressionThomasChocked.png");
-	addTexture("expressionThomasCry.png");
-	addTexture("expressionThomasDetermined.png");
-	addTexture("expressionThomasHappy.png");
-	addTexture("expressionThomasNeutral.png");
-	addTexture("expressionThomasSad.png");
-	addTexture("expressionThomasSceptic.png");
-	addTexture("expressionThomasSigh.png");
-	addTexture("expressionThomasSmile.png");
-	addTexture("expressionThomasSurprised.png");
-	addTexture("expressionThomasThoughtful.png");
-	addTexture("expressionThomasWorried.png");
-
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
 	addTexture("InventoryIconGlow.png");
@@ -129,25 +100,59 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("eyecursor.png");
 	addTexture("scenechangecursor.png");
 
-	drawLoadScreen(window, "Davidar Pratbubblor");
-	//Textbubble
-	addTexture("textboxSmall.png");
-	addTexture("textbox.png");
+	drawLoadScreen(window, "Lailar Ansiktsuttryck");
+	//Character Expressions
+	addTexture("expressionHilmaAbject.png");
+	addTexture("expressionHilmaAngry.png");
+	addTexture("expressionHilmaConfident.png");
+	addTexture("expressionHilmaDetermined.png");
+	addTexture("expressionHilmaGrumpy.png");
+	addTexture("expressionHilmaHappy.png");
+	addTexture("expressionHilmaNervous.png");
+	addTexture("expressionHilmaNeutral.png");
+	addTexture("expressionHilmaSad.png");
+	addTexture("expressionHilmaSigh.png");
+	addTexture("expressionHilmaSurprised.png");
+	addTexture("expressionHilmaThoughtful.png");
+	addTexture("expressionThomasAngry.png");
+	addTexture("expressionThomasBlush.png");
+	addTexture("expressionThomasChocked.png");
+	addTexture("expressionThomasCry.png");
+	addTexture("expressionThomasDetermined.png");
+	addTexture("expressionThomasHappy.png");
+	addTexture("expressionThomasNeutral.png");
+	addTexture("expressionThomasSad.png");
+	addTexture("expressionThomasSceptic.png");
+	addTexture("expressionThomasSigh.png");
+	addTexture("expressionThomasSmile.png");
+	addTexture("expressionThomasSurprised.png");
+	addTexture("expressionThomasThoughtful.png");
+	addTexture("expressionThomasWorried.png");
 
 	drawLoadScreen(window, "Laddar Sepia");
 	//Sepia
 	addTexture("sepia.png");
 
+	drawLoadScreen(window, "PerHeimerar Musik");
+	//Music
+	addMusic("Level1Music.ogg");
+
 	drawLoadScreen(window, "Matatasar Ljud");
 	//Sound
 	addSound("Footsteps_Thomas.ogg");
+	addSound("Level1_Ambience.ogg");
+	addSound("Aquarium.ogg");
+	addSound("Magnet_Catch.ogg");
+	addSound("Magnet_Drop.ogg");
+	addSound("Pushing_Object.ogg");
+	addSound("Radio_Noise.ogg");
 	addSound("Regular_Item_Pickup.ogg");
+	addSound("Crafting.ogg");
 	addSound("Menu_Hat.ogg");
 	addSound("Menu_Inventory.ogg");
 	addSound("Menu_MainUI.ogg");
 	addSound("Critical_Item.ogg");
 	addSound("Inventory_Move.ogg");
-	addSound("Crafting.ogg");
 }
 
 void ResourceHandler::loadLevel1(sf::RenderWindow &window)
@@ -306,27 +311,38 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 		//Level 3
 		addTexture("Garden.png");
 		addTexture("GardenForeground.png");
+		addTexture("CabinBackground.png");
+		addTexture("CabinForeground.png");
+		addTexture("CabinPlayground.png");
+		addTexture("magicworld_background.png");
+		addTexture("magicworld_foreground.png");
 
 		//Karaktärer
-		/*addTexture("DogRunning.png");*/
-		addTexture("GardenLady.png");
+		addTexture("KNEKT.png");
 
 		//Props
-		addTexture("thomasbowl.png");
-		addTexture("Saturnus.png");
-		addTexture("Venus.png");
-		addTexture("Pluto.png");
-		addTexture("Fisk1.png");
 		addTexture("LastLevel_ItemTest1.png");
 		addTexture("LastLevel_ItemTest2.png");
 		addTexture("transparent.png");
 		addTexture("Stick.png");
+		addTexture("StickINV.png");
 		addTexture("StickIcon.png");
 		addTexture("Trimmer.png");
-		addTexture("TrimmerIcon.png");
-
-		//Remove this later
-		addTexture("saturnusINV.png");
+		addTexture("TrimmerINV.png");
+		addTexture("Leash.png");
+		addTexture("Flowers.png");
+		addTexture("FlowersINV.png");
+		addTexture("Sawdust.png");
+		addTexture("SawdustINV.png");
+		addTexture("Featherball.png");
+		addTexture("FeatherballINV.png");
+		addTexture("Skjuletfjun.png");
+		addTexture("SkjuletfjunINV.png");
+		addTexture("Clover.png");
+		addTexture("CloverINV.png");
+		addTexture("NailINV.png");
+		addTexture("RippedClothINV.png");
+		addTexture("Statue.png");
 
 		mLevel3Loaded = true;
 	}
