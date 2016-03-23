@@ -58,12 +58,23 @@ public:
 
 	void eventListen(sf::RenderWindow &window);
 	void mouseClick(sf::Event &event);
+	void mouseReleased(sf::Event &event);
 	void update(sf::RenderWindow &window, float deltaTime);
 	void mouseHover();
 
 
 	//Level Complete
 	bool isLevelComplete();
+
+	//Update functions
+	void updateTargetItem(float deltaTime);
+	void lookAtTargetItem();
+	void pickupTargetItem();
+	void interactTargetItem();
+
+	//Mouseclick collision functions
+	void mouseClickCheckItemCollision(sf::Vector2f point);
+	void mouseClickCheckRectCollision(sf::Vector2f point);
 
 private:
 
@@ -87,6 +98,22 @@ private:
 	sf::RectangleShape foreground3;
 
 	sf::RectangleShape rectangle; //HelpRect
+	sf::RectangleShape rectangle2; //HelpRect
+	sf::RectangleShape rectangle3; //HelpRect
+	sf::RectangleShape rectangle4; //HelpRect
+	sf::RectangleShape rectangle5; //HelpRect
+	sf::RectangleShape rectangle6; //HelpRect
+	sf::RectangleShape rectangle7; //HelpRect
+	sf::RectangleShape rectangle8; //HelpRect
+	sf::RectangleShape rectangle9; //HelpRect
+	sf::RectangleShape rectangle10; //HelpRect
+	sf::RectangleShape rectangle11; //HelpRect
+	sf::RectangleShape rectangle12; //HelpRect
+	sf::RectangleShape rectangle13; //HelpRect
+	sf::RectangleShape rectangle14; //HelpRect
+	sf::RectangleShape rectangle15; //HelpRect
+	sf::RectangleShape rectangle16; //HelpRect
+	sf::RectangleShape rectangle17; //HelpRect
 	sf::FloatRect* createRect(int positionX, int positionY, int sizeX, int sizeY);
 
 	//Sound
@@ -102,6 +129,7 @@ private:
 
 	//Items
 	ItemVector mItems;
+	Item* mKey;
 	Item* mTrimmer;
 	Item* mStick;
 	Item* mFlowers;
@@ -109,6 +137,28 @@ private:
 	Item *mLeash;
 	Item* mDog;
 	Item* mFlagpole;
+	Item *mLady;
+	Item* mClover;
+	Item* mFeatherball;
+	Item* mNail;
+	Item* mSawdust;
+	Item* mFjun;
+	Item *mJack;
+	Item* mRippedCloth;
+	Item* mPond;
+	Item* mStatue;
+	Item* mBlueStone;
+	Item* mGreenStone;
+	Item* mRedStone;
+	Item* mYellowStone;
+	Item* mHideout1;
+	Item* mHideout2;
+	Item* mHideout3;
+	Item* mHideout4;
+	Item* mSkatmara;
+	Item* mParent;
+	Item* mCoin;
+
 
 
 	bool mLevelComplete;
@@ -142,9 +192,27 @@ private:
 	bool mPlayerToggle;
 	bool mInventoryMode;
 	bool mDisableClick;
+
 	bool mUnleashed;
 	bool mFlowerPickedUp;
 	bool mFlowersPlaced;
+	bool mDogRunning;
+
+	bool mItemPicked;
+
+	bool mParentTalked;
+	bool mSkatmaraTalked;
+	bool mHide1Looked;
+	bool mHide2Looked;
+	bool mHide3Looked;
+	bool mHide4Looked;
+	bool mCoinGiven;
+	bool mStoneGiven;
+	bool mPinGiven;
+	
+	bool mMouseReleased;
+
+	bool mMagicWorldOpen;
 
 	ResourceHandler &handler;
 
