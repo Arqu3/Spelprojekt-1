@@ -99,12 +99,6 @@ mMode(RectangleShape)
 {
 	mRect.setTexture(handler.getTexture(textureName));
 	mHoverRect.setTexture(handler.getTexture(hoverName));
-
-	cout << mRect.getGlobalBounds().width << endl;
-	cout << mRect.getGlobalBounds().height << endl;
-
-	cout << mHoverRect.getGlobalBounds().width << endl;
-	cout << mHoverRect.getGlobalBounds().height << endl;
 }
 
 Button::~Button()
