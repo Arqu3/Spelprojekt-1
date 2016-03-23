@@ -65,8 +65,14 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	//Mr. RiddleSpider
 	addTexture("RiddleSpider.png");
 
+	addTexture("sepia.png");
 	drawLoadScreen(window, "Lailar Ansiktsuttryck");
 	//Character Expressions
+	addTexture("expressionArnoldApologetic.png");
+	addTexture("expressionArnoldHappy.png");
+	addTexture("expressionArnoldLaughing.png");
+	addTexture("expressionArnoldNeutral.png");
+	addTexture("expressionArnoldSurprised.png");
 	addTexture("expressionHilmaAbject.png");
 	addTexture("expressionHilmaAngry.png");
 	addTexture("expressionHilmaConfident.png");
@@ -79,6 +85,42 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionHilmaSigh.png");
 	addTexture("expressionHilmaSurprised.png");
 	addTexture("expressionHilmaThoughtful.png");
+	addTexture("expressionLadyAngry.png");
+	addTexture("expressionLadyFriendly.png");
+	addTexture("expressionLadyGiggling.png");
+	addTexture("expressionLadyImpatient.png");
+	addTexture("expressionLadyNeutral.png");
+	addTexture("expressionLadyRemembers.png");
+	addTexture("expressionLadyRemorseful.png");
+	addTexture("expressionLadySurprised.png");
+	addTexture("expressionLillemorHappy.png");
+	addTexture("expressionLillemorLaughing.png");
+	addTexture("expressionLillemorNeutral.png");
+	addTexture("expressionLillemorSympathic.png");
+	addTexture("expressionLillemorThinking.png");
+	addTexture("expressionLisaEnthusiastic.png");
+	addTexture("expressionLisaHappy.png");
+	addTexture("expressionLisaIrritable.png");
+	addTexture("expressionLisaNeutral.png");
+	addTexture("expressionPutteAbject.png");
+	addTexture("expressionPutteBrightens.png");
+	addTexture("expressionPutteChocked.png");
+	addTexture("expressionPutteHappy.png");
+	addTexture("expressionPutteHelpless.png");
+	addTexture("expressionPutteNervous.png");
+	addTexture("expressionPutteNeutral.png");
+	addTexture("expressionPutteRelieved.png");
+	addTexture("expressionPutteSad.png");
+	addTexture("expressionPutteSigh.png");
+	addTexture("expressionPutteWorried.png");
+	addTexture("expressionSkatmaranConfident.png");
+	addTexture("expressionSkatmaranHappy.png");
+	addTexture("expressionSkatmaranLaughing.png");
+	addTexture("expressionSkatmaranNeutral.png");
+	addTexture("expressionSkatmaranSigh.png");
+	addTexture("expressionSkatmaranSnide.png");
+	addTexture("expressionSkatmaranSurprised.png");
+	addTexture("expressionSkatmaranThoughtful.png");
 	addTexture("expressionThomasAngry.png");
 	addTexture("expressionThomasBlush.png");
 	addTexture("expressionThomasChocked.png");
@@ -93,6 +135,12 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionThomasSurprised.png");
 	addTexture("expressionThomasThoughtful.png");
 	addTexture("expressionThomasWorried.png");
+	addTexture("expressionTotteHappy.png");
+	addTexture("expressionTotteNeutral.png");
+	addTexture("expressionTotteSigh.png");
+	addTexture("expressionTotteUncertain.png");
+	addTexture("expressionTotteTest.png");
+
 
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
