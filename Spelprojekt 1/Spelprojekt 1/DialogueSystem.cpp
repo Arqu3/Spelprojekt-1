@@ -382,6 +382,12 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 	}
 
 	//Level 5
+	else if (indexName == "letter" && mHasClicked == false)
+	{
+		mLevel5Letter2 = true;
+		mHasClicked = true;
+	}
+
 	else if (indexName == "balconyDoor" && mHasClicked == false)
 	{
 		mLevel5BalconyDoor = true;
@@ -409,6 +415,18 @@ void DialogueSystem::hasClicked(std::string indexName, Player *player)
 	else if (indexName == "together" && mHasClicked == false)
 	{
 		mLevel5Together = true;
+		mHasClicked = true;
+	}
+
+	else if (indexName == "level5End" && mHasClicked == false)
+	{
+		mLevel5End= true;
+		mHasClicked = true;
+	}
+
+	else if (indexName == "ending1" && mHasClicked == false)
+	{
+		mEnding1 = true;
 		mHasClicked = true;
 	}
 
@@ -701,6 +719,7 @@ void DialogueSystem::reset()
 	mHasClicked = false;
 	mState = 0;
 
+
 	mText.setString("");
 }
 
@@ -900,6 +919,21 @@ void DialogueSystem::update(float time)
 		displayLevel5StartAdvancedDialogue();
 	}
 
+	else if (mLevel5End == true)
+	{
+		displayLevel5EndAdvancedDialogue();
+	}
+
+	else if (mLevel5Letter1 == true)
+	{
+		displayLevel5Letter1AdvancedDialogue();
+	}
+
+	else if (mLevel5Letter2 == true)
+	{
+		displayLevel5Letter2AdvancedDialogue();
+	}
+
 	else if (mLevel5BalconyDoor == true)
 	{
 		displayLevel5BalconyDoorAdvancedDialogue();
@@ -929,6 +963,39 @@ void DialogueSystem::update(float time)
 	{
 		displayLevel5TogetherAdvancedDialogue();
 	}
+
+	//Endings
+
+	else if (mEnding1 == true)
+	{
+		displayEnding1AdvancedDialogue();
+	}
+
+	else if (mEnding2 == true)
+	{
+		displayEnding2AdvancedDialogue();
+	}
+
+	else if (mEnding3 == true)
+	{
+		displayEnding3AdvancedDialogue();
+	}
+
+	else if (mEnding4 == true)
+	{
+		displayEnding4AdvancedDialogue();
+	}
+
+	else if (mEnding5 == true)
+	{
+		displayEnding5AdvancedDialogue();
+	}
+
+	else if (mEnding6 == true)
+	{
+		displayEnding6AdvancedDialogue();
+	}
+
 
 	//Thomas' Room
 	else if (mBooks == true)
@@ -1184,7 +1251,7 @@ void DialogueSystem::displaySpiderDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(mSpider->getText(), 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -1295,7 +1362,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level1StartHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
@@ -1332,7 +1399,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 2)
 	{
 		advancedText(level1StartHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		//Voice Acting Template
@@ -1351,14 +1418,14 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 3)
 	{
 		advancedText(level1StartHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAbject.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAbject.png");
 
 		//voiceActingTest.stop();
 	}
 	if (mState == 4)
 	{
 		advancedText(level1StartThomas, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && ThomasLvl1Part1.getStatus() != 2)
@@ -1375,7 +1442,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 5)
 	{
 		advancedText(level1StartHilma4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		ThomasLvl1Part1.stop();
@@ -1399,7 +1466,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 7)
 	{
 		advancedText(level1StartThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		NarratorLvl1Part2.stop();
@@ -1417,7 +1484,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 8)
 	{
 		advancedText(level1StartHilma5, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		ThomasLvl1Part2.stop();
@@ -1425,7 +1492,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 9)
 	{
 		advancedText(level1StartThomas3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && ThomasLvl1Part3.getStatus() != 2)
@@ -1442,7 +1509,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 10)
 	{
 		advancedText(level1StartHilma6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		ThomasLvl1Part3.stop();
@@ -1450,7 +1517,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 11)
 	{
 		advancedText(level1StartHilma7, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 	}
 	if (mState == 12)
 	{
@@ -1471,7 +1538,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 13)
 	{
 		advancedText(level1StartHilma8, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		NarratorLvl1Part3.stop();
@@ -1479,7 +1546,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 14)
 	{
 		advancedText(level1StartThomas4, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && ThomasLvl1Part4.getStatus() != 2)
@@ -1496,7 +1563,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 15)
 	{
 		advancedText(level1StartHilma9, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		ThomasLvl1Part4.stop();
@@ -1504,7 +1571,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 16)
 	{
 		advancedText(level1StartThomas5, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && ThomasLvl1Part5.getStatus() != 2)
@@ -1521,7 +1588,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 17)
 	{
 		advancedText(level1StartHilma10, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		ThomasLvl1Part5.stop();
@@ -1529,7 +1596,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 18)
 	{
 		advancedText(level1StartThomas6, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && ThomasLvl1Part6.getStatus() != 2)
@@ -1553,25 +1620,25 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 20)
 	{
 		advancedText(level1StartHilma12, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 21)
 	{
 		advancedText(level1StartInterlude, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSigh.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSigh.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 22)
 	{
 		advancedText(level1StartHilma13, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 23)
 	{
 		advancedText(level1StartThomas7, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasBlush.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasBlush.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && ThomasLvl1Part7.getStatus() != 2)
@@ -1588,7 +1655,7 @@ void DialogueSystem::displayLevel1StartAdvancedDialogue()
 	if (mState == 24)
 	{
 		advancedText(level1StartHilma14, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		ThomasLvl1Part7.stop();
@@ -1642,8 +1709,8 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level1EndHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -1666,7 +1733,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 2)
 	{
 		advancedText(level1EndHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		NarratorLvl1Part4.stop();
@@ -1674,7 +1741,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 3)
 	{
 		advancedText(level1EndTeller2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && NarratorLvl1Part5.getStatus() != 2)
@@ -1707,7 +1774,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 5)
 	{
 		advancedText(level1EndHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		NarratorLvl1Part6.stop();
@@ -1725,7 +1792,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 8)
 	{
 		advancedText(level1EndThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 9)
@@ -1736,25 +1803,25 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 10)
 	{
 		advancedText(level1EndThomas3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasDetermined.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasDetermined.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 11)
 	{
 		advancedText(level1EndHilma6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 12)
 	{
 		advancedText(level1EndThomas4, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 13)
 	{
 		advancedText(level1EndThomas5, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
 	}
 	if (mState == 14)
 	{
@@ -1764,18 +1831,18 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 15)
 	{
 		advancedText(level1EndThomas6, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasDetermined.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasDetermined.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 16)
 	{
 		advancedText(level1EndThomas7, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasCry.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasCry.png");
 	}
 	if (mState == 17)
 	{
 		advancedText(level1EndTeller4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && NarratorLvl1Part7.getStatus() != 2)
@@ -1792,7 +1859,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 18)
 	{
 		advancedText(level1EndHilma8, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 
 		NarratorLvl1Part7.stop();
@@ -1800,25 +1867,25 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 19)
 	{
 		advancedText(level1EndThomas8, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSad.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 20)
 	{
 		advancedText(level1EndHilma9, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 21)
 	{
 		advancedText(level1EndThomas9, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 22)
 	{
 		advancedText(level1EndHilma10, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 23)
@@ -1840,7 +1907,7 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 24)
 	{
 		advancedText(level1EndThomas10, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 
 		NarratorLvl1Part8.stop();
@@ -1848,25 +1915,25 @@ void DialogueSystem::displayLevel1EndAdvancedDialogue()
 	if (mState == 25)
 	{
 		advancedText(level1EndHilma11, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 26)
 	{
 		advancedText(level1EndThomas11, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 27)
 	{
 		advancedText(level1EndHilma12, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 28)
 	{
 		advancedText(level1EndTeller6, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 
 		if (!mLineStarted && NarratorLvl1Part9.getStatus() != 2)
@@ -1914,26 +1981,26 @@ void DialogueSystem::displayLevel2StartAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level2StartHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 1)
 	{
 		advancedText(level2StartThomas, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 2)
 	{
 		advancedText(level2StartHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 3)
 	{
 		advancedText(level2StartThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 4)
@@ -1944,7 +2011,7 @@ void DialogueSystem::displayLevel2StartAdvancedDialogue()
 	if (mState == 5)
 	{
 		advancedText(level2StartThomas3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomas.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomas.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 6)
@@ -1955,7 +2022,7 @@ void DialogueSystem::displayLevel2StartAdvancedDialogue()
 	if (mState == 7)
 	{
 		advancedText(level2StartThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -1989,8 +2056,8 @@ void DialogueSystem::displayLevel2MissingRocketAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level2MissingRocketTeller, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
@@ -2007,7 +2074,7 @@ void DialogueSystem::displayLevel2MissingRocketAdvancedDialogue()
 	if (mState == 3)
 	{
 		advancedText(level2MissingRocketHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 4)
@@ -2018,14 +2085,14 @@ void DialogueSystem::displayLevel2MissingRocketAdvancedDialogue()
 	if (mState == 5)
 	{
 		advancedText(level2MissingRocketHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 6)
 	{
 		advancedText(level2MissingRocketPutte, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
 	}
 	if (mState == 7)
@@ -2061,7 +2128,7 @@ void DialogueSystem::displayLevel2PutteAdvancedDialogue()
 	std::string level2PutteThomas4 = "Du... tänker väl inte ge honom till skatan?";
 	std::string level2PutteHilma8 = "Skator har ett öga för saker som glittrar. Putte är så långt från glitter man kan komma.";
 
-	if (mState >= 24)
+	if (mState >= 23)
 	{
 		mText.setString("");
 		mActorText.setString("");
@@ -2074,16 +2141,200 @@ void DialogueSystem::displayLevel2PutteAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level2PutteTeller, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level2PutteHilma, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(level2PutteTeller2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 3)
+	{
+		advancedText(level2PuttePutte, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteChocked.png");
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 4)
+	{
+		advancedText(level2PutteTeller3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteHappy.png");
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 5)
+	{
+		advancedText(level2PuttePutte2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 6)
+	{
+		advancedText(level2PutteHilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 7)
+	{
+		advancedText(level2PutteThomas, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasHappy.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 8)
+	{
+		advancedText(level2PutteTeller4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 9)
+	{
+		advancedText(level2PuttePutte3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteHelpless.png");
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 10)
+	{
+		advancedText(level2PutteHilma3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 11)
+	{
+		advancedText(level2PuttePutte4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 12)
+	{
+		advancedText(level2PutteHilma4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 13)
+	{
+		advancedText(level2PutteHilma5, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 14)
+	{
+		advancedText(level2PutteThomas2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasWorried.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 15)
+	{
+		advancedText(level2PuttePutte5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteNervous.png");
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 16)
+	{
+		advancedText(level2PutteHilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 17)
+	{
+		advancedText(level2PuttePutte6, 100.f, 420.f, 1.f, 1.f);
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 18)
+	{
+		advancedText(level2PutteThomas3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasThoughtful.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 19)
+	{
+		advancedText(level2PutteHilma7, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 20)
+	{
+		advancedText(level2PuttePutte7, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteBrightens.png");
+		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 21)
+	{
+		advancedText(level2PutteThomas4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasWorried.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState ==22)
+	{
+		advancedText(level2PutteHilma8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 }
 
 void DialogueSystem::displayLevel2SteamMachineAdvancedDialogue()
 {
+	std::string level2SteamMachineHilma = "Vad är det här för mojäng? Den ser lite gammaldags ut.";
+	std::string level2SteamMachineThomas = "Den där?.. euhm… det är en ångmaskin.";
+	std::string level2SteamMachineHilma2 = "Jaha ja… hmm.. jag måste säga att den har många intressanta delar. Om den inte var hel skulle det vara perfekt att använda delarna till att bygga en flygfarkost! Men vad gör man med den här egentligen?";
+	std::string level2SteamMachineThomas2 = "Mormor sa… att man häller vatten… och så låter man det koka. Då kommer en massa ånga från skorstenen...";
+	std::string level2SteamMachineHilma3 = "Aha! Nu vet jag! Vi behöver ånga för att ballongen ska sväva i luften!";
+	std::string level2SteamMachineThomas3 = "Men… vi har ingen vätska som vi kan fylla den med...";
 
+	if (mState >= 23)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel2Putte = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+	if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level2SteamMachineHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNervous.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level2SteamMachineThomas, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(level2SteamMachineHilma2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
 }
 
 void DialogueSystem::displayLevel2ArnoldAdvancedDialogue()
@@ -2148,8 +2399,8 @@ void DialogueSystem::displayLevel3StartAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level3StartHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -2157,48 +2408,48 @@ void DialogueSystem::displayLevel3StartAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level3StartThomas, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level3StartHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level3StartSurtanten, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasChocked.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level3StartThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasChocked.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 5)
 	{
 		advancedText(level3StartHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level3StartThomas3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 7)
 	{
 		advancedText(level3StartHilma4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2211,28 +2462,28 @@ void DialogueSystem::displayLevel3StartAdvancedDialogue()
 	else if (mState == 9)
 	{
 		advancedText(level3StartHilma5, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 10)
 	{
 		advancedText(level3StartThomas5, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 11)
 	{
 		advancedText(level3StartHilma6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 12)
 	{
 		advancedText(level3StartHilma7, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -2262,8 +2513,8 @@ void DialogueSystem::displayLevel3ShedAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level3ShedThomas, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
@@ -2271,7 +2522,7 @@ void DialogueSystem::displayLevel3ShedAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level3ShedHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2284,28 +2535,28 @@ void DialogueSystem::displayLevel3ShedAdvancedDialogue()
 	else if (mState == 3)
 	{
 		advancedText(level3ShedHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level3ShedThomas3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 5)
 	{
 		advancedText(level3ShedHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level3ShedThomas4, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2316,8 +2567,6 @@ void DialogueSystem::displayLevel3ShedAdvancedDialogue()
 	}
 }
 
-
-//OBS! Samtliga saknar Skatmaran!
 void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 {
 	std::string level3Skatmaran1Hilma = "Hörru du din tjuv! Ge tillbaka det du stulit!";
@@ -2368,21 +2617,21 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level3Skatmaran1Skatmaran, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSurprised.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level3Skatmaran1Skatmaran2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level3Skatmaran1Hilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2396,84 +2645,91 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 	else if (mState == 5)
 	{
 		advancedText(level3Skatmaran1Hilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level3Skatmaran1Skatmaran4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 7)
 	{
 		advancedText(level3Skatmaran1Hilma4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 8)
 	{
 		advancedText(level3Skatmaran1Skatmaran5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSigh.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 9)
 	{
 		advancedText(level3Skatmaran1Hilma5, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 10)
 	{
 		advancedText(level3Skatmaran1Skatmaran6, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 11)
 	{
 		advancedText(level3Skatmaran1Hilma6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 12)
 	{
 		advancedText(level3Skatmaran1Skatmaran7, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 13)
 	{
 		advancedText(level3Skatmaran1Hilma7, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 14)
 	{
 		advancedText(level3Skatmaran1Skatmaran8, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 15)
 	{
 		advancedText(level3Skatmaran1Skatmaran9, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranThoughtful.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 16)
 	{
 		advancedText(level3Skatmaran1Hilma8, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 17)
 	{
 		advancedText(level3Skatmaran1Skatmaran10, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2492,6 +2748,7 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 	else if (mState == 20)
 	{
 		advancedText(level3Skatmaran1Hilma10, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2504,12 +2761,14 @@ void DialogueSystem::displayLevel3Skatmaran1AdvancedDialogue()
 	else if (mState == 22)
 	{
 		advancedText(level3Skatmaran1Hilma11, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 23)
 	{
 		advancedText(level3Skatmaran1Skatmaran13, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranLaughing.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -2542,8 +2801,8 @@ void DialogueSystem::displayLevel3Skatmaran2AdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level3Skatmaran2Hilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranNeutral.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -2551,58 +2810,63 @@ void DialogueSystem::displayLevel3Skatmaran2AdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level3Skatmaran2Skatmaran, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSurprised.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level3Skatmaran2Skatmaran2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSigh.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level3Skatmaran2Hilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level3Skatmaran2Skatmaran3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 5)
 	{
 		advancedText(level3Skatmaran2Hilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level3Skatmaran2Skatmaran4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 7)
 	{
 		advancedText(level3Skatmaran2Hilma4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 8)
 	{
 		advancedText(level3Skatmaran2Skatmaran5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 9)
 	{
 		advancedText(level3Skatmaran2Hilma5, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2644,8 +2908,8 @@ void DialogueSystem::displayLevel3Skatmaran3AdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level3Skatmaran3Hilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranNeutral.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -2653,19 +2917,21 @@ void DialogueSystem::displayLevel3Skatmaran3AdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level3Skatmaran3Skatmaran, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranThoughtful.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level3Skatmaran3Hilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level3Skatmaran3Skatmaran2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSigh.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2678,13 +2944,14 @@ void DialogueSystem::displayLevel3Skatmaran3AdvancedDialogue()
 	else if (mState == 5)
 	{
 		advancedText(level3Skatmaran3Skatmaran3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level3Skatmaran3Hilma4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2697,6 +2964,7 @@ void DialogueSystem::displayLevel3Skatmaran3AdvancedDialogue()
 	else if (mState == 8)
 	{
 		advancedText(level3Skatmaran3Skatmaran5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranThoughtful.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2709,19 +2977,21 @@ void DialogueSystem::displayLevel3Skatmaran3AdvancedDialogue()
 	else if (mState == 10)
 	{
 		advancedText(level3Skatmaran3Skatmaran6, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 11)
 	{
 		advancedText(level3Skatmaran3Hilma6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 12)
 	{
 		advancedText(level3Skatmaran3Skatmaran7, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -2761,7 +3031,7 @@ void DialogueSystem::displayLevel3Skatmaran4AdvancedDialogue()
 		mText.setString("");
 		mActorText.setString("");
 		mHasClicked = false;
-		mLevel3Skatmaran3 = false;
+		mLevel3Skatmaran4 = false;
 		mAdvancedIsActive = false;
 		mFinishedDialogue = true;
 	}
@@ -2770,8 +3040,8 @@ void DialogueSystem::displayLevel3Skatmaran4AdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level3Skatmaran4Skatmaran, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
@@ -2785,32 +3055,35 @@ void DialogueSystem::displayLevel3Skatmaran4AdvancedDialogue()
 	else if (mState == 2)
 	{
 		advancedText(level3Skatmaran4Skatmaran2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSurprised.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level3Skatmaran4Hilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level3Skatmaran4Skatmaran3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSigh.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 5)
 	{
 		advancedText(level3Skatmaran4Skatmaran4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSurprised.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level3Skatmaran4Hilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2841,37 +3114,42 @@ void DialogueSystem::displayLevel3Skatmaran4AdvancedDialogue()
 	else if (mState == 11)
 	{
 		advancedText(level3Skatmaran4Skatmaran7, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranThoughtful.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 12)
 	{
 		advancedText(level3Skatmaran4Hilma5, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 13)
 	{
 		advancedText(level3Skatmaran4Skatmaran8, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSigh.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 14)
 	{
 		advancedText(level3Skatmaran4Skatmaran9, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 15)
 	{
 		advancedText(level3Skatmaran4Hilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 16)
 	{
 		advancedText(level3Skatmaran4Hilma7, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2884,12 +3162,14 @@ void DialogueSystem::displayLevel3Skatmaran4AdvancedDialogue()
 	else if (mState == 18)
 	{
 		advancedText(level3Skatmaran4Hilma8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 19)
 	{
 		advancedText(level3Skatmaran4Skatmaran10, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranThoughtful.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
@@ -2902,43 +3182,45 @@ void DialogueSystem::displayLevel3Skatmaran4AdvancedDialogue()
 	else if (mState == 21)
 	{
 		advancedText(level3Skatmaran4Hilma10, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 22)
 	{
 		advancedText(level3Skatmaran4Skatmaran11, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 23)
 	{
 		advancedText(level3Skatmaran4Hilma11, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 24)
 	{
 		advancedText(level3Skatmaran4Skatmaran12, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranHappy.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 25)
 	{
 		advancedText(level3Skatmaran4Hilma12, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 26)
 	{
 		advancedText(level3Skatmaran4Skatmaran13, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 }
-
 
 void DialogueSystem::displayLevel3EndAdvancedDialogue()
 {
@@ -2947,7 +3229,7 @@ void DialogueSystem::displayLevel3EndAdvancedDialogue()
 	std::string level3EndHilma2 = "Äsch, det var ingenting. Jag hade varit här på halva tiden om det inte varit för den där Skatmaran...";
 	std::string level3EndHilma3 = "Just det! Thomas jag hittade din och mormors raket! Den står här i skjulet!";
 	std::string level3EndThomas2 = "STÅR RAKETEN I SKJULET?";
-	std::string level3EndSurtanten = "Vem är det som är och gormar i min trädgård ? !Jaha!Och vad har vi här då!Är det inte rackarpojken som jag förbjöd att komma hit!";
+	std::string level3EndSurtanten = "Vem är det som är och gormar i min trädgård? Jaha! Och vad har vi här då! Är det inte rackarpojken som jag förbjöd att komma hit!";
 	std::string level3EndThomas3 = "Jag är ledsen jag… jag…";
 	std::string level3EndSurtanten2 = "Vänta! Var det kanske du som jagade bort min hund också? Och som lekte med flaggstången? Sånt får du inte hålla på med unge! Se så lerig jag blev av att leta efter hunden.";
 	std::string level3EndThomas4 = "Jag… jag är ledsen vi… jag…";
@@ -2992,12 +3274,12 @@ void DialogueSystem::displayLevel3EndAdvancedDialogue()
 	std::string level3EndHilma8 = "Nedrans skata...";
 	std::string level3EndThomas16 = "Vad väntar vi på? Nu cyklar vi till mormor!";
 
-	if (mState >= 27)
+	if (mState >= 49)
 	{
 		mText.setString("");
 		mActorText.setString("");
 		mHasClicked = false;
-		mLevel3Skatmaran3 = false;
+		mLevel3End = false;
 		mAdvancedIsActive = false;
 		mFinishedDialogue = true;
 	}
@@ -3006,191 +3288,195 @@ void DialogueSystem::displayLevel3EndAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level3EndHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionHilmaHappy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
-		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 1)
 	{
 		advancedText(level3EndThomas, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionTotteHappy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level3EndHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionArnoldLaughing.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyAngry.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level3EndHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionLillemorHappy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLisaIrritable.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionHilmaSurprised.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level3EndThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionPutteSad.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasChocked.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 5)
 	{
 		advancedText(level3EndSurtanten, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyAngry.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level3EndThomas3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLisaIrritable.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasSad.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 7)
 	{
 		advancedText(level3EndSurtanten2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 8)
 	{
 		advancedText(level3EndThomas4, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionTotteHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 9)
 	{
 		advancedText(level3EndHilma4, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyAngry.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 10)
 	{
 		advancedText(level3EndThomas5, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionArnoldLaughing.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 11)
 	{
 		advancedText(level3EndSurtanten3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLillemorHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyImpatient.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 12)
 	{
 		advancedText(level3EndSurtanten4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadySurprised.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 13)
 	{
 		advancedText(level3EndThomas6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranTest.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasSurprised.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 14)
 	{
 		advancedText(level3EndSurtanten5, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranTest2.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyRemorseful.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 15)
 	{
 		advancedText(level3EndThomas7, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 16)
 	{
 		advancedText(level3EndSurtanten6, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyRemembers.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 17)
 	{
 		advancedText(level3EndSurtanten7, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyFriendly.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 18)
 	{
 		advancedText(level3EndSurtanten8, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyRemorseful.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 19)
 	{
 		advancedText(level3EndSurtanten9, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyNeutral.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 20)
 	{
 		advancedText(level3EndThomas8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasNeutral.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 21)
 	{
 		advancedText(level3EndSurtanten10, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyRemorseful.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 22)
 	{
 		advancedText(level3EndThomas9, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasSmile.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 23)
 	{
 		advancedText(level3EndSurtanten11, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyImpatient.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 24)
 	{
 		advancedText(level3EndThomas10, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 25)
 	{
 		advancedText(level3EndSurtanten12, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyGiggling.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 26)
 	{
 		advancedText(level3EndSurtanten13, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadySurprised.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 27)
 	{
 		advancedText(level3EndThomas11, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3203,60 +3489,70 @@ void DialogueSystem::displayLevel3EndAdvancedDialogue()
 	else if (mState == 29)
 	{
 		advancedText(level3EndThomas12, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasChocked.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 30)
 	{
 		advancedText(level3EndSurtanten15, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyRemembers.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 31)
 	{
 		advancedText(level3EndSurtanten16, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyAngry.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 32)
 	{
 		advancedText(level3EndThomas13, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 33)
 	{
 		advancedText(level3EndSurtanten17, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyRemembers.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 34)
 	{
 		advancedText(level3EndSurtanten18, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyRemorseful.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 35)
 	{
 		advancedText(level3EndSurtanten19, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyAngry.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 36)
 	{
 		advancedText(level3EndSurtanten20, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLadyGiggling.png");
 		actorText("Surtanten", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 37)
 	{
 		advancedText(level3EndThomas14, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 38)
 	{
 		advancedText(level3EndHilma5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3269,54 +3565,63 @@ void DialogueSystem::displayLevel3EndAdvancedDialogue()
 	else if (mState == 40)
 	{
 		advancedText(level3EndSkatmaran, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranLaughing.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 41)
 	{
 		advancedText(level3EndHilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 42)
 	{
 		advancedText(level3EndSkatmaran2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranConfident.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 43)
 	{
 		advancedText(level3EndThomas15, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasChocked.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
-	else if (mState == 43)
+	else if (mState == 44)
 	{
 		advancedText(level3EndSkatmaran3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranSnide.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 45)
 	{
 		advancedText(level3EndHilma7, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 46)
 	{
 		advancedText(level3EndSkatmaran4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionSkatmaranLaughing.png");
 		actorText("Skatmaran", 454.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 47)
 	{
 		advancedText(level3EndHilma8, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 48)
 	{
 		advancedText(level3EndThomas16, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -3329,10 +3634,9 @@ void DialogueSystem::displayLevel5StartAdvancedDialogue()
 	std::string level5StartThomas = "Tror du kanske att...";
 	std::string level5StartHilma2 = "Ja, hon måste vara här, Thomas.";
 	std::string level5StartTeller2 = "Det klappade till i Thomas hjärta. Hon var här, det var han säker på. Thomas kunde knappt hålla inne sin lycka.";
-	std::string level5StartThomas2 = "Vad väntar vi på! Kom så hittar vi henne! Hon skrev i brevet att hon skulle se kometen idag; hon borde vara på övervåningen!";
-	std::string level5StartHilma3 = "Jag tror jag såg en balkong förut, hon kanske är där?";
+	std::string level5StartThomas2 = "Vad väntar vi på! Kom så hittar vi henne!";
 
-	if (mState >= 7)
+	if (mState >= 6)
 	{
 		mText.setString("");
 		mActorText.setString("");
@@ -3346,8 +3650,8 @@ void DialogueSystem::displayLevel5StartAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5StartTeller, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
@@ -3355,6 +3659,7 @@ void DialogueSystem::displayLevel5StartAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5StartHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3367,7 +3672,7 @@ void DialogueSystem::displayLevel5StartAdvancedDialogue()
 	else if (mState == 3)
 	{
 		advancedText(level5StartHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3382,11 +3687,244 @@ void DialogueSystem::displayLevel5StartAdvancedDialogue()
 		advancedText(level5StartThomas2, 100.f, 420.f, 1.f, 1.f);
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
+}
+
+void DialogueSystem::displayLevel5Letter1AdvancedDialogue()
+{
+	std::string level5Letter1Hilma = "Thomas! Det ligger ett brev på katedern!";
+	std::string level5Letter1Thomas = "Ett brev?";
+
+	if (mState >= 2)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel5Letter1 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level5Letter1Hilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level5Letter1Thomas, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayLevel5Letter2AdvancedDialogue()
+{
+	std::string level5Letter2Thomas = "Till… Thomas? Det är till mig!";
+	std::string level5Letter2Hilma = "Vad väntar du på? Läs upp det!";
+	std::string level5Letter2Teller = "Kära Thomas.";
+	std::string level5Letter2Teller2 = "Jag är ledsen att du måste läsa det här i ett brev och att jag inte kan berätta det för dig själv.";
+	std::string level5Letter2Teller3 = "Faktum är att det finns mycket jag är ledsen för.";
+	std::string level5Letter2Teller4 = "Det finns saker jag inte berättat, vare sig för dig eller din mor, och jag önskar nu att jag hade det.";
+	std::string level5Letter2Teller5 = "Jag hade visserligen mina anledningar och ville inte oroa er men det är ingen ursäkt.";
+	std::string level5Letter2Teller6 = "Det inser jag nu.";
+	std::string level5Letter2Teller7 = "Ni två är de viktigaste personerna i mitt liv och jag borde ha låtit er få veta.";
+	std::string level5Letter2Teller8 = "Istället får ni reda på det såhär, på en bit papper.";
+	std::string level5Letter2Teller9 = "Men Thomas, det finns också saker jag verkligen inte är ledsen för.";
+	std::string level5Letter2Teller10 = "Som tiden jag spenderat med dig och din mor.";
+	std::string level5Letter2Teller11 = "Ni två lärde mig att människor kan vara minst lika intressanta som manicker och maskiner.";
+	std::string level5Letter2Teller12 = "Nä stryk det, ni två är bra mycket roligare att vara med.";
+	std::string level5Letter2Teller13 = "Och för att jag fick chansen att ha en underbar familj som ni är jag evigt tacksam för.";
+	std::string level5Letter2Teller14 = "Thomas, en dag kanske du förstår allt det här och då hoppas jag att du kan förlåta mig.";
+	std::string level5Letter2Teller15 = "Jag ska ge mig iväg på en resa och jag vet inte om jag kommer tillbaka.";
+	std::string level5Letter2Teller16 = "Den här resan har alltid varit mitt mål i livet och jag tror du kommer förstå varför.";
+	std::string level5Letter2Teller17 = "Vi träffas under stjärnornas sken.";
+	std::string level5Letter2Teller18 = "Och om vi inte ses, ta hand om dig Thomas.";
+	std::string level5Letter2Teller19 = "Jag älskar dig.";
+	std::string level5Letter2Teller20 = "Din mormor.";
+	std::string level5Letter2Thomas2 = "Mormor… Jag älskar dig med… Vad är det för resa hon pratar om? Om hon älskar oss, varför måste hon ge sig iväg?";
+	std::string level5Letter2Hilma2 = "Ja du Thomas, det ända sättet att ta reda på det är att träffa henne! Hon ville träffa oss vid stjärnornas sken… Var ser man stjärnorna som bäst?";
+	std::string level5Letter2Thomas3 = "Det måste vara på balkongen!";
+	std::string level5Letter2Hilma3 = "Då går vi dit!";
+
+	if (mState >= 26)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel5Letter2 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level5Letter2Thomas, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level5Letter2Hilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(level5Letter2Teller, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 3)
+	{
+		advancedText(level5Letter2Teller2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 4)
+	{
+		advancedText(level5Letter2Teller3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 5)
+	{
+		advancedText(level5Letter2Teller4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
 
 	else if (mState == 6)
 	{
-		advancedText(level5StartHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		advancedText(level5Letter2Teller5, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 7)
+	{
+		advancedText(level5Letter2Teller6, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 8)
+	{
+		advancedText(level5Letter2Teller7, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 9)
+	{
+		advancedText(level5Letter2Teller8, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 10)
+	{
+		advancedText(level5Letter2Teller9, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 11)
+	{
+		advancedText(level5Letter2Teller10, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 12)
+	{
+		advancedText(level5Letter2Teller11, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 13)
+	{
+		advancedText(level5Letter2Teller12, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 14)
+	{
+		advancedText(level5Letter2Teller13, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 15)
+	{
+		advancedText(level5Letter2Teller14, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 16)
+	{
+		advancedText(level5Letter2Teller15, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 17)
+	{
+		advancedText(level5Letter2Teller16, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 18)
+	{
+		advancedText(level5Letter2Teller17, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 19)
+	{
+		advancedText(level5Letter2Teller18, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 20)
+	{
+		advancedText(level5Letter2Teller19, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 21)
+	{
+		advancedText(level5Letter2Teller20, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 22)
+	{
+		advancedText(level5Letter2Thomas2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasCry.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 23)
+	{
+		advancedText(level5Letter2Hilma2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 24)
+	{
+		advancedText(level5Letter2Thomas3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasDetermined.png");
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 25)
+	{
+		advancedText(level5Letter2Hilma3, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -3416,8 +3954,8 @@ void DialogueSystem::displayLevel5BalconyDoorAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5ClosedTeller, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
@@ -3437,7 +3975,7 @@ void DialogueSystem::displayLevel5BalconyDoorAdvancedDialogue()
 	else if (mState == 3)
 	{
 		advancedText(level5ClosedHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3450,13 +3988,14 @@ void DialogueSystem::displayLevel5BalconyDoorAdvancedDialogue()
 	else if (mState == 5)
 	{
 		advancedText(level5ClosedThomas3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasDetermined.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level5ClosedHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3466,7 +4005,7 @@ void DialogueSystem::displayLevel5BalconyDoorAdvancedDialogue()
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
 }
-//Saknar Putte, fel expressions
+
 void DialogueSystem::displayLevel5Putte2AdvancedDialogue()
 {
 	std::string level5ReunionPutte = "Lisa! Totte! Var är ni? Åh vart har ni tagit vägen? Det här kan inte vara sant...";
@@ -3482,7 +4021,7 @@ void DialogueSystem::displayLevel5Putte2AdvancedDialogue()
 	std::string level5ReunionPutte4 = "Men tänk om katten har tagit dem! Eller om de har fastnat i råttfällan? Eller blivit tagna av fåglarna? Ack! Jag kan inte ens hålla reda på mina barn...";
 	std::string level5ReunionPutte5 = "Jag är den sämsta hittaren någonsin...";
 	std::string level5ReunionLillemor2 = "Men älskade vän. Nog kan du vara slarvig, men inte den sämsta! De kommer säkert tillbaka snart. Du måste låta dem breda ut sina vingar!";
-	std::string level5ReunionPutte6 = "";
+	std::string level5ReunionPutte6 = "...";
 	std::string level5ReunionThomas3 = "Du Hilma, jag tror vi borde hjälpa honom att hitta sina barn.";
 	std::string level5ReunionHilma4 = "Borde och borde? Vi måste väl om han ska sluta gråta någon gång det här århundradet! Hörrudu Putte!";
 	std::string level5ReunionHilma5 = "Vi hjälper dig, men det här är sista gången!";
@@ -3510,7 +4049,7 @@ void DialogueSystem::displayLevel5Putte2AdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5ReunionPutte, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
 		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteWorried.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
@@ -3519,6 +4058,7 @@ void DialogueSystem::displayLevel5Putte2AdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5ReunionHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaAngry.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3561,6 +4101,7 @@ void DialogueSystem::displayLevel5Putte2AdvancedDialogue()
 	else if (mState == 7)
 	{
 		advancedText(level5ReunionTeller, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionLillemorHappy.png");
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3573,102 +4114,111 @@ void DialogueSystem::displayLevel5Putte2AdvancedDialogue()
 	else if (mState == 9)
 	{
 		advancedText(level5ReunionHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 10)
 	{
 		advancedText(level5ReunionPutte4, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionLillemorHappy.png");
 		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 11)
 	{
 		advancedText(level5ReunionPutte5, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 12)
 	{
 		advancedText(level5ReunionLillemor2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionLillemorSympathic.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 13)
 	{
 		advancedText(level5ReunionPutte6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteHelpless.png");
 		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 14)
 	{
 		advancedText(level5ReunionThomas3, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasWorried.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasWorried.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 15)
 	{
 		advancedText(level5ReunionHilma4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 16)
 	{
 		advancedText(level5ReunionHilma5, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 17)
 	{
 		advancedText(level5ReunionPutte7, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteBrightens.png");
 		actorText("Putte", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 18)
 	{
 		advancedText(level5ReunionTeller2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 19)
 	{
 		advancedText(level5ReunionLillemor3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLillemorHappy.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 20)
 	{
 		advancedText(level5ReunionLillemor4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 21)
 	{
 		advancedText(level5ReunionThomas4, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 22)
 	{
 		advancedText(level5ReunionHilma6, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 23)
 	{
 		advancedText(level5ReunionLillemor5, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLillemorThinking.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 24)
 	{
 		advancedText(level5ReunionHilma7, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3712,8 +4262,8 @@ void DialogueSystem::displayLevel5SolarSystemAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5SolarSystemHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -3733,14 +4283,14 @@ void DialogueSystem::displayLevel5SolarSystemAdvancedDialogue()
 	else if (mState == 3)
 	{
 		advancedText(level5SolarSystemThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSmile.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSmile.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level5SolarSystemHilma3, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3759,35 +4309,35 @@ void DialogueSystem::displayLevel5SolarSystemAdvancedDialogue()
 	else if (mState == 7)
 	{
 		advancedText(level5SolarSystemHilma5, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 8)
 	{
 		advancedText(level5SolarSystemThomas4, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 9)
 	{
 		advancedText(level5SolarSystemHilma6, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 10)
 	{
 		advancedText(level5SolarSystemThomas5, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 11)
 	{
 		advancedText(level5SolarSystemThomas6, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasChocked.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasChocked.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
@@ -3800,14 +4350,14 @@ void DialogueSystem::displayLevel5SolarSystemAdvancedDialogue()
 	else if (mState == 13)
 	{
 		advancedText(level5SolarSystemThomas7, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 14)
 	{
 		advancedText(level5SolarSystemHilma8, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -3832,8 +4382,8 @@ void DialogueSystem::displayLevel5MouseHoleAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5MouseHoleVoices, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Röster", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -3847,7 +4397,7 @@ void DialogueSystem::displayLevel5MouseHoleAdvancedDialogue()
 	else if (mState == 2)
 	{
 		advancedText(level5MouseHoleHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -3875,8 +4425,8 @@ void DialogueSystem::displayLevel5VictoryAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5VictoryHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasChocked.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLisaNeutral.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -3884,41 +4434,39 @@ void DialogueSystem::displayLevel5VictoryAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5VictoryLisa, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLisaEnthusiastic.png");
 		actorText("Lisa", 488.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level5VictoryTotte, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionTotteUncertain.png");
 		actorText("Totte", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level5VictoryHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaConfident.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaDetermined.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level5VictoryLisa2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLisaIrritable.png");
 		actorText("Lisa", 488.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 5)
 	{
 		advancedText(level5VictoryTotte2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionTotteHappy.png");
 		actorText("Totte", 480.f, 307.f, 1.f, 1.f);
 	}
 }
 
-void DialogueSystem::displayLevel5EndAdvancedDialogue()
-{
-	//LIEK IDK
-}
-
-//Expressions saknas
 void DialogueSystem::displayLevel5TogetherAdvancedDialogue()
 {
 	std::string level5TogetherTeller = "Nu var Puttes familj tillsammans igen. Puttes kinder var alldeles våta av lyckotårar. Han kramade om sina barn, nästan hårdare än vad han kramade Hilma, och lovade att han aldrig skulle tappa bort dem igen.";
@@ -3947,8 +4495,8 @@ void DialogueSystem::displayLevel5TogetherAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5TogetherTeller, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaGrumpy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasChocked.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionLisaHappy.png");
+		drawSecondCharacter(mHandler, 1000.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionPutteHappy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
@@ -3956,42 +4504,49 @@ void DialogueSystem::displayLevel5TogetherAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5TogetherTotte, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionTotteSigh.png");
 		actorText("Totte", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level5TogetherLisa, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionLisaEnthusiastic.png");
 		actorText("Lisa", 488.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level5TogetherLillemor, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLillemorHappy.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 4)
 	{
 		advancedText(level5TogetherHilma, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 5)
 	{
 		advancedText(level5TogetherThomas, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 6)
 	{
 		advancedText(level5TogetherLillemor2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLillemorSympathic.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 7)
 	{
 		advancedText(level5TogetherLillemor3, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLillemorHappy.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 
@@ -4004,12 +4559,14 @@ void DialogueSystem::displayLevel5TogetherAdvancedDialogue()
 	else if (mState == 9)
 	{
 		advancedText(level5TogetherHilma2, 100.f, 420.f, 1.f, 1.f);
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 10)
 	{
 		advancedText(level5TogetherLillemor4, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionLillemorLaughing.png");
 		actorText("Lillemor", 470.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -4028,7 +4585,7 @@ void DialogueSystem::displayLevel5SolutionAdvancedDialogue()
 		mText.setString("");
 		mActorText.setString("");
 		mHasClicked = false;
-		mLevel5Together = false;
+		mLevel5Solution = false;
 		mAdvancedIsActive = false;
 		mFinishedDialogue = true;
 	}
@@ -4037,8 +4594,8 @@ void DialogueSystem::displayLevel5SolutionAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5SolutionTeller, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaHappy.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
 	}
@@ -4046,7 +4603,7 @@ void DialogueSystem::displayLevel5SolutionAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5SolutionThomas, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSmile.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSmile.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
@@ -4065,6 +4622,7 @@ void DialogueSystem::displayLevel5SolutionAdvancedDialogue()
 	else if (mState == 4)
 	{
 		advancedText(level5SolutionThomas2, 100.f, 420.f, 1.f, 1.f);
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasHappy.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
@@ -4096,8 +4654,8 @@ void DialogueSystem::displayLevel5PaintingAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5PaintingThomas, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaNeutral.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSurprised.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
@@ -4105,21 +4663,21 @@ void DialogueSystem::displayLevel5PaintingAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5PaintingHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level5PaintingThomas2, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSceptic.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSceptic.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 3)
 	{
 		advancedText(level5PaintingHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSigh.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 }
@@ -4145,8 +4703,8 @@ void DialogueSystem::displayLevel5RecordsAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5RecordsHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasNeutral.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -4154,14 +4712,14 @@ void DialogueSystem::displayLevel5RecordsAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5RecordsThomas, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level5RecordsHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
 
@@ -4192,8 +4750,8 @@ void DialogueSystem::displayLevel5DrawingsAdvancedDialogue()
 	{
 		mAdvancedIsActive = true;
 		advancedText(level5DrawingsHilma, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaSurprised.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasThoughtful.png");
 		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
@@ -4201,16 +4759,319 @@ void DialogueSystem::displayLevel5DrawingsAdvancedDialogue()
 	else if (mState == 1)
 	{
 		advancedText(level5DrawingsThomas, 100.f, 420.f, 1.f, 1.f);
-		drawSecondCharacter(mHandler, 700.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSceptic.png");
+		drawSecondCharacter(mHandler, 600.f, 30.f, 1.f, 1.f, 0.2f, 0.2f, "expressionThomasSceptic.png");
 		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
 	}
 
 	else if (mState == 2)
 	{
 		advancedText(level5DrawingsHilma2, 100.f, 420.f, 1.f, 1.f);
-		drawFirstCharacter(mHandler, 300.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
+		drawFirstCharacter(mHandler, 400.f, 30.f, 1.f, 1.f, -0.2f, 0.2f, "expressionHilmaThoughtful.png");
 		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
 	}
+}
+
+//Ending
+
+void DialogueSystem::displayLevel5EndAdvancedDialogue()
+{
+	std::string level5EndTeller = "Äntligen. Ja äntligen skulle Thomas få träffa henne. Ack vad Hilma och Thomas har letat i alla möjliga hörn. Från mormors verkstad, till surtantens trädgård och nu, i detta märkliga hus i skogens hjärta.";
+	std::string level5EndTeller2 = "Thomas kunde föreställa sig hur mormor skulle sitta där på balkongen och skåda stjärnorna. Han kunde inte bärga sig för att presentera Hilma för mormor.";
+	std::string level5EndTeller3 = "Hilma skulle skryta om hennes hittarkunskaper, medan mormor skulle peka ut alla stjärnbilder och planter på himmelen. Åh, de skulle komma så bra överens!";
+	std::string level5EndTeller4 = "Ja allt skulle bli som vanligt igen.";
+
+	if (mState >= 4)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mLevel5End = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(level5EndTeller, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(level5EndTeller2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(level5EndTeller3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 3)
+	{
+		advancedText(level5EndTeller4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayEnding1AdvancedDialogue()
+{
+	std::string endingTeller = "Men det satt ingen mormor på balkongen.";
+	std::string endingThomas = "Jag förstår inte… Varför är hon inte här!? Hon skrev ju i sitt brev att hon skulle vara här! Hon skulle vänta på mig, hon skulle...";
+	std::string endingHilma = "Titta Thomas, det står en mojäng där!";
+	std::string endingThomas2 = "Mormors teleskop…?";
+	std::string endingHilma2 = "Teleskop? Vad är det för något?";
+	std::string endingThomas3 = "Man tittar på stjärnorna genom den... ";
+	std::string endingTeller2 = "Försiktigt gick Thomas fram till teleskopet.";
+
+	if (mState >= 7)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mEnding1 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(endingTeller, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(endingThomas, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(endingHilma, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 3)
+	{
+		advancedText(endingThomas2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 4)
+	{
+		advancedText(endingHilma2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 5)
+	{
+		advancedText(endingThomas3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 6)
+	{
+		advancedText(endingTeller2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayEnding2AdvancedDialogue()
+{
+	std::string ending2Teller = "Han tappade hakan när han tittade in i teleskopet. För på natthimmelen kunde han se tusentals små, gnistrande stjärnor. Han hade aldrig sett så många stjärnor förut!";
+	std::string ending2Thomas = "Wow! Jag kan se alla stjärnor jätteklart!";
+	std::string ending2Hilma = "Va?! Låt mig få se!";
+
+	if (mState >= 3)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mEnding2 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(ending2Teller, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending2Thomas, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(ending2Hilma, 100.f, 420.f, 1.f, 1.f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayEnding3AdvancedDialogue()
+{
+	std::string ending3Hilma = "Nämen! Så många stjärnor! Är det såhär rymden verkligen ser ut?";
+	std::string ending3Thomas = "Nästan! Mormor sa att...";
+
+	if (mState >= 2)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mEnding3 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(ending3Hilma, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending3Thomas, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayEnding4AdvancedDialogue()
+{
+	std::string ending4Hilma = "Vad sjutton är det där för eldklot som flyger?";
+	std::string ending4Thomas = "Det där…?";
+
+	if (mState >= 2)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mEnding4 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(ending4Hilma, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Hilma", 480.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending4Thomas, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayEnding5AdvancedDialogue()
+{
+	std::string ending5Teller = "De båda blev tysta för en stund och såg upp mot natthimmelen. Det stora eldklotet lämnade efter sig ett vackert, blått spår av ljus. Tillsammans med de gnistrande stjärnorna och den stora fullmånen, lystes den mörka natthimmelen upp";
+	std::string ending5Thomas = "Du Hilma?";
+	std::string ending5Hilma = "Ja Thomas?";
+	std::string ending5Thomas2 = "Jag tror vi har hittat henne.";
+	std::string ending5Hilma2 = "Jag tror inte, jag vet det.";
+
+	if (mState >= 5)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mEnding5 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(ending5Teller, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Berättare", 462.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending5Thomas, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending5Hilma, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending5Thomas2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending5Hilma2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+}
+
+void DialogueSystem::displayEnding6AdvancedDialogue()
+{
+	std::string ending6Thomas = "För min mormor";
+	std::string ending6Thomas2 = "min mormor";
+	std::string ending6Thomas3 = "hon åkte";
+	std::string ending6Thomas4 = "till månen.";
+
+	if (mState >= 4)
+	{
+		mText.setString("");
+		mActorText.setString("");
+		mHasClicked = false;
+		mEnding6 = false;
+		mAdvancedIsActive = false;
+		mFinishedDialogue = true;
+	}
+
+	else if (mState == 0)
+	{
+		mAdvancedIsActive = true;
+		advancedText(ending6Thomas, 100.f, 420.f, 1.f, 1.f);
+		createTextBox(-1.f, 280.f, 1.f, 1.f, 0.267f, 0.45f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 1)
+	{
+		advancedText(ending6Thomas2, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
+	else if (mState == 2)
+	{
+		advancedText(ending6Thomas3, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+	else if (mState == 3)
+	{
+		advancedText(ending6Thomas4, 100.f, 420.f, 1.f, 1.f);
+		actorText("Thomas", 472.f, 307.f, 1.f, 1.f);
+	}
+
 }
 
 //Dialogue functions down below

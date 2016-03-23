@@ -100,7 +100,7 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionLillemorHappy.png");
 	addTexture("expressionLillemorLaughing.png");
 	addTexture("expressionLillemorNeutral.png");
-	addTexture("expressionLillemorLillemorSympathetic.png");
+	addTexture("expressionLillemorSympathic.png");
 	addTexture("expressionLillemorThinking.png");
 	addTexture("expressionLisaEnthusiastic.png");
 	addTexture("expressionLisaHappy.png");
@@ -143,6 +143,7 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionTotteNeutral.png");
 	addTexture("expressionTotteSigh.png");
 	addTexture("expressionTotteUncertain.png");
+	addTexture("expressionTotteTest.png");
 
 
 	drawLoadScreen(window, "Davidar UI");
