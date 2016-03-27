@@ -95,14 +95,17 @@ mSelectedLevel(1)
 
 	//Adds level select 
 	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Level1.png", "Level1Glow.png"));
+	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Level2.png", "Level2Glow.png"));
 	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Level3.png", "Level3Glow.png"));
 	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Level4.png", "Level4Glow.png"));
 	mLevelSelectButtons.push_back(new Button(handler, sf::RectangleShape(sf::Vector2f(287, 110)), "Exit.png", "ExitGLOW.png"));
 	
-	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	for (ButtonVector::size_type i = 0; i < mLevelSelectButtons.size() - 1; i++)
 	{
 		mLevelSelectButtons[i]->setPosition(240.0f - (mLevelSelectButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
 	}
+
+	mLevelSelectButtons[4]->setPosition(790.0f - (mLevelSelectButtons[0]->getRect().width / 2), 80.0f + (120.0f * 3));
 
 	//Sounds
 	mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
@@ -366,6 +369,13 @@ void UI::eventListen(sf::RenderWindow &window)
 
 					if (mLevelSelectButtons[3]->isPressed(window))
 					{
+						mSelectedLevel = 3;
+						mLevelStart = true;
+						setState(INGAME);
+					}
+
+					if (mLevelSelectButtons[4]->isPressed(window))
+					{
 						setState(MAINMENU);
 					}
 					break;
@@ -556,10 +566,12 @@ void UI::setUIPosition(sf::Vector2f viewCenter)
 		mMainButtons[i]->setPosition((viewCenter.x - 272) - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
 	}
 
-	for (ButtonVector::size_type i = 0; i < mMainButtons.size(); i++)
+	for (ButtonVector::size_type i = 0; i < mLevelSelectButtons.size() - 1; i++)
 	{
 		mLevelSelectButtons[i]->setPosition((viewCenter.x - 272) - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * i));
 	}
+
+	mLevelSelectButtons[4]->setPosition((viewCenter.x + 272) - (mMainButtons[0]->getRect().width / 2), 80.0f + (120.0f * 3));
 
 	mBackground.setPosition(viewCenter.x - 512, 0);
 }

@@ -149,6 +149,8 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("ClueBackground1.png");
 	addTexture("InfoIcon.png");
 	addTexture("InfoBox.png");
+	addTexture("textbox.png");
+	addTexture("textboxSmall.png");
 	//Main menu buttons
 	addTexture("NewGame.png");
 	addTexture("NewGameGLOW.png");
@@ -161,6 +163,8 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	//Level Select Buttons
 	addTexture("Level1.png");
 	addTexture("Level1Glow.png");
+	addTexture("Level2.png");
+	addTexture("Level2Glow.png");
 	addTexture("Level3.png");
 	addTexture("Level3Glow.png");
 	addTexture("Level4.png");

@@ -873,7 +873,7 @@ void Level3::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
-				mLevelComplete = true; //TODO - Remove this
+				mPlayer->togglePlayer(); //TODO - Remove this
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
