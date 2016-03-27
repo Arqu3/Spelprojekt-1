@@ -1,6 +1,5 @@
 #include "Level3.h"
 
-
 Level3::Level3(ResourceHandler &handler) :
 mRects(),
 mPlayRects(),
@@ -282,6 +281,8 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 		//UI
 		mUI = ui;
+
+		/*mDialogueSystem = new DialogueSystem(handler);*/
 
 		//Rectangles
 		mRects.push_back(createRect(1806, 96, 62, 74));
@@ -1106,7 +1107,6 @@ void Level3::update(sf::RenderWindow &window, float deltaTime)
 			moveViewWithPlayer(mPlayer->getPosition().x);
 		}
 	}
-
 	if (getActiveScene() == 2)
 	{
 		if (mPlayer->getPosition().x > 520 && mPlayer->getPosition().x < 2000)

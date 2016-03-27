@@ -71,13 +71,15 @@ public:
 	void displayLevel3Skatmaran1AdvancedDialogue();
 	void displayLevel3Skatmaran2AdvancedDialogue();
 	void displayLevel3Skatmaran3AdvancedDialogue();
-	void displayLevel3ReturnAdvancedDialogue();
+	void displayLevel3Skatmaran4AdvancedDialogue();
 
 	//Level 4
 
 	//Level 5
 	void displayLevel5StartAdvancedDialogue();
 	void displayLevel5EndAdvancedDialogue();
+	void displayLevel5Letter1AdvancedDialogue();
+	void displayLevel5Letter2AdvancedDialogue();
 	void displayLevel5BalconyDoorAdvancedDialogue();
 	void displayLevel5Putte2AdvancedDialogue();
 	void displayLevel5SolarSystemAdvancedDialogue();
@@ -88,6 +90,14 @@ public:
 	void displayLevel5PaintingAdvancedDialogue();
 	void displayLevel5RecordsAdvancedDialogue();
 	void displayLevel5DrawingsAdvancedDialogue();
+
+	//Ending Dialogues
+	void displayEnding1AdvancedDialogue();
+	void displayEnding2AdvancedDialogue();
+	void displayEnding3AdvancedDialogue();
+	void displayEnding4AdvancedDialogue();
+	void displayEnding5AdvancedDialogue();
+	void displayEnding6AdvancedDialogue();
 
 	//Dialogues (functions with strings)
 	//Thomas' room
@@ -258,19 +268,28 @@ private:
 	bool mLevel3Skatmaran1;
 	bool mLevel3Skatmaran2;
 	bool mLevel3Skatmaran3;
-	bool mLevel3Return;
+	bool mLevel3Skatmaran4;
 
 	//Level 4
 
 	//Level 5
+	bool mEnding1;
+	bool mEnding2;
+	bool mEnding3;
+	bool mEnding4;
+	bool mEnding5;
+	bool mEnding6;
 	bool mLevel5Start;
 	bool mLevel5End;
+	bool mLevel5Letter1;
+	bool mLevel5Letter2;
 	bool mLevel5BalconyDoor;
 	bool mLevel5Putte2;
 	bool mLevel5SolarSystem;
 	bool mLevel5MouseHole;
 	bool mLevel5Victory;
 	bool mLevel5Together;
+	bool mLevel5Solution;
 	bool mLevel5Painting;
 	bool mLevel5Records;
 	bool mLevel5Drawings;
