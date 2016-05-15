@@ -7,15 +7,15 @@ LevelHandler::LevelHandler(ResourceHandler &handler) :
 {
 	//Initialize new levels
 	mLevel1 = new Level1(handler);
-	mLevel2 = new Level2(handler);
-	mLevel3 = new Level3(handler);
-	mLastLevel = new LastLevel(handler);
+	//mLevel2 = new Level2(handler);
+	//mLevel3 = new Level3(handler);
+	//mLastLevel = new LastLevel(handler);
 
 	//Add levels to member list
 	mLevels.push_back(mLevel1);
-	mLevels.push_back(mLevel2);
-	mLevels.push_back(mLevel3);
-	mLevels.push_back(mLastLevel);
+	//mLevels.push_back(mLevel2);
+	//mLevels.push_back(mLevel3);
+	//mLevels.push_back(mLastLevel);
 }
 
 LevelHandler::~LevelHandler()

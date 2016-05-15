@@ -336,7 +336,7 @@ void UI::eventListen(sf::RenderWindow &window)
 
 					if (mMainButtons[1]->isPressed(window))
 					{
-						setState(LEVELSELECT);
+						//setState(LEVELSELECT);
 					}
 
 					if (mMainButtons[3]->isPressed(window))

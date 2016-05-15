@@ -1134,7 +1134,8 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		}
 		if (mReadyToLeave && !mDialogueSystem->getLevel1End())
 		{
-			mLevelComplete = true;
+			//mLevelComplete = true;
+			// T0D0 - Add "Thanks for playing!" screen here
 		}
 	}
 
