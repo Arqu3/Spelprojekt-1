@@ -224,7 +224,14 @@ void Level3::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 
 
 		//Add sound
-		music.openFromFile("Level1Music.ogg");
+		music.openFromFile(handler.getMusic("Level3Music.ogg"));
+		music.setLoop(true);
+		music.setVolume(50);
+		music.play();
+
+		magicMusic.openFromFile(handler.getMusic("MagicWorldMusic.ogg"));
+		magicMusic.setLoop(true);
+		magicMusic.setVolume(50);
 
 		//Add HelpRect
 		rectangle.setPosition(sf::Vector2f(1973, 123));
@@ -523,6 +530,11 @@ void Level3::internalSwap(int num)
 		////Knekt ?
 		//mRects.push_back(createRect(1226, 157, 100, 200));
 
+		if (magicMusic.getStatus() == 2)
+		{
+			magicMusic.stop();
+			music.play();
+		}
 
 		if (mClover->getActive())
 		{
@@ -558,6 +570,8 @@ void Level3::internalSwap(int num)
 		//Scene 3
 		mActiveScene = 2;
 		mView.setCenter(524, 288);
+
+		mPlayer->setScale(sf::Vector2f(0.28f, 0.28f));
 
 		//Walkable Area
 		mPlayRects.push_back(createRect(277, 387, 151, 79));
@@ -656,6 +670,9 @@ void Level3::internalSwap(int num)
 		mRects.push_back(createRect(25, 49, 160, 232));
 		mRects.push_back(createRect(1342, 90, 129, 175));
 		mRects.push_back(createRect(2337, 474, 173, 92));
+
+		music.stop();
+		magicMusic.play();
 
 		if (mPond->getActive())
 		{

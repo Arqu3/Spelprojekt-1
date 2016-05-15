@@ -252,6 +252,11 @@ void Level2::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mMenuHatSound.setBuffer(*handler.getSound("Menu_Hat.ogg"));
 		mMenuInventorySound.setBuffer(*handler.getSound("Menu_Inventory.ogg"));
 
+		music.openFromFile(handler.getMusic("Level2Music.ogg"));
+		music.setLoop(true);
+		music.setVolume(50);
+		music.play();
+
 		//View
 		mView.setCenter(512, 288);
 		mView.setSize(1024, 576);
