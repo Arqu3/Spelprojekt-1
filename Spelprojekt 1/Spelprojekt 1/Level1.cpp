@@ -96,13 +96,20 @@ void Level1::drawBackground(sf::RenderWindow &window)
 		window.draw(background);
 		window.draw(playground);
 	}
-	else
+	else if (mActiveScene == 1)
 	{
 		window.draw(backgroundZoom);
 		window.draw(playgroundZoom);
 	}
+	else
+	{
+		window.draw(thanksForPlaying);
+	}
 	//window.draw(rectangle); // Help rectangle
-	drawItems(mItems, window);
+	if (mActiveScene != 2)
+	{
+		drawItems(mItems, window);
+	}
 }
 
 
@@ -112,9 +119,13 @@ void Level1::drawForeground(sf::RenderWindow &window)
 	{
 		window.draw(foreground);
 	}
-	else
+	else if (mActiveScene == 1)
 	{
 		window.draw(foregroundZoom);
+	}
+	else
+	{
+		window.draw(thanksForPlaying);
 	}
 }
 
@@ -135,35 +146,38 @@ void Level1::drawItems(ItemVector items, sf::RenderWindow &window)
 
 void Level1::drawUI(sf::RenderWindow &window)
 {
-	mUI->draw(window);
+	if (mActiveScene != 2)
+	{
+		mUI->draw(window);
 
-	if (mUI->getState() == UI::INVENTORY)
-	{
-		mInventory->draw(window);
-	}
-	if (mUI->getState() == UI::CLUES)
-	{
-		mClues->draw(window);
-		for (unsigned int i = 0; i < mClues->getClues().size(); i++)
+		if (mUI->getState() == UI::INVENTORY)
 		{
-			if (mClues->getClue(i)->isHover(mWorldPos))
+			mInventory->draw(window);
+		}
+		if (mUI->getState() == UI::CLUES)
+		{
+			mClues->draw(window);
+			for (unsigned int i = 0; i < mClues->getClues().size(); i++)
 			{
-				mClues->getClue(i)->drawText(window);
+				if (mClues->getClue(i)->isHover(mWorldPos))
+				{
+					mClues->getClue(i)->drawText(window);
+				}
 			}
 		}
-	}
-	if (mCursor->getMode() == Cursor::DIALOGUE)
-	{
-		mDialogueSystem->drawDialogue(window);
-	}
-
-	mCursor->draw(window);
-	if (mInventory->getSelectedItem() != -1)
-	{
-		mInventory->drawCursorSprite(window);
-		if (mActiveScene == 1 && mBlockPushed && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+		if (mCursor->getMode() == Cursor::DIALOGUE)
 		{
-			window.draw(mAstronautGlow);
+			mDialogueSystem->drawDialogue(window);
+		}
+
+		mCursor->draw(window);
+		if (mInventory->getSelectedItem() != -1)
+		{
+			mInventory->drawCursorSprite(window);
+			if (mActiveScene == 1 && mBlockPushed && mInventory->selectedItem()->getId() == "FishingRodMagnet")
+			{
+				window.draw(mAstronautGlow);
+			}
 		}
 	}
 }
@@ -215,6 +229,10 @@ void Level1::toggleActive(ResourceHandler &handler, sf::RenderWindow &window, UI
 		mLookedAtBackpack = false;
 
 		mActiveScene = 0;
+
+		//Thanks for playing background
+		thanksForPlaying.setSize(sf::Vector2f(1024, 576));
+		thanksForPlaying.setTexture(handler.getTexture("ThanksForPlaying.png"));
 
 		//Room Textures
 		//Background texture
@@ -550,7 +568,7 @@ void Level1::internalSwap(int num)
 		}
 	}
 	// Fishtank Zoom
-	else
+	else if (num == 1)
 	{
 		if (!mLookedAtAquarium)
 		{
@@ -602,6 +620,10 @@ void Level1::internalSwap(int num)
 			mCube->setPosition(645.0f, 450.0f);
 			addItem(mCube);
 		}
+	}
+	else
+	{
+		mActiveScene = 2;
 	}
 }
 
@@ -703,6 +725,10 @@ void Level1::eventListen(sf::RenderWindow &window)
 
 			//mouse button pressed
 		case sf::Event::MouseButtonPressed:
+			if (mActiveScene == 2)
+			{
+				window.close();
+			}
 			//if Inventory Mode is enabled, only check for collisions with Items in Inventory
 			if (mUI->getState() == UI::INVENTORY)
 			{
@@ -773,7 +799,8 @@ void Level1::eventListen(sf::RenderWindow &window)
 			}
 			if (event.key.code == sf::Keyboard::P)
 			{
-				mPlayer->togglePlayer();
+				//mPlayer->togglePlayer();
+				//changeScene(2);
 			}
 			if (event.key.code == sf::Keyboard::Escape)
 			{
@@ -1135,7 +1162,7 @@ void Level1::update(sf::RenderWindow &window, float deltaTime)
 		if (mReadyToLeave && !mDialogueSystem->getLevel1End())
 		{
 			//mLevelComplete = true;
-			// T0D0 - Add "Thanks for playing!" screen here
+			changeScene(2);
 		}
 	}
 

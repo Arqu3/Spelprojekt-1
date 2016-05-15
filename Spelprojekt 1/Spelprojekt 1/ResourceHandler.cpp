@@ -17,6 +17,7 @@ ResourceHandler::ResourceHandler() :
 {
 	addTexture("loadscreen.png");
 	addTexture("MainMenuBackground.png");
+	addTexture("ThanksForPlaying.png");
 	addTexture("Test1.png");
 
 	loadScreen.setSize(sf::Vector2f(1024, 576));

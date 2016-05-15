@@ -87,6 +87,7 @@ private:
 	sf::RectangleShape playgroundZoom;
 	sf::RectangleShape foregroundZoom;
 	sf::RectangleShape rectangle;
+	sf::RectangleShape thanksForPlaying;
 	sf::FloatRect* createRect(float positionX, float positionY, float sizeX, float sizeY);
 
 	//Sound
