@@ -374,6 +374,8 @@ void ResourceHandler::loadLevel2(sf::RenderWindow & window)
 		addTexture("LastLevel_ItemTest1.png");
 		addTexture("LastLevel_ItemTest2.png");
 
+		addMusic("Level2Music.ogg");
+
 		mLevel2Loaded = true;
 	}
 	else
@@ -425,6 +427,9 @@ void ResourceHandler::loadLevel3(sf::RenderWindow &window)
 		addTexture("NailINV.png");
 		addTexture("RippedClothINV.png");
 		addTexture("Statue.png");
+
+		addMusic("Level3Music.ogg");
+		addMusic("MagicWorldMusic.ogg");
 
 		mLevel3Loaded = true;
 	}

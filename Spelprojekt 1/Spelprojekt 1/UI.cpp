@@ -14,7 +14,7 @@ mLevelStart(false),
 mInfoBoxDisplay(true),
 mReset(false),
 mLevelExit(false),
-mSelectedLevel(1)
+mSelectedLevel(0)
 {
 	//Cursor
 	mCursor = new Cursor(handler);

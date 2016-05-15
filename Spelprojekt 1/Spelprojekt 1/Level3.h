@@ -118,6 +118,7 @@ private:
 
 	//Sound
 	sf::Music music;
+	sf::Music magicMusic;
 	sf::Sound ambientSound;
 
 	//Scene
