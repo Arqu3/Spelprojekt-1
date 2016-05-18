@@ -826,12 +826,12 @@ void Level1::eventListen(sf::RenderWindow &window)
 
 void Level1::mouseClick(sf::Event &event)
 {
-	std::cout << "Mouse Pressed" << std::endl;
-	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+	//std::cout << "Mouse Pressed" << std::endl;
+	//std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+	//std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
-	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
-	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+	//std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	//std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
 
 	sf::Vector2f point(mWorldPos.x, mWorldPos.y);
 
@@ -998,12 +998,12 @@ void Level1::mouseHover()
 
 void Level1::mouseReleased(sf::Event & event)
 {
-	std::cout << "Mouse Released" << std::endl;
-	std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-	std::cout << "mouse y: " << event.mouseButton.y << std::endl;
+	//std::cout << "Mouse Released" << std::endl;
+	//std::cout << "mouse x: " << event.mouseButton.x << std::endl;
+	//std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 
-	std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
-	std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
+	//std::cout << "mapped mouse x: " << mWorldPos.x << std::endl;
+	//std::cout << "mapped mouse y: " << mWorldPos.y << std::endl;
 
 	//Fishing interaction
 	if (mInventory->selectedItem() != NULL
@@ -1374,7 +1374,7 @@ void Level1::pickupTargetItem()
 	{
 		mInventory->addItem(mTargetItem);
 		mUI->setActiveAnimation("InventoryIconGlowOnce");
-		std::cout << "Plockade upp magnet";
+		//std::cout << "Plockade upp magnet";
 		mRegularItemSound.play();
 		mPickedUpMagnet = true;
 		if (mPickedUpFishingRod)
@@ -1388,7 +1388,7 @@ void Level1::pickupTargetItem()
 	{
 		mInventory->addItem(mTargetItem);
 		mUI->setActiveAnimation("InventoryIconGlowOnce");
-		std::cout << "Plockade upp fiskespo";
+		//std::cout << "Plockade upp fiskespo";
 		mRegularItemSound.play();
 		mPickedUpFishingRod = true;
 		if (mPickedUpMagnet)
@@ -1444,7 +1444,7 @@ void Level1::interactTargetItem()
 			mAstronaut->toggleActive();
 			mAstronaut->togglePickupable();
 
-			std::cout << "Knuffade Klossen";
+			//std::cout << "Knuffade Klossen";
 		}
 		if (mTargetItem->getId() == "Star")
 		{
@@ -1456,7 +1456,7 @@ void Level1::interactTargetItem()
 			mClues->getClue(1)->setState2();
 			mClues->getClue(2)->setState1();
 			mUI->setActiveAnimation("CluesIconGlowOnce");
-			std::cout << "Satte stjärnan på väggen";
+			//std::cout << "Satte stjärnan på väggen";
 		}
 	}
 }
@@ -1663,7 +1663,7 @@ void Level1::mouseClickCheckRectCollision(sf::Vector2f point)
 			// i == 7 is the door
 			else if (i == 7)
 			{
-				std::cout << "IT'S NOT OVER YET" << std::endl;
+				//std::cout << "IT'S NOT OVER YET" << std::endl;
 			}
 		}
 	}

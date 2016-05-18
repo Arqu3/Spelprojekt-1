@@ -24,14 +24,14 @@ mCircle1Mid(487, 276),
 mCircle2Mid(725, 175)
 {
 	//Size check
-	cout << mItems.size() << endl;
+	//cout << mItems.size() << endl;
 
 	//Sets initial grid position
 	setInitialGrid();
 
 	//Rows and columns
-	cout << "Number of columns: " << mCol + 1 << endl;
-	cout << "Number of rows: " << mRow + 1 << endl;
+	//cout << "Number of columns: " << mCol + 1 << endl;
+	//cout << "Number of rows: " << mRow + 1 << endl;
 
 	//Crafting rectangles
 	mItem1Rect.setSize(sf::Vector2f(60, 65));
@@ -281,7 +281,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			{
 				mSelectedItem1 = i;
 				mCursorSprite = mItems[mSelectedItem1]->getINVSprite();
-				cout << "First selected item is: " << mSelectedItem1 << endl;
+				//cout << "First selected item is: " << mSelectedItem1 << endl;
 				mDescription.setString(mItems[mSelectedItem1]->getDescription());
 				if (mItems[mSelectedItem1]->getCraftIndex() != -1)
 				{
@@ -298,7 +298,7 @@ void Inventory::checkCollision(ItemVector items, sf::Vector2f point, UI &ui)
 			{
 				mSelectedItem2 = i;
 				mCursorSprite = mItems[mSelectedItem2]->getINVSprite();
-				cout << "Second selected item is: " << mSelectedItem2 << endl;
+				//cout << "Second selected item is: " << mSelectedItem2 << endl;
 			}
 			return;
 		}
@@ -433,7 +433,7 @@ void Inventory::swapItems(ItemVector &inputVector, int inputIndex, int swapIndex
 
 		swapPos(*inputVector[inputIndex], *inputVector[swapIndex]);
 
-		cout << "Swapped" << endl;
+		//cout << "Swapped" << endl;
 		mInventoryMoveSound.play();
 	}
 }

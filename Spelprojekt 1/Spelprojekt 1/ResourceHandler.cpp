@@ -69,11 +69,11 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("sepia.png");
 	drawLoadScreen(window, "Lailar Ansiktsuttryck");
 	//Character Expressions
-	addTexture("expressionArnoldApologetic.png");
+	/*addTexture("expressionArnoldApologetic.png");
 	addTexture("expressionArnoldHappy.png");
 	addTexture("expressionArnoldLaughing.png");
 	addTexture("expressionArnoldNeutral.png");
-	addTexture("expressionArnoldSurprised.png");
+	addTexture("expressionArnoldSurprised.png");*/
 	addTexture("expressionHilmaAbject.png");
 	addTexture("expressionHilmaAngry.png");
 	addTexture("expressionHilmaConfident.png");
@@ -86,7 +86,7 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionHilmaSigh.png");
 	addTexture("expressionHilmaSurprised.png");
 	addTexture("expressionHilmaThoughtful.png");
-	addTexture("expressionLadyAngry.png");
+	/*addTexture("expressionLadyAngry.png");
 	addTexture("expressionLadyFriendly.png");
 	addTexture("expressionLadyGiggling.png");
 	addTexture("expressionLadyImpatient.png");
@@ -121,7 +121,7 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionSkatmaranSigh.png");
 	addTexture("expressionSkatmaranSnide.png");
 	addTexture("expressionSkatmaranSurprised.png");
-	addTexture("expressionSkatmaranThoughtful.png");
+	addTexture("expressionSkatmaranThoughtful.png");*/
 	addTexture("expressionThomasAngry.png");
 	addTexture("expressionThomasBlush.png");
 	addTexture("expressionThomasChocked.png");
@@ -136,11 +136,11 @@ void ResourceHandler::loadGeneral(sf::RenderWindow &window)
 	addTexture("expressionThomasSurprised.png");
 	addTexture("expressionThomasThoughtful.png");
 	addTexture("expressionThomasWorried.png");
-	addTexture("expressionTotteHappy.png");
+	/*addTexture("expressionTotteHappy.png");
 	addTexture("expressionTotteNeutral.png");
 	addTexture("expressionTotteSigh.png");
 	addTexture("expressionTotteUncertain.png");
-	addTexture("expressionTotteTest.png");
+	addTexture("expressionTotteTest.png");*/
 	drawLoadScreen(window, "Davidar UI");
 	//In-game UI
 	addTexture("InventoryIconGlow.png");
