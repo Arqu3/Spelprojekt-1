@@ -335,7 +335,7 @@ mWalkable(true)
 		mDescription = "Gåtfisken Roger";
 		mSprite.setPosition(mPosition);
 		mSprite.setScale(sf::Vector2f(0.07f, 0.07f));
-		mRogerSwim = *handler.getTexture("RogerSwim.png");
+		mRogerSwim.loadFromFile("Resources/Textures/RogerSwim.png");
 		mSprite.setTexture(mRogerSwim);
 		mSprite.setOrigin(350, 0);
 		mSprite.setTextureRect(sf::IntRect(0, 0, 700, 700));
